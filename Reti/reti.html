@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-14 Thu 18:51 -->
+<!-- 2024-11-14 Thu 19:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Reti</title>
@@ -55,7 +55,7 @@
 <li><a href="#org497ef60">Concetto di protocollo</a></li>
 <li><a href="#orgda2d940">Parametri e statistiche</a>
 <ul>
-<li><a href="#orgab916ae">Round trip time</a></li>
+<li><a href="#org05285a8">Round trip time</a></li>
 <li><a href="#org4d33f6a">Altre</a></li>
 </ul>
 </li>
@@ -63,16 +63,16 @@
 </li>
 <li><a href="#org155cfa7">Livelli gerarchici</a>
 <ul>
-<li><a href="#org15823f0">Primo livello (<b>Physic</b>)</a></li>
-<li><a href="#org7253387">Secondo livello (<b>Data link</b>)</a></li>
-<li><a href="#org70e5a1f">Terzo livello (<b>Network layer</b>)</a></li>
-<li><a href="#org10bf44d">Quarto livello (<b>Transport layer</b>)</a></li>
-<li><a href="#orgc1c1a40">Quinto/Settimo livello (<b>Application layer</b>)</a></li>
+<li><a href="#org5b58d43">Primo livello (<b>Physical</b>)</a></li>
+<li><a href="#orgff145ab">Secondo livello (<b>Data Link</b>)</a></li>
+<li><a href="#org8c2f4e6">Terzo livello (<b>Network</b>)</a></li>
+<li><a href="#orge70b4bf">Quarto livello (<b>Transport</b>)</a></li>
+<li><a href="#orgd37f6c0">Quinto/Settimo livello (<b>Application</b>)</a></li>
 </ul>
 </li>
 <li><a href="#org218fd17">Formule</a>
 <ul>
-<li><a href="#org05285a8">Round trip time</a></li>
+<li><a href="#orgba2c364">Round trip time</a></li>
 </ul>
 </li>
 </ul>
@@ -138,9 +138,9 @@ I protocolli sono standard e vengono stabiliti e descritti da organismi internaz
 <h3 id="orgda2d940">Parametri e statistiche</h3>
 <div class="outline-text-3" id="text-orgda2d940">
 </div>
-<div id="outline-container-orgab916ae" class="outline-4">
-<h4 id="orgab916ae">Round trip time</h4>
-<div class="outline-text-4" id="text-orgab916ae">
+<div id="outline-container-org05285a8" class="outline-4">
+<h4 id="org05285a8">Round trip time</h4>
+<div class="outline-text-4" id="text-org05285a8">
 <p>
 In una comunicazione in <b>ARQ</b> <i>(Automatic Repeat Request)</i>, il <b>round trip time</b> è il tempo necessario perchè un frame venga spedito dalla sorgente alla destinazione ed un <code>ACK</code> venga restituito dalla destinazione per confermare l'avvenuta ricezione.
 </p>
@@ -211,37 +211,61 @@ Internet utilizza 5 di questi livelli, combinando gli ultimi 3 secondo un altro 
 </p>
 
 <p>
-I primi 3 livelli sono presenti in tutte le macchine coinvolte in una rete, ovvero i router e gli host.
+I primi 3 livelli sono presenti in tutte le macchine coinvolte in una rete, ovvero i router e gli host. Dal 4 in poi, solo sugli host.
+</p>
+
+<p>
+Da un punto di vista logico, il collegamento fra ogni livello può essere rappresentato come un buffer I/O. Ogni richiesta attraversa tutti i livelli di entrambe le macchine, aumentando la propria dimensione ad ogni passaggio. Ogni livello della sorgente aggiunge uno <b>header</b> che verrà utilizzati dal corrispettivo nella destinazione.
+</p>
+
+<p>
+Questa struttura introduce un overhead nelle prestazioni. L'unico modo per ridurre il suo impatto è quello di ottimizzare la dimensione degli header.
 </p>
 </div>
 
-<div id="outline-container-org15823f0" class="outline-3">
-<h3 id="org15823f0">Primo livello (<b>Physic</b>)</h3>
-<div class="outline-text-3" id="text-org15823f0">
+<div id="outline-container-org5b58d43" class="outline-3">
+<h3 id="org5b58d43">Primo livello (<b>Physical</b>)</h3>
+<div class="outline-text-3" id="text-org5b58d43">
 <p>
 Questo livello si occupa di gestire la trasmissione attraverso una porta I/O, inserendo i bit nel cavo ed estraendoli con un clock definito.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org7253387" class="outline-3">
-<h3 id="org7253387">Secondo livello (<b>Data link</b>)</h3>
-<div class="outline-text-3" id="text-org7253387">
+<div id="outline-container-orgff145ab" class="outline-3">
+<h3 id="orgff145ab"><a href="data_link.html#ID-cd7a9248-fb2c-4007-a983-1cdd443f9560">Secondo livello (<b>Data Link</b>)</a></h3>
+<div class="outline-text-3" id="text-orgff145ab">
 <p>
-Questo livello fornisce un formato logico alle informazioni che viaggiano sul cavo fra coppie di host, formattandoli e taggandoli in modo da abilitare funzioni come l'affidabilità.
+Questo livello fornisce un formato logico alle informazioni che viaggiano sul cavo fra coppie di host.
+</p>
+
+<p>
+Ogni macchina ha tanti livelli indipendenti di questo tipo, quanti sono i suoi link.
 </p>
 
 <p>
 Il principale protocollo utilizzato per questo livello è <b>Ethernet</b> IEEE 802.3 e le sue versioni più avanzate come <b>Gigabit Ethernet</b>.
 </p>
+
+<p>
+L'<a href="affidabilita.html#ID-3898f6e3-9c94-41fc-bdef-7690d5031ccd">affidabilità</a> può essere risolta a questo livello, ma questa soluzione è poco utilizzata a causa della sua inefficienza.
+</p>
+
+<p>
+Si preferisce utilizzare una versione non affidabile, chiamata <b>best-effort</b>, delegando l'affidabilità al livello 4.
+</p>
 </div>
 </div>
 
-<div id="outline-container-org70e5a1f" class="outline-3">
-<h3 id="org70e5a1f">Terzo livello (<b>Network layer</b>)</h3>
-<div class="outline-text-3" id="text-org70e5a1f">
+<div id="outline-container-org8c2f4e6" class="outline-3">
+<h3 id="org8c2f4e6">Terzo livello (<b>Network</b>)</h3>
+<div class="outline-text-3" id="text-org8c2f4e6">
 <p>
-Il terzo livello ci fornisce l'<b>instradamento</b>, per far sì che una comunicazione avvenga su distanze più lunghe, non direttamente collegate. Per svolgere questa funzione, ha bisogno di gestire anche l'<b>indirizzamento</b>.
+Il terzo livello implementa l'<b>instradamento</b>, per abilitare comunicazioni su distanze lunghe e variabili, non direttamente collegate.
+</p>
+
+<p>
+Per svolgere questa funzione, serve anche gestire l'<b>indirizzamento</b>.
 </p>
 
 <p>
@@ -254,27 +278,27 @@ In questo livello agiscono, fra gli altri:
 </ul>
 
 <p>
-I due livelli restanti si trovano soltanto nelle macchine host e non nei router intermedi.
+Questo è l'ultimo livello presente in ogni elemento della rete, ovvero host e router. Dal livello quattro in poi, si fa riferimento a soluzioni implementate soltanto a livello host.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org10bf44d" class="outline-3">
-<h3 id="org10bf44d">Quarto livello (<b>Transport layer</b>)</h3>
-<div class="outline-text-3" id="text-org10bf44d">
+<div id="outline-container-orge70b4bf" class="outline-3">
+<h3 id="orge70b4bf">Quarto livello (<b>Transport</b>)</h3>
+<div class="outline-text-3" id="text-orge70b4bf">
 <p>
 Il quarto livello mette in comunicazione due macchine direttamente fra loro (sfruttando i livelli inferiori) e per questo si parla di livello <b>end-to-end.</b>
 </p>
 
 <p>
-L'ordinamento dei pacchetti, classificato come uno dei parametri necessari per l'affidabilità, avviene in questo livello.
+L'ordinamento dei pacchetti, classificato come uno dei parametri necessari per l'affidabilità, avviene qui.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgc1c1a40" class="outline-3">
-<h3 id="orgc1c1a40">Quinto/Settimo livello (<b>Application layer</b>)</h3>
-<div class="outline-text-3" id="text-orgc1c1a40">
+<div id="outline-container-orgd37f6c0" class="outline-3">
+<h3 id="orgd37f6c0">Quinto/Settimo livello (<b>Application</b>)</h3>
+<div class="outline-text-3" id="text-orgd37f6c0">
 <p>
 Il settimo livello della gerarchia OSI-RM è quello in cui la rete interagisce direttamente con il processo di sistema.
 </p>
@@ -292,23 +316,18 @@ uniforme i dati su macchine che potrebbero utilizzare formati diversi. L'importa
 </div>
 </div>
 </div>
+
 <div id="outline-container-org218fd17" class="outline-2">
 <h2 id="org218fd17">Formule</h2>
 <div class="outline-text-2" id="text-org218fd17">
 </div>
-<div id="outline-container-org05285a8" class="outline-3">
-<h3 id="org05285a8">Round trip time</h3>
-<div class="outline-text-3" id="text-org05285a8">
-<p>
-Tempo necessario perchè un frame arrivi a destinazione e venga
-Inserire spiegazione, formula e esempi.
-</p>
-</div>
+<div id="outline-container-orgba2c364" class="outline-3">
+<h3 id="orgba2c364"><a href="#org05285a8">Round trip time</a></h3>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-11-14 Thu 18:51</p>
+<p class="date">Created: 2024-11-14 Thu 19:39</p>
 </div>
 </body>
 </html>

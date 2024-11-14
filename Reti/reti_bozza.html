@@ -3,11 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-14 Thu 17:51 -->
+<!-- 2024-11-14 Thu 20:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Retibozza</title>
-<meta name="author" content="vjo" />
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
 <script>
@@ -51,30 +50,21 @@
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
 <li><a href="#org92e6ff2">References</a></li>
-<li><a href="#org22d670d">SONO QUIIII</a></li>
-<li><a href="#org956597c">Adesso analizzeremo le altre componenti della rete, e come sono organizzate all'interno della struttura, le varie funzioni di rete.</a>
-<ul>
-<li><a href="#org9efb090">Tra le varie funzioni abbiamo l'instradamento, la garanzia di affidabilità ecc.</a></li>
-<li><a href="#orgd789fe7">Prima di scendere nel dettaglio, analizziamo in definitiva cosa sono le funzioni di rete.</a>
-<ul>
-<li><a href="#org58b459e">Immaginiamo di avere un browser e un server web, con il primo che comunica con il secondo per ricevere contenuti sul desktop.</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a href="#orge3d88fc">Host computer dove risiedono le app finali e un sistema di rete composto da un insieme di nodi e link.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
+<li><a href="#orgbaa7943">Gli unici dati che viaggiano nel sistema sono denominati pacchetti, di dimensione massima fissa. Semplifica l'architettura dei nodi di switch, cioè i router, che svolgono funzionalità di instradamento. In questo modo ogni router si occupa soltanto di ricevere e smistare i pacchetti su link stabiliti in base a metriche di instradamento.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
+<li><a href="#org1131133">Una divisione funzionale delle varie parti è: il sistema di reti, attraverso ip, decide il percorso migliore in base a quel momento specifico (le condizioni variano nel tempo), concetto chiamato instradamento.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
+<li><a href="#orgfade202">Pacchetti con stesso mittente e destinatario non necessariamente percorrono lo stesso cammino. Non solo la comunicazione non è affidabile, ma anche ogni pacchetto è completamente indipendente dagli altri, sebbene siano tutti risultato dello stesso processo di frammentazione da parte dell'host. Servirà poi un modo per reassemblarli a destinazione.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
+<li><a href="#org09064ec">Ogni pacchetto è indipendente, ma in qualche modo verrà ricostruito, quindi c'è qualche legame logico fra il singolo frammento e l'unità generale. Finchè i pacchetti sono nel sistema di rete, questo collegamento è perso.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
+<li><a href="#org76ff6cc">A questo punto abbiamo definito dei concetti come affidabilità e valori tempo di trasmissione, tempo di propagazione, round-trip tie, error-rate su un canale, gitter, che tornano.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
+<li><a href="#orgfaa4296">Abbiamo identificato le componenti architetturali di una rete, con link fra router e host, entrambi con software e funzioni utili alla comunicazione, IP lato router e TCP lato host&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
+<li><a href="#org956597c">Adesso analizzeremo le altre componenti della rete, e come sono organizzate all'interno della struttura, le varie funzioni di rete.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
 <li><a href="#org39ff886">Per la struttura gerarchica a 5 (7) livelli, i collegamenti fra le due macchine sorgente e destinazione sono allo stesso livello. Non sono ammesse cross-layer communication.</a>
 <ul>
-<li><a href="#org4fbb577">Il vantaggio è pulizia del codice</a></li>
-<li><a href="#orgcf89b97">I protocolli dal livello 4 in su, sono end-to-end.</a>
-<ul>
-<li><a href="#org976070a">Ad ogni protocollo di livello n, dev'essere chiaro qual è il servizio di livello n-1, che verrà utilizzato per comunicare con esso.</a></li>
-<li><a href="#org86bdc40">Se logicamente i livelli superiori comunicano fra loro, praticamente c'è una risalita fino al cavo.</a></li>
-<li><a href="#orgdc67fd0">La risalita avviene sfruttando dati immessi nell'header. Ogni livello immette dati utili alle proprie operazioni e che non verranno modificati dai livelli gerarchici superiori.</a></li>
-</ul>
-</li>
+<li><a href="#org4fbb577">Il vantaggio è pulizia del codice&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
+<li><a href="#orgcf89b97">I protocolli dal livello 4 in su, sono end-to-end.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
 <li><a href="#org8b54f0f">Il livello 2 si occupa di mandare i bit direttamente al livello 1, che poi manderà al cavo</a>
 <ul>
-<li><a href="#org2c07b67">Bisogna far capire al livello fisico quale sequenza di bit, ovvero quali tensioni (Volt), fanno parte di uno specifico pacchetto e non dello stato di IDLE, stessa cosa per la fine.</a></li>
+<li><a href="#org2c07b67">Bisogna far capire al livello fisico quale sequenza di bit, ovvero quali tensioni (Volt), fanno parte di uno specifico pacchetto e non dello stato di IDLE, stessa cosa per la fine.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
 <li><a href="#org0e409ae">Il livello 2 può essere progettato in modo affidabile, sebbene nelle reti moderne non sia il caso.</a></li>
 </ul>
 </li>
@@ -343,229 +333,51 @@
 </p>
 </div>
 </div>
-<div id="outline-container-org22d670d" class="outline-2">
-<h2 id="org22d670d">SONO QUIIII</h2>
+<div id="outline-container-orge3d88fc" class="outline-2">
+<h2 id="orge3d88fc">Host computer dove risiedono le app finali e un sistema di rete composto da un insieme di nodi e link.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
 </div>
+
+<div id="outline-container-orgbaa7943" class="outline-2">
+<h2 id="orgbaa7943">Gli unici dati che viaggiano nel sistema sono denominati pacchetti, di dimensione massima fissa. Semplifica l'architettura dei nodi di switch, cioè i router, che svolgono funzionalità di instradamento. In questo modo ogni router si occupa soltanto di ricevere e smistare i pacchetti su link stabiliti in base a metriche di instradamento.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
+</div>
+
+<div id="outline-container-org1131133" class="outline-2">
+<h2 id="org1131133">Una divisione funzionale delle varie parti è: il sistema di reti, attraverso ip, decide il percorso migliore in base a quel momento specifico (le condizioni variano nel tempo), concetto chiamato instradamento.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
+</div>
+<div id="outline-container-orgfade202" class="outline-2">
+<h2 id="orgfade202">Pacchetti con stesso mittente e destinatario non necessariamente percorrono lo stesso cammino. Non solo la comunicazione non è affidabile, ma anche ogni pacchetto è completamente indipendente dagli altri, sebbene siano tutti risultato dello stesso processo di frammentazione da parte dell'host. Servirà poi un modo per reassemblarli a destinazione.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
+</div>
+<div id="outline-container-org09064ec" class="outline-2">
+<h2 id="org09064ec">Ogni pacchetto è indipendente, ma in qualche modo verrà ricostruito, quindi c'è qualche legame logico fra il singolo frammento e l'unità generale. Finchè i pacchetti sono nel sistema di rete, questo collegamento è perso.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
+</div>
+
+<div id="outline-container-org76ff6cc" class="outline-2">
+<h2 id="org76ff6cc">A questo punto abbiamo definito dei concetti come affidabilità e valori tempo di trasmissione, tempo di propagazione, round-trip tie, error-rate su un canale, gitter, che tornano.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
+</div>
+<div id="outline-container-orgfaa4296" class="outline-2">
+<h2 id="orgfaa4296">Abbiamo identificato le componenti architetturali di una rete, con link fra router e host, entrambi con software e funzioni utili alla comunicazione, IP lato router e TCP lato host&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
+</div>
+
 <div id="outline-container-org956597c" class="outline-2">
-<h2 id="org956597c">Adesso analizzeremo le altre componenti della rete, e come sono organizzate all'interno della struttura, le varie funzioni di rete.</h2>
-<div class="outline-text-2" id="text-org956597c">
+<h2 id="org956597c">Adesso analizzeremo le altre componenti della rete, e come sono organizzate all'interno della struttura, le varie funzioni di rete.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
 </div>
-<div id="outline-container-org9efb090" class="outline-3">
-<h3 id="org9efb090">Tra le varie funzioni abbiamo l'instradamento, la garanzia di affidabilità ecc.</h3>
-</div>
-<div id="outline-container-orgd789fe7" class="outline-3">
-<h3 id="orgd789fe7">Prima di scendere nel dettaglio, analizziamo in definitiva cosa sono le funzioni di rete.</h3>
-<div class="outline-text-3" id="text-orgd789fe7">
-</div>
-<div id="outline-container-org58b459e" class="outline-4">
-<h4 id="org58b459e">Immaginiamo di avere un browser e un server web, con il primo che comunica con il secondo per ricevere contenuti sul desktop.</h4>
-<div class="outline-text-4" id="text-org58b459e">
-</div>
-<ul class="org-ul">
-<li><a id="org263b0ca"></a>Il browser usa un protocollo di comunicazione, chiamato HTTP, che svolge la funzione di mettere in collegamento il browser sul nostro desktop con il server remoto sul sito.<br /></li>
-<li><a id="org5019e03"></a>L'URL è necessario per raggiungere il server, insieme al protocollo HTTP<br />
-<ul class="org-ul">
-<li><a id="orgaac3ad3"></a>Quindi HTTP è un tipo di file transfer.<br /></li>
-</ul>
-</li>
-<li><a id="orgac2aa43"></a>Chiaramente, sia il lato client che quello server devono avere delle regole per mandare pacchetti all'altro lato, e queste regole devono essere condivise. L'insieme di queste regole costituisce il protocollo<br />
-<ul class="org-ul">
-<li><a id="org7c5abdc"></a>L'esempio di una regola è definire il formato della richiesta che il client fa al server per ottenere dei dati.<br /></li>
-</ul>
-</li>
-<li><a id="orged265c1"></a>Sia nel client che nel server ho una macchina a stati finiti che si occupa dell'utilizzo della rete attraverso i protocolli<br />
-<ul class="org-ul">
-<li><a id="orge872904"></a>Una semplificazione potrebbe essere che il client, partendo da uno stato idle, passa in uno stato "active" di processing richieste quando ne viene aggiunta una in queue, e poi in uno stato di attesa risposta quando manda la request.<br /></li>
-</ul>
-</li>
-<li><a id="org9e2039f"></a>Questi programmi che si occupano della comunicazione su rete, vengono utilizzate da altri processi, che sfruttano un'interfaccia per interagirvi, ovvero per chiedere al programma di gestione del protocollo di mandare richieste e di fornire i dati recuperati.<br /></li>
-<li><a id="org94efc11"></a>Ogni funzione di rete è caratterizzata da due attributi. Una è il protocollo legato a quella specifica funzione. L'altra è l'interfaccia di servizio, che specifica come accedere al servizio fornito da quella specifica funzione.<br />
-<ul class="org-ul">
-<li><a id="orgafe7567"></a>L'interfaccia di servizio è interna alla macchina. Il protocollo è una specifica di sistema distribuito.<br /></li>
-</ul>
-</li>
-<li><a id="org342ca3e"></a>Adesso vedremo 1. quante sono le funzioni che ci interessano e quindi quanti protocolli dobbiamo implementare, 2. come organizzo le funzioni all'interno di un'architettura di rete.<br />
-<ul class="org-ul">
-<li><a id="orgc7a8b1d"></a>Si privilegia un'architettura gerarchica, in particolare a strati indipendenti, organizzati gerarchicamente.<br /></li>
-<li><a id="org9d3526f"></a>Quindi diciamo che ho una funzione di livello 1, con un suo protocollo di livello 1 e il servizio di livello 1, per comunicare con i livelli precedenti.<br />
-<ul class="org-ul">
-<li><a id="orgb1b9d97"></a>Al termine della catena, avrò il livello user, da cui si generano e in cui terminano tutte le comunicazioni.<br />
-<ul class="org-ul">
-<li><a id="orgbe2824b"></a>Quindi l'organizzazione va dal cavo fisico all'utente.<br /></li>
-<li><a id="org510543d"></a>Noi useremo un approccio bottom-up, ovvero partendo dal cavo.<br /></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a id="orgda81d75"></a>Ci sono 7 di questi livelli nello standard di rete OSI-RM, open-system interconnection reference model.<br />
-<ul class="org-ul">
-<li><a id="org68abca9"></a>Questo è il modello di riferimento generale di qualunque rete.<br /></li>
-</ul>
-</li>
-<li><a id="orgb1d7d2f"></a>Internet utilizza soltanto 5 livelli gerarchici fra i 7 indicati in precedenza.<br />
-<ul class="org-ul">
-<li><a id="org312ce96"></a>Si potrebbe dire che siano 5 e mezzo.<br /></li>
-</ul>
-</li>
-<li><a id="org8fc61b1"></a>Abbiamo un sistema di rete, con un file che viene comunicato fra due macchine ed un architettura di rete con dei router.<br /></li>
-<li><a id="orgaf8b415"></a>Una parte della gerarchia si trova nel router<br />
-<ul class="org-ul">
-<li><a id="org0eb854a"></a>Il primo livello, quello fisico, fa questo: ha porta I/O, una porta di trasmissione, infila bit ad un tempo definito nel cavo o li estrae.<br />
-<ul class="org-ul">
-<li><a id="org61bda0e"></a>Lo chiamiamo "physic"<br /></li>
-</ul>
-</li>
-<li><a id="orgfb53449"></a>Il secondo livello dà un formato logico alle informazioni che viaggiano da un nodo a quello adiacente. Formatta i dati sul singolo link.<br />
-<ul class="org-ul">
-<li><a id="orgc9463f6"></a>Infatti il nome del livello 2 è "data link", o "link layer".<br /></li>
-<li><a id="org8b80660"></a>Ogni nodo ha tanti livelli di questo tipo quanti sono i suoi link ed ognuno dei livelli opera in base agli stessi criteri in modo indipendente su ogni link<br /></li>
-<li><a id="orgbe2f8dc"></a>L'affidabilità potrebbe essere risolta qua, perchè risolvere il problema dell'affidabilità significa avere link affidabili sui singoli link.<br />
-<ul class="org-ul">
-<li><a id="orgfed04c9"></a>L'affidabilità comporta uno spreco di banda, quindi molte soluzioni odierne contengono entrambe le modalità, affidabile e best effort, in modo che la seconda possa essere attuata per una maggiore efficienza e l'affidabilità delegata a livelli superiori.<br /></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a id="org6a79316"></a>Il terzo livello ci fornisce l'instradamento (routing), ovvero una strategia per viaggiare su distanze più lunghe. Comprende anche l'indirizzamento (addressing).<br />
-<ul class="org-ul">
-<li><a id="orgc877bee"></a>Prende il nome di "network layer".<br /></li>
-<li><a id="org5bd8800"></a>IP si trova a questo punto.<br /></li>
-</ul>
-</li>
-<li><a id="org35ff0ed"></a>Questo è tutto ciò che riguarda il router. Non serve più nulla da mettere nel router.<br /></li>
-</ul>
-</li>
-<li><a id="orgaae4c71"></a>La restante parte si trova nell'host<br />
-<ul class="org-ul">
-<li><a id="orgf00df97"></a>Una parte dell'host è uguale al router, infatti l'host deve comunicare con il router, quindi deve avere il cavo per mandare dati, il data link per formattarli e un livello 3 per indirizzare verso il ricevitore.<br /></li>
-<li><a id="orge7b7824"></a>Il quarto livello, chiamato "transport" mette in comunicazione le due macchine. TCP è usato per garantire l'affidabilità, mentre UDP no.<br />
-<ul class="org-ul">
-<li><a id="org6f65401"></a>I quarti livelli delle macchine in comunicazione comunicano direttamente fra loro (ovviamente sfruttando i livelli inferiori ad essi). Per questo si parla di livello <b>end-to-end</b>.<br /></li>
-<li><a id="orga587245"></a>L'ordinamento dei pacchetti, classificato sotto l'affidabilità, viene eseguito qua.<br /></li>
-</ul>
-</li>
-<li><a id="org07b2502"></a>Il settimo livello (l'ultimo per internet) è chiamato application layer ed è quello con cui interagisce il processo del sistema.<br />
-<ul class="org-ul">
-<li><a id="org383143e"></a>HTTP, file transfer, email, risiedono tutte qui. Tutti protocolli di supporto applicativo.<br /></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a id="orga2cebee"></a>Ci sono due livelli mancanti nell'internet rispetto all'OSI<br />
-<ul class="org-ul">
-<li><a id="org3d5f0e4"></a>Il quinto è session layer. Serve per mettere smistare i dati ai singoli processi che utilizzano la rete.<br />
-<ul class="org-ul">
-<li><a id="org10246a0"></a>Ogni singolo processo ha una propria sessione aperta, a cui i dati che arrivano dalla rete sono indirizzati e ristretti.<br /></li>
-<li><a id="orgfa39c53"></a>Nell'internet questa parte è finita nelle <b>socket</b>, specifiche interfacce implementate a livello di sistema, che creano un associazione fra processo sorgente e processo destinatario.<br /></li>
-<li><a id="org3023299"></a>Questo è il mezzo a cui si faceva riferimento prima<br /></li>
-<li><a id="org9a571f5"></a>I socket interfacciano direttamente il transport layer, come fossero delle API per esso.<br /></li>
-</ul>
-</li>
-<li><a id="org71b5e18"></a>Il sesto è presentation layer.<br />
-<ul class="org-ul">
-<li><a id="org1311755"></a>Le reti erano molto disomogenee. I terminali, i filesystem erano diversi da macchina a macchina. Devo avere il modo di presentare in modo uniforme i dati.<br /></li>
-<li><a id="orgee37082"></a>In internet viene ridotta la disomogeneità dei formati, attraverso UNICODE. Inoltre, se voglio trasformare dati verso un altro formato, lo faccio a livello 7 con dei plugin.<br /></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a id="org2066236"></a>Da un punto di vista logico, il collegamento fra ogni livello può essere rappresentato come un buffer I/O<br /></li>
-<li><a id="org8c5f04b"></a>Ogni richiesta passa attraverso tutti i livelli singolarmente, dal 7 all'1 della prima macchina e poi risale i livelli dell'altra macchina.<br /></li>
-<li><a id="orgb0fd9bb"></a>Ogni livello attraverso cui il pacchetto passa, aumenta la dimensione dell'unita dati trasmessa, in quanto deve aggiungere dei dati<br /></li>
-<li><a id="orgff8b131"></a>Quanto più piccola è l'unita dati, quanto maggiore è il rapporto fra i dati ed i vari header, ovvero l'overhead.<br /></li>
-<li><a id="orgc5a5b91"></a>L'architettura che noi usiamo è gerarchica e una netta distinzione funzionale fra parti, ma inevitabilmente lo fa in overhead.<br /></li>
-<li><a id="org57947da"></a>La sfida è quella di ottimizzare la dimensione dell'header, ovvero incorporare le informazioni necessarie ad ogni livello di svolgere le sue funzioni, occupando il minor spazio possibile nel pacchetto.<br />
-<ul class="org-ul">
-<li><a id="org37e88f6"></a>Dal punto di vista nominale, 10Mbps sul livello fisico diventano 5Mbps a livello 7. All'inizio addirittura 0.7Mbps.<br /></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-</div>
+
 <div id="outline-container-org39ff886" class="outline-2">
 <h2 id="org39ff886">Per la struttura gerarchica a 5 (7) livelli, i collegamenti fra le due macchine sorgente e destinazione sono allo stesso livello. Non sono ammesse cross-layer communication.</h2>
 <div class="outline-text-2" id="text-org39ff886">
 </div>
 <div id="outline-container-org4fbb577" class="outline-3">
-<h3 id="org4fbb577">Il vantaggio è pulizia del codice</h3>
+<h3 id="org4fbb577">Il vantaggio è pulizia del codice&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h3>
 </div>
 <div id="outline-container-orgcf89b97" class="outline-3">
-<h3 id="orgcf89b97">I protocolli dal livello 4 in su, sono end-to-end.</h3>
-<div class="outline-text-3" id="text-orgcf89b97">
-</div>
-<div id="outline-container-org976070a" class="outline-4">
-<h4 id="org976070a">Ad ogni protocollo di livello n, dev'essere chiaro qual è il servizio di livello n-1, che verrà utilizzato per comunicare con esso.</h4>
-</div>
-<div id="outline-container-org86bdc40" class="outline-4">
-<h4 id="org86bdc40">Se logicamente i livelli superiori comunicano fra loro, praticamente c'è una risalita fino al cavo.</h4>
-</div>
-<div id="outline-container-orgdc67fd0" class="outline-4">
-<h4 id="orgdc67fd0">La risalita avviene sfruttando dati immessi nell'header. Ogni livello immette dati utili alle proprie operazioni e che non verranno modificati dai livelli gerarchici superiori.</h4>
-<div class="outline-text-4" id="text-orgdc67fd0">
-</div>
-<ul class="org-ul">
-<li><a id="org4e6b4d8"></a>Che fine fanno questi bit aggiuntivi?<br />
-<ul class="org-ul">
-<li><a id="orgeab0bb8"></a>La sequenza di aggiunte viene risalita, quindi ogni livello prende tutto e toglie la parte di header tipica del suo corrispettivo livello dall'altro lato.<br />
-<ul class="org-ul">
-<li><a id="orga39e067"></a>Il protocollo specifica il formato dell'header e quindi lui sa esattamente come processare quei dati.<br /></li>
-</ul>
-</li>
-<li><a id="org79c5e89"></a>Quindi il costo di overhead è speso da entrambi i lati, per aggiungere e per eliminare header<br />
-<ul class="org-ul">
-<li><a id="orgaf8322c"></a>Il costo di overhead viene però generato soltanto dalla sorgente.<br /></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
+<h3 id="orgcf89b97">I protocolli dal livello 4 in su, sono end-to-end.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h3>
 </div>
 <div id="outline-container-org8b54f0f" class="outline-3">
 <h3 id="org8b54f0f">Il livello 2 si occupa di mandare i bit direttamente al livello 1, che poi manderà al cavo</h3>
 <div class="outline-text-3" id="text-org8b54f0f">
 </div>
 <div id="outline-container-org2c07b67" class="outline-4">
-<h4 id="org2c07b67">Bisogna far capire al livello fisico quale sequenza di bit, ovvero quali tensioni (Volt), fanno parte di uno specifico pacchetto e non dello stato di IDLE, stessa cosa per la fine.</h4>
-<div class="outline-text-4" id="text-org2c07b67">
-</div>
-<ul class="org-ul">
-<li><a id="org3c956ca"></a>Questo viene fatto attraverso una specifica sequenza, che è un byte così composto [01111110].<br /></li>
-<li><a id="org7b9e0b0"></a>Niente vieta che nella sequenza in questione ci sia lo stesso byte. Come si gestisce quel caso?<br />
-<ul class="org-ul">
-<li><a id="org5a70522"></a>Potrei risolvere aggiungendo un pacchetto di controllo, che specifica la lunghezza del pacchetto. In quel caso non servirebbe neanche il flag di fine.<br />
-<ul class="org-ul">
-<li><a id="org270dcff"></a>Il problema è che bisognerebbe garantire l'affidabilità per la comunicazione di quel pacchetto. Troppo complicato.<br /></li>
-</ul>
-</li>
-<li><a id="orgd98762e"></a>Un'altra soluzione è quella di raddoppiare i byte uguali alla flag, in modo che ci sia un modo univoco per capire se il byte è una flag o meno.<br />
-<ul class="org-ul">
-<li><a id="orgaeb83b1"></a>Questa soluzione è attuabile, ma l'overhead è considerato troppo alto<br /></li>
-</ul>
-</li>
-<li><a id="org156f1c7"></a>La soluzione che viene utilizzata a livello due è che tutte le volte che ho un byte uguale al flag, aggiungo un solo bit. Grazie a quello, riesco a disaccoppiare byte di comunicazione e flag. Si chiama <b>bit stuffing</b> e viene effettuato solo per le sequenze interne, non quelle di flag.<br />
-<ul class="org-ul">
-<li><a id="org586275f"></a>Il bit stuffing nel trasmettitore conta i bit. Quando ne trova 5 consecutivi a 1, opera il bit stuffing inserendo uno 0 all'interno della sequenza che sta trasmettendo.<br />
-<ul class="org-ul">
-<li><a id="org923a891"></a>In questo modo, seppure avessi una sequenza [001111100], che non è flag perchè ha un 1 in meno del flag, effettuerei comunque il bitstuffing, inserendo uno zero alla fine della sequenza di 1.<br /></li>
-</ul>
-</li>
-<li><a id="orgaf075bb"></a>Nel ricevitore, il contatore conta 5 uno e poi mette in un registro il bit successivo. Se è uno 0, lo ignora perchè era stato inserito d'ufficio dal trasmettitore. Se è 1, allora è una flag e segnala la fine del pacchetto.<br /></li>
-<li><a id="orgf7dace8"></a>Volendo essere precisi, si parla di frame e non di pacchetti, perchè il pacchetto riguarda il terzo livello, il secondo pacchetto non contiene questa nozione.<br />
-<ul class="org-ul">
-<li><a id="org5be5cae"></a>La stessa cosa avviene per il livello 4, in cui si parla di segmenti.<br /></li>
-</ul>
-</li>
-<li><a id="orgba695ee"></a>Il bit stuffing e le flag sono un invenzione di HDLC.<br /></li>
-<li><a id="org0ee9719"></a>L'implementazione è fatta dal livello 2, ma l'implementazione direttamente dall'1. Possiamo dire che si trovi a 1 e mezzo<br /></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+<h4 id="org2c07b67">Bisogna far capire al livello fisico quale sequenza di bit, ovvero quali tensioni (Volt), fanno parte di uno specifico pacchetto e non dello stato di IDLE, stessa cosa per la fine.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h4>
 </div>
 <div id="outline-container-org0e409ae" class="outline-4">
 <h4 id="org0e409ae">Il livello 2 può essere progettato in modo affidabile, sebbene nelle reti moderne non sia il caso.</h4>
@@ -1630,9 +1442,7 @@
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: vjo</p>
-<p class="date">Created: 2024-11-14 Thu 17:51</p>
-<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.4 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</p>
+<p class="date">Created: 2024-11-14 Thu 20:11</p>
 </div>
 </body>
 </html>

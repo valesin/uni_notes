@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-11-14 Thu 20:11 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Data_Link</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Data<sub>Link</sub></h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgb7c26c1">Data link</a>
+<ul>
+<li><a href="#org47addf5">Bit stuffing</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb7c26c1" class="outline-2">
+<h2 id="orgb7c26c1">Data link</h2>
+<div class="outline-text-2" id="text-orgb7c26c1">
+<p>
+Il livello 2 si occupa di preparare i bit che il livello 1 introduce fisicamente nel cavo.
+</p>
+</div>
+
+<div id="outline-container-org47addf5" class="outline-3">
+<h3 id="org47addf5">Bit stuffing</h3>
+<div class="outline-text-3" id="text-org47addf5">
+<p>
+Dal cavo viene emessa una tensione variabile in Volt, attraverso cui vengono codificati i dati, rappresentati mediante dei bit.
+</p>
+
+<p>
+La tensione sul cavo è continua, ma la trasmissione da parte di altre macchine non necessariamente. Serve, quindi, un modo per riconoscere se l'attuale sequenza di tensione, e quindi di bit, appartiene ad un frame in arrivo, o se corrisponde allo stato di IDLE.
+</p>
+
+<p>
+Per ottenere ciò, si utilizza il byte \([0111110]\), detto <b>flag byte</b>, che delimita il contenuto trasmesso.
+</p>
+
+<p>
+Quando la porta di ingresso del livello 2 legge questa flag, processa i bit successivi e li manda al livello superiore. Letta la seconda, capisce che la comunicazione è finita e torna in stato di IDLE.
+</p>
+
+<p>
+Questa soluzione comporterebbe ambiguità nel caso in cui la trasmissione contenga una sequenza di 8 bit uguale al flag byte. In tal caso, infatti, non ci sarebbe modo di distinguerle.
+</p>
+
+<p>
+Per risolvere l'ambiguità, viene applicata una tecnica, chiamata <b>bit stuffing</b>, che consiste nell'inserire un bit aggiuntivo di valore \(0\) alla fine di ogni sequenza da cinque \(1\) nel corpo del messaggio.
+</p>
+
+<p>
+Quindi, la sequenza \([\ldots 01111110 \ldots]\) diventa \([\dots 011111 \underline 0 10 \dots]\)
+</p>
+
+<p>
+In questo modo, non è possibile avere una sequenza di sei \(1\) fra due flag byte.
+</p>
+
+<p>
+Al ricevitore basta effettuare l'operazione inversa e rimuovere lo \(0\) presente al termine di ogni sequenza da cinque \(1\).
+</p>
+
+<p>
+Se, invece, i cinque \(1\) sono seguiti da un altro \(1\) e poi un \(0\), allora la sorgente ha emesso il flag byte e ha terminato la trasmissione.
+</p>
+
+<p>
+L'implementazione del bit stuffing viene effettuata al livello logico dal protocollo <b>HDLC</b> sul Data Link, ma la sua implementazione fisica si trova sul Physical.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2024-11-14 Thu 20:11</p>
+</div>
+</body>
+</html>
