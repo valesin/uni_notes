@@ -3,11 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-14 Thu 17:51 -->
+<!-- 2024-11-14 Thu 18:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Reti</title>
-<meta name="author" content="vjo" />
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
 <script>
@@ -52,9 +51,14 @@
 <ul>
 <li><a href="#org20e9291">Introduzione</a>
 <ul>
-<li><a href="#org4cc6ff0">Affidabilita</a></li>
+<li><a href="#org43eba36">Affidabilità</a></li>
 <li><a href="#org497ef60">Concetto di protocollo</a></li>
-<li><a href="#orgda2d940">Parametri e statistiche</a></li>
+<li><a href="#orgda2d940">Parametri e statistiche</a>
+<ul>
+<li><a href="#orgab916ae">Round trip time</a></li>
+<li><a href="#org4d33f6a">Altre</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#org155cfa7">Livelli gerarchici</a>
@@ -68,7 +72,7 @@
 </li>
 <li><a href="#org218fd17">Formule</a>
 <ul>
-<li><a href="#orgab916ae">Round trip time</a></li>
+<li><a href="#org05285a8">Round trip time</a></li>
 </ul>
 </li>
 </ul>
@@ -78,17 +82,21 @@
 <h2 id="org20e9291">Introduzione</h2>
 <div class="outline-text-2" id="text-org20e9291">
 <p>
-Una <b>rete</b> è un sistema che permette ad <b>host</b>, ovvero computer dove risiedono le app finali, di connettersi da remoto, attraverso nodi intermedi e link.
+Una <b>rete</b> è un sistema che permette a degli <b>host</b>, computer dove risiedono le app finali, di connettersi da remoto, attraverso nodi intermedi e link.
 </p>
 
 <p>
-I dati che viaggiano nel sistema sono denominati <b>pacchetti</b>, con una dimensione massima fissa, per semplificare l'architettura dei nodi intermedi che si occupano di instradarli. Ogni pacchetto è composto da un <b>payload</b>, ovvero il contenuto originale che il mittente intende comunicare, e uno <b>header</b>, che contiene le informazioni necessarie al sistema di rete e agli host per processare correttamente il contenuto.
+I dati che viaggiano nel sistema sono denominati <b>pacchetti</b>, con una dimensione massima fissa per semplificare l'architettura dei nodi intermedi che si occupano di instradarli.
+</p>
+
+<p>
+Ogni pacchetto è composto da un <b>payload</b>, ovvero il contenuto originale che il mittente intende comunicare, e uno <b>header</b>, che contiene le informazioni necessarie al sistema di rete e agli host per processare correttamente il contenuto.
 </p>
 </div>
 
-<div id="outline-container-org4cc6ff0" class="outline-3">
-<h3 id="org4cc6ff0"><a href="affidabilita.html#ID-3898f6e3-9c94-41fc-bdef-7690d5031ccd">Affidabilita</a></h3>
-<div class="outline-text-3" id="text-org4cc6ff0">
+<div id="outline-container-org43eba36" class="outline-3">
+<h3 id="org43eba36"><a href="affidabilita.html#ID-3898f6e3-9c94-41fc-bdef-7690d5031ccd">Affidabilità</a></h3>
+<div class="outline-text-3" id="text-org43eba36">
 <p>
 Definiamo rete <b>affidabile</b> quella che garantisca tre condizioni:
 </p>
@@ -97,6 +105,10 @@ Definiamo rete <b>affidabile</b> quella che garantisca tre condizioni:
 <li>Ordine</li>
 <li>Non duplicazione</li>
 </ul>
+
+<p>
+Viene garantita attraverso il controllo errori, ecc.
+</p>
 </div>
 </div>
 
@@ -105,7 +117,11 @@ Definiamo rete <b>affidabile</b> quella che garantisca tre condizioni:
 <h3 id="org497ef60">Concetto di protocollo</h3>
 <div class="outline-text-3" id="text-org497ef60">
 <p>
-L'introduzione di un algoritmo per garantire l'affidabilità e del round trip time delay comportano la necessità di <b>sincronizzare</b> tutte le macchine coinvolte nella comunicazione. Ognuna di esse deve utilizzare gli stessi algoritmi e i messaggi che esse si scambiano devono essere mutualmente intellegibili. Ad esempio, l'<code>ACK</code> che una destinazione invia alla sorgente dev'essere correttamente identificato da quest'ultima, altrimenti la comunicazione verrà ripetuta all'infinito.
+L'utilizzo di algoritmi per garantire la corretta ed affidabile comunicazione fra host comporta la necessità di <b>sincronizzare</b> tutte le macchine coinvolte.
+</p>
+
+<p>
+Anche il formato dei messaggi scambiati deve poter essere univocamente interpretato da ogni componente della rete.
 </p>
 
 <p>
@@ -113,7 +129,7 @@ L'insieme di informazioni e convenzioni condivise fra tutte le macchine connesse
 </p>
 
 <p>
-I protocolli sono standard e vengono stabiliti e descritti da organismi come lo IETF per Internet. Nel caso di quest'ultimo, in particolare, non c'è stato un ente sovranazionale che stabilisse e divulgasse gli standard, ma è stato lo sforzo condiviso di molteplici entità che nel tempo ha modificato le specifiche fino a raggiungere un insieme di regole che adesso consideriamo come standard.
+I protocolli sono standard e vengono stabiliti e descritti da organismi internazionali come lo IETF per Internet. Nel caso di quest'ultimo, però, non è stato un ente sovranazionale a definire lo standard odierno fin dall'inizio, ma è stato lo sforzo condiviso di diverse entità a modificare le specifiche fino a raggiungere ciò che viene considerato come standard oggi.
 </p>
 </div>
 </div>
@@ -121,13 +137,56 @@ I protocolli sono standard e vengono stabiliti e descritti da organismi come lo 
 <div id="outline-container-orgda2d940" class="outline-3">
 <h3 id="orgda2d940">Parametri e statistiche</h3>
 <div class="outline-text-3" id="text-orgda2d940">
+</div>
+<div id="outline-container-orgab916ae" class="outline-4">
+<h4 id="orgab916ae">Round trip time</h4>
+<div class="outline-text-4" id="text-orgab916ae">
 <p>
-Oltre al <b>round trip time</b> menzionato in precedenza, esistono altri parametri utilizzati nell'analisi di una rete, ovvero la probabilità di errore, <b>error rate</b>, che è caratteristica di un cavo ed è \(10^{-9}\) per la fibra, \(10^{-5}\) per il doppino telefonico e ancora più alta per le reti radio.
+In una comunicazione in <b>ARQ</b> <i>(Automatic Repeat Request)</i>, il <b>round trip time</b> è il tempo necessario perchè un frame venga spedito dalla sorgente alla destinazione ed un <code>ACK</code> venga restituito dalla destinazione per confermare l'avvenuta ricezione.
 </p>
 
 <p>
-Un altro parametro importante per alcune applicazioni, ma che non analizzeremo nel nostro corso, è quello del gitter, ovvero la variazione nel ritardo fra coppie di messaggi, che è importante nel caso di segnali audio e video per garantire la qualità della riproduzione.
+Il tempo totale comprenderebbe:
 </p>
+<ul class="org-ul">
+<li>trasmissione e propagazione del frame</li>
+<li>trasmissione e propagazione dell'<code>ACK</code></li>
+<li>tempo necessario a entrambi gli host per processare i dati</li>
+</ul>
+
+<p>
+Nella pratica, però, il tempo di trasmissione dell'<code>ACK</code> è negligibile, data la sua dimensione ridotta. Lo stesso vale per il tempo necessario a processare i frame.
+</p>
+
+<p>
+I valori che dominano sono, quindi, il tempo di trasmissione del frame e quello di propagazione per entrambi i messaggi.
+</p>
+
+<p>
+Sia \(t_{x}\) il tempo di <b>trasmissione</b>, ovvero il tempo necessario alla destinazione per ricevere un frame o l'<code>ACK</code>.
+</p>
+
+<p>
+Sia \(t_{p}\) il tempo di <b>propagazione</b>, ovvero il tempo che i dati impiegano a viaggiare sullo specifico cavo.
+</p>
+
+<p>
+Allora, il tempo totale di una comunicazione è \(t_{x} + 2t_{p}\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4d33f6a" class="outline-4">
+<h4 id="org4d33f6a">Altre</h4>
+<div class="outline-text-4" id="text-org4d33f6a">
+<p>
+L'<b>error rate</b>, che è caratteristica di un cavo ed è \(10^{-9}\) per la fibra, \(10^{-5}\) per il doppino telefonico e ancora più alta per le reti radio.
+</p>
+
+<p>
+Lo <b>jitter</b>, cioè la variazione nel ritardo fra coppie, è importante nel caso di segnali audio e video per garantire la qualità della riproduzione.
+</p>
+</div>
 </div>
 </div>
 </div>
@@ -237,9 +296,9 @@ uniforme i dati su macchine che potrebbero utilizzare formati diversi. L'importa
 <h2 id="org218fd17">Formule</h2>
 <div class="outline-text-2" id="text-org218fd17">
 </div>
-<div id="outline-container-orgab916ae" class="outline-3">
-<h3 id="orgab916ae">Round trip time</h3>
-<div class="outline-text-3" id="text-orgab916ae">
+<div id="outline-container-org05285a8" class="outline-3">
+<h3 id="org05285a8">Round trip time</h3>
+<div class="outline-text-3" id="text-org05285a8">
 <p>
 Tempo necessario perchè un frame arrivi a destinazione e venga
 Inserire spiegazione, formula e esempi.
@@ -249,9 +308,7 @@ Inserire spiegazione, formula e esempi.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: vjo</p>
-<p class="date">Created: 2024-11-14 Thu 17:51</p>
-<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.4 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</p>
+<p class="date">Created: 2024-11-14 Thu 18:51</p>
 </div>
 </body>
 </html>
