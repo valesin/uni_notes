@@ -1,0 +1,1638 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-11-14 Thu 17:51 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Retibozza</title>
+<meta name="author" content="vjo" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Retibozza</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org92e6ff2">References</a></li>
+<li><a href="#org22d670d">SONO QUIIII</a></li>
+<li><a href="#org956597c">Adesso analizzeremo le altre componenti della rete, e come sono organizzate all'interno della struttura, le varie funzioni di rete.</a>
+<ul>
+<li><a href="#org9efb090">Tra le varie funzioni abbiamo l'instradamento, la garanzia di affidabilità ecc.</a></li>
+<li><a href="#orgd789fe7">Prima di scendere nel dettaglio, analizziamo in definitiva cosa sono le funzioni di rete.</a>
+<ul>
+<li><a href="#org58b459e">Immaginiamo di avere un browser e un server web, con il primo che comunica con il secondo per ricevere contenuti sul desktop.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org39ff886">Per la struttura gerarchica a 5 (7) livelli, i collegamenti fra le due macchine sorgente e destinazione sono allo stesso livello. Non sono ammesse cross-layer communication.</a>
+<ul>
+<li><a href="#org4fbb577">Il vantaggio è pulizia del codice</a></li>
+<li><a href="#orgcf89b97">I protocolli dal livello 4 in su, sono end-to-end.</a>
+<ul>
+<li><a href="#org976070a">Ad ogni protocollo di livello n, dev'essere chiaro qual è il servizio di livello n-1, che verrà utilizzato per comunicare con esso.</a></li>
+<li><a href="#org86bdc40">Se logicamente i livelli superiori comunicano fra loro, praticamente c'è una risalita fino al cavo.</a></li>
+<li><a href="#orgdc67fd0">La risalita avviene sfruttando dati immessi nell'header. Ogni livello immette dati utili alle proprie operazioni e che non verranno modificati dai livelli gerarchici superiori.</a></li>
+</ul>
+</li>
+<li><a href="#org8b54f0f">Il livello 2 si occupa di mandare i bit direttamente al livello 1, che poi manderà al cavo</a>
+<ul>
+<li><a href="#org2c07b67">Bisogna far capire al livello fisico quale sequenza di bit, ovvero quali tensioni (Volt), fanno parte di uno specifico pacchetto e non dello stato di IDLE, stessa cosa per la fine.</a></li>
+<li><a href="#org0e409ae">Il livello 2 può essere progettato in modo affidabile, sebbene nelle reti moderne non sia il caso.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgf24520c">Finora abbiamo capito come, su un canale che collega il nodo a al nodo b, inviare frame in modo affidabile (rimando alle 3 condizioni)</a>
+<ul>
+<li><a href="#orgb62a270">Lo possiamo fare utilizzando la spedizione e la ricezione di un ACK per validare la ricezione del frame, un timer dimensionato opportunamente, un buffer che tenga copia della frame in modo da rimandarlo in caso di scadenza del timer e due variabili, una di trasmissione (Sender) una di ricezione (Receiver) incrementate secondo un algoritmo.</a></li>
+<li><a href="#orgbc4ef78">Questa euristica supera l'impossibilità del problema dei generali bizantini, ma va estesa in modo da accomodare nuove funzioni, come una checksum e la numerazione delle frame.</a></li>
+<li><a href="#org7614008">Il limite, infatti, è che per ogni frame trasmesso, siamo costretti ad aspettare l'intero T. Ecco perchè vogliamo ottimizzare il funzionamento.</a>
+<ul>
+<li><a href="#orgd0c83be">Quando il round-trip è dominato dal tempo di trasmissione, l'utilizzo U (tx su T) è quasi 1, ma nel caso contrario si ottiene un grande vantaggio.</a></li>
+</ul>
+</li>
+<li><a href="#org8005a96">Con i protocolli a finestra, utilizzo le porte IO molto di più, a spese della semplicità dell'architettura software, in quanto mi servirà un algoritmo che raccoglie gli ack e gestisce le sequenze.</a></li>
+<li><a href="#org3c33c2d">Avrò K posizioni nel buffer e K timer, che non sono fisici ma virtuali, che però tutti generano degli interrupt.</a></li>
+<li><a href="#org3af7b2a">Esistono due policies per gestire questa tecnica, che differiscono nella gestione del buffer di ricezione.</a>
+<ul>
+<li><a href="#org45d4ac9">In uno dei due, Go back N, quando il ricevitore scopre che una sola delle frame ha un errore, butta tutte le frame della finestra e le richiede.</a></li>
+<li><a href="#orgbc39e27">La seconda si chiama Selected repeat e utilizza un buffer grande K.</a></li>
+<li><a href="#org5fb3b2c">Con finestra 1, il K è 1 e la policy è una Go back n semplificata.</a></li>
+<li><a href="#org91a9934">TCP usa entrambe. Infatti, chiede di rimandare tutto comunque, ma mantiene tutti i frame in buffer, perchè sa che il sender si risincronizzerà con l'ACK del frame recuperato ( e ipotizzo tutti quelli successivi sbloccati dal recuperato).</a></li>
+</ul>
+</li>
+<li><a href="#org602616e">Per rifermi al singolo frame, ho bisogno di un numero di sequenza.</a>
+<ul>
+<li><a href="#org0e3cce6">Il suo limite sta nella dimensione dell'Header. Più bit metto sulla sequenza, maggiore è l'overhead.</a></li>
+<li><a href="#org594b972">Immaginiamo di usare tanti numeri di frequenza quanti sono i frame in una finestra. Se tutti gli ack vengono smarriti, il ricevitore manderà un NAK, o un ACK cumulativo fino alla finestra precedente, e il sender potrà rimandare la finestra non ricevuta o andare avanti con la prossima, che non sarà accettata dal receiver, e quindi mandare quella non ricevuta. Ma il receiver non potrebbe distinguere fra le due sequenze, in quanto avrebbero esattamente gli stessi numeri di sequenza.</a></li>
+<li><a href="#org65dd550">In gobackn è sufficiente avere k+1 numeri di sequenza, per consentire al ricevitore di discriminare fra vecchia e nuova sequenza.</a></li>
+<li><a href="#org667eb54">In selective repeat, invece, K+1 frame non bastano, ma ne servono 2K. Infatti adesso, un ACK</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org5dad09f">A volte la topologia di rete è un grafo parzialmente connesso e in particolare in cui i punti sono collegati fra loro in una <b>maglia</b>, ed è per questo chiamata anche punto-a-punto, ma spesso non è così.</a>
+<ul>
+<li><a href="#org7a155bc">In una LAN (local a.. network) la rete è broadcast, ovvero c'è un dispositivo che comunica a tutti gli altri, compreso quello da cui ha ricevuto il segnale in entrata. Ovvero un HUB, chiamato anche <b>centro stella passivo</b></a></li>
+<li><a href="#org14b9462">Un terzo modo, che è come ethernet era fatto inizialmente, si ha una struttura a bus lineare, in cui tutti i dispositivi sono collegati in serie. Sia questa che la seconda sono chiamate <b>broadcast</b>.</a></li>
+<li><a href="#org5aea07f">Il problema delle strutture broadcast è innanzitutto quello di creare l'equivalente semantico di una comunicazione fra due soli dispositivi, e si fa utilizzando header di mittente e destinatario, così che nel secondo driver di IO capiscono se salvano o buttano via i dati.</a></li>
+<li><a href="#orgb323d46">Un altro problema è che trasmettere sull'hub o su bus lineare è critico e va quindi garantita la mutua esclusività per l'accesso a canale condiviso: non tutti i dispositivi possono trasmettere nello stesso momento.</a>
+<ul>
+<li><a href="#org5c47d64">Si può sfruttare un token unico e condiviso dalle stazioni. La struttura è fatta ad anello e chi lo riceve, lo estrae e trasmette. Una volta che la trasmissione torna al primo dispositivo, vuol dire che la comunicazione è arrivata a tutti e cede il token ad un altro.</a></li>
+<li><a href="#org463bebf">Ethernet utilizza, invece, una soluzione <b>non deterministica</b>, fuzzy, in cui c'entra molto la probabilità ed in cui le collisioni sono ammesse, chiamato CSMA-CD.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org1649c0a">Di solito, alla salita del fronte d'onda, legge il valore in volt, e se è 5 il bit è 1, altrimenti 0</a>
+<ul>
+<li><a href="#orga5025b1">Con ethernet, però, abbiamo vari problemi. Uno è quello di disambiguare sequenze di bit uguali, un'altra è quella di far arrivare il valore in modo chiaro al ricevitore.</a>
+<ul>
+<li><a href="#org4fc5668">Ethernet utilizza quindi la codifica Manchester, che a differenza del solito, legge nel momento centrale del bit, che è il punto meno soggetto a distorsione.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgc2590fb">Per stabilire l'utilizzo (efficienza) del mio MAC layer, che presiede la connessione Ethernet, bisogna introdurre al tempo di propagazione, nella formula originale, ovvero tx su tx + 2tp, il contention time medio, ovvero il tempo perso in carrier sense, nel discardare trasmissioni corrotte e nei ritardi. (Bisogna sommare l'inverso (perchè?), e quindi 1/A)</a>
+<ul>
+<li><a href="#orgf0af78a">Si dimostra che al tendere delle stazioni K all'infinito, 1/A tende a "e".</a></li>
+<li><a href="#orgaec4d05">Inoltre, si ricorda che abbiamo definito tx come dimFrame/velBanda e tp come Lunghezza/velCavo.</a>
+<ul>
+<li><a href="#org04bee96">Allora divido tutto per tx e ottengo \(\frac{1}{1+2 \frac{BL}{CF}e }\). Quindi, all'aumentare della banda e della lunghezza, l'utilizzo diminuisce di tanto.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgc44b670">Per aumentare le prestazioni di Ethernet, potrei scalare il tasso di trasmissione di un ordine di grandezza. Il problema è che il rame non va oltre 25Mbps.</a>
+<ul>
+<li><a href="#orgfcdf7ce">Una soluzione immediata sarebbe quella di usare 4 fili e dividere un bit in ognuno. In realtà, se ne usano solo 3 per la trasmissione, perchè il 2 è quello usato per CarrierSense e CollisionDetection.</a></li>
+<li><a href="#orgd072901">Come si raggiungono 1000Mbit, con solo 3 fili da 25Mbps? Si usa una codifica diversa, ternaria non binaria, chiamata 8B6T, ovvero "mappo 8 bit Binari su 6 Ternari".</a>
+<ul>
+<li><a href="#org910185e">A questo punto abbiamo 100 * 10<sup>6</sup> Mbit *6/8 diviso i 3 fili, ottengo 25 bit ternari per filo, che corrispondono a 33 binari.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgcb1b3a5">Nell'architettura Ethernet, il primo apparato utilizzato è il repeating hub, passivo, in cui tutte le stazioni contendono per il canale di trasmissione. Gli hub sono collegati da un bridging hub, attivo, che attraverso il principio di Store-and-Forward, separa i domini di collisione dei vari hub. Un bridge ha tante porte ethernet quanti sono i domini collegati. Inoltre, contiene una tabella aggiornata ogni volta che riceve una comunicazione (bridge trasparente). Quando la comunicazione è destinata a una stazione non salvata in tabella, fa flading.</a>
+<ul>
+<li><a href="#orgb950da9">flading, broadcast ma senza restituire alla porta da cui è arrivato.</a></li>
+<li><a href="#org42da3f5">Un problema è che se un dispositivo, con un certo MAC address, si sposta da un dominio all'altro, la tabella non è più valida. Ogni entrata deve quindi avere un timer, Il flading è quindi parte integrante dell'apparato</a></li>
+</ul>
+</li>
+<li><a href="#org36b352c">A livello superiore, c'è uno switch, che funziona come un hub, ma con una memoria ed una cpu, per memorizzare e switchare in modo intelligente. Le connessioni da e per lo switch NON richiedono Carrier Sense, perchè sono punto-punto, in quanto già univocate dal bridge. Il cavo utilizzato è un duplex e può essere anche in fibra. Le porte sono comunque compliant con IEEE nel formato della porta.</a></li>
+<li><a href="#orgce99dec">Nel CSMA-CD, l'efficienza è \(\frac{1}{1+\frac{2BL}{CF}e}\), quindi se aumento la Bandwidth, devo necessariamente ridurre la lunghezza e aumentare la dimensione del frame.</a>
+<ul>
+<li><a href="#org6bd6985">E' stato deciso, in sede di standard, ogni tratta deve essere grande al massimo 200 metri, quindi 800 metri in tutto al massimo ( per andare sulle 2 tratte e tornare sulle stesse).</a>
+<ul>
+<li><a href="#org8266a07">Su 800 metri, il tempo andata e ritorno è circa 4ms. Con 1Gbit, esce fuori 4000bit, ovvero 500bit, arrotondati a 512B.</a></li>
+<li><a href="#org55a9a3b">Se si fosse lasciato il tempo di 51.2 microsecondi, avremmo dovuto mandare 51200 bit per ogni minimo frame e sarebbe stato poco efficiente. Viene quindi ridotto il diametro, e anche la dimensione dei frame.</a></li>
+<li><a href="#org3141e08">Per evitare di cambiare anche la porta MAC, che fa il padding di solo 64Byte, il padding viene fatto a livello fisico.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge5934da">Notiamo che nel Data-Link, a questo punto, non ci sono più collegamenti punto-punto, ma un MAC layer, che controlla l'accesso a un canale condiviso.</a>
+<ul>
+<li><a href="#orgfd4f510">C'è, però, anche un'interfaccia aggiuntiva, posizionata appena sopra il MAC, ma sempre a livello 2, chiamata <b>Logical Link Control</b>.</a></li>
+<li><a href="#orgc25e308">Quello che facciamo con questo sottolivello serve a creare dei canali logici punto-punto fra sè e le altre stazioni.</a>
+<ul>
+<li><a href="#orgfef437d">Quindi, a livello MAC gestisco la situazione Broadcast, e nel Logical Link Control, creo una sovrastruttura logica che modella i collegamenti come punto-punto. In questo modo, dal Logical Link Control in sù, ignoro qualunque ragionamento riguardo il MAC e le sue operazioni.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org5074964">Una VLAN viene utilizzata per introdurre una nuova divisione virtuale fra stazioni. Un motivo per cui viene utilizzata è per aumentare la sicurezza.</a>
+<ul>
+<li><a href="#orgb4dca63">Stazioni che fanno parte di VLAN diverse, non possono comunicare fra loro, anche se fanno parte dello stesso hub. Serve uno switching intelligente per attivare questa funzione, perchè di base le comunicazioni sullo stesso hub girano liberamente</a></li>
+<li><a href="#org898fb4b">Per permettere a macchine appartenenti a VLAN diversi, è necessario utilizzare il routing di livello 3, perchè la separazione introdotta, sebbene logica, è finale.</a>
+<ul>
+<li><a href="#org58d273f">Gli switch avanzati posseggono una funzione di routing incorporata</a></li>
+</ul>
+</li>
+<li><a href="#orgfbf07b3">Le informazioni riguardo le VLAN sono contenute nello switch, che <b>tagga</b> le porte e le frame a esse corrispondenti</a>
+<ul>
+<li><a href="#org9d6b9c3">Quindi, le stazioni mandano i soliti frame 802.3, e lo switch si occupa di taggarli e smistarli secondo un nuovo standard, chiamato 802.1Q</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgbf1df97">Per riassumere i primi 2 livelli, sono entrambi composti da due sottolivelli.</a>
+<ul>
+<li><a href="#org1ad5847">Convergence sublayer e Physical-medium dependent layer per il physical layer, il cui primo serve per separare ulteriormente il livello fisico finale, che è fortemente dipendente dall'architettura</a></li>
+<li><a href="#orgdb80d8c">LLC(Logical Link Control) e MAC(Multiple Access Control), il cui primo si occupa di rendere trasparente la gestione complicata del CSMA-CD da parte del MAC, gestendo apparentemente le connessioni come punto-punto.</a></li>
+</ul>
+</li>
+<li><a href="#orga1a29e0">Le LAN occupano spazi geografici molto limitati. E' necessario collegare LAN, anche lontane, così che siano tutte raggiungibili. Per farlo, vengono collegate ad uno strato superiore, che sarebbe l'ISP, fino ad arrivare ad un terzo strato che è quello intercontinentale.</a>
+<ul>
+<li><a href="#orga169920">Chiaramente, il MAC address smette di avere valore, su questa scala, e viene introdotto l'IP, che identifica univocamente qualunque stazione appartenente a qualunque LAN.</a></li>
+<li><a href="#orga60aebd">Nell'andare da una stazione ad un altra, quindi da un livello Application all'altro, attraversiamo un numero indefinito di macchine che operano al massimo a livello 3. Ognuna di esse deve occuparsi dell'Addressing, ovvero come gestire l'univocità dell'IP, ed il routing, ovvero come trovare una strada fra le stazioni in modo efficiente.</a></li>
+<li><a href="#org12cc03c">Nel livello 3 non c'è solo un entità, ma 5, di cui analizzeremo due e IP in particolare, con il suo sottomodulo OSPF, per il routing. L'altro è ARP, con cui si mappa/risolve l'IP globale nel MAC.</a></li>
+</ul>
+</li>
+<li><a href="#orgabd5c05">Nel livello 3 dobbiamo gestire l'indirizzamento e l'instradamento.</a>
+<ul>
+<li><a href="#org12f1dfe">Il formato di un pacchetto IP è formato da 5 parole (ovvero 4 byte, 32 bit) ed un ultimo spazio opzionale, utilizzato ad esempio per il source routing.</a>
+<ul>
+<li><a href="#org98b2e8a">Il primo campo è quello versione, che occupa i primi 4 bit e indica la versione del protocollo, di cui ne esistono due, la v4 e la v6.</a></li>
+<li><a href="#org0822eed">Dopodichè c'è la header length, che occupa altri 4 bit e specifica quanti byte è lungo l'header. Serve nel caso in cui il campo option venga utilizzato, perchè ha lunghezza variabile.</a></li>
+<li><a href="#orgdbcae06">Gli 8 bit successivi sono occupati dal Type Of Service (TOS),</a></li>
+<li><a href="#orga98a6d8">I successivi 16 bit che completano la parola riguardano la Total Length, che quindi può arrivare a \(2^{16}\).</a></li>
+<li><a href="#org19c83b4">Nella prossima parola, si inizia con 16 bit per l'ID, seguito da 3 bit, di cui il primo vuoto per futuro uso e due bit chiamati D (Do not fragment) e M (More fragment)</a></li>
+<li><a href="#org27198a0">Poi ci sono i restanti 13 bit della parola, che si chiama Fragment Offset</a></li>
+<li><a href="#org52bd418">Nella terza parola, i primi 8 bit sono un timestamp, TTL (Time to live).</a></li>
+<li><a href="#org17191df">Il secondo campo di 8 bit si chiama Protocol selector.</a></li>
+<li><a href="#org1026bd3">I restanti 16 sono di Header Checksum</a></li>
+<li><a href="#orgeb89999">Nella quarta e quinta parola troviamo rispettivamente il Source e il Destination address, che quindi sono di 32 bit ognuno.</a></li>
+</ul>
+</li>
+<li><a href="#org931ba02">Immaginiamo di avere due stazioni che comunicano, passando attraverso vari gateway, che collegano stazioni attraverso tecnologie diverse.</a>
+<ul>
+<li><a href="#org74e3646">Ad esempio, immaginiamo che la source esca con un ring, con un limite di 4000 byte per frame, passi per due gateway, di cui il secondo è collegato ethernet, con un limite di 1500 byte per frame alla stazione di arrivo.</a></li>
+</ul>
+</li>
+<li><a href="#org303309c">L'indirizzamento avviene attraverso l'IP address, che consiste in 4 sequenze di 8 bit, di cui viene rappresentato il valore decimale.</a>
+<ul>
+<li><a href="#orgc35e0e0">L'indirizzo IP è unico a livello globale. Esiste un organismo internazionale, chiamato ICANN, ovvero "&#x2026; for Name and Numbers" e se voglio assegnare un nome al mio dispositivo, devo chiedere a loro.</a></li>
+<li><a href="#org33a8ccb">Abbiamo 5 modalità di addressing:</a></li>
+<li><a href="#org56cb2a7">Nel CLASS based, esistono 3 classi diverse, che gestiscono trasmissioni Unicast, ovvero punto-punto.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgd24d67d">Riguardo l'indirizzamento IP, abbiamo visto metodi per garantire l'unicità dell'indirizzo. Abbiamo visto il subnetting, che va di pari passo con il metodo CLASS based. Subnetting non nasce con l'obiettivo di superare il limite delle classi, ma è trucco organizzativo per inserire un nuovo livello gerarchico per gestire le reti in modo che riflettano di più la struttura.</a>
+<ul>
+<li><a href="#orgb11065a">Gli altri metodi, CIDR e NAT, sono usati per superare il problema della frammentazione interna degli IP e aumentare la longevità di IPv4.</a>
+<ul>
+<li><a href="#org839eaab">Prima o poi, gli indirizzi a 32 bit di v4 finiranno, e saremmo costretti a utilizzare i 128 bit del IPv6.</a></li>
+<li><a href="#org0de91d9">CIDR sta per Classless Inter Domain Routing e invece di dividere in classi, lo fa in blocchi autonomi e indipendenti, geografici (europeo, nord-americano, asiatico, ecc.).</a></li>
+<li><a href="#orgb93152c">Il NAT estende ulteriormente la vita di IPv4.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org501df70">Sebbene l'indirizzamento sia parte del livello 3 a livello globale, ogni livello possiede il proprio indirizzo per comunicare con altre macchine.</a>
+<ul>
+<li><a href="#org9c6c2ee">A livello 2, in una rete CSMA-CD l'indirizzo è il MAC</a></li>
+<li><a href="#orga8f5f67">A livello 3, l'indirizzo è quello IP, con tutte le considerazioni fatte in precedenza.</a></li>
+<li><a href="#org1190694">Un problema che dobbiamo risolvere è quello di mappare l'IP al corrispondente MAC.</a>
+<ul>
+<li><a href="#org8f36933">Infatti, finora non c'è nessun modo per far arrivare un pacchetto a destinazione.</a></li>
+</ul>
+</li>
+<li><a href="#orge615453">Immaginiamo che A e B siano sulla stessa rete locale.</a>
+<ul>
+<li><a href="#org7fa1798">Se la macchina A manda un pacchetto al modulo B, chiede ad ARP di risolvere l'IP in un MAC address, così che possa mandarglielo attraverso il livello 2</a></li>
+<li><a href="#org103cdcb">In pratica l'ARP, per conto di IP, manda ai livelli sottostanti una richiesta, ARPRequest, così che il dispositivo in questione risponda con un ARPReply, rispondendo con il proprio MAC, che ARP fornirà al livello IP della macchina sorgente.</a></li>
+</ul>
+</li>
+<li><a href="#org1e2b76c">Immaginiamo adesso che siano su macchine diverse.</a>
+<ul>
+<li><a href="#orgbb60406">A manda richiesta a Z, su un'altra rete.</a></li>
+<li><a href="#org9aa5df7">Il site access gateway leggerà il NETID e vedrà che non appartiene alla rete locale e che quindi va cercato al di fuori. Prenderà lui in carico l'operazione.</a></li>
+<li><a href="#org32cbe15">A questo punto, risponderà con il proprio MAC, in modo che A mandi le richieste al gateway.</a></li>
+<li><a href="#org911de5b">Il gateway aspetterà autonomamente per la ARPReply della macchina remota e salverà il risultato.</a></li>
+<li><a href="#org00a83a2">Questo servizio si chiama ProxyARP.</a></li>
+</ul>
+</li>
+<li><a href="#org30de8bc">ARP in ogni dispositivo terrà una ARP Cache, in cui salverà tutte le associazioni IP-MAC, così che le volte successive non servirà una nuova richiesta.</a></li>
+<li><a href="#org39d3201">Quindi uso ARP per fare una discovery delle macchine che sono raggiungibili in rete.</a></li>
+<li><a href="#orgc1dab00">Anche in questo caso, abbiamo un livello 3 che per funzionare (anzi, il suo obiettivo) è di livello 2. Deve infatti andare a toccare il MAC, indirizzo di livello 2, ma in questo caso almeno fa una richiesta</a></li>
+<li><a href="#org69f05bd">Notiamo che nello header di livello 3, il campo type è usato anche per identificare se la richiesta sia IPv4 o ARP</a></li>
+</ul>
+</li>
+<li><a href="#org8ffdae2">Introduciamo il DHCP</a>
+<ul>
+<li><a href="#org99a3330">Abbiamo tante macchine collegate ad una LAN, che possono essere nostre oppure di ospiti che arrivano transitoriamente. Come assegniamo l'IP privato alle macchine?</a>
+<ul>
+<li><a href="#org2302ffc">La LAN potrebbe essere Wireless, collegata tramite un Access Point ad una Lan fisica, che tramite il suo Access Gateway è collegata alla rete fisica.</a></li>
+</ul>
+</li>
+<li><a href="#orgc7428aa">Il Gateway riesce a fare Address Resolution e quindi è anche un NAT. Ovvero, riesce a mascherare un indirizzo interno.</a>
+<ul>
+<li><a href="#orgd22a71a">Ci presenta con un IP pubblico alla rete, ma poi smista alle macchine singole con gli indirizzi privati.</a></li>
+</ul>
+</li>
+<li><a href="#org7bd0ee1">Questi indirizzi potrebbero esere statici, ma questo è scomodo. (Perchè?).</a></li>
+<li><a href="#org1cb0ffe">E' più comodo se al momento della prima connessione alla rete, venga assegnato un IP dinamico al dispositivo, che rimanga fino allo spegnimento.</a></li>
+<li><a href="#orga80d386">Per assegnare l'IP dinamico, usiamo il server DHCP (eventualmente molteplici)</a>
+<ul>
+<li><a href="#org45323a1">Appena una macchina cliente viene bootata, fa un operazione di Request DHCP al server, che farà a sua volta una Reply.</a></li>
+<li><a href="#orgd40841b">La reply assegna un IP privato, valido per tutto il tempo necessario.</a></li>
+<li><a href="#org755be5c">La RequestForComment che lo definisce è la 2131.</a></li>
+<li><a href="#org6eeccc1">Il client triggera la richiesta, che nello specifico si chiama DHCP Discover.</a></li>
+<li><a href="#org2aafea6">Il server riceve la richiesta e reagisce con una DHCP Offer.</a></li>
+<li><a href="#org0f37939">A questo punto il client ha <b>apparentemente</b> risolto il suo problema.</a></li>
+<li><a href="#orgf5f7957">Diventa necessaria un ulteriore fase, una commit, chiamata DHCP Request.</a></li>
+<li><a href="#orge4fd18e">A questo punto, si chiude il commitment con una DHCP Ack, che è una validazione della request. Anche questo è mandato in broadcast secondo IP.</a></li>
+<li><a href="#org4054d8e">Questo protocollo è un protocollo a 4 vie, a causa della necessità di selezionare fra i vari server.</a></li>
+<li><a href="#orgbbc2c2e">Servono inoltre dei check per verificare la validità degli IP, anche dal punto di vista del client.</a></li>
+<li><a href="#orgc15db0d">Esistono dei meccanismi di ricovero, per gestire i casi in cui i messaggi vengano persi. Si utilizza ad esempio un timer T, che viene eseguito massimo K volte (numero di retry). Una volta aver provato K volte, si ritorna alle origini e si ricomincia da capo.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgc0764dd">L'ICMP utilizzato per il ping e per capire delle statistiche sulla rete, fa uso di uno Header IP ed utilizza un Checksum, oltre che il tipo di richiesta (ce ne sono varie).</a></li>
+<li><a href="#org5324396">Un importante compito del livello 3 è quello di instradare i pacchetti verso la giusta destinazione. Il grafo della rete è parzialmente connesso e serve un livello superiore a quello del data link che abbia una visione più ampia e riesca a smistare i pacchetti in un modo intelligente ed efficiente</a>
+<ul>
+<li><a href="#org1c2f1f0">Immaginiamo di avere due macchine con porte I/O e un forwarder in mezzo, che contiene una tabella e fa un lookup per capire su quale porta trasmettere il messaggio entrato.</a>
+<ul>
+<li><a href="#org5c8c5f3">A livello 2, questo è fatto dal bridge, che popola e spopola le tabelle periodicamente per lasciar spostare le macchine.</a></li>
+<li><a href="#org4062394">Se saliamo di un piano, quello che cambia radicalmente è che non è più vero che la macchina destinazione sia attaccata al link. La validità di un forwarding livello 2, a livello 3 non è più sufficiente.</a></li>
+</ul>
+</li>
+<li><a href="#org6772a24">A livello 3, la tabella viene popolata da un secondo processo, che chiamiamo <b>router</b>, che lavora con i suoi pacchetti di controllo, utili soltanto a lui, tramite i quali impara la topologia della rete e popola la tabella in modo da permettere di raggiungere ogni host in un modo efficiente, possibilmente il cammino minimo.</a>
+<ul>
+<li><a href="#org93bd8d6">La cosa interessante è che abbiamo una separazione netta fra tutto ciò che è gestione dei dati utente e la gestione di controllo di tutto ciò che serve alla rete autonomamente perchè funzioni.</a></li>
+<li><a href="#orge0f1624">Con il routing questa diventa chiara.</a></li>
+</ul>
+</li>
+<li><a href="#orgb57592c">Il router opera attraverso 3 tecniche:</a>
+<ul>
+<li><a href="#org549cd88">Il protocollo con Distance vector opera assegnando due etichette con numero del link e corrispondente peso su ogni arco bidirezionale.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org92e6ff2" class="outline-2">
+<h2 id="org92e6ff2">References</h2>
+<div class="outline-text-2" id="text-org92e6ff2">
+<p>
+<a href="https://computer.howstuffworks.com/ethernet.htm">How Ethernet works</a>
+<a href="https://intronetworks.cs.luc.edu/1/html/index.html">Exercises from Chicago University</a>
+</p>
+</div>
+</div>
+<div id="outline-container-org22d670d" class="outline-2">
+<h2 id="org22d670d">SONO QUIIII</h2>
+</div>
+<div id="outline-container-org956597c" class="outline-2">
+<h2 id="org956597c">Adesso analizzeremo le altre componenti della rete, e come sono organizzate all'interno della struttura, le varie funzioni di rete.</h2>
+<div class="outline-text-2" id="text-org956597c">
+</div>
+<div id="outline-container-org9efb090" class="outline-3">
+<h3 id="org9efb090">Tra le varie funzioni abbiamo l'instradamento, la garanzia di affidabilità ecc.</h3>
+</div>
+<div id="outline-container-orgd789fe7" class="outline-3">
+<h3 id="orgd789fe7">Prima di scendere nel dettaglio, analizziamo in definitiva cosa sono le funzioni di rete.</h3>
+<div class="outline-text-3" id="text-orgd789fe7">
+</div>
+<div id="outline-container-org58b459e" class="outline-4">
+<h4 id="org58b459e">Immaginiamo di avere un browser e un server web, con il primo che comunica con il secondo per ricevere contenuti sul desktop.</h4>
+<div class="outline-text-4" id="text-org58b459e">
+</div>
+<ul class="org-ul">
+<li><a id="org263b0ca"></a>Il browser usa un protocollo di comunicazione, chiamato HTTP, che svolge la funzione di mettere in collegamento il browser sul nostro desktop con il server remoto sul sito.<br /></li>
+<li><a id="org5019e03"></a>L'URL è necessario per raggiungere il server, insieme al protocollo HTTP<br />
+<ul class="org-ul">
+<li><a id="orgaac3ad3"></a>Quindi HTTP è un tipo di file transfer.<br /></li>
+</ul>
+</li>
+<li><a id="orgac2aa43"></a>Chiaramente, sia il lato client che quello server devono avere delle regole per mandare pacchetti all'altro lato, e queste regole devono essere condivise. L'insieme di queste regole costituisce il protocollo<br />
+<ul class="org-ul">
+<li><a id="org7c5abdc"></a>L'esempio di una regola è definire il formato della richiesta che il client fa al server per ottenere dei dati.<br /></li>
+</ul>
+</li>
+<li><a id="orged265c1"></a>Sia nel client che nel server ho una macchina a stati finiti che si occupa dell'utilizzo della rete attraverso i protocolli<br />
+<ul class="org-ul">
+<li><a id="orge872904"></a>Una semplificazione potrebbe essere che il client, partendo da uno stato idle, passa in uno stato "active" di processing richieste quando ne viene aggiunta una in queue, e poi in uno stato di attesa risposta quando manda la request.<br /></li>
+</ul>
+</li>
+<li><a id="org9e2039f"></a>Questi programmi che si occupano della comunicazione su rete, vengono utilizzate da altri processi, che sfruttano un'interfaccia per interagirvi, ovvero per chiedere al programma di gestione del protocollo di mandare richieste e di fornire i dati recuperati.<br /></li>
+<li><a id="org94efc11"></a>Ogni funzione di rete è caratterizzata da due attributi. Una è il protocollo legato a quella specifica funzione. L'altra è l'interfaccia di servizio, che specifica come accedere al servizio fornito da quella specifica funzione.<br />
+<ul class="org-ul">
+<li><a id="orgafe7567"></a>L'interfaccia di servizio è interna alla macchina. Il protocollo è una specifica di sistema distribuito.<br /></li>
+</ul>
+</li>
+<li><a id="org342ca3e"></a>Adesso vedremo 1. quante sono le funzioni che ci interessano e quindi quanti protocolli dobbiamo implementare, 2. come organizzo le funzioni all'interno di un'architettura di rete.<br />
+<ul class="org-ul">
+<li><a id="orgc7a8b1d"></a>Si privilegia un'architettura gerarchica, in particolare a strati indipendenti, organizzati gerarchicamente.<br /></li>
+<li><a id="org9d3526f"></a>Quindi diciamo che ho una funzione di livello 1, con un suo protocollo di livello 1 e il servizio di livello 1, per comunicare con i livelli precedenti.<br />
+<ul class="org-ul">
+<li><a id="orgb1b9d97"></a>Al termine della catena, avrò il livello user, da cui si generano e in cui terminano tutte le comunicazioni.<br />
+<ul class="org-ul">
+<li><a id="orgbe2824b"></a>Quindi l'organizzazione va dal cavo fisico all'utente.<br /></li>
+<li><a id="org510543d"></a>Noi useremo un approccio bottom-up, ovvero partendo dal cavo.<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a id="orgda81d75"></a>Ci sono 7 di questi livelli nello standard di rete OSI-RM, open-system interconnection reference model.<br />
+<ul class="org-ul">
+<li><a id="org68abca9"></a>Questo è il modello di riferimento generale di qualunque rete.<br /></li>
+</ul>
+</li>
+<li><a id="orgb1d7d2f"></a>Internet utilizza soltanto 5 livelli gerarchici fra i 7 indicati in precedenza.<br />
+<ul class="org-ul">
+<li><a id="org312ce96"></a>Si potrebbe dire che siano 5 e mezzo.<br /></li>
+</ul>
+</li>
+<li><a id="org8fc61b1"></a>Abbiamo un sistema di rete, con un file che viene comunicato fra due macchine ed un architettura di rete con dei router.<br /></li>
+<li><a id="orgaf8b415"></a>Una parte della gerarchia si trova nel router<br />
+<ul class="org-ul">
+<li><a id="org0eb854a"></a>Il primo livello, quello fisico, fa questo: ha porta I/O, una porta di trasmissione, infila bit ad un tempo definito nel cavo o li estrae.<br />
+<ul class="org-ul">
+<li><a id="org61bda0e"></a>Lo chiamiamo "physic"<br /></li>
+</ul>
+</li>
+<li><a id="orgfb53449"></a>Il secondo livello dà un formato logico alle informazioni che viaggiano da un nodo a quello adiacente. Formatta i dati sul singolo link.<br />
+<ul class="org-ul">
+<li><a id="orgc9463f6"></a>Infatti il nome del livello 2 è "data link", o "link layer".<br /></li>
+<li><a id="org8b80660"></a>Ogni nodo ha tanti livelli di questo tipo quanti sono i suoi link ed ognuno dei livelli opera in base agli stessi criteri in modo indipendente su ogni link<br /></li>
+<li><a id="orgbe2f8dc"></a>L'affidabilità potrebbe essere risolta qua, perchè risolvere il problema dell'affidabilità significa avere link affidabili sui singoli link.<br />
+<ul class="org-ul">
+<li><a id="orgfed04c9"></a>L'affidabilità comporta uno spreco di banda, quindi molte soluzioni odierne contengono entrambe le modalità, affidabile e best effort, in modo che la seconda possa essere attuata per una maggiore efficienza e l'affidabilità delegata a livelli superiori.<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a id="org6a79316"></a>Il terzo livello ci fornisce l'instradamento (routing), ovvero una strategia per viaggiare su distanze più lunghe. Comprende anche l'indirizzamento (addressing).<br />
+<ul class="org-ul">
+<li><a id="orgc877bee"></a>Prende il nome di "network layer".<br /></li>
+<li><a id="org5bd8800"></a>IP si trova a questo punto.<br /></li>
+</ul>
+</li>
+<li><a id="org35ff0ed"></a>Questo è tutto ciò che riguarda il router. Non serve più nulla da mettere nel router.<br /></li>
+</ul>
+</li>
+<li><a id="orgaae4c71"></a>La restante parte si trova nell'host<br />
+<ul class="org-ul">
+<li><a id="orgf00df97"></a>Una parte dell'host è uguale al router, infatti l'host deve comunicare con il router, quindi deve avere il cavo per mandare dati, il data link per formattarli e un livello 3 per indirizzare verso il ricevitore.<br /></li>
+<li><a id="orge7b7824"></a>Il quarto livello, chiamato "transport" mette in comunicazione le due macchine. TCP è usato per garantire l'affidabilità, mentre UDP no.<br />
+<ul class="org-ul">
+<li><a id="org6f65401"></a>I quarti livelli delle macchine in comunicazione comunicano direttamente fra loro (ovviamente sfruttando i livelli inferiori ad essi). Per questo si parla di livello <b>end-to-end</b>.<br /></li>
+<li><a id="orga587245"></a>L'ordinamento dei pacchetti, classificato sotto l'affidabilità, viene eseguito qua.<br /></li>
+</ul>
+</li>
+<li><a id="org07b2502"></a>Il settimo livello (l'ultimo per internet) è chiamato application layer ed è quello con cui interagisce il processo del sistema.<br />
+<ul class="org-ul">
+<li><a id="org383143e"></a>HTTP, file transfer, email, risiedono tutte qui. Tutti protocolli di supporto applicativo.<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a id="orga2cebee"></a>Ci sono due livelli mancanti nell'internet rispetto all'OSI<br />
+<ul class="org-ul">
+<li><a id="org3d5f0e4"></a>Il quinto è session layer. Serve per mettere smistare i dati ai singoli processi che utilizzano la rete.<br />
+<ul class="org-ul">
+<li><a id="org10246a0"></a>Ogni singolo processo ha una propria sessione aperta, a cui i dati che arrivano dalla rete sono indirizzati e ristretti.<br /></li>
+<li><a id="orgfa39c53"></a>Nell'internet questa parte è finita nelle <b>socket</b>, specifiche interfacce implementate a livello di sistema, che creano un associazione fra processo sorgente e processo destinatario.<br /></li>
+<li><a id="org3023299"></a>Questo è il mezzo a cui si faceva riferimento prima<br /></li>
+<li><a id="org9a571f5"></a>I socket interfacciano direttamente il transport layer, come fossero delle API per esso.<br /></li>
+</ul>
+</li>
+<li><a id="org71b5e18"></a>Il sesto è presentation layer.<br />
+<ul class="org-ul">
+<li><a id="org1311755"></a>Le reti erano molto disomogenee. I terminali, i filesystem erano diversi da macchina a macchina. Devo avere il modo di presentare in modo uniforme i dati.<br /></li>
+<li><a id="orgee37082"></a>In internet viene ridotta la disomogeneità dei formati, attraverso UNICODE. Inoltre, se voglio trasformare dati verso un altro formato, lo faccio a livello 7 con dei plugin.<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a id="org2066236"></a>Da un punto di vista logico, il collegamento fra ogni livello può essere rappresentato come un buffer I/O<br /></li>
+<li><a id="org8c5f04b"></a>Ogni richiesta passa attraverso tutti i livelli singolarmente, dal 7 all'1 della prima macchina e poi risale i livelli dell'altra macchina.<br /></li>
+<li><a id="orgb0fd9bb"></a>Ogni livello attraverso cui il pacchetto passa, aumenta la dimensione dell'unita dati trasmessa, in quanto deve aggiungere dei dati<br /></li>
+<li><a id="orgff8b131"></a>Quanto più piccola è l'unita dati, quanto maggiore è il rapporto fra i dati ed i vari header, ovvero l'overhead.<br /></li>
+<li><a id="orgc5a5b91"></a>L'architettura che noi usiamo è gerarchica e una netta distinzione funzionale fra parti, ma inevitabilmente lo fa in overhead.<br /></li>
+<li><a id="org57947da"></a>La sfida è quella di ottimizzare la dimensione dell'header, ovvero incorporare le informazioni necessarie ad ogni livello di svolgere le sue funzioni, occupando il minor spazio possibile nel pacchetto.<br />
+<ul class="org-ul">
+<li><a id="org37e88f6"></a>Dal punto di vista nominale, 10Mbps sul livello fisico diventano 5Mbps a livello 7. All'inizio addirittura 0.7Mbps.<br /></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org39ff886" class="outline-2">
+<h2 id="org39ff886">Per la struttura gerarchica a 5 (7) livelli, i collegamenti fra le due macchine sorgente e destinazione sono allo stesso livello. Non sono ammesse cross-layer communication.</h2>
+<div class="outline-text-2" id="text-org39ff886">
+</div>
+<div id="outline-container-org4fbb577" class="outline-3">
+<h3 id="org4fbb577">Il vantaggio è pulizia del codice</h3>
+</div>
+<div id="outline-container-orgcf89b97" class="outline-3">
+<h3 id="orgcf89b97">I protocolli dal livello 4 in su, sono end-to-end.</h3>
+<div class="outline-text-3" id="text-orgcf89b97">
+</div>
+<div id="outline-container-org976070a" class="outline-4">
+<h4 id="org976070a">Ad ogni protocollo di livello n, dev'essere chiaro qual è il servizio di livello n-1, che verrà utilizzato per comunicare con esso.</h4>
+</div>
+<div id="outline-container-org86bdc40" class="outline-4">
+<h4 id="org86bdc40">Se logicamente i livelli superiori comunicano fra loro, praticamente c'è una risalita fino al cavo.</h4>
+</div>
+<div id="outline-container-orgdc67fd0" class="outline-4">
+<h4 id="orgdc67fd0">La risalita avviene sfruttando dati immessi nell'header. Ogni livello immette dati utili alle proprie operazioni e che non verranno modificati dai livelli gerarchici superiori.</h4>
+<div class="outline-text-4" id="text-orgdc67fd0">
+</div>
+<ul class="org-ul">
+<li><a id="org4e6b4d8"></a>Che fine fanno questi bit aggiuntivi?<br />
+<ul class="org-ul">
+<li><a id="orgeab0bb8"></a>La sequenza di aggiunte viene risalita, quindi ogni livello prende tutto e toglie la parte di header tipica del suo corrispettivo livello dall'altro lato.<br />
+<ul class="org-ul">
+<li><a id="orga39e067"></a>Il protocollo specifica il formato dell'header e quindi lui sa esattamente come processare quei dati.<br /></li>
+</ul>
+</li>
+<li><a id="org79c5e89"></a>Quindi il costo di overhead è speso da entrambi i lati, per aggiungere e per eliminare header<br />
+<ul class="org-ul">
+<li><a id="orgaf8322c"></a>Il costo di overhead viene però generato soltanto dalla sorgente.<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org8b54f0f" class="outline-3">
+<h3 id="org8b54f0f">Il livello 2 si occupa di mandare i bit direttamente al livello 1, che poi manderà al cavo</h3>
+<div class="outline-text-3" id="text-org8b54f0f">
+</div>
+<div id="outline-container-org2c07b67" class="outline-4">
+<h4 id="org2c07b67">Bisogna far capire al livello fisico quale sequenza di bit, ovvero quali tensioni (Volt), fanno parte di uno specifico pacchetto e non dello stato di IDLE, stessa cosa per la fine.</h4>
+<div class="outline-text-4" id="text-org2c07b67">
+</div>
+<ul class="org-ul">
+<li><a id="org3c956ca"></a>Questo viene fatto attraverso una specifica sequenza, che è un byte così composto [01111110].<br /></li>
+<li><a id="org7b9e0b0"></a>Niente vieta che nella sequenza in questione ci sia lo stesso byte. Come si gestisce quel caso?<br />
+<ul class="org-ul">
+<li><a id="org5a70522"></a>Potrei risolvere aggiungendo un pacchetto di controllo, che specifica la lunghezza del pacchetto. In quel caso non servirebbe neanche il flag di fine.<br />
+<ul class="org-ul">
+<li><a id="org270dcff"></a>Il problema è che bisognerebbe garantire l'affidabilità per la comunicazione di quel pacchetto. Troppo complicato.<br /></li>
+</ul>
+</li>
+<li><a id="orgd98762e"></a>Un'altra soluzione è quella di raddoppiare i byte uguali alla flag, in modo che ci sia un modo univoco per capire se il byte è una flag o meno.<br />
+<ul class="org-ul">
+<li><a id="orgaeb83b1"></a>Questa soluzione è attuabile, ma l'overhead è considerato troppo alto<br /></li>
+</ul>
+</li>
+<li><a id="org156f1c7"></a>La soluzione che viene utilizzata a livello due è che tutte le volte che ho un byte uguale al flag, aggiungo un solo bit. Grazie a quello, riesco a disaccoppiare byte di comunicazione e flag. Si chiama <b>bit stuffing</b> e viene effettuato solo per le sequenze interne, non quelle di flag.<br />
+<ul class="org-ul">
+<li><a id="org586275f"></a>Il bit stuffing nel trasmettitore conta i bit. Quando ne trova 5 consecutivi a 1, opera il bit stuffing inserendo uno 0 all'interno della sequenza che sta trasmettendo.<br />
+<ul class="org-ul">
+<li><a id="org923a891"></a>In questo modo, seppure avessi una sequenza [001111100], che non è flag perchè ha un 1 in meno del flag, effettuerei comunque il bitstuffing, inserendo uno zero alla fine della sequenza di 1.<br /></li>
+</ul>
+</li>
+<li><a id="orgaf075bb"></a>Nel ricevitore, il contatore conta 5 uno e poi mette in un registro il bit successivo. Se è uno 0, lo ignora perchè era stato inserito d'ufficio dal trasmettitore. Se è 1, allora è una flag e segnala la fine del pacchetto.<br /></li>
+<li><a id="orgf7dace8"></a>Volendo essere precisi, si parla di frame e non di pacchetti, perchè il pacchetto riguarda il terzo livello, il secondo pacchetto non contiene questa nozione.<br />
+<ul class="org-ul">
+<li><a id="org5be5cae"></a>La stessa cosa avviene per il livello 4, in cui si parla di segmenti.<br /></li>
+</ul>
+</li>
+<li><a id="orgba695ee"></a>Il bit stuffing e le flag sono un invenzione di HDLC.<br /></li>
+<li><a id="org0ee9719"></a>L'implementazione è fatta dal livello 2, ma l'implementazione direttamente dall'1. Possiamo dire che si trovi a 1 e mezzo<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="outline-container-org0e409ae" class="outline-4">
+<h4 id="org0e409ae">Il livello 2 può essere progettato in modo affidabile, sebbene nelle reti moderne non sia il caso.</h4>
+<div class="outline-text-4" id="text-org0e409ae">
+</div>
+<ul class="org-ul">
+<li><a id="org5d7731a"></a>Ricordiamo che in una rete affidabile, voglio garantire che la comunicazione sia avvenuta e sia stata ricevuta.<br />
+<ul class="org-ul">
+<li><a id="org5b53aa4"></a>Per farlo, utilizzo un ACK di risposta che spiega che il ricevitore abbia ricevuto il frame.<br />
+<ul class="org-ul">
+<li><a id="orgbeb9694"></a>Dopo un tempo t, dimensionato in base al delay di trasmissione e di "creazione", si assume che il frame non sia stato ricevuto e si rimanda.<br /></li>
+</ul>
+</li>
+<li><a id="org95d449c"></a>Esistono due casi in cui la comunicazione non può essere considerata affidabile, ovvero se il frame sia perso, oppure se l'ACK sia perso.<br />
+<ul class="org-ul">
+<li><a id="orgfa6119e"></a>Nel primo caso, banalmente lo rimando e il problema è risolto<br /></li>
+<li><a id="orga8124e1"></a>Nel secondo il sender manda due volte il pacchetto e il receiver dovrà capire che quello è un duplicato e non va mandato a livello 3 ma discardato<br /></li>
+<li><a id="org36e30b2"></a>Per rendere il livello 2 affidabile, sfrutto due variabili, variabile send e variabile receive, che vengono incrementate ad ogni trasmissione ricevuta dall'altro lato che rispetta certi criteri.<br />
+<ul class="org-ul">
+<li><a id="org51b7eec"></a>Quando il sender non riceve l'ACK, rimanda il frame senza aggiornare la variabile, che era però già stata incrementata dal receiver.<br />
+<ul class="org-ul">
+<li><a id="org797f0d4"></a>Il receiver riceverà un ACK outdated e dovrà quindi ignorare il pacchetto ricevuto, rispedendo la validazione con il suo attuale numero di variabile (maggiore di uno rispetto al sender), che il sender eventualmente riceverà, procedendo nella trasmissione.<br /></li>
+</ul>
+</li>
+<li><a id="org25e66cb"></a>Se l'ACK arriva, ma in ritardo rispetto al tempo massimo previsto, la variabile sender si aggiornerebbe, ma il nuovo frame sarebbe già partito. Il receiver lo butta e rimanda l'ACK. Il sender riceve l'ACK e lo butta, perchè l'aveva già ricevuto.<br /></li>
+<li><a id="orgd927cf0"></a>Il criterio secondo cui aggiorno è che il sender vuole ricevere l'ACK dello stesso suo livello e il receiver vuole ricevere un frame dello stesso suo livello.<br />
+<ul class="org-ul">
+<li><a id="org6a7e1a5"></a>Se l'ACK che torna è di un livello superiore, allora il receiver aveva già ricevuto il pacchetto e non mi serve<br /></li>
+<li><a id="org4f9cf8f"></a>Se il frame che arriva al receiver è di livello inferiore al proprio, quel pacchetto è stato già ricevuto e non serve<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a id="orgcfadf5c"></a>Questo modello è affidabile e si basa sul fatto che entrambi i nodi in comunicazione posseggano istanze della stessa macchina a stati con lo stesso funzionamento, in modo che possano essere sincronizzate.<br /></li>
+</ul>
+</li>
+<li><a id="org153f7cc"></a>Questo sistema è inefficiente, perchè aspetta un tempo T per ogni pacchetto.<br />
+<ul class="org-ul">
+<li><a id="orgc05b50c"></a>Riguardo la definizione, tx è il tempo necessario per la porta I/O per immettere la sequenza sul filo. Durante il tempo tx, la nostra macchina non riesce a ottimizzare.<br /></li>
+<li><a id="orgf3453e6"></a>Quello su cui possiamo lavorare è il tempo tp.<br /></li>
+<li><a id="org69dba02"></a>Potrei mandare una serie di frame ogni tx, anche se il ricevitore non abbia ancora avuto modo di ricevere il pacchetto di precedente, nè di mandarmi l'ACK.<br />
+<ul class="org-ul">
+<li><a id="org3b21fd3"></a>Infatti, immaginiamo di avere un canale a 1Mbps su un cavo di 2km con frame di 1000 bit.<br />
+<ul class="org-ul">
+<li><a id="orgddf0d45"></a>Allora tx, ovvero il tempo necessario all'IO per immettere il frame è di 1000 su 1000000 ovvero 1 msec<br /></li>
+<li><a id="org4cb9884"></a>Tp invece, è lunghezza su velocità, che assumendo il cavo sia di rame, viene 10microsec<br /></li>
+</ul>
+</li>
+<li><a id="org49ddb29"></a>Il tempo di propagazione è di due ordini di grandezza minore di quello di trasmissione<br /></li>
+<li><a id="org3325a79"></a>Definiamo l'utilizzo U di un canale come \(\frac{tx}{tx+2tp}\), ovvero il tempo che serve all'io per trasmettere rispetto al tempo totale che il frame impiega per arrivare ed essere confermato tramite ACK.<br /></li>
+<li><a id="org83c6fdf"></a>Allora, nell'esempio superiore, l'utilizzo è di circa 98%.<br /></li>
+<li><a id="orga99e212"></a>Se invece la distanza diventasse 200km, l'utilizzo diventerebbe del 30%, ovvero molto efficiente.<br /></li>
+</ul>
+</li>
+<li><a id="orgdf80bb4"></a>Introduciamo i protocolli a finestra, che definiscono un numero di frame da inviare nella finestra temporale che va dall'invio del primo frame alla ricezione dell'ACK.<br /></li>
+<li><a id="org2ca6b46"></a>L'utilizzo del canale aumenta secondo un fattore di K, dove K è il numero di frame in una finestra.<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf24520c" class="outline-2">
+<h2 id="orgf24520c">Finora abbiamo capito come, su un canale che collega il nodo a al nodo b, inviare frame in modo affidabile (rimando alle 3 condizioni)</h2>
+<div class="outline-text-2" id="text-orgf24520c">
+</div>
+<div id="outline-container-orgb62a270" class="outline-3">
+<h3 id="orgb62a270">Lo possiamo fare utilizzando la spedizione e la ricezione di un ACK per validare la ricezione del frame, un timer dimensionato opportunamente, un buffer che tenga copia della frame in modo da rimandarlo in caso di scadenza del timer e due variabili, una di trasmissione (Sender) una di ricezione (Receiver) incrementate secondo un algoritmo.</h3>
+</div>
+<div id="outline-container-orgbc4ef78" class="outline-3">
+<h3 id="orgbc4ef78">Questa euristica supera l'impossibilità del problema dei generali bizantini, ma va estesa in modo da accomodare nuove funzioni, come una checksum e la numerazione delle frame.</h3>
+</div>
+<div id="outline-container-org7614008" class="outline-3">
+<h3 id="org7614008">Il limite, infatti, è che per ogni frame trasmesso, siamo costretti ad aspettare l'intero T. Ecco perchè vogliamo ottimizzare il funzionamento.</h3>
+<div class="outline-text-3" id="text-org7614008">
+</div>
+<div id="outline-container-orgd0c83be" class="outline-4">
+<h4 id="orgd0c83be">Quando il round-trip è dominato dal tempo di trasmissione, l'utilizzo U (tx su T) è quasi 1, ma nel caso contrario si ottiene un grande vantaggio.</h4>
+<div class="outline-text-4" id="text-orgd0c83be">
+</div>
+<ul class="org-ul">
+<li><a id="orgdaa1c64"></a>Quindi il problema che si risolve con i protocolli a finestra risulta in grandi vantaggi nei casi in cui l'IO sia molto veloce o la distanza molto lungo.<br /></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org8005a96" class="outline-3">
+<h3 id="org8005a96">Con i protocolli a finestra, utilizzo le porte IO molto di più, a spese della semplicità dell'architettura software, in quanto mi servirà un algoritmo che raccoglie gli ack e gestisce le sequenze.</h3>
+</div>
+<div id="outline-container-org3c33c2d" class="outline-3">
+<h3 id="org3c33c2d">Avrò K posizioni nel buffer e K timer, che non sono fisici ma virtuali, che però tutti generano degli interrupt.</h3>
+</div>
+<div id="outline-container-org3af7b2a" class="outline-3">
+<h3 id="org3af7b2a">Esistono due policies per gestire questa tecnica, che differiscono nella gestione del buffer di ricezione.</h3>
+<div class="outline-text-3" id="text-org3af7b2a">
+</div>
+<div id="outline-container-org45d4ac9" class="outline-4">
+<h4 id="org45d4ac9">In uno dei due, Go back N, quando il ricevitore scopre che una sola delle frame ha un errore, butta tutte le frame della finestra e le richiede.</h4>
+<div class="outline-text-4" id="text-org45d4ac9">
+</div>
+<ul class="org-ul">
+<li><a id="org462f37a"></a>Il problema è nell'efficienza, in quanto richiede di rimandare pacchetti corretti. In compenso utilizza un buffer dimensionato su un singolo frame.<br /></li>
+<li><a id="org585af6e"></a>Nel caso in cui un frame sia persa, il sender continua a inviare la sua intera frame, ma il receiver non accetterà più nessun frame oltre quello sbagliato, ovvero <b>fuori sequenza</b>.<br />
+<ul class="org-ul">
+<li><a id="org3d667de"></a>Inoltre, avviserà il sender che non ha ricevuto quello specifico frame, così il sender glielo rimanderà.<br />
+<ul class="org-ul">
+<li><a id="org6947517"></a>Sul libro, viene utilizzato l'ACK selettivo, ovvero rispondo con l'ACK del frame specifico, così che il NON ACK (NAK) sia un messaggio separato.<br /></li>
+<li><a id="org00eeb01"></a>Quello che usa TCP (e noi), è l'ACK cumulativo, ovvero vuol dire che siamo arrivati fino ad un certo frame e quelli successivi non sono arrivati. In questo modo, il NAK è implicito nel ACK(n-1)<br />
+<ul class="org-ul">
+<li><a id="orge641f03"></a>In questo caso, si risolve anche il problema della perdita di ACK, perchè se N+1 non è ricevuto, ma N sì e quindi si assume che i precedenti siano ricevuti.<br />
+<ul class="org-ul">
+<li><a id="org57b4497"></a>In questo caso, N rimarrebbe in buffer fino alla ricezione di un ACK successivo.<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="outline-container-orgbc39e27" class="outline-4">
+<h4 id="orgbc39e27">La seconda si chiama Selected repeat e utilizza un buffer grande K.</h4>
+<div class="outline-text-4" id="text-orgbc39e27">
+</div>
+<ul class="org-ul">
+<li><a id="org2a0c1a5"></a>Quando ricevo un fuori sequenza, il receiver ribadisce che l'ultimo frame ricevuto è quello precedente, e il sender glielo rimanderà una volta terminata la finestra attuale<br /></li>
+<li><a id="org0d9f4b2"></a>Questo comporta che il buffer debba essere grande quanto una finestra, così da tenerci i frame successivi a quello perso e poi concatenarli.<br /></li>
+</ul>
+</div>
+<div id="outline-container-org5fb3b2c" class="outline-4">
+<h4 id="org5fb3b2c">Con finestra 1, il K è 1 e la policy è una Go back n semplificata.</h4>
+</div>
+<div id="outline-container-org91a9934" class="outline-4">
+<h4 id="org91a9934">TCP usa entrambe. Infatti, chiede di rimandare tutto comunque, ma mantiene tutti i frame in buffer, perchè sa che il sender si risincronizzerà con l'ACK del frame recuperato ( e ipotizzo tutti quelli successivi sbloccati dal recuperato).</h4>
+</div>
+</div>
+<div id="outline-container-org602616e" class="outline-3">
+<h3 id="org602616e">Per rifermi al singolo frame, ho bisogno di un numero di sequenza.</h3>
+<div class="outline-text-3" id="text-org602616e">
+</div>
+<div id="outline-container-org0e3cce6" class="outline-4">
+<h4 id="org0e3cce6">Il suo limite sta nella dimensione dell'Header. Più bit metto sulla sequenza, maggiore è l'overhead.</h4>
+<div class="outline-text-4" id="text-org0e3cce6">
+</div>
+<ul class="org-ul">
+<li><a id="orge0a21d9"></a>TCP non conta le frame ma il numero di byte spediti, quindi ha bisogno di un numero abbastanza grande.<br /></li>
+</ul>
+</div>
+<div id="outline-container-org594b972" class="outline-4">
+<h4 id="org594b972">Immaginiamo di usare tanti numeri di frequenza quanti sono i frame in una finestra. Se tutti gli ack vengono smarriti, il ricevitore manderà un NAK, o un ACK cumulativo fino alla finestra precedente, e il sender potrà rimandare la finestra non ricevuta o andare avanti con la prossima, che non sarà accettata dal receiver, e quindi mandare quella non ricevuta. Ma il receiver non potrebbe distinguere fra le due sequenze, in quanto avrebbero esattamente gli stessi numeri di sequenza.</h4>
+</div>
+<div id="outline-container-org65dd550" class="outline-4">
+<h4 id="org65dd550">In gobackn è sufficiente avere k+1 numeri di sequenza, per consentire al ricevitore di discriminare fra vecchia e nuova sequenza.</h4>
+<div class="outline-text-4" id="text-org65dd550">
+</div>
+<ul class="org-ul">
+<li><a id="orge814d7f"></a>Infatti, il ricevitore si pianta quando non riceve un frame e butta tutti i successivi. Quindi se perde un frame della finestra, non andrà avanti finchè non riceve il primo di quella finestra, e la finestra che ha perso ha un numero di sequenza del suo primo frame diverso da quello precedente.<br />
+<ul class="org-ul">
+<li><a id="org8068a90"></a>Insomma, ogni finestra inizia con un frame diverso da quello precedente, per qualunque K, perchè se sono in modulo K+1 ed ogni finestra di trasmissione contiene K frame, tornando indietro di K mi porta sempre nell'unico altro elemento dell'insieme K+1, che non faceva parte di K.<br /></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="outline-container-org667eb54" class="outline-4">
+<h4 id="org667eb54">In selective repeat, invece, K+1 frame non bastano, ma ne servono 2K. Infatti adesso, un ACK</h4>
+<div class="outline-text-4" id="text-org667eb54">
+</div>
+<ul class="org-ul">
+<li><a id="org0acef83"></a>Infatti, il ricevitore tiene in buffer al massimo K elementi e se arrivasse un nuovo elemento, con lo stesso numero di uno di quelli che ha già salvato nel suo buffer, non avrebbe modo di capire che è un frame nuovo e lo rifiuterebbe pensando che sia già accettato.<br /></li>
+<li><a id="org3910edf"></a>Utilizzando 2K numeri di sequenza, sono sicuro che tutti i nuovi frame mandati siano diversi da quelli nel buffer. Infatti, non è possibile che un frame già nel buffer sia rimandato.<br /></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org5dad09f" class="outline-2">
+<h2 id="org5dad09f">A volte la topologia di rete è un grafo parzialmente connesso e in particolare in cui i punti sono collegati fra loro in una <b>maglia</b>, ed è per questo chiamata anche punto-a-punto, ma spesso non è così.</h2>
+<div class="outline-text-2" id="text-org5dad09f">
+</div>
+<div id="outline-container-org7a155bc" class="outline-3">
+<h3 id="org7a155bc">In una LAN (local a.. network) la rete è broadcast, ovvero c'è un dispositivo che comunica a tutti gli altri, compreso quello da cui ha ricevuto il segnale in entrata. Ovvero un HUB, chiamato anche <b>centro stella passivo</b></h3>
+</div>
+<div id="outline-container-org14b9462" class="outline-3">
+<h3 id="org14b9462">Un terzo modo, che è come ethernet era fatto inizialmente, si ha una struttura a bus lineare, in cui tutti i dispositivi sono collegati in serie. Sia questa che la seconda sono chiamate <b>broadcast</b>.</h3>
+</div>
+<div id="outline-container-org5aea07f" class="outline-3">
+<h3 id="org5aea07f">Il problema delle strutture broadcast è innanzitutto quello di creare l'equivalente semantico di una comunicazione fra due soli dispositivi, e si fa utilizzando header di mittente e destinatario, così che nel secondo driver di IO capiscono se salvano o buttano via i dati.</h3>
+</div>
+<div id="outline-container-orgb323d46" class="outline-3">
+<h3 id="orgb323d46">Un altro problema è che trasmettere sull'hub o su bus lineare è critico e va quindi garantita la mutua esclusività per l'accesso a canale condiviso: non tutti i dispositivi possono trasmettere nello stesso momento.</h3>
+<div class="outline-text-3" id="text-orgb323d46">
+</div>
+<div id="outline-container-org5c47d64" class="outline-4">
+<h4 id="org5c47d64">Si può sfruttare un token unico e condiviso dalle stazioni. La struttura è fatta ad anello e chi lo riceve, lo estrae e trasmette. Una volta che la trasmissione torna al primo dispositivo, vuol dire che la comunicazione è arrivata a tutti e cede il token ad un altro.</h4>
+<div class="outline-text-4" id="text-org5c47d64">
+</div>
+<ul class="org-ul">
+<li><a id="org3d2255d"></a>Da notare che bisogna fidarsi che il dispositivo ceda il token. Potrebbe non farlo, ed in quel caso nessun altro parlerebbe<br /></li>
+<li><a id="orgb56ac37"></a>Questa è una soluzione deterministica, perchè in ogni momento so esattamente chi sta parlando.<br /></li>
+<li><a id="org0d512e4"></a>Questo approccio comporta dei problemi:<br />
+<div class="outline-text-5" id="text-org0d512e4">
+<ul class="org-ul">
+<li>il token deve fare il giro di tutto l'anello, ma quest'ultimo ha una dimensione variabile, potenzialmente molto grande.</li>
+<li>quando una stazione si aggiunge, bisogna inserirla, sincronizzando gli altri nodi per notificarli dell'inserimento. Questo non può che essere fatto da una stazione master, da cui dipende tutto il sistema.</li>
+<li>la stazione master serve anche per generare il token e garantire che sia unico</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-org463bebf" class="outline-4">
+<h4 id="org463bebf">Ethernet utilizza, invece, una soluzione <b>non deterministica</b>, fuzzy, in cui c'entra molto la probabilità ed in cui le collisioni sono ammesse, chiamato CSMA-CD.</h4>
+<div class="outline-text-4" id="text-org463bebf">
+</div>
+<ul class="org-ul">
+<li><a id="org1b0eb4b"></a>Un primo modo, chiamato ALOHA, precedente a quello finale, prevede che nel caso in cui ci sia una collisione, entrambi i mittenti non ricevono alcun ACK e ritrasmettono. Se avessero T uguale, ritrasmetterebbero nello stesso momento, generando una nuova collisione. Viene quindi introdotto un ritardo casuale. Questo diminuisce le probabilità di collisione.<br />
+<ul class="org-ul">
+<li><a id="orgc7e9958"></a>Questa soluzione è vincente rispetto la precedente. Questo è un sistema distribuito, in cui un nuovo dispositivo può inserirsi immediatamente e trasmettere in una nuova rete.<br />
+<ul class="org-ul">
+<li><a id="orgbfc9b52"></a>La prima volta nella storia in cui un approccio probabilistico vince con uno deterministico.<br /></li>
+</ul>
+</li>
+<li><a id="org7134b89"></a>Questa soluzione ha un'efficienza minima, intorno al 18%.<br /></li>
+</ul>
+</li>
+<li><a id="org4fb188a"></a>L'innovazione adottata per il protocollo di Ethernet è l'operazione di ascolto, chiamata CS, ovvero Carrier Sense. Vedo se il canale è libero e solo in quel caso immette il proprio pacchetto.<br />
+<ul class="org-ul">
+<li><a id="orge160fc8"></a>Il rischio di collisione avviene nel caso in cui due stazioni facciano Carrier Sense nello stesso momento. Scopriranno che il Carrier si è liberato nello stesso momento e immetteranno i pacchetti.<br />
+<ul class="org-ul">
+<li><a id="org87b1338"></a>Una soluzione per ridurre la probabilità di collisioni di questo tipo, potrebbe essere quella di introdurre un ritardo dal momento in cui viene notata la fine del pacchetto attraverso il Carrier Sense. Dato che la probabilità di questo tipo di collisione è considerata bassa in Ethernet, non viene introdotto un ulteriore ritardo. Si scommette che non avvenga di frequenza.<br />
+<ul class="org-ul">
+<li><a id="orgf13038d"></a>Applicare il ritardo comporterebbe un protocollo Non-Persistent, ovvero le stazioni non sono competitive.<br /></li>
+<li><a id="org868bc30"></a>La nostra scelta è 1Persistent, ovvero i pacchetti trasmettono con probabilità 1.<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a id="org1295572"></a>La collisione viene gestita, però, in modo molto più rapido: se una stazione riceve qualcosa di diverso da quello che sta immettendo, c'è una collisione e blocca istantaneamente la trasmissione. Solo a quel punto inizia il timer random<br />
+<ul class="org-ul">
+<li><a id="org01b18d8"></a>BEB (binary exponential backoff) è un modo per calcolare il tempo di ritardo dopo una collisione<br />
+<ul class="org-ul">
+<li><a id="org4a3716c"></a>Ad ogni i-esima collisione, genero un ritardo randomicamente scelto fra 0 e 2<sup>i</sup>-1 * unità di tempo<br />
+<ul class="org-ul">
+<li><a id="org46d33d2"></a>Quindi la prima volta il ritardo può essere di 0 o 1 unità, la seconda 0,1,2,3, la terza tra 0 d e 7 è così via<br /></li>
+<li><a id="org8f2f939"></a>Il prof dice che 2<sup>i</sup>-1 è l'estremo dell'intervallo e non il numero di scelte.<br /></li>
+</ul>
+</li>
+<li><a id="org7f4f021"></a><span class="todo TODO">TODO</span> controllare cos'è<br /></li>
+<li><a id="orge8c7e0a"></a>L'unità di tempo viene dallo standard IEEE 802.3 che specifica il CSMA-CD 1Persistente.<br />
+<ul class="org-ul">
+<li><a id="org7fab56d"></a>Abbiamo un cavo di 2500 mt, diviso in 5 sezioni di 500mt da 4 repeater. Lunghezza per indice del rame, mi da un tempo di 12.5 microsecondi.<br /></li>
+<li><a id="org3cbef15"></a>Devo garantire che questo tempo, ovvero 2tp = 25 microsecondi, non pesi troppo rispetto al tx.<br /></li>
+<li><a id="orgf339c6f"></a>Immaginiamo ci siano A e B, B alla fine del cavo di cui prima. Prima di 25microsecondi, se B facesse Carrier Sense, troverebbe la rete libera e colliderebbe. Lo stesso vale perchè A riconosca la presenza di bit corrotti e quindi la collisione.<br /></li>
+<li><a id="orgb3151fe"></a>In una rete di questo tipo, per garantire la collision detection, è necessario che il primo trasmettitore trasmetta per un tempo almeno maggiore di 2tp, ovvero il tempo che la trasmissione arrivi a tutti gli altri, e la trasmissione di tutti gli altri ritorni.<br /></li>
+<li><a id="org0d63614"></a>Si è quindi deciso di settare il parametro 2tp in 51,2 ms, che è il tempo richiesto ad ogni stazione per continuare a trasmettere, in modo da rilevare la collisione, questo diventa il tempo minimo di trasmissione in rete.<br />
+<ul class="org-ul">
+<li><a id="org04a4adc"></a>Se la rete lavora con un clock a 10Mbit, in 51.2microsecondi trasmetto 512 bit, ovvero 64byte<br /></li>
+<li><a id="org4cbe64c"></a>Questo parametro di 51,2 è l'unita di tempo fondamentale, che viene applicata anche per il BEB.<br /></li>
+</ul>
+</li>
+<li><a id="orga4bab59"></a>Lo IEEE 802.11 è lo standard WiFi.<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a id="org95a4647"></a>Nel MAC, che è un layer di livello 2, multiple access control, che sarebbe lo stesso standard IEEE802.3, viene definito anche il formato del pacchetto, in cui si usa un header e un padding, che serve per raggiungere la dimensione minima.<br /></li>
+<li><a id="orgef4eb87"></a>Il nome è Carrier Sense, Multiple Access, Collision Detection.<br /></li>
+<li><a id="org88ee399"></a>La curva d'efficienza la ottiene nello sweet spot di stazioni ed è intorno al 95%.<br /></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org1649c0a" class="outline-2">
+<h2 id="org1649c0a">Di solito, alla salita del fronte d'onda, legge il valore in volt, e se è 5 il bit è 1, altrimenti 0</h2>
+<div class="outline-text-2" id="text-org1649c0a">
+</div>
+<div id="outline-container-orga5025b1" class="outline-3">
+<h3 id="orga5025b1">Con ethernet, però, abbiamo vari problemi. Uno è quello di disambiguare sequenze di bit uguali, un'altra è quella di far arrivare il valore in modo chiaro al ricevitore.</h3>
+<div class="outline-text-3" id="text-orga5025b1">
+</div>
+<div id="outline-container-org4fc5668" class="outline-4">
+<h4 id="org4fc5668">Ethernet utilizza quindi la codifica Manchester, che a differenza del solito, legge nel momento centrale del bit, che è il punto meno soggetto a distorsione.</h4>
+<div class="outline-text-4" id="text-org4fc5668">
+</div>
+<ul class="org-ul">
+<li><a id="org4975dfd"></a>Ciò che viene letto, però, non è il valore assoluto ma la transizione. Se vede che c'è una transizione verso l'alto, abbiamo un uno, altrimenti zero.<br />
+<ul class="org-ul">
+<li><a id="org4f7c57c"></a>Questo comporta che in caso di valori uguali consecutivi, bisogna cambiare la tensione appena si capisce che il prossimo bit è uguale, e poi nel momento centrale (quello letto), effettuare la transizione.<br /></li>
+<li><a id="org7b45ac9"></a>Questo comporta anche che la trasmissione sia shiftata di mezzo ciclo di clock.<br /></li>
+</ul>
+</li>
+<li><a id="orgd7994fd"></a>Essendo un sistema a stato IDLE pre-trasmissione, prima che questa inizi, il ricevitore non conosce il clock di trasmissione, perchè i bit in entrata sono tutti uguali.<br />
+<ul class="org-ul">
+<li><a id="orgfc940fb"></a>La sfida è quella di tenere il clock del ricevitore sincronizzato, magari non fornendgli un clock indipendente, ma incorporando univocamente questa informazione nei dati<br />
+<ul class="org-ul">
+<li><a id="org87507cc"></a>Un primo problema è che il ricevitore non può a priori sapere se una transizione allo scattare del clock (quindi quella di preparazione), non sia una transizione valida "trasmittiva", ovvero quella mid-clock<br /></li>
+</ul>
+</li>
+<li><a id="orga5ced07"></a>Introduciamo un preambolo, formato da 7 byte in cui i bit 0 e 1 si alternano, ed un ottavo byte così costituito [1010101011], che il ricevitore riceve per sincronizzarsi. Gli ultimi due uno, o in particolare l'ultimo, che prevede una doppia transizione, segnala l'inizio del vero frame.<br /></li>
+</ul>
+</li>
+<li><a id="orgaab298d"></a>(non serve guardare la codifica Manchester differenziale)<br /></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc2590fb" class="outline-2">
+<h2 id="orgc2590fb">Per stabilire l'utilizzo (efficienza) del mio MAC layer, che presiede la connessione Ethernet, bisogna introdurre al tempo di propagazione, nella formula originale, ovvero tx su tx + 2tp, il contention time medio, ovvero il tempo perso in carrier sense, nel discardare trasmissioni corrotte e nei ritardi. (Bisogna sommare l'inverso (perchè?), e quindi 1/A)</h2>
+<div class="outline-text-2" id="text-orgc2590fb">
+</div>
+<div id="outline-container-orgf0af78a" class="outline-3">
+<h3 id="orgf0af78a">Si dimostra che al tendere delle stazioni K all'infinito, 1/A tende a "e".</h3>
+</div>
+<div id="outline-container-orgaec4d05" class="outline-3">
+<h3 id="orgaec4d05">Inoltre, si ricorda che abbiamo definito tx come dimFrame/velBanda e tp come Lunghezza/velCavo.</h3>
+<div class="outline-text-3" id="text-orgaec4d05">
+</div>
+<div id="outline-container-org04bee96" class="outline-4">
+<h4 id="org04bee96">Allora divido tutto per tx e ottengo \(\frac{1}{1+2 \frac{BL}{CF}e }\). Quindi, all'aumentare della banda e della lunghezza, l'utilizzo diminuisce di tanto.</h4>
+<div class="outline-text-4" id="text-org04bee96">
+</div>
+<ul class="org-ul">
+<li><a id="orgde7ccc5"></a>Sembra inutile aumentare la banda, perchè diminuirebbe l'utilizzo.<br /></li>
+<li><a id="org9e4d609"></a>Diventa quindi necessario gestire il problema dell'aumento banda<br />
+<ul class="org-ul">
+<li><a id="orge56f261"></a>Ricordiamo che nelle reti moderne, la struttura è a centro stella passivo, con un hub a cui fanno riferimento vari dispositivi, in una struttura complessa ad albero, in cui i vari hub sono collegati fra loro.<br />
+<ul class="org-ul">
+<li><a id="org71bb2a9"></a>Questa struttura causa problemi quando il numero di dispositivi diventa eccessivo<br /></li>
+<li><a id="org88e4a5f"></a>Misurando il tasso di collisione di ritrasmissione, ci si rende conto che la rete è overcrowded<br /></li>
+<li><a id="org65e39a9"></a>Per ovviare al problema, si fa uso dei <b>bridge</b>.<br />
+<ul class="org-ul">
+<li><a id="org2351da5"></a>Immaginiamo di avere una rete locale composta da 6 stazioni, 3 per hub, su 2 hub collegati.<br />
+<ul class="org-ul">
+<li><a id="org79f2466"></a>Gli hub sono passivi e ogni stazione può trasmettere agli altri, e può anche collidere con essi.<br />
+<ul class="org-ul">
+<li><a id="org1b7b69b"></a>Hub collegati comportano che tutte le stazioni facciano parte dello stesso dominio di collisione, ovvero lo spazio di rete in cui le stazioni competono per l'accesso al canale condiviso di trasmissione<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a id="orge52a8ea"></a>Il bridge non è totalmente passivo, ovvero che opera a livello soltanto fisico, ma un apparato intelligente che possiede un buffer e trasmette se utile e necessario secondo certi criteri.<br />
+<ul class="org-ul">
+<li><a id="orgeb0e3bb"></a>Se il bridge riceve una trasmissione da parte di una stazione, verso la stazione nello stesso dominio, la scarta, perchè sa che è già arrivata a destinazione<br /></li>
+<li><a id="orgb29b151"></a>Se invece riceve una trasmissione verso un altro dominio a esso collegato, la inoltra verso il nuovo dominio.<br /></li>
+<li><a id="org86bfae4"></a>Queste operazioni prendono il nome di Store-and-Forward.<br /></li>
+<li><a id="org1781587"></a>Un bridge è fatto da tante schede Ethernet (Livelli MAC) quante sono le LAN a esso collegate, con corrispondenti MAC Address per entrambe.<br />
+<ul class="org-ul">
+<li><a id="orgfd6f425"></a>Quindi si comporta esattamente come una stazione<br /></li>
+</ul>
+</li>
+<li><a id="org7ecd668"></a>Chiaramente, deve contenere anche una tabella con le stazioni e la corrispondente porta attraverso cui è collegato con esse.<br />
+<ul class="org-ul">
+<li><a id="org68a2f65"></a>Per riempire la tabella, si fa in modo che il bridge impari poco alla volta dove si trovano le stazioni. Quando riceve un frame da una porta, salva la stazione nella tabella<br /></li>
+<li><a id="org64dabbf"></a>Se una frame è destinata ad una stazione a cui non è collegata una porta, si fa broadcast.<br />
+<ul class="org-ul">
+<li><a id="orgc12f8f4"></a>DOMANDA: Quindi ogni volta che trasmetto verso una porta non registrata, occupo tutti i domini di collisione? Se ho un bridge con tante porte, dovrò occuparle tutte, per raggiungerne una sola. E se la porta di destinazione non spedisse mai?<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a id="org06b21c0"></a>Il bridge è il primo strumento di CSMA-CD che opera a <b>livello 2</b><br /></li>
+</ul>
+</li>
+<li><a id="org8a735eb"></a>Un altro dispositivo è lo <b>switch</b>.<br />
+<ul class="org-ul">
+<li><a id="orgaffed89"></a>E' simile all'hub, ma siamo a livello 2 e contiene una tabella di store e forward.<br /></li>
+<li><a id="org5f8d001"></a>La differenza con il bridge è che le connessioni fra le stazioni e lo switch sono punto-punto, e quindi il CSMA-CD non è necessario. Lo switch smista le comunicazioni in modo intelligente.<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc44b670" class="outline-2">
+<h2 id="orgc44b670">Per aumentare le prestazioni di Ethernet, potrei scalare il tasso di trasmissione di un ordine di grandezza. Il problema è che il rame non va oltre 25Mbps.</h2>
+<div class="outline-text-2" id="text-orgc44b670">
+</div>
+<div id="outline-container-orgfcdf7ce" class="outline-3">
+<h3 id="orgfcdf7ce">Una soluzione immediata sarebbe quella di usare 4 fili e dividere un bit in ognuno. In realtà, se ne usano solo 3 per la trasmissione, perchè il 2 è quello usato per CarrierSense e CollisionDetection.</h3>
+</div>
+<div id="outline-container-orgd072901" class="outline-3">
+<h3 id="orgd072901">Come si raggiungono 1000Mbit, con solo 3 fili da 25Mbps? Si usa una codifica diversa, ternaria non binaria, chiamata 8B6T, ovvero "mappo 8 bit Binari su 6 Ternari".</h3>
+<div class="outline-text-3" id="text-orgd072901">
+</div>
+<div id="outline-container-org910185e" class="outline-4">
+<h4 id="org910185e">A questo punto abbiamo 100 * 10<sup>6</sup> Mbit *6/8 diviso i 3 fili, ottengo 25 bit ternari per filo, che corrispondono a 33 binari.</h4>
+</div>
+</div>
+</div>
+<div id="outline-container-orgcb1b3a5" class="outline-2">
+<h2 id="orgcb1b3a5">Nell'architettura Ethernet, il primo apparato utilizzato è il repeating hub, passivo, in cui tutte le stazioni contendono per il canale di trasmissione. Gli hub sono collegati da un bridging hub, attivo, che attraverso il principio di Store-and-Forward, separa i domini di collisione dei vari hub. Un bridge ha tante porte ethernet quanti sono i domini collegati. Inoltre, contiene una tabella aggiornata ogni volta che riceve una comunicazione (bridge trasparente). Quando la comunicazione è destinata a una stazione non salvata in tabella, fa flading.</h2>
+<div class="outline-text-2" id="text-orgcb1b3a5">
+</div>
+<div id="outline-container-orgb950da9" class="outline-3">
+<h3 id="orgb950da9">flading, broadcast ma senza restituire alla porta da cui è arrivato.</h3>
+</div>
+<div id="outline-container-org42da3f5" class="outline-3">
+<h3 id="org42da3f5">Un problema è che se un dispositivo, con un certo MAC address, si sposta da un dominio all'altro, la tabella non è più valida. Ogni entrata deve quindi avere un timer, Il flading è quindi parte integrante dell'apparato</h3>
+</div>
+</div>
+<div id="outline-container-org36b352c" class="outline-2">
+<h2 id="org36b352c">A livello superiore, c'è uno switch, che funziona come un hub, ma con una memoria ed una cpu, per memorizzare e switchare in modo intelligente. Le connessioni da e per lo switch NON richiedono Carrier Sense, perchè sono punto-punto, in quanto già univocate dal bridge. Il cavo utilizzato è un duplex e può essere anche in fibra. Le porte sono comunque compliant con IEEE nel formato della porta.</h2>
+</div>
+<div id="outline-container-orgce99dec" class="outline-2">
+<h2 id="orgce99dec">Nel CSMA-CD, l'efficienza è \(\frac{1}{1+\frac{2BL}{CF}e}\), quindi se aumento la Bandwidth, devo necessariamente ridurre la lunghezza e aumentare la dimensione del frame.</h2>
+<div class="outline-text-2" id="text-orgce99dec">
+</div>
+<div id="outline-container-org6bd6985" class="outline-3">
+<h3 id="org6bd6985">E' stato deciso, in sede di standard, ogni tratta deve essere grande al massimo 200 metri, quindi 800 metri in tutto al massimo ( per andare sulle 2 tratte e tornare sulle stesse).</h3>
+<div class="outline-text-3" id="text-org6bd6985">
+</div>
+<div id="outline-container-org8266a07" class="outline-4">
+<h4 id="org8266a07">Su 800 metri, il tempo andata e ritorno è circa 4ms. Con 1Gbit, esce fuori 4000bit, ovvero 500bit, arrotondati a 512B.</h4>
+</div>
+<div id="outline-container-org55a9a3b" class="outline-4">
+<h4 id="org55a9a3b">Se si fosse lasciato il tempo di 51.2 microsecondi, avremmo dovuto mandare 51200 bit per ogni minimo frame e sarebbe stato poco efficiente. Viene quindi ridotto il diametro, e anche la dimensione dei frame.</h4>
+</div>
+<div id="outline-container-org3141e08" class="outline-4">
+<h4 id="org3141e08">Per evitare di cambiare anche la porta MAC, che fa il padding di solo 64Byte, il padding viene fatto a livello fisico.</h4>
+<div class="outline-text-4" id="text-org3141e08">
+</div>
+<ul class="org-ul">
+<li><a id="orgad788da"></a>In ogni caso, il padding è eccessivo ed è il motivo per cui spopolano gli switch e il Gbit ethernet non ha fatto presa.<br /></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orge5934da" class="outline-2">
+<h2 id="orge5934da">Notiamo che nel Data-Link, a questo punto, non ci sono più collegamenti punto-punto, ma un MAC layer, che controlla l'accesso a un canale condiviso.</h2>
+<div class="outline-text-2" id="text-orge5934da">
+</div>
+<div id="outline-container-orgfd4f510" class="outline-3">
+<h3 id="orgfd4f510">C'è, però, anche un'interfaccia aggiuntiva, posizionata appena sopra il MAC, ma sempre a livello 2, chiamata <b>Logical Link Control</b>.</h3>
+</div>
+<div id="outline-container-orgc25e308" class="outline-3">
+<h3 id="orgc25e308">Quello che facciamo con questo sottolivello serve a creare dei canali logici punto-punto fra sè e le altre stazioni.</h3>
+<div class="outline-text-3" id="text-orgc25e308">
+</div>
+<div id="outline-container-orgfef437d" class="outline-4">
+<h4 id="orgfef437d">Quindi, a livello MAC gestisco la situazione Broadcast, e nel Logical Link Control, creo una sovrastruttura logica che modella i collegamenti come punto-punto. In questo modo, dal Logical Link Control in sù, ignoro qualunque ragionamento riguardo il MAC e le sue operazioni.</h4>
+<div class="outline-text-4" id="text-orgfef437d">
+</div>
+<ul class="org-ul">
+<li><a id="orga1c5c07"></a>Questi collegamenti logici, possono essere sia best-effort che affidabili, esattamente come fossimo su una rete magliata.<br /></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org5074964" class="outline-2">
+<h2 id="org5074964">Una VLAN viene utilizzata per introdurre una nuova divisione virtuale fra stazioni. Un motivo per cui viene utilizzata è per aumentare la sicurezza.</h2>
+<div class="outline-text-2" id="text-org5074964">
+</div>
+<div id="outline-container-orgb4dca63" class="outline-3">
+<h3 id="orgb4dca63">Stazioni che fanno parte di VLAN diverse, non possono comunicare fra loro, anche se fanno parte dello stesso hub. Serve uno switching intelligente per attivare questa funzione, perchè di base le comunicazioni sullo stesso hub girano liberamente</h3>
+</div>
+<div id="outline-container-org898fb4b" class="outline-3">
+<h3 id="org898fb4b">Per permettere a macchine appartenenti a VLAN diversi, è necessario utilizzare il routing di livello 3, perchè la separazione introdotta, sebbene logica, è finale.</h3>
+<div class="outline-text-3" id="text-org898fb4b">
+</div>
+<div id="outline-container-org58d273f" class="outline-4">
+<h4 id="org58d273f">Gli switch avanzati posseggono una funzione di routing incorporata</h4>
+</div>
+</div>
+<div id="outline-container-orgfbf07b3" class="outline-3">
+<h3 id="orgfbf07b3">Le informazioni riguardo le VLAN sono contenute nello switch, che <b>tagga</b> le porte e le frame a esse corrispondenti</h3>
+<div class="outline-text-3" id="text-orgfbf07b3">
+</div>
+<div id="outline-container-org9d6b9c3" class="outline-4">
+<h4 id="org9d6b9c3">Quindi, le stazioni mandano i soliti frame 802.3, e lo switch si occupa di taggarli e smistarli secondo un nuovo standard, chiamato 802.1Q</h4>
+<div class="outline-text-4" id="text-org9d6b9c3">
+</div>
+<ul class="org-ul">
+<li><a id="org360bb36"></a>Entrambi i formati, posseggono il DestinationAddress come primo campo. L'1Q, rimpiazza il campo della lunghezza con quello del protocol ID. Quindi, in quel campo, posso aspettarmi sia una lunghezza che l'ID, ed il secondo viene distinto dal fatto che contiene 8100H in hex, ovvero u numero maggiore di 1500 che è la lunghezza massima.<br /></li>
+<li><a id="org51e6169"></a>Nei due byte successivi, si trovano info legate alle VLAN e, in particolare, 12 bit di VLAN identifier.<br /></li>
+<li><a id="org191a1b6"></a>Il cavo fra switch, su cui circolano soltanto frame <b>tagged</b>, si chiama <b>trunk</b><br /></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbf1df97" class="outline-2">
+<h2 id="orgbf1df97">Per riassumere i primi 2 livelli, sono entrambi composti da due sottolivelli.</h2>
+<div class="outline-text-2" id="text-orgbf1df97">
+</div>
+<div id="outline-container-org1ad5847" class="outline-3">
+<h3 id="org1ad5847">Convergence sublayer e Physical-medium dependent layer per il physical layer, il cui primo serve per separare ulteriormente il livello fisico finale, che è fortemente dipendente dall'architettura</h3>
+</div>
+<div id="outline-container-orgdb80d8c" class="outline-3">
+<h3 id="orgdb80d8c">LLC(Logical Link Control) e MAC(Multiple Access Control), il cui primo si occupa di rendere trasparente la gestione complicata del CSMA-CD da parte del MAC, gestendo apparentemente le connessioni come punto-punto.</h3>
+</div>
+</div>
+<div id="outline-container-orga1a29e0" class="outline-2">
+<h2 id="orga1a29e0">Le LAN occupano spazi geografici molto limitati. E' necessario collegare LAN, anche lontane, così che siano tutte raggiungibili. Per farlo, vengono collegate ad uno strato superiore, che sarebbe l'ISP, fino ad arrivare ad un terzo strato che è quello intercontinentale.</h2>
+<div class="outline-text-2" id="text-orga1a29e0">
+</div>
+<div id="outline-container-orga169920" class="outline-3">
+<h3 id="orga169920">Chiaramente, il MAC address smette di avere valore, su questa scala, e viene introdotto l'IP, che identifica univocamente qualunque stazione appartenente a qualunque LAN.</h3>
+</div>
+<div id="outline-container-orga60aebd" class="outline-3">
+<h3 id="orga60aebd">Nell'andare da una stazione ad un altra, quindi da un livello Application all'altro, attraversiamo un numero indefinito di macchine che operano al massimo a livello 3. Ognuna di esse deve occuparsi dell'Addressing, ovvero come gestire l'univocità dell'IP, ed il routing, ovvero come trovare una strada fra le stazioni in modo efficiente.</h3>
+</div>
+<div id="outline-container-org12cc03c" class="outline-3">
+<h3 id="org12cc03c">Nel livello 3 non c'è solo un entità, ma 5, di cui analizzeremo due e IP in particolare, con il suo sottomodulo OSPF, per il routing. L'altro è ARP, con cui si mappa/risolve l'IP globale nel MAC.</h3>
+</div>
+</div>
+<div id="outline-container-orgabd5c05" class="outline-2">
+<h2 id="orgabd5c05">Nel livello 3 dobbiamo gestire l'indirizzamento e l'instradamento.</h2>
+<div class="outline-text-2" id="text-orgabd5c05">
+</div>
+<div id="outline-container-org12f1dfe" class="outline-3">
+<h3 id="org12f1dfe">Il formato di un pacchetto IP è formato da 5 parole (ovvero 4 byte, 32 bit) ed un ultimo spazio opzionale, utilizzato ad esempio per il source routing.</h3>
+<div class="outline-text-3" id="text-org12f1dfe">
+</div>
+<div id="outline-container-org98b2e8a" class="outline-4">
+<h4 id="org98b2e8a">Il primo campo è quello versione, che occupa i primi 4 bit e indica la versione del protocollo, di cui ne esistono due, la v4 e la v6.</h4>
+</div>
+<div id="outline-container-org0822eed" class="outline-4">
+<h4 id="org0822eed">Dopodichè c'è la header length, che occupa altri 4 bit e specifica quanti byte è lungo l'header. Serve nel caso in cui il campo option venga utilizzato, perchè ha lunghezza variabile.</h4>
+</div>
+<div id="outline-container-orgdbcae06" class="outline-4">
+<h4 id="orgdbcae06">Gli 8 bit successivi sono occupati dal Type Of Service (TOS),</h4>
+<div class="outline-text-4" id="text-orgdbcae06">
+</div>
+<ul class="org-ul">
+<li><a id="orge24ca7f"></a>E' importantissimo soprattutto oggi, dato che viaggia traffico di tipo diverso (best-effort, audio, video, real time) ed ognuno richiede un servizio diverso.<br />
+<ul class="org-ul">
+<li><a id="orgae4bea4"></a>Se arriva un flusso di contenuti real-time, in cui il gitter è importante, questo verrà processato per primo. Lo scheduler sceglie la coda d'uscita in cui imbucare in base a questo parametro, e chi lo decide è il livello superiore.<br /></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="outline-container-orga98a6d8" class="outline-4">
+<h4 id="orga98a6d8">I successivi 16 bit che completano la parola riguardano la Total Length, che quindi può arrivare a \(2^{16}\).</h4>
+</div>
+<div id="outline-container-org19c83b4" class="outline-4">
+<h4 id="org19c83b4">Nella prossima parola, si inizia con 16 bit per l'ID, seguito da 3 bit, di cui il primo vuoto per futuro uso e due bit chiamati D (Do not fragment) e M (More fragment)</h4>
+</div>
+<div id="outline-container-org27198a0" class="outline-4">
+<h4 id="org27198a0">Poi ci sono i restanti 13 bit della parola, che si chiama Fragment Offset</h4>
+<div class="outline-text-4" id="text-org27198a0">
+</div>
+<ul class="org-ul">
+<li><a id="org4451712"></a>Gestisce la frammentazione all'interno del livello 3. Un'unità dati utente non può passare sulla rete nella sua interezza e va frammentata per essere trasmessa. Di solito questa è una funzionalità di livello 4. Questo è un altro tipo di frammentazione.<br />
+<ul class="org-ul">
+<li><a id="org0f5dd89"></a>Un dato viene prodotto a livello 7 e frammentato in <b>segmenti</b> dal livello 4, che vengono poi singolarmente mandati al livello 3 attraverso il relativo servizio, che lo manda alla rete, che non è un concetto astratto ma una rete di qualche tipo, ad esempio Ethernet, la cui grandezza massima è 512 o ~1500 byte. Quindi il livello 3 deve frammentare a sua volta, che comunica direttamente con il livello 2 per capire la lunghezza massima e predispone sequenze da essa dipendenti.<br /></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="outline-container-org52bd418" class="outline-4">
+<h4 id="org52bd418">Nella terza parola, i primi 8 bit sono un timestamp, TTL (Time to live).</h4>
+<div class="outline-text-4" id="text-org52bd418">
+</div>
+<ul class="org-ul">
+<li><a id="org9790527"></a>Ogni pacchetto parte dalla sorgente, che decide quanto tempo può vivere il pacchetto in rete e se arriva alla destinazione con un valore nullo, verrà discardato. Sebbene si parli di Time, di fatto la misura è l'Hop, ovvero quanti step effettua. Se ne effettua troppi, potrebbe essersi trovato in un lungo loop.<br /></li>
+</ul>
+</div>
+<div id="outline-container-org17191df" class="outline-4">
+<h4 id="org17191df">Il secondo campo di 8 bit si chiama Protocol selector.</h4>
+<div class="outline-text-4" id="text-org17191df">
+</div>
+<ul class="org-ul">
+<li><a id="orga9c21c8"></a>A livello 4 esistono diversi protocolli, ad esempio TCP ed UDP. Il pacchetto destinazione deve avere un modo per capire quale protocollo la sorgente abbia utilizzato per inviare il pacchetto.<br /></li>
+</ul>
+</div>
+<div id="outline-container-org1026bd3" class="outline-4">
+<h4 id="org1026bd3">I restanti 16 sono di Header Checksum</h4>
+<div class="outline-text-4" id="text-org1026bd3">
+</div>
+<ul class="org-ul">
+<li><a id="org8a33b0b"></a>Internet è, per definizione, una rete best-effort. Non c'è nessun tipo di affidabilità implementata prima del livello 4. Sull'header, però, si utilizza una checksum in modo da controllare, limitatamente all'header, la validità, in modo da scartare i pacchetti non validi.<br /></li>
+</ul>
+</div>
+<div id="outline-container-orgeb89999" class="outline-4">
+<h4 id="orgeb89999">Nella quarta e quinta parola troviamo rispettivamente il Source e il Destination address, che quindi sono di 32 bit ognuno.</h4>
+</div>
+</div>
+<div id="outline-container-org931ba02" class="outline-3">
+<h3 id="org931ba02">Immaginiamo di avere due stazioni che comunicano, passando attraverso vari gateway, che collegano stazioni attraverso tecnologie diverse.</h3>
+<div class="outline-text-3" id="text-org931ba02">
+</div>
+<div id="outline-container-org74e3646" class="outline-4">
+<h4 id="org74e3646">Ad esempio, immaginiamo che la source esca con un ring, con un limite di 4000 byte per frame, passi per due gateway, di cui il secondo è collegato ethernet, con un limite di 1500 byte per frame alla stazione di arrivo.</h4>
+<div class="outline-text-4" id="text-org74e3646">
+</div>
+<ul class="org-ul">
+<li><a id="org1276db7"></a>In questo caso, devo splittare il pacchetto in un certo modo all'uscita, sfruttando i campi che abbiamo visto prima, ovvero l'ID del pacchetto e il fragment offset (che è un array a scorrimento con info riguardo la posizione del pacchetto mandato).<br /></li>
+<li><a id="org25cfdb8"></a>Innanzitutto, non posso utilizzare tutti i 4000, perchè 20 servono per l'header.<br /></li>
+<li><a id="orgd6f3935"></a>Inoltre, la dimensione massima è a 16 bit, ma l'indice di fragment offset è su 13. Come si potrebbe indicare l'indice successivo a un pacchetto che già occupava la dimensione massima su 16 bit?<br /></li>
+<li><a id="org0766aed"></a>Si decide di utilizzare ogni bit per indicare un ottetto. Questo comporta che ogni frammento deve avere una dimensione in byte che sia un multiplo di 8.<br /></li>
+<li><a id="orgf7f9f30"></a>Il primo frammento sarebbe quindi di una dimensione uguale al multiplo di 8 appena minore dello spazio rimasto oltre i byte.<br />
+<ul class="org-ul">
+<li><a id="org9f0024a"></a>L'ID è assegnato, la lunghezza totale pure. Nel primo frammento il fragment offset sarà a 0, e il bit More fragments a 1. Nel secondo pacchetto, invece, il fragment offset sarà uguale al numero di byte spediti in quello precedente, diviso 8. Così indico la posizione che il nuovo frammento occupa rispetto a quello precedente. Alla fine, il bit M verrà settato a 0 e si passerà al prossimo.<br /></li>
+</ul>
+</li>
+<li><a id="org09469b8"></a>Il riassemblamento viene effettuato soltanto dagli end system, quindi i pacchetti non vengono riassemblati per poi essere di nuovo frammentati per rispettare i nuovi protocolli, ma si lavora sui frammenti già presenti.<br /></li>
+<li><a id="org48222fb"></a>In ogni tratta mi occupo di soddifare i requisiti della rete fisica di cui mi sto occupando, ma non ricompongo mai, scompongo soltanto ulteriormente.<br /></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org303309c" class="outline-3">
+<h3 id="org303309c">L'indirizzamento avviene attraverso l'IP address, che consiste in 4 sequenze di 8 bit, di cui viene rappresentato il valore decimale.</h3>
+<div class="outline-text-3" id="text-org303309c">
+</div>
+<div id="outline-container-orgc35e0e0" class="outline-4">
+<h4 id="orgc35e0e0">L'indirizzo IP è unico a livello globale. Esiste un organismo internazionale, chiamato ICANN, ovvero "&#x2026; for Name and Numbers" e se voglio assegnare un nome al mio dispositivo, devo chiedere a loro.</h4>
+</div>
+<div id="outline-container-org33a8ccb" class="outline-4">
+<h4 id="org33a8ccb">Abbiamo 5 modalità di addressing:</h4>
+<div class="outline-text-4" id="text-org33a8ccb">
+<ul class="org-ul">
+<li>CLASS based</li>
+<li>Subnetting</li>
+<li>CIDR (Classless &#x2026;), molto usato</li>
+<li>NAT, diffusissimo</li>
+<li>IPv6, che riguarda un tipo diverso ai precedenti, ma che usa comunque il NAT ed il subnetting</li>
+</ul>
+</div>
+<ul class="org-ul">
+<li><a id="orgf1eb812"></a>Tutte queste soluzioni sono rivolte a garantire l'unicità degli indirizzi IP<br /></li>
+</ul>
+</div>
+<div id="outline-container-org56cb2a7" class="outline-4">
+<h4 id="org56cb2a7">Nel CLASS based, esistono 3 classi diverse, che gestiscono trasmissioni Unicast, ovvero punto-punto.</h4>
+<div class="outline-text-4" id="text-org56cb2a7">
+</div>
+<ul class="org-ul">
+<li><a id="org5fc5855"></a>Esistono anche una classe per Multicast e una Reserved.<br /></li>
+<li><a id="org480b134"></a>La classe A è caratterizzata dal primo bit settato a quindi il valore del primo byte è da 0 a 127<br /></li>
+<li><a id="org73b0b5f"></a>La classe B ha il primo bit settato ad 1, quindi da 128 a 191<br /></li>
+<li><a id="orgb762cd6"></a>La classe C ha i primi due bit, quindi da 192 a 255<br /></li>
+<li><a id="org234d7a3"></a>In ogni classe, una prima sezione riguarda l'ID della rete, mentre la seconda riguarda il singolo Host<br />
+<ul class="org-ul">
+<li><a id="org9ebb01f"></a>Se un router vede che la sezione iniziale è di passaggio, non si preoccupa neanche di controllare l'HostID.<br /></li>
+<li><a id="orgc1af9f6"></a>Più alta è la classe, meno reti univoche esistono, ma hanno più spazio per host.<br /></li>
+</ul>
+</li>
+<li><a id="org82c6235"></a>C'è un problema di frammentazione interna: è praticamente impossibile che un certo network ID utilizzi tutti gli Host ID ad esso associati<br /></li>
+<li><a id="org271df2f"></a>Il subnetting riserva, a partire dalla divisione in classi precedente, una parte dell'HostID per creare delle subnet, utili all'amministratore per gestire ed organizzare logicamente le reti.<br />
+<ul class="org-ul">
+<li><a id="orga148926"></a>Prendiamo un indirizzo del tipo 130.50.15.6.<br />
+<ul class="org-ul">
+<li><a id="org39551dc"></a>Ignoriamo i primi 16 bit, che sono quelli del NetID, abbiamo 15.6, ovvero 00001111 00000110.<br /></li>
+<li><a id="org4b0b867"></a>Come fa il router a selezionare i 6 bit della subnet e i 10 bit dell'host?<br />
+<ul class="org-ul">
+<li><a id="org10f3463"></a>Bisogna in qualche modo istruire il router in modo che capisca che questo il modo in cui vanno letti e non quello originario, in cui tutti i bit sono Host.<br /></li>
+<li><a id="org0833ba8"></a>Viene quindi introdotta una subnet mask, che filtri via i 6 bit della subnet e lasci tutto il resto, venendo sovrapposta con un AND, dove i 6 bit della subnet, e tutti i bit precedenti, quelli del NetID sono settati a 1, in modo da lasciarli intatti, e il resto a 0, in modo da cancellare il restanti 10 bit dell'host.<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd24d67d" class="outline-2">
+<h2 id="orgd24d67d">Riguardo l'indirizzamento IP, abbiamo visto metodi per garantire l'unicità dell'indirizzo. Abbiamo visto il subnetting, che va di pari passo con il metodo CLASS based. Subnetting non nasce con l'obiettivo di superare il limite delle classi, ma è trucco organizzativo per inserire un nuovo livello gerarchico per gestire le reti in modo che riflettano di più la struttura.</h2>
+<div class="outline-text-2" id="text-orgd24d67d">
+</div>
+<div id="outline-container-orgb11065a" class="outline-3">
+<h3 id="orgb11065a">Gli altri metodi, CIDR e NAT, sono usati per superare il problema della frammentazione interna degli IP e aumentare la longevità di IPv4.</h3>
+<div class="outline-text-3" id="text-orgb11065a">
+</div>
+<div id="outline-container-org839eaab" class="outline-4">
+<h4 id="org839eaab">Prima o poi, gli indirizzi a 32 bit di v4 finiranno, e saremmo costretti a utilizzare i 128 bit del IPv6.</h4>
+</div>
+<div id="outline-container-org0de91d9" class="outline-4">
+<h4 id="org0de91d9">CIDR sta per Classless Inter Domain Routing e invece di dividere in classi, lo fa in blocchi autonomi e indipendenti, geografici (europeo, nord-americano, asiatico, ecc.).</h4>
+<div class="outline-text-4" id="text-org0de91d9">
+</div>
+<ul class="org-ul">
+<li><a id="org72b2f42"></a>Per esempio, in Europa gli indirizzi vanno da 194.0.0.0 a 194.255.255.255 e lo stesso per 195. Quindi abbiamo 3 sequenze da 8 bit, quindi ognuna da 256 indirizzi, con un totale di 16,777,216. Questo numero è per ogni sequenza iniziale di bit, quindi, moltiplicata per 2, ci porta ad un totale di 33,554,432 indirizzi per l'europa.<br /></li>
+<li><a id="org5617af9"></a>Il vantaggio è che ogni operatore può scegliere un numero di subnet o host che preferisce.<br />
+<ul class="org-ul">
+<li><a id="org754f850"></a>Fra paginazione e segmentazione, il vantaggio è che la seconda fa perdere frammentazione interna, ma può creare quella esterna.<br />
+<ul class="org-ul">
+<li><a id="orgb153678"></a>Infatti, nel momento in cui ogni spazio è occupato e uno degli spazi viene deallocato, bisogna trovare qualcuno che abbia bisogno di un numero massimo uguale a quello lasciato, altrimenti non trova posto e quello spazio rimane inallocato.<br /></li>
+</ul>
+</li>
+<li><a id="orgd4f864a"></a>Supponiamo che un organizzazione di Milano richieda 2048 indirizzi e gli viene assegnato l'indirizzo 194.24.0.___, fino a quello 194.24.7.___. L'ultima parte è interna e quindi non serve indicarla.<br />
+<ul class="org-ul">
+<li><a id="orgc84309f"></a>All'organizzazione viene assegnato l'indirizzo base, ovvero i primi 3 byte. Bisogna però dare al router un altro strumento di filtro, per evitare che vada ad utilizzare indirizzi fuori da questo slot.<br /></li>
+</ul>
+</li>
+<li><a id="orgf6b982d"></a>Una di roma chiede 2046 indirizzi, servono quindi 16 pagine da 256 indirizzi, allora 4 bit saranno cancellati<br /></li>
+<li><a id="orgdd9d4b8"></a>Ogni router deve quindi far girare tutte le maschere che conosce in AND con l'indirizzo ricevuto, finchè non trova la base dello spazio di indirizzi che è stato assegnato.<br /></li>
+<li><a id="org15644c9"></a>Questa soluzione allunga la vita a IPV4, ma non risolve completamente il problema. Fra l'altro, il numero massimo di IP è 30 milioni, molto minore della popolazione europea.<br /></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="outline-container-orgb93152c" class="outline-4">
+<h4 id="orgb93152c">Il NAT estende ulteriormente la vita di IPv4.</h4>
+<div class="outline-text-4" id="text-orgb93152c">
+</div>
+<ul class="org-ul">
+<li><a id="org3e414ef"></a>Ogni rete privata ha un NAT, che è un router, che fa da "firewall" fra il mondo di indirizzamento pubblico e quello di indirizzamento privato.<br /></li>
+<li><a id="org696a3e4"></a>Vengono riservati gli ip che iniziano con 10, 172 e 192 alle reti private.<br /></li>
+<li><a id="org0e79cb1"></a>Ogni organizzazione viene raggiunta da un IP unico a livello globale, che poi smisterà il pacchetto agli IP, univoci solo a livello di organizzazione, degli host singoli.<br /></li>
+<li><a id="org4ebb2a3"></a>Ovviamente, è necessario che i pacchetti salvino sia l'IP globale che quello locale.<br /></li>
+<li><a id="org2814872"></a>Bisogna gestire il caso delle requeste da parte degli host locali: questi ultimi sanno dove passare per raggiungere il server, ovvero attraverso il NAT. Il server, invece, riceve una request soltanto dal NAT e risponderà ad esso, ma non ha informazione dell'host locale originario.<br />
+<ul class="org-ul">
+<li><a id="org109f34a"></a>Abbiamo bisogno di qualcosa di nuovo per salvare questa informazione, in modo che il NAT riesca ad associare i pacchetti in arrivo con gli specifici host.<br /></li>
+<li><a id="org2fd4174"></a>Un metodo per risolvere questo problema è attraverso il concetto di porta: il TCP è un identificatore numerico che vale solo nel sistema operativo, che associa all'interno della macchina il processo alla specifica entità TCP.<br />
+<ul class="org-ul">
+<li><a id="org6491a84"></a>Il numero della porta è restituito all'apertura di una socket, come per i file descriptor al momento della open o write in un SO.<br /></li>
+<li><a id="org5ed298a"></a>I server web di tutto il mondo parlano sulla porta 80, well-known-port.<br /></li>
+<li><a id="org69d5030"></a>I server client hanno, invece, un numero di porta effimero assegnato mediante chiamata a primitiva socket e consistente durante la vita della socket.<br /></li>
+<li><a id="org01f4c69"></a>Immaginiamo ora che la host machine dietro NAT usi la porta 1500 ed il server la porta 80. Allora, ogni pacchetto conterrà, oltre ai 3 ip coinvolti (host, NAT, server), anche la porta sorgente e quella destinazione, così che la comunicazione avverrà tra le due porte in questione e il NAT avrà modo di associare il pacchetto in arrivo all'host originario.<br /></li>
+<li><a id="org0af9e7c"></a>A questo punto, la gerarchia ben definita secondo cui ogni livello pensa solo a sè stesso, crolla.<br />
+<ul class="org-ul">
+<li><a id="org5713678"></a>Infatti, IP porta in giro lo header di TCP, che sta a livello 4 e quindi dovrebbe essere completamente ignorato a livello 3.<br /></li>
+<li><a id="org4b2d39a"></a>Invece, il router NAT a livello 3, per compiere le sue tipiche funzioni di instradamento nell'inviare il pacchetto alla sua macchina host, deve andare a leggere lo header TCP, in particolare la porta che quello ha assegnato all'host. Lo stesso vale per le comunicazioni in uscita.<br /></li>
+<li><a id="org9018808"></a>Insomma, lo svolgimento del livello 3 quando è coinvolto un NAT, è basato su risultati creati a livello 4.<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a id="orgd3ed865"></a>Questa soluzione porta ad un problema successivo: cosa accade se a due processi differenti, viene assegnato lo stesso numero di porta dalle primitive socket?<br /></li>
+<li><a id="org8562233"></a>L'unico modo diventa quello di rendere le porte univoche, ed il NAT lo fa utilizzando una numerazione propria e diversa per ogni processo.<br />
+<ul class="org-ul">
+<li><a id="org5f959a8"></a>Il NAT, quindi, accede allo header di livello 4 non soltanto per leggere, ma anche per sostituire la porta locale con quella NAT.<br /></li>
+<li><a id="org1303990"></a>Ovviamente, modifica anche l'IP.<br /></li>
+<li><a id="orgf3303d3"></a>Di conseguenza, le reply arriveranno all'IP del NAT e alla specifica porta NAT, che quest'ultimo trasformerà nella porta host corretta.<br /></li>
+<li><a id="org7d7575b"></a>A cosa serve quindi tenere la porta originale? BHO<br /></li>
+</ul>
+</li>
+<li><a id="org35a8ce7"></a>Il NAT offre grandi garanzie in termini di sicurezza, perchè le macchine dietro di lui sono assolutamente invisibili ed inaccessibili dall'esterno, infatti fa anche da firewall.<br /></li>
+<li><a id="orgfe81ba1"></a>L'ultima questione da risolvere è quella di un server dietro NAT, dato che nessuno conosce la porta che mi porta ad esso.<br />
+<ul class="org-ul">
+<li><a id="orgde71908"></a>Un modo banale è quello di assegnargli un IP pubblico, ma perdendo i vantaggi dovuti all'utilizzo del NAT.<br /></li>
+<li><a id="org1530501"></a>Un secondo modo è quello di aprire la porta specifica del server. In questo modo, tutte le richieste verso quella porta vengono routate al server in questione.<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org501df70" class="outline-2">
+<h2 id="org501df70">Sebbene l'indirizzamento sia parte del livello 3 a livello globale, ogni livello possiede il proprio indirizzo per comunicare con altre macchine.</h2>
+<div class="outline-text-2" id="text-org501df70">
+</div>
+<div id="outline-container-org9c6c2ee" class="outline-3">
+<h3 id="org9c6c2ee">A livello 2, in una rete CSMA-CD l'indirizzo è il MAC</h3>
+</div>
+<div id="outline-container-orga8f5f67" class="outline-3">
+<h3 id="orga8f5f67">A livello 3, l'indirizzo è quello IP, con tutte le considerazioni fatte in precedenza.</h3>
+</div>
+<div id="outline-container-org1190694" class="outline-3">
+<h3 id="org1190694">Un problema che dobbiamo risolvere è quello di mappare l'IP al corrispondente MAC.</h3>
+<div class="outline-text-3" id="text-org1190694">
+</div>
+<div id="outline-container-org8f36933" class="outline-4">
+<h4 id="org8f36933">Infatti, finora non c'è nessun modo per far arrivare un pacchetto a destinazione.</h4>
+</div>
+</div>
+<div id="outline-container-orge615453" class="outline-3">
+<h3 id="orge615453">Immaginiamo che A e B siano sulla stessa rete locale.</h3>
+<div class="outline-text-3" id="text-orge615453">
+</div>
+<div id="outline-container-org7fa1798" class="outline-4">
+<h4 id="org7fa1798">Se la macchina A manda un pacchetto al modulo B, chiede ad ARP di risolvere l'IP in un MAC address, così che possa mandarglielo attraverso il livello 2</h4>
+</div>
+<div id="outline-container-org103cdcb" class="outline-4">
+<h4 id="org103cdcb">In pratica l'ARP, per conto di IP, manda ai livelli sottostanti una richiesta, ARPRequest, così che il dispositivo in questione risponda con un ARPReply, rispondendo con il proprio MAC, che ARP fornirà al livello IP della macchina sorgente.</h4>
+<div class="outline-text-4" id="text-org103cdcb">
+</div>
+<ul class="org-ul">
+<li><a id="org7595aa7"></a>Le due macchine, nell'esempio, si trovano nella stessa rete. Ovviamente, nella richiesta non si sa chi sia l'host destinazione, quindi è necessario fare una richiesta broadcast. La risposta sarà, invece, punto-punto.<br /></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org1e2b76c" class="outline-3">
+<h3 id="org1e2b76c">Immaginiamo adesso che siano su macchine diverse.</h3>
+<div class="outline-text-3" id="text-org1e2b76c">
+</div>
+<div id="outline-container-orgbb60406" class="outline-4">
+<h4 id="orgbb60406">A manda richiesta a Z, su un'altra rete.</h4>
+</div>
+<div id="outline-container-org9aa5df7" class="outline-4">
+<h4 id="org9aa5df7">Il site access gateway leggerà il NETID e vedrà che non appartiene alla rete locale e che quindi va cercato al di fuori. Prenderà lui in carico l'operazione.</h4>
+</div>
+<div id="outline-container-org32cbe15" class="outline-4">
+<h4 id="org32cbe15">A questo punto, risponderà con il proprio MAC, in modo che A mandi le richieste al gateway.</h4>
+</div>
+<div id="outline-container-org911de5b" class="outline-4">
+<h4 id="org911de5b">Il gateway aspetterà autonomamente per la ARPReply della macchina remota e salverà il risultato.</h4>
+</div>
+<div id="outline-container-org00a83a2" class="outline-4">
+<h4 id="org00a83a2">Questo servizio si chiama ProxyARP.</h4>
+</div>
+</div>
+<div id="outline-container-org30de8bc" class="outline-3">
+<h3 id="org30de8bc">ARP in ogni dispositivo terrà una ARP Cache, in cui salverà tutte le associazioni IP-MAC, così che le volte successive non servirà una nuova richiesta.</h3>
+</div>
+<div id="outline-container-org39d3201" class="outline-3">
+<h3 id="org39d3201">Quindi uso ARP per fare una discovery delle macchine che sono raggiungibili in rete.</h3>
+</div>
+<div id="outline-container-orgc1dab00" class="outline-3">
+<h3 id="orgc1dab00">Anche in questo caso, abbiamo un livello 3 che per funzionare (anzi, il suo obiettivo) è di livello 2. Deve infatti andare a toccare il MAC, indirizzo di livello 2, ma in questo caso almeno fa una richiesta</h3>
+</div>
+<div id="outline-container-org69f05bd" class="outline-3">
+<h3 id="org69f05bd">Notiamo che nello header di livello 3, il campo type è usato anche per identificare se la richiesta sia IPv4 o ARP</h3>
+</div>
+</div>
+<div id="outline-container-org8ffdae2" class="outline-2">
+<h2 id="org8ffdae2">Introduciamo il DHCP</h2>
+<div class="outline-text-2" id="text-org8ffdae2">
+</div>
+<div id="outline-container-org99a3330" class="outline-3">
+<h3 id="org99a3330">Abbiamo tante macchine collegate ad una LAN, che possono essere nostre oppure di ospiti che arrivano transitoriamente. Come assegniamo l'IP privato alle macchine?</h3>
+<div class="outline-text-3" id="text-org99a3330">
+</div>
+<div id="outline-container-org2302ffc" class="outline-4">
+<h4 id="org2302ffc">La LAN potrebbe essere Wireless, collegata tramite un Access Point ad una Lan fisica, che tramite il suo Access Gateway è collegata alla rete fisica.</h4>
+</div>
+</div>
+<div id="outline-container-orgc7428aa" class="outline-3">
+<h3 id="orgc7428aa">Il Gateway riesce a fare Address Resolution e quindi è anche un NAT. Ovvero, riesce a mascherare un indirizzo interno.</h3>
+<div class="outline-text-3" id="text-orgc7428aa">
+</div>
+<div id="outline-container-orgd22a71a" class="outline-4">
+<h4 id="orgd22a71a">Ci presenta con un IP pubblico alla rete, ma poi smista alle macchine singole con gli indirizzi privati.</h4>
+</div>
+</div>
+<div id="outline-container-org7bd0ee1" class="outline-3">
+<h3 id="org7bd0ee1">Questi indirizzi potrebbero esere statici, ma questo è scomodo. (Perchè?).</h3>
+</div>
+<div id="outline-container-org1cb0ffe" class="outline-3">
+<h3 id="org1cb0ffe">E' più comodo se al momento della prima connessione alla rete, venga assegnato un IP dinamico al dispositivo, che rimanga fino allo spegnimento.</h3>
+</div>
+<div id="outline-container-orga80d386" class="outline-3">
+<h3 id="orga80d386">Per assegnare l'IP dinamico, usiamo il server DHCP (eventualmente molteplici)</h3>
+<div class="outline-text-3" id="text-orga80d386">
+</div>
+<div id="outline-container-org45323a1" class="outline-4">
+<h4 id="org45323a1">Appena una macchina cliente viene bootata, fa un operazione di Request DHCP al server, che farà a sua volta una Reply.</h4>
+</div>
+<div id="outline-container-orgd40841b" class="outline-4">
+<h4 id="orgd40841b">La reply assegna un IP privato, valido per tutto il tempo necessario.</h4>
+<div class="outline-text-4" id="text-orgd40841b">
+</div>
+<ul class="org-ul">
+<li><a id="org8f2f159"></a>Addirittura, un DHCP address ha un TimeToLeave, poi viene buttato e refreshato.<br /></li>
+<li><a id="orgcf33ea4"></a>Al punto che quando arriva un ospite (abilitato ad accedere alla rete), loro parlano con DHCP e diventano a tutti gli effetti parte della rete.<br /></li>
+</ul>
+</div>
+<div id="outline-container-org755be5c" class="outline-4">
+<h4 id="org755be5c">La RequestForComment che lo definisce è la 2131.</h4>
+</div>
+<div id="outline-container-org6eeccc1" class="outline-4">
+<h4 id="org6eeccc1">Il client triggera la richiesta, che nello specifico si chiama DHCP Discover.</h4>
+<div class="outline-text-4" id="text-org6eeccc1">
+</div>
+<ul class="org-ul">
+<li><a id="org6acf3ab"></a>Questa discover è un pacchetto IP che viaggia con sorgente 0.0.0.0, perchè non so scriverlo ed è proprio per questo che mando la richiesta.<br /></li>
+<li><a id="org4747221"></a>La destinazione è 255.255.255.255. Un pacchetto broadcast all'interno della LAN. Non va direttamente al server DHCP. Il motivo è che se io voglio un assegnamento dinamico per ogni macchina, anche non appartenenti alla mia rete, non posso assumere che questi sappiano l'indirizzo del server DHCP.<br /></li>
+<li><a id="org4e02526"></a>Inoltre, se io mettessi un singolo IP, perderei la possiblità di avere molteplici DHCP server, utilizi banalmente per ridondanza.<br /></li>
+<li><a id="org6eba35d"></a>Poi c'è un campo Time To Live,  con un Transaction ID, che viene associato all'indirizzo della macchina.<br />
+<ul class="org-ul">
+<li><a id="orgb14d458"></a>Questo serve per associare le request alle response<br /></li>
+<li><a id="orga151e85"></a>Per identificare questo Time To Live con il client della richiesta, non può essere utilizzato l'IP, ma necessariamente il MAC di livello 2.<br /></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="outline-container-org2aafea6" class="outline-4">
+<h4 id="org2aafea6">Il server riceve la richiesta e reagisce con una DHCP Offer.</h4>
+<div class="outline-text-4" id="text-org2aafea6">
+</div>
+<ul class="org-ul">
+<li><a id="orgc5b56e8"></a>Quello che offre il DHCP server è l'IP address.<br /></li>
+<li><a id="org25c970d"></a>Sarà sempre un pacchetto con sorgente IP del Server, broadcast e lo stesso transactionID della richiesta.<br />
+<ul class="org-ul">
+<li><a id="org2da577f"></a>Deve necessariamente essere broadcast.<br /></li>
+</ul>
+</li>
+<li><a id="orgb187058"></a>Prima di fare la offer, il server fa un check. Il check dell'IP prevede che tramite ICMP il server sia in grado di verificare se per caso quell'IP non sia stato già assegnato a qualcuno per errore.<br />
+<ul class="org-ul">
+<li><a id="org4b3a306"></a>In pratica fa un ping, che prevede un echo se la stazione è raggiungibile. Se l'echo è assente, l'IP non è stato associato a nessuno. Altrimenti l'IP va aggiornato.<br /></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="outline-container-org0f37939" class="outline-4">
+<h4 id="org0f37939">A questo punto il client ha <b>apparentemente</b> risolto il suo problema.</h4>
+<div class="outline-text-4" id="text-org0f37939">
+</div>
+<ul class="org-ul">
+<li><a id="orgc3ac21b"></a>Si può immaginare che il client abbia un timeout in modo che non trascorra troppo prima dell'arrivo di una offer. (Stesso principio dell'ACK).<br /></li>
+<li><a id="org613f754"></a>Il problema è che un algoritmo di questo tipo funzionerebbe se e solo se ammettesse uno e un solo server DHCP operativo per ogni rete, ma il protocollo è fatto per funzionare con un numero arbitrario di server.<br />
+<ul class="org-ul">
+<li><a id="org2fc355c"></a>Infatti, la discover è in broadcast e arriva a tutti i server, che si adopereranno tutti per offrire un IP.<br /></li>
+</ul>
+</li>
+<li><a id="org174a8a0"></a>Bisogna garantire che venga accettata l'offerta di un solo server.<br /></li>
+</ul>
+</div>
+<div id="outline-container-orgf5f7957" class="outline-4">
+<h4 id="orgf5f7957">Diventa necessaria un ulteriore fase, una commit, chiamata DHCP Request.</h4>
+<div class="outline-text-4" id="text-orgf5f7957">
+</div>
+<ul class="org-ul">
+<li><a id="org09fd680"></a>Questa viaggia con stesse sorgente e destinazione della discover (0 e 1Broadcast), ma con un ulteriore campo scelta, che contiene un ID del server la cui offerta è stata accettata.<br /></li>
+</ul>
+</div>
+<div id="outline-container-orge4fd18e" class="outline-4">
+<h4 id="orge4fd18e">A questo punto, si chiude il commitment con una DHCP Ack, che è una validazione della request. Anche questo è mandato in broadcast secondo IP.</h4>
+<div class="outline-text-4" id="text-orge4fd18e">
+</div>
+<ul class="org-ul">
+<li><a id="org48ccd75"></a>Ricordare che tutte queste comunicazioni di risposta da parte del server, utilizzano il MAC di livello 2 e sono quindi Unicast.<br /></li>
+</ul>
+</div>
+<div id="outline-container-org4054d8e" class="outline-4">
+<h4 id="org4054d8e">Questo protocollo è un protocollo a 4 vie, a causa della necessità di selezionare fra i vari server.</h4>
+</div>
+<div id="outline-container-orgbbc2c2e" class="outline-4">
+<h4 id="orgbbc2c2e">Servono inoltre dei check per verificare la validità degli IP, anche dal punto di vista del client.</h4>
+<div class="outline-text-4" id="text-orgbbc2c2e">
+</div>
+<ul class="org-ul">
+<li><a id="orge1428ad"></a>Viene utilizzato ARP, che è perfetto per questo lavoro, ovvero risolvere un IP in un MAC.<br />
+<ul class="org-ul">
+<li><a id="orgc84b6ac"></a>Facendo una ARP request con l'IP appena assegnato al server, in caso di risposta positiva si capisce che l'IP è già assegnato.<br /></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="outline-container-orgc15db0d" class="outline-4">
+<h4 id="orgc15db0d">Esistono dei meccanismi di ricovero, per gestire i casi in cui i messaggi vengano persi. Si utilizza ad esempio un timer T, che viene eseguito massimo K volte (numero di retry). Una volta aver provato K volte, si ritorna alle origini e si ricomincia da capo.</h4>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc0764dd" class="outline-2">
+<h2 id="orgc0764dd">L'ICMP utilizzato per il ping e per capire delle statistiche sulla rete, fa uso di uno Header IP ed utilizza un Checksum, oltre che il tipo di richiesta (ce ne sono varie).</h2>
+</div>
+<div id="outline-container-org5324396" class="outline-2">
+<h2 id="org5324396">Un importante compito del livello 3 è quello di instradare i pacchetti verso la giusta destinazione. Il grafo della rete è parzialmente connesso e serve un livello superiore a quello del data link che abbia una visione più ampia e riesca a smistare i pacchetti in un modo intelligente ed efficiente</h2>
+<div class="outline-text-2" id="text-org5324396">
+</div>
+<div id="outline-container-org1c2f1f0" class="outline-3">
+<h3 id="org1c2f1f0">Immaginiamo di avere due macchine con porte I/O e un forwarder in mezzo, che contiene una tabella e fa un lookup per capire su quale porta trasmettere il messaggio entrato.</h3>
+<div class="outline-text-3" id="text-org1c2f1f0">
+</div>
+<div id="outline-container-org5c8c5f3" class="outline-4">
+<h4 id="org5c8c5f3">A livello 2, questo è fatto dal bridge, che popola e spopola le tabelle periodicamente per lasciar spostare le macchine.</h4>
+</div>
+<div id="outline-container-org4062394" class="outline-4">
+<h4 id="org4062394">Se saliamo di un piano, quello che cambia radicalmente è che non è più vero che la macchina destinazione sia attaccata al link. La validità di un forwarding livello 2, a livello 3 non è più sufficiente.</h4>
+<div class="outline-text-4" id="text-org4062394">
+</div>
+<ul class="org-ul">
+<li><a id="org3399a00"></a>Il forwarding deve avere la capacità di scegliere la porta che conduce alla destinazione in futuro, e in un modo oscuro alla singola macchina.<br /></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6772a24" class="outline-3">
+<h3 id="org6772a24">A livello 3, la tabella viene popolata da un secondo processo, che chiamiamo <b>router</b>, che lavora con i suoi pacchetti di controllo, utili soltanto a lui, tramite i quali impara la topologia della rete e popola la tabella in modo da permettere di raggiungere ogni host in un modo efficiente, possibilmente il cammino minimo.</h3>
+<div class="outline-text-3" id="text-org6772a24">
+</div>
+<div id="outline-container-org93bd8d6" class="outline-4">
+<h4 id="org93bd8d6">La cosa interessante è che abbiamo una separazione netta fra tutto ciò che è gestione dei dati utente e la gestione di controllo di tutto ciò che serve alla rete autonomamente perchè funzioni.</h4>
+</div>
+<div id="outline-container-orge0f1624" class="outline-4">
+<h4 id="orge0f1624">Con il routing questa diventa chiara.</h4>
+<div class="outline-text-4" id="text-orge0f1624">
+</div>
+<ul class="org-ul">
+<li><a id="orgf33d310"></a>Finora i messaggi di controllo e i dati erano mescolati, anche fisicamente.<br /></li>
+<li><a id="org997a2aa"></a>Adesso, il router lavora in modo assolutamente autonomo.<br /></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgb57592c" class="outline-3">
+<h3 id="orgb57592c">Il router opera attraverso 3 tecniche:</h3>
+<div class="outline-text-3" id="text-orgb57592c">
+<ul class="org-ul">
+<li>Distance vector - RIP, vecchio e residuale</li>
+<li>OSPF, link state, più diffuso</li>
+<li>BGP, Border Gateway Protocol, evoluzione del distance vector, utilizzato per la comunicazione ad alto livello, intercontinentale</li>
+</ul>
+</div>
+<div id="outline-container-org549cd88" class="outline-4">
+<h4 id="org549cd88">Il protocollo con Distance vector opera assegnando due etichette con numero del link e corrispondente peso su ogni arco bidirezionale.</h4>
+<div class="outline-text-4" id="text-org549cd88">
+</div>
+<ul class="org-ul">
+<li><a id="orge6e8a29"></a>Ogni nodo produce la tabella delle adiacenze. Questa contiene Router, Link e Cost.<br />
+<ul class="org-ul">
+<li><a id="org52716b2"></a>Sè stesso è raggiungibile da sè stesso (no link) con costo 0.<br /></li>
+<li><a id="orgd42ee28"></a>Ogni altro router, è raggiungibile attraverso un certo link, con un costo uguale alla somma delle etichette dei pesi di tutti gli archi che vengono attraversati.<br /></li>
+</ul>
+</li>
+<li><a id="org57d3b5b"></a>Con queste costruiamo la conoscenza locale, ovvero tutti i router appena adiacenti attraverso soltanto un filo, insieme al loro costo.<br />
+<ul class="org-ul">
+<li><a id="orgd104a50"></a>Ancora non abbiamo una visione topologica della rete. Abbiamo solo una visione delle adiacenze.<br />
+<ul class="org-ul">
+<li><a id="orgf810ed1"></a>Un singolo nodo nono ha idea di quali nodi possa raggiungere oltre le adiacenze.<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a id="orgf198df0"></a>Il modo per passare da una conoscenza locale a quella globale sfrutta la comunicazione fra nodi.<br /></li>
+<li><a id="orgff70fea"></a>Periodicamente viene trasferito agli altri il distance vector, ovvero l'associazione Router-Costo<br />
+<ul class="org-ul">
+<li><a id="org71d7895"></a>Ogni router ha un proprio timer, alla scadenza del quale trasferisce il vettore delle distanze ai suoi vicini.<br /></li>
+</ul>
+</li>
+<li><a id="org49a9e59"></a>Quando un nodo riceve il vettore delle distanze del vicino, aggiorna il proprio vettore con i nuovi nodi raggiungibili attraverso il vicino, la cui distanza è la somma fra il primo nodo è quello appena collegato e quest'ultimo con il nuovo.<br /></li>
+<li><a id="org49592e6"></a>Ogni vettore delle distanze nuovo che arriva, un router calcola anche tutte le nuove distanze per le destinazioni che già conosce, in modo da aggiornare nuove distanze minime.<br /></li>
+<li><a id="org33f5284"></a>Il tempo necessario per conoscere tutta la rete è lineare con il suo diametro.<br /></li>
+<li><a id="orgffc289f"></a>Viene inoltre utilizzato il trigger update con cui i nodi vicini appena accesi chiamano velocemente informazioni nuove.<br /></li>
+<li><a id="org1d0af0d"></a>Il problema di questo protocollo è che non c'è modo di aggiornare in caso di peggioramenti.<br />
+<ul class="org-ul">
+<li><a id="org2be1bc7"></a>Immaginiamo che un link su un certo nodo si guasti.<br />
+<ul class="org-ul">
+<li><a id="org1ed67c7"></a>Il nodo stesso lo riconosce subito e aggiorna la propria tabella con valore <b>infinito</b> per il nodo dietro quel link.<br /></li>
+<li><a id="orga48d04d"></a>Gli altri nodi però non lo sanno e continuano a mandare su quel link, se la loro tabella dice che è quella la strada minore.<br /></li>
+<li><a id="org356b93a"></a>Questa situazione finisce soltanto nel momento in cui B propaga il suo distance vector con costo infinito.<br /></li>
+<li><a id="org4ae5aaa"></a>Cosa succede se però nel frattempo un altro nodo, non ancora informato del guasto, manda il proprio distance vector al nodo che ha appena notato il guasto?<br />
+<ul class="org-ul">
+<li><a id="org7fe2a0c"></a>Siano A, B e C i nodi, con A che vuole raggiungere C attraverso B, e il collegamento fra B e C guasto.<br />
+<ul class="org-ul">
+<li><a id="orgd135ffe"></a>Allora la distanza fra A e C è uguale alla distanza fra A e B più quella fra A e C<br /></li>
+<li><a id="orgba379e9"></a>Il problema è che adesso la distanza fra B e C è infinita, ma quella fra A e C ancora quella fra A e B, intatta, più quella fra B e C, vecchia.<br /></li>
+<li><a id="org5193b5b"></a>B non sa che quella info è datata, e aggiorna la sua stessa distanza fra B e C come quella suggerita da A.<br />
+<ul class="org-ul">
+<li><a id="orgc4d0270"></a>In pratica, B rimpiazza la sua distanza con C con la distanza fra A e B più quella fra B e C.<br /></li>
+<li><a id="orga58087a"></a>Allo stesso tempo, A rimpiazza la sua distanza con C con la distanza fra<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a id="orga190b3f"></a>Il nodo del guasto non ha modo di capire che quella informazione sia datata, e sovrascrive l'infinito con la distanza che l'altro nodo gli ha suggerito e rispedirà a sua volta il vettore delle distanze.<br /></li>
+<li><a id="org02f839a"></a>L'altro nodo però, deve passare attraverso quello del guasto per raggiungere la destinazione. Quindi la sua nuova<br /></li>
+</ul>
+</li>
+<li><a id="org69bb9ef"></a><span class="todo TODO">TODO</span> Capire la condizione di race to infinity, guardare da 01:45:00 della lezione 11<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: vjo</p>
+<p class="date">Created: 2024-11-14 Thu 17:51</p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.4 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</p>
+</div>
+</body>
+</html>

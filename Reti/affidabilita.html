@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-11-14 Thu 17:51 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Affidabilita</title>
+<meta name="author" content="vjo" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Affidabilita</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org27fe6bd">Affidabilità</a>
+<ul>
+<li><a href="#org18bd346">Applicazioni</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org27fe6bd" class="outline-2">
+<h2 id="org27fe6bd">Affidabilità</h2>
+<div class="outline-text-2" id="text-org27fe6bd">
+<p>
+Definiamo rete <b>affidabile</b> quella che garantisca tre condizioni:
+</p>
+<ul class="org-ul">
+<li>Correttezza</li>
+<li>Ordine</li>
+<li>Non duplicazione</li>
+</ul>
+
+<p>
+Il problema di rendere una rete affidabile non è banale, anzi è dimostrabile che su un canale non affidabile, non esista una comunicazione che sia affidabile e garantita. <sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup> Vengono però messe in atto delle <b>euristiche</b> che garantiscono una buona soluzione al problema. Una di queste si basa sull'<b>Acknowledgement (<code>ACK</code>)</b>, che consiste in un messaggio di risposta da parte dello host destinatario, attraverso il cui viene confermata la corretta ricezione del messaggio originale.
+</p>
+
+<p>
+Nella macchina sorgente, viene inserito un cronometro che misura il tempo trascorso dalla trasmissione iniziale e viene resettato alla ricezione dell'<code>ACK</code>. Dopo un certo tempo \(T\) durante il quale un <code>ACK</code> non è stato ricevuto, la sorgente assumerà che la comunicazione non sia andata a buon fine e la ripeterà<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup>.
+</p>
+
+<p>
+Il valore di \(T\) deve essere correttamente dimensionato. Infatti, un valore troppo elevato comporterebbe una attesa inutile
+ad ogni mancata ricezione dell'<code>ACK</code>, mentre con un valore troppo ridotto la sorgente potrebbe rimandare la comunicazione mentre l'<code>ACK</code> è in arrivo, annullando la condizione della non duplicazione.
+</p>
+
+<p>
+Per dimensionare \(T\) viene utilizzata la formula del <b>round trip time</b> ovvero \(t_{x}+2t_{p}\), ed il tempo \(T\) si chiamerà quindi <b>round trip time delay.</b>
+</p>
+</div>
+
+<div id="outline-container-org18bd346" class="outline-3">
+<h3 id="org18bd346">Applicazioni</h3>
+<div class="outline-text-3" id="text-org18bd346">
+<p>
+Nel caso di reti ad alta qualità, il problema di affidabilità non ha un impatto significativo, infatti lo <b>error rate</b> è basso e le eventuali ritrasmissioni pesano poco sul totale.
+Il punto delicato, infatti, non sono i link ma i nodi intermedi. Una comunicazione che viaggia su lunghe distanze, attraversa un numero consistente di nodi che la smistano. Per fare ciò, utilizzano dei buffer che possono andare in <b>buffer overflow</b> e quindi perdere i nuovi messaggi che avrebbero dovuto instradare correttamente.
+</p>
+
+<p>
+In questa situazione, la soluzione dell'<code>ACK</code> è inefficace: il nodo è congestionato ed il messaggio rispedito verrà probabilmente perso nuovamente. Quella soluzione è utile per risolvere i problemi di <b>trasmissione</b>, mentre in questo caso si parla di <b>congestione</b> e la scelta più ragionevole è quella di ridurre il flusso verso il nodo problematico. Questo è compito del TCP. 
+</p>
+
+<p>
+Le soluzioni ai due problemi sono entrambe inefficienti per risolvere l'altro. Ne consegue che utilizzare uno strumento nel caso inadatto comporti una grande perdita di efficienza.
+</p>
+
+<p>
+Quindi, non va usato TCP su reti wireless, perchè le assunzioni che fa, basate sui problemi di congestine, non sono valide per un canale con un error rate alto e comportano frequenti mismatch. TCP è in corso di revisione per questo motivo.
+</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Il problema è legato a quello dei generali bizantini
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Ovviamente va anche aggiunto un buffer che mantenga il contenuto del messaggio fino alla ricezione dell'<code>ACK</code>.
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="author">Author: vjo</p>
+<p class="date">Created: 2024-11-14 Thu 17:51</p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.4 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</p>
+</div>
+</body>
+</html>

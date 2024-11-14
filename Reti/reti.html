@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-11-14 Thu 17:51 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reti</title>
+<meta name="author" content="vjo" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Reti</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org20e9291">Introduzione</a>
+<ul>
+<li><a href="#org4cc6ff0">Affidabilita</a></li>
+<li><a href="#org497ef60">Concetto di protocollo</a></li>
+<li><a href="#orgda2d940">Parametri e statistiche</a></li>
+</ul>
+</li>
+<li><a href="#org155cfa7">Livelli gerarchici</a>
+<ul>
+<li><a href="#org15823f0">Primo livello (<b>Physic</b>)</a></li>
+<li><a href="#org7253387">Secondo livello (<b>Data link</b>)</a></li>
+<li><a href="#org70e5a1f">Terzo livello (<b>Network layer</b>)</a></li>
+<li><a href="#org10bf44d">Quarto livello (<b>Transport layer</b>)</a></li>
+<li><a href="#orgc1c1a40">Quinto/Settimo livello (<b>Application layer</b>)</a></li>
+</ul>
+</li>
+<li><a href="#org218fd17">Formule</a>
+<ul>
+<li><a href="#orgab916ae">Round trip time</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org20e9291" class="outline-2">
+<h2 id="org20e9291">Introduzione</h2>
+<div class="outline-text-2" id="text-org20e9291">
+<p>
+Una <b>rete</b> è un sistema che permette ad <b>host</b>, ovvero computer dove risiedono le app finali, di connettersi da remoto, attraverso nodi intermedi e link.
+</p>
+
+<p>
+I dati che viaggiano nel sistema sono denominati <b>pacchetti</b>, con una dimensione massima fissa, per semplificare l'architettura dei nodi intermedi che si occupano di instradarli. Ogni pacchetto è composto da un <b>payload</b>, ovvero il contenuto originale che il mittente intende comunicare, e uno <b>header</b>, che contiene le informazioni necessarie al sistema di rete e agli host per processare correttamente il contenuto.
+</p>
+</div>
+
+<div id="outline-container-org4cc6ff0" class="outline-3">
+<h3 id="org4cc6ff0"><a href="affidabilita.html#ID-3898f6e3-9c94-41fc-bdef-7690d5031ccd">Affidabilita</a></h3>
+<div class="outline-text-3" id="text-org4cc6ff0">
+<p>
+Definiamo rete <b>affidabile</b> quella che garantisca tre condizioni:
+</p>
+<ul class="org-ul">
+<li>Correttezza</li>
+<li>Ordine</li>
+<li>Non duplicazione</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org497ef60" class="outline-3">
+<h3 id="org497ef60">Concetto di protocollo</h3>
+<div class="outline-text-3" id="text-org497ef60">
+<p>
+L'introduzione di un algoritmo per garantire l'affidabilità e del round trip time delay comportano la necessità di <b>sincronizzare</b> tutte le macchine coinvolte nella comunicazione. Ognuna di esse deve utilizzare gli stessi algoritmi e i messaggi che esse si scambiano devono essere mutualmente intellegibili. Ad esempio, l'<code>ACK</code> che una destinazione invia alla sorgente dev'essere correttamente identificato da quest'ultima, altrimenti la comunicazione verrà ripetuta all'infinito.
+</p>
+
+<p>
+L'insieme di informazioni e convenzioni condivise fra tutte le macchine connesse viene chiamato <b>protocollo</b>.
+</p>
+
+<p>
+I protocolli sono standard e vengono stabiliti e descritti da organismi come lo IETF per Internet. Nel caso di quest'ultimo, in particolare, non c'è stato un ente sovranazionale che stabilisse e divulgasse gli standard, ma è stato lo sforzo condiviso di molteplici entità che nel tempo ha modificato le specifiche fino a raggiungere un insieme di regole che adesso consideriamo come standard.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgda2d940" class="outline-3">
+<h3 id="orgda2d940">Parametri e statistiche</h3>
+<div class="outline-text-3" id="text-orgda2d940">
+<p>
+Oltre al <b>round trip time</b> menzionato in precedenza, esistono altri parametri utilizzati nell'analisi di una rete, ovvero la probabilità di errore, <b>error rate</b>, che è caratteristica di un cavo ed è \(10^{-9}\) per la fibra, \(10^{-5}\) per il doppino telefonico e ancora più alta per le reti radio.
+</p>
+
+<p>
+Un altro parametro importante per alcune applicazioni, ma che non analizzeremo nel nostro corso, è quello del gitter, ovvero la variazione nel ritardo fra coppie di messaggi, che è importante nel caso di segnali audio e video per garantire la qualità della riproduzione.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org155cfa7" class="outline-2">
+<h2 id="org155cfa7">Livelli gerarchici</h2>
+<div class="outline-text-2" id="text-org155cfa7">
+<p>
+Le componenti della rete sono organizzate all'interno di una struttura, in modo da assolvere a tutte le funzioni necessarie per la corretta comunicazione. Fra queste funzioni ci sono ad esempio l'instradamento e la garanzia di affidabilità.
+</p>
+
+<p>
+L'architettura è gerarchica, organizzata in livelli indipendenti che implementano un insieme ridotto di funzioni e comunicano l'un l'altro attraverso delle interfacce. In generale, i livelli non interferiscono direttamente con l'operato degli altri, tranne alcuni casi specifici.
+</p>
+
+<p>
+Questa struttura è definita nell'<b>OSI-RM</b> (<i>open-system interconnection reference model</i>), che è un modello generale a 7 livelli, che vanno dalle funzioni più vicine al cavo, fino a salire al livello applicativo, direttamente controllato dal sistema operativo.
+</p>
+
+<p>
+Internet utilizza 5 di questi livelli, combinando gli ultimi 3 secondo un altro modello, <b>TCP/IP</b>.
+</p>
+
+<p>
+I primi 3 livelli sono presenti in tutte le macchine coinvolte in una rete, ovvero i router e gli host.
+</p>
+</div>
+
+<div id="outline-container-org15823f0" class="outline-3">
+<h3 id="org15823f0">Primo livello (<b>Physic</b>)</h3>
+<div class="outline-text-3" id="text-org15823f0">
+<p>
+Questo livello si occupa di gestire la trasmissione attraverso una porta I/O, inserendo i bit nel cavo ed estraendoli con un clock definito.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7253387" class="outline-3">
+<h3 id="org7253387">Secondo livello (<b>Data link</b>)</h3>
+<div class="outline-text-3" id="text-org7253387">
+<p>
+Questo livello fornisce un formato logico alle informazioni che viaggiano sul cavo fra coppie di host, formattandoli e taggandoli in modo da abilitare funzioni come l'affidabilità.
+</p>
+
+<p>
+Il principale protocollo utilizzato per questo livello è <b>Ethernet</b> IEEE 802.3 e le sue versioni più avanzate come <b>Gigabit Ethernet</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org70e5a1f" class="outline-3">
+<h3 id="org70e5a1f">Terzo livello (<b>Network layer</b>)</h3>
+<div class="outline-text-3" id="text-org70e5a1f">
+<p>
+Il terzo livello ci fornisce l'<b>instradamento</b>, per far sì che una comunicazione avvenga su distanze più lunghe, non direttamente collegate. Per svolgere questa funzione, ha bisogno di gestire anche l'<b>indirizzamento</b>.
+</p>
+
+<p>
+In questo livello agiscono, fra gli altri:
+</p>
+<ul class="org-ul">
+<li><b>IP</b> per l'indirizzamento e l'instradamento</li>
+<li><b>ARP</b> per la risoluzione degli indirizzi IP di livello 3 in quelli MAC di livello 2</li>
+<li><b>ICMP</b> per la gestione di messaggi di controllo come <code>ping</code></li>
+</ul>
+
+<p>
+I due livelli restanti si trovano soltanto nelle macchine host e non nei router intermedi.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org10bf44d" class="outline-3">
+<h3 id="org10bf44d">Quarto livello (<b>Transport layer</b>)</h3>
+<div class="outline-text-3" id="text-org10bf44d">
+<p>
+Il quarto livello mette in comunicazione due macchine direttamente fra loro (sfruttando i livelli inferiori) e per questo si parla di livello <b>end-to-end.</b>
+</p>
+
+<p>
+L'ordinamento dei pacchetti, classificato come uno dei parametri necessari per l'affidabilità, avviene in questo livello.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc1c1a40" class="outline-3">
+<h3 id="orgc1c1a40">Quinto/Settimo livello (<b>Application layer</b>)</h3>
+<div class="outline-text-3" id="text-orgc1c1a40">
+<p>
+Il settimo livello della gerarchia OSI-RM è quello in cui la rete interagisce direttamente con il processo di sistema.
+</p>
+
+<p>
+Nel modello TCP/IP di Internet, questo livello comprende, oltre al livello 7, anche i livelli 5, 6 dell'OSI-RM, ovvero:
+</p>
+
+<ul class="org-ul">
+<li><b>Session layer</b>, che smista i dati ai singoli processi che utilizzano la rete, assegnando delle sessioni separate ad ogni processo. In Internet questo ruolo è svolto dalle <b>socket</b>, specifiche interfacce implementate a livello di sistema, che creano un associazione fra processo sorgente e destinatario.</li>
+
+<li><b>Presentation layer</b>, che si occupa di presentare in modo
+uniforme i dati su macchine che potrebbero utilizzare formati diversi. L'importanza di questo livello è diminuita notevolmente a causa dell'introduzione di Unicode.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org218fd17" class="outline-2">
+<h2 id="org218fd17">Formule</h2>
+<div class="outline-text-2" id="text-org218fd17">
+</div>
+<div id="outline-container-orgab916ae" class="outline-3">
+<h3 id="orgab916ae">Round trip time</h3>
+<div class="outline-text-3" id="text-orgab916ae">
+<p>
+Tempo necessario perchè un frame arrivi a destinazione e venga
+Inserire spiegazione, formula e esempi.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: vjo</p>
+<p class="date">Created: 2024-11-14 Thu 17:51</p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.4 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</p>
+</div>
+</body>
+</html>

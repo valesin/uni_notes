@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-11-14 Thu 17:51 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ricerca</title>
+<meta name="author" content="vjo" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Ricerca</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgc764a7e">Array</a>
+<ul>
+<li><a href="#orgaacd385">Collezione di elementi dello stesso tipo, accessibili in base alla posizione.</a></li>
+<li><a href="#org3dfc853">Memorizzato in una porzione contigua di memoria.</a></li>
+<li><a href="#org9313c9b">Accessibile mediante <i>indice</i>.</a>
+<ul>
+<li><a href="#orgc082e38">Questo comporta che il tempo di accesso sia indipendente dalla posizione del dato.</a></li>
+</ul>
+</li>
+<li><a href="#org928d55f">E' una struttura statica.</a>
+<ul>
+<li><a href="#orgc80bbfa">Non si può modificare la dimensione dopo la dichiarazione iniziale.</a></li>
+<li><a href="#org6040710">Infatti, cadrebbe la condizione della porzione contigua di memoria.</a></li>
+</ul>
+</li>
+<li><a href="#org226afdb">La variabile array è un <b>puntatore</b> all'array.</a>
+<ul>
+<li><a href="#org3923661">Questo comporta che diverse variabili puntino allo stesso array sottostante.</a></li>
+</ul>
+</li>
+<li><a href="#org33bdb18">Ricerca in un array</a>
+<ul>
+<li><a href="#orgb6122cf">Ricerca sequenziale</a></li>
+<li><a href="#org13df1cc">Ricerca dicotomica</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc764a7e" class="outline-2">
+<h2 id="orgc764a7e">Array</h2>
+<div class="outline-text-2" id="text-orgc764a7e">
+</div>
+<div id="outline-container-orgaacd385" class="outline-3">
+<h3 id="orgaacd385">Collezione di elementi dello stesso tipo, accessibili in base alla posizione.</h3>
+</div>
+<div id="outline-container-org3dfc853" class="outline-3">
+<h3 id="org3dfc853">Memorizzato in una porzione contigua di memoria.</h3>
+</div>
+<div id="outline-container-org9313c9b" class="outline-3">
+<h3 id="org9313c9b">Accessibile mediante <i>indice</i>.</h3>
+<div class="outline-text-3" id="text-org9313c9b">
+</div>
+<div id="outline-container-orgc082e38" class="outline-4">
+<h4 id="orgc082e38">Questo comporta che il tempo di accesso sia indipendente dalla posizione del dato.</h4>
+<div class="outline-text-4" id="text-orgc082e38">
+</div>
+<ul class="org-ul">
+<li><a id="org57f7c5e"></a>Sfrutta l'architettura della memoria RAM.<br /></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org928d55f" class="outline-3">
+<h3 id="org928d55f">E' una struttura statica.</h3>
+<div class="outline-text-3" id="text-org928d55f">
+</div>
+<div id="outline-container-orgc80bbfa" class="outline-4">
+<h4 id="orgc80bbfa">Non si può modificare la dimensione dopo la dichiarazione iniziale.</h4>
+</div>
+<div id="outline-container-org6040710" class="outline-4">
+<h4 id="org6040710">Infatti, cadrebbe la condizione della porzione contigua di memoria.</h4>
+<div class="outline-text-4" id="text-org6040710">
+</div>
+<ul class="org-ul">
+<li><a id="org09ea570"></a>Una soluzione sarebbe quella di riallocare l'intero array, ma è molto costoso.<br /></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org226afdb" class="outline-3">
+<h3 id="org226afdb">La variabile array è un <b>puntatore</b> all'array.</h3>
+<div class="outline-text-3" id="text-org226afdb">
+</div>
+<div id="outline-container-org3923661" class="outline-4">
+<h4 id="org3923661">Questo comporta che diverse variabili puntino allo stesso array sottostante.</h4>
+<div class="outline-text-4" id="text-org3923661">
+<div class="org-src-container">
+<pre class="src src-go"><span style="color: #a0522d;">A</span> := [3]<span style="color: #228b22;">int</span>{1,2,3}
+<span style="color: #a0522d;">B</span> := A
+B[1] = 0
+fmt.<span style="color: #0000ff;">Println</span>(A[1], B[1])
+</pre>
+</div>
+</div>
+<ul class="org-ul">
+<li><a id="org077a8e5"></a>Non succede in go.<br /></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org33bdb18" class="outline-3">
+<h3 id="org33bdb18">Ricerca in un array</h3>
+<div class="outline-text-3" id="text-org33bdb18">
+</div>
+<div id="outline-container-orgb6122cf" class="outline-4">
+<h4 id="orgb6122cf">Ricerca sequenziale</h4>
+<div class="outline-text-4" id="text-orgb6122cf">
+<pre class="example" id="orgb856876">
+ALGORITMO ricercaSequenziale( Array A[0..n-1], elemento x) -&gt; indice
+i &lt;- 0
+WHILE  ( i &lt; n AND A[i] /= x )  DO
+    i &lt;- i+1
+IF ( i = n) THEN RETURN -1
+    ELSE RETURN i
+</pre>
+</div>
+<ul class="org-ul">
+<li><a id="org1fda1a0"></a>Notare che nel caso in cui le condizioni fossero verificate in ordine contrario, si accederebbe ad una posizione inesistente, generando un errore.<br /></li>
+<li><a id="orgc21070e"></a>Attenzione al fatto che l'AND non è commutativo, come in logica, e le condizioni vengono verificate in ordine.<br /></li>
+<li><a id="orgd70dbff"></a>Inoltre, per la <b>lazy evaluation</b>, se una condizione si rivela falsa, la successiva non viene verificata.<br /></li>
+</ul>
+</div>
+
+<div id="outline-container-org13df1cc" class="outline-4">
+<h4 id="org13df1cc">Ricerca dicotomica</h4>
+<div class="outline-text-4" id="text-org13df1cc">
+<pre class="example" id="orgc3dcc38">
+FUNZIONE ricercaRic( Array A, indice sx, indice dx, elemento x) -&gt; indice
+    IF (dx&lt;=sx) THEN RETURN -1    // se la porzione compresa fra indici è vuota, ho scansionato l'intero array, oppure è vuoto
+    ELSE
+        m &lt;- (sx+dx)/2            // prendo il punto medio fra gli indici estremi
+        IF x=A[m] THEN RETURN m   // se l'ho trovato, lo ritorno
+        ELSE IF x&lt;A[M] THEN
+            RETURN ricercaRic(A,sx,m,x)   // altrimenti, faccio lo stesso con la parte destra e quella sinistra
+            ELSE                          // escludendo l'indice m, perchè l'ho già controllato
+            RETURN ricercaRic(A,m+1,dx,x)
+
+ALGORITMO ricercaBinaria ( Array A[0..n-1], x) -&gt; indice
+    RETURN ricercaRic(A,0,n,x)
+</pre>
+</div>
+
+<ul class="org-ul">
+<li><a id="org542a586"></a>Il tempo è logaritmico, mentre lo spazio è eccessivo. Sarebbe meglio trovare un modo per operare in loco.<br />
+<ul class="org-ul">
+<li><a id="org6e182f5"></a>Notare che per il tempo si usa \(\theta{(n)}\) e non \(\O{(n)}\), perchè esiste un caso per ogni lunghezza in cui il tempo è effettivamente \(\log(n)\)<br /></li>
+</ul>
+</li>
+<li><a id="org44ea703"></a>Il tipo di ricorsione usato in <code>ricercaRic</code> è chiamato "in coda" o "terminale".<br />
+<ul class="org-ul">
+<li><a id="org4ad6e18"></a>La chiamata risolutiva non termina l'algoritmo, ma restituisce il valore a quelle superiori, fino ad arrivare alla prima.<br /></li>
+</ul>
+</li>
+<li><a id="org0741453"></a>La ricorsione "in coda" occupa tanto spazio inutile, ma si crea facilmente una versione iterativa che risolve lo stesso problema, occupando meno spazio.<br />
+<div class="outline-text-5" id="text-org0741453">
+<pre class="example" id="orga682766">
+ALGORITMO ricercaBinaria( Array A[0..n-1], elemento x ) -&gt; indice
+   sx &lt;- 0
+   dx &lt;- n
+   pos &lt;- -1
+   WHILE sx &lt; dx AND pos = -1 DO    // finchè la porzione non è vuota
+   m &lt;- (sx+dx)/2
+   IF x=A[M] THEN pos &lt;- m     // se ho trovato, salvo la posizione e nel prossimo ciclo il while si fermerà
+   ELSE IF x&lt;A[M] THEN dx&lt;-m   // se  l'elemento medio è maggiore di quello cercato, sposto l'estremo destro a quello medio
+   ELSE sx &lt;-m+1               // altrimenti parto da quello successivo
+   
+</pre>
+<p>
+Notare che l'estremo destro è sempre escluso, mentre quello sinistro incluso.
+</p>
+</div>
+</li>
+<li><a id="orgc3ca919"></a>Ogni algoritmo ricorsivo può essere trasformato in uno iterativo. A volte, però, farlo non fornisce alcun vantaggio, in quanto è necessario creare uno stack manualmente.<br /></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: vjo</p>
+<p class="date">Created: 2024-11-14 Thu 17:51</p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.4 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-11-14 Thu 17:51 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ottimizzazione</title>
+<meta name="author" content="vjo" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Ottimizzazione</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org9db7a05">Problemi di ottimizzazione</a>
+<ul>
+<li><a href="#orge614eb9">Formalizzazione</a></li>
+<li><a href="#org06e4f25">Spiegazione</a></li>
+<li><a href="#org955e866">Zaino monodimensionale</a></li>
+</ul>
+</li>
+<li><a href="#org072b430">Tecnica greedy</a>
+<ul>
+<li><a href="#org4b0afcc">Applicazione al problema dello zaino</a></li>
+</ul>
+</li>
+<li><a href="#org179640b">Alberi e tecnica greedy</a>
+<ul>
+<li><a href="#org69883bc">Alberi ricoprenti minimi</a>
+<ul>
+<li><a href="#org3022e22">Algoritmo di Kruskal</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org9db7a05" class="outline-2">
+<h2 id="org9db7a05">Problemi di ottimizzazione</h2>
+<div class="outline-text-2" id="text-org9db7a05">
+<p>
+Un esempio è la colorazione di grafi con il numero minimo di colori. Per i grafi planari, ovvero quelli che possono essere disegnati senza che le linee si intereschino, è stato dimostrato che quel numero sia 4.
+</p>
+</div>
+<div id="outline-container-orge614eb9" class="outline-3">
+<h3 id="orge614eb9">Formalizzazione</h3>
+<div class="outline-text-3" id="text-orge614eb9">
+<p>
+to fill
+</p>
+</div>
+</div>
+<div id="outline-container-org06e4f25" class="outline-3">
+<h3 id="org06e4f25">Spiegazione</h3>
+<div class="outline-text-3" id="text-org06e4f25">
+<p>
+Fra tutte le soluzioni ammissibili, voglio trovare la soluzione ottima rispetto al criterio che mi è stato dato.
+</p>
+</div>
+</div>
+<div id="outline-container-org955e866" class="outline-3">
+<h3 id="org955e866">Zaino monodimensionale</h3>
+<div class="outline-text-3" id="text-org955e866">
+<p>
+Istanza: ho uno zaino di altezza \(h\) e \(k\) contenitori \(c_{1},...c_{k}\).
+Problema: scegliere quali contenitori collocare nello zaino in modo da riempirlo il più possibile.
+Una soluzione ammissibile è un sottoinsieme dei contenitori la cui somma delle altezze è minore o uguale ad \(h\)
+La soluzione ottima è anch'essa un sottoinsieme tale che la somma delle altezze sia maggiore o uguale a ogni soluzione ammissibile, rispettando ancora il vincolo.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org072b430" class="outline-2">
+<h2 id="org072b430">Tecnica greedy</h2>
+<div class="outline-text-2" id="text-org072b430">
+<p>
+Ho un problema di ottimizzazione e ad ogni step scelgo la soluzione ottima localmente, ignorando le altre.
+Quindi facciamo un processo di selezione di candidati finchè questi non finiscono. Scelgo un candidato se è ammissibile, altrimenti è scartato per sempre e la scelta è irrevocabile. Il problema è: questo sistema trova veramente la soluzione ottima?
+</p>
+</div>
+<div id="outline-container-org4b0afcc" class="outline-3">
+<h3 id="org4b0afcc">Applicazione al problema dello zaino</h3>
+<div class="outline-text-3" id="text-org4b0afcc">
+<p>
+Utilizzo la strategia greedy scegliendo sempre il contenitore più grande. Non funziona.
+Per trovare la soluzione ottima serve provare tutti i sottoinsiemi, che sono \(2^{k}\), rendendo l'algoritmo impraticabile.
+La tecnica greedy si accontenta di trovare una soluzione ammissibile, con un tempo veloce e cercando di non ottenere un risultato molto minore di quella ottima. Esistono però dei casi in cui la tecnica greedy è in grado di trovare la soluzione ottimale.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org179640b" class="outline-2">
+<h2 id="org179640b">Alberi e tecnica greedy</h2>
+<div class="outline-text-2" id="text-org179640b">
+<p>
+Ricordiamo che un grafo è un albero se e solo se il numero di archi è il numero di vertici meno 1.
+Inoltre ricordiamo che se a un albero tolgo un arco, ottengo una foresta. Se vi aggiungo un albero, ottengo un ciclo e perdo l'albero.
+</p>
+</div>
+<div id="outline-container-org69883bc" class="outline-3">
+<h3 id="org69883bc">Alberi ricoprenti minimi</h3>
+<div class="outline-text-3" id="text-org69883bc">
+<p>
+Voglio trovare l'albero ricoprente con costo minimo su un grafo pesato.
+So che i vertici voglio averli tutti, mentre gli archi.
+Ispeziono gli archi in ordine di peso. A ogni passo scelgo quello che pesa di meno.
+Questa tecnica si chiama Algoritmo di Kruskal.
+</p>
+</div>
+<div id="outline-container-org3022e22" class="outline-4">
+<h4 id="org3022e22">Algoritmo di Kruskal</h4>
+<div class="outline-text-4" id="text-org3022e22">
+<p>
+Quando analizzo due vertici,
+Utilizzo lo union find e abbiamo una foresta. Quando dobbiamo unire gli alberi, li 
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: vjo</p>
+<p class="date">Created: 2024-11-14 Thu 17:51</p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.4 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</p>
+</div>
+</body>
+</html>

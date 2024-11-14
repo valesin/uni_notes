@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-11-14 Thu 17:51 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Grafi</title>
+<meta name="author" content="vjo" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Grafi</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org99bd04e">Definizioni</a></li>
+<li><a href="#org0b3a02f">Rappresentazioni</a>
+<ul>
+<li><a href="#org635ba79">Liste</a>
+<ul>
+<li><a href="#org4252270">Lista di archi</a></li>
+<li><a href="#org2247106">Lista di adiacenza</a></li>
+<li><a href="#org9009331">Lista di incidenza</a></li>
+</ul>
+</li>
+<li><a href="#orge15ec80">Matrici</a>
+<ul>
+<li><a href="#org0eab2ec">Matrice di adiacenza</a></li>
+<li><a href="#org3623203">Matrice di incidenza</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orga313a60">Attraversamento di grafi</a>
+<ul>
+<li><a href="#orge218b8e">Visita in ampiezza (breadth-first search)</a></li>
+<li><a href="#org9962e8e">Visita in profondità (depth-first search)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org99bd04e" class="outline-2">
+<h2 id="org99bd04e">Definizioni</h2>
+<div class="outline-text-2" id="text-org99bd04e">
+<div class="org-src-container">
+<pre class="src src-go" id="orge7cb523"><span style="color: #a020f0;">package</span> main
+
+<span style="color: #a020f0;">import</span> <span style="color: #8b2252;">"fmt"</span>
+<span style="color: #a020f0;">import</span> <span style="color: #8b2252;">"mylib"</span>
+</pre>
+</div>
+<p>
+\(\newtheorem{theorem}{Teorema}\)
+Un grafo \(G=(V,E)\) modella la "connessione" o "relazione" fra coppie di oggetti e consiste in:
+</p>
+<ul class="org-ul">
+<li>un insieme \(V\) di <b>nodi</b> o <b>vertici</b></li>
+<li>un insieme \(E\) di coppie di vertici detti <b>archi</b></li>
+</ul>
+
+<p>
+I grafi possono essere <b>non orientati</b>, in cui ogni arco è simmetrico, o <b>orientati</b>, nei quali un arco in una direzione non implica la presenza di quello nella direzione opposta.
+</p>
+
+<p>
+Gli archi che connettono due vertici sono detti <b>incidenti</b> ad essi e in tal caso il vertice di arrivo è detto <b>adiacente</b> a quello di partenza.<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>
+</p>
+
+<p>
+Il <b>grado</b> \(\delta(v)\) di un vertice è il numero di archi incidenti su esso, ovvero la somma degli archi in <b>ingresso</b> e quelli in <b>uscita</b>.
+</p>
+
+<p>
+In un grafo non orientato, i due insiemi sono uguali e la cardinalità della loro somma è il doppio di quella di uno di essi.
+</p>
+
+<p>
+Un <b>cammino</b> da \(x\) a \(y\) è una sequenza di vertici tale per cui \(v_{0}=x\), \(v_{k}=y\) e \((v_{i-1},v_{i})\in E\), con \(i=1,...,k\).
+</p>
+
+<p>
+La sua <b>lunghezza</b> è il numero di archi ed esso è detto semplice se non contiene vertici ripetuti.
+</p>
+
+<p>
+Un vertice è detto <b>raggiungibile</b> da un altro se esiste un cammino dal secondo al primo.
+</p>
+
+<p>
+Un <b>ciclo</b> è un cammino da un vertice a sè stesso e, in questo caso, esso è semplice se solo il vertice iniziale è ripetuto alla fine.
+</p>
+
+<p>
+Una <b>catena</b> è una sequenza di vertici simile ad un cammino, in cui però non è necessario che fra ogni coppia esista un arco nella direzione corretta, ma è ammesso risalire un vertice al contrario.
+</p>
+
+<p>
+Un <b>circuito</b> è una catena con estremi coincidenti.
+</p>
+
+<p>
+Un grafo è <b>connesso</b> se esiste una catena tra ogni coppia di vertici ed è <b>fortemente connesso</b> se tra ogni coppia di vertici esiste un cammino
+Un sottografo è un grafo composto da un sottoinsieme di vertici e di archi, in particolare il sottografo <b>indotto</b> contiene un sottoinsieme degli archi ma tutti i nodi fra quelli che li connettono.
+</p>
+
+<p>
+Una <b>componente fortemente connessa</b> è un sottografo indotto fortemente connesso <i>massimale</i>.
+</p>
+
+<p>
+Un circuito <b>hamiltoniano</b> è un circuito che passa per ogni vertice del grafo una e una sola volta, quello <b>euleriano</b> passa per ogni <b>arco</b> una e una sola volta.
+</p>
+
+\begin{theorem}
+$\exists$ un circuito euleriano *se e solo se* $\forall v,\;\delta(v)$ è pari.
+\end{theorem}
+</div>
+</div>
+
+<div id="outline-container-org0b3a02f" class="outline-2">
+<h2 id="org0b3a02f">Rappresentazioni</h2>
+<div class="outline-text-2" id="text-org0b3a02f">
+<p>
+Esistono vari modi per rappresentare un grafo, che influenzano la struttura e l'efficienza degli algoritmi.
+</p>
+</div>
+
+<div id="outline-container-org635ba79" class="outline-3">
+<h3 id="org635ba79">Liste</h3>
+<div class="outline-text-3" id="text-org635ba79">
+</div>
+<div id="outline-container-org4252270" class="outline-4">
+<h4 id="org4252270">Lista di archi</h4>
+<div class="outline-text-4" id="text-org4252270">
+<p>
+Rappresento soltanto gli archi, il cui numero varia tra \(0\), nel grafo con solo vertici, a \(n^{2}\) nel grafo in cui ogni vertice è connesso ad ogni altro, compreso sè stesso.
+</p>
+
+<p>
+Se il grafo è connesso, ovvero se esiste una catena tra ogni coppia di vertici, allora la versione con meno archi in assoluto è un [BROKEN LINK: 6daa15a6-652a-4fce-9082-f5973b568401].
+</p>
+
+<p>
+In questa rappresentazione, tutte le operazioni che richiedono di trovare uno specifico arco, come trovare gli archi incidenti, verificare l'adiacenza di due vertici, trovare il grado di un vertice o eliminare un arco, operano in tempo lineare.
+</p>
+
+<p>
+Dall'altro lato, l'aggiunta di un nuovo vertice o
+Lo spazio è \(\Theta(m+n)\) e il tempo \(\Theta(m)\)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go" id="org264fc23"><span style="color: #a020f0;">type</span> <span style="color: #228b22;">Arco</span>[T <span style="color: #228b22;">any</span>] <span style="color: #a020f0;">struct</span> {
+        From, To *<span style="color: #228b22;">Vertices</span>[T]
+}
+
+<span style="color: #a020f0;">type</span> <span style="color: #228b22;">Vertices</span>[T <span style="color: #228b22;">any</span>] <span style="color: #a020f0;">struct</span> {
+        val <span style="color: #228b22;">T</span>
+}
+
+<span style="color: #a020f0;">type</span> <span style="color: #228b22;">Grafo</span>[T <span style="color: #228b22;">any</span>] []*<span style="color: #228b22;">Arco</span>[T]
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2247106" class="outline-4">
+<h4 id="org2247106">Lista di adiacenza</h4>
+<div class="outline-text-4" id="text-org2247106">
+<p>
+Non viene salvata una lista che contiene gli archi incidenti a qualunque vertice, ma raggruppati per vertice.
+Ogni elemento della lista contiene la lista di tutti i vertici adiacenti ad esso.
+In questo modo, la lista di vertici può essere rappresentata mediante un array ad accesso costante e la lista di adiancenza, di lunghezza non definita, con una lista concatenata.
+In questo modo, lo spazio rimane \(\Theta(m+n)\), ma il tempo è \(\Theta(\max(\delta(m)))\)
+Uno svantaggio che rimane è che in un arco orientato, trovare gli archi entranti richiede di scansionare tutti gli archi.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9009331" class="outline-4">
+<h4 id="org9009331">Lista di incidenza</h4>
+<div class="outline-text-4" id="text-org9009331">
+<p>
+Un mix fra una lista di adiacenza e una lista di archi.
+Si mantiene una lista di archi in una lista esterna e una pseudo-lista di adiacenza che punta agli elementi della prima
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge15ec80" class="outline-3">
+<h3 id="orge15ec80">Matrici</h3>
+<div class="outline-text-3" id="text-orge15ec80">
+</div>
+<div id="outline-container-org0eab2ec" class="outline-4">
+<h4 id="org0eab2ec">Matrice di adiacenza</h4>
+<div class="outline-text-4" id="text-org0eab2ec">
+<p>
+Una matrice quadrata di 0 e 1 i cui indici sono i vertici e il cui valore per ogni posto è 1 se il vertice della colonna è adiacente a quello della riga.
+</p>
+
+<p>
+Nei grafi non orientati, è quindi simmetrica, ma il contrario non è vero.
+</p>
+
+<p>
+Per trovare gli archi uscenti da un vertice, guardo la riga associata ad esso. Quando cerco gli entranti, guardo la sua colonna. Quindi serve un tempo lineare al numero di vertici.
+</p>
+
+<p>
+Lo spazio necessario è \(\Theta(n^{2})\).
+</p>
+
+<p>
+Si parla di <b>grafi sparsi</b> quando \(m << n^{2}\), ovvero grafi in cui ci sono pochi archi rispetto ai vertici.
+</p>
+
+<p>
+In questi casi, non è utile utilizzare la matrice di adiacenza.
+</p>
+
+<p>
+In generale, questa rappresentazione occupa uno spazio eccessivo.
+</p>
+
+<p>
+Un vantaggio è che si possono effettuare operazioni algebriche sulle matrici.
+Ad esempio, il risultato della moltiplicazione di due matrici con algebra booleana \(n\) volte è una matrice in cui ogni casella è \(1\) se e solo se esiste un cammino lungo \(n\).
+Se, invece, si usasse la vera algebra, si scoprirebbe il numero di cammini da un vertice all'altro (??)
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3623203" class="outline-4">
+<h4 id="org3623203">Matrice di incidenza</h4>
+<div class="outline-text-4" id="text-org3623203">
+<p>
+La matrice è grande \(n\times m\) e ha i vertici sulle righe e gli archi sulle colonne. Il valore è 1 se l'arco corrispondente esce dal vertice corrispondente, -1 se entra e 0 se non lo riguarda.
+Viene usata molto poco.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga313a60" class="outline-2">
+<h2 id="orga313a60">Attraversamento di grafi</h2>
+<div class="outline-text-2" id="text-orga313a60">
+<p>
+Definiamoci un grafo di esempio
+</p>
+</div>
+
+
+
+<div id="outline-container-orge218b8e" class="outline-3">
+<h3 id="orge218b8e">Visita in ampiezza (breadth-first search)</h3>
+<div class="outline-text-3" id="text-orge218b8e">
+<p>
+Si inizia visitando un vertice s, si visitano poi i vertici adiacenti ad s, poi quelli adiacenti a quelli appena visitati e così via.
+Nel caso in cui il grafo sia rappresentato attraverso liste &#x2026;
+Nel caso in cui sia una matrice di incidenza, devo scorrere tutti gli \(m\) archi per ognuno degli \(n\) vertici, con un tempo totale di \(\Theta(n\cdot m)\)
+</p>
+
+<p>
+Questo è l'esempio di una visita in ampiezza di un grafo non orientato connesso a partire da un vertice <code>s</code> e costruzione di un albero ricoprente ottenuto selezionando gli archi secondo l’ordine della visita.
+</p>
+
+<pre class="example" id="org23d6759">
+ALGORITMO visitaInAmpiezza(grafo G=(V,E), vertice s) -&gt; albero
+C &lt;- coda vuota
+T &lt;- ({s}, [])
+marca s come raggiunto
+C.enqueue(s)
+while not C.isEmpty() do
+    u &lt;- C.dequeue()
+    foreach(u,v) \in E do
+        if v non è marcato come raggiunto then
+            T &lt;- (vertici(T) \cup v, archi(T) \cupp (u,v))
+            marca v come raggiunto
+            C.enqueue(v)
+</pre>
+
+<p>
+Quest'algoritmo fa uso di una coda, che inizialmente contiene solo l'elemento iniziale.
+</p>
+
+<p>
+L'uscita sarà un albero che contiene tutti i vertici una sola volta e gli archi attraverso i quali vengono raggiunti.
+</p>
+
+<p>
+Ad ogni passo, viene prelevato il primo elemento della coda (nel primo passo corrisponde all'elemento iniziale) e vengono scanditi tutti i suoi adiacenti.
+</p>
+
+<p>
+Fra questi ultimi, quelli che sono stati già raggiunti attraverso un altro vertice vengono ignorati, mentre quelli che vengono incontrati per la prima volta vengono aggiunti all'albero risultante e alla coda.
+</p>
+
+<p>
+Tutti gli elementi della coda, in ordine di inserimento, vengono prima o poi prelevati, così da trovare i loro figli.
+</p>
+
+<p>
+In questo modo, ogni nodo <b>raggiungibile</b> da quello iniziale viene prima o poi raggiunto e inserito nella coda.
+</p>
+
+<p>
+Notare che si potrebbe aggiungere un vertice all'albero risultante al momento della <code>dequeue</code> e non la prima volta che viene raggiunto. In questo caso, l'ordine di visita rimarrebbe uguale, ma il nodo verrebbe aggiunto soltanto quando sono stati raggiunti anche tutti i suoi figli e la coda raggiungerebbe una dimensione maggiore, perchè arriverebbe a contenere l'intera discendenza di un nodo, prima di aggiungerlo.
+</p>
+
+<p>
+Nella tecnica mostrata, la dimensione massima della coda è uguale al massimo dei gradi di tutti i vertici (il numero di uscite maggiore fra quelli di ogni vertice).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span style="color: #a020f0;">func</span> <span style="color: #0000ff;">bfs</span>[T <span style="color: #228b22;">any</span>](g <span style="color: #228b22;">Grafo</span>[T]) {
+        <span style="color: #b22222;">//</span><span style="color: #b22222;">Inizio con una coda vuota</span>
+        <span style="color: #a0522d;">q</span> := mylib.NewQueue[T]
+        fmt.<span style="color: #0000ff;">Println</span>(q)
+}
+
+<span style="color: #a020f0;">func</span> <span style="color: #0000ff;">main</span>() {
+        <span style="color: #a0522d;">g</span> := Grafo[int]{
+                {<span style="color: #008b8b;">From</span>: &amp;Vertices[int]{1}, <span style="color: #008b8b;">To</span>: &amp;Vertices[int]{2}},
+                {<span style="color: #008b8b;">From</span>: &amp;Vertices[int]{1}, <span style="color: #008b8b;">To</span>: &amp;Vertices[int]{3}},
+                {<span style="color: #008b8b;">From</span>: &amp;Vertices[int]{3}, <span style="color: #008b8b;">To</span>: &amp;Vertices[int]{4}},
+        }
+        <span style="color: #0000ff;">bfs</span>(g)
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9962e8e" class="outline-3">
+<h3 id="org9962e8e">Visita in profondità (depth-first search)</h3>
+<div class="outline-text-3" id="text-org9962e8e">
+<p>
+Partiamo da un nodo e andiamo quanto più in fondo possibile, per poi fare backtracking e tornare al primo nodo non visitato.
+</p>
+
+<p>
+In questo algoritmo, la visita avviene ricorsivamente, facendo quindi l'uso implicito di una pila.
+</p>
+
+<p>
+Utilizzo una procedura <b>tail-recursive</b> in cui dato un grafo di riferimento, invariato durante l'esecuzione, un albero accumulatore ed un vertice, controllo se quest'ultimo è già visitato e se non lo è, lo aggiungo all'albero e lo visito ricorsivamente.
+</p>
+
+<p>
+In questo modo, visito in sequenza ogni vertice che non avevo già visitato in precedenza. Nella prima esecuzione, visito e aggiungo all'albero tutti i vertici che incontro, fino ad arrivare ad un ciclo. A quel punto faccio backtracking tornando fino al vertice che ha almeno un figlio non ancora visitato e proseguo da lì.
+</p>
+
+<p>
+La procedura ricorsiva è incapsulata in una funzione esterna che maschera l'utilizzo dell'albero accumulatore, fornendolo vuoto alla prima chiamata e restituendolo completo al termine.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span style="color: #a020f0;">func</span> <span style="color: #0000ff;">dfs</span>[T <span style="color: #228b22;">any</span>](g <span style="color: #228b22;">Grafo</span>[T]) {
+        <span style="color: #a020f0;">for</span> <span style="color: #a0522d;">_</span>, <span style="color: #a0522d;">v</span> := <span style="color: #a020f0;">range</span> g {
+                fmt.<span style="color: #0000ff;">Println</span>(v)
+        }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Ne consegue che in un grafo non orientato, l'adiacenza è simmetrica, ma nel caso di un grafo orientato no. 
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="author">Author: vjo</p>
+<p class="date">Created: 2024-11-14 Thu 17:51</p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.4 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</p>
+</div>
+</body>
+</html>
