@@ -3,11 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-14 Thu 17:51 -->
+<!-- 2024-11-15 Fri 13:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ordinamento</title>
-<meta name="author" content="vjo" />
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
 <script>
@@ -52,11 +51,10 @@
 <ul>
 <li><a href="#org3ff630b">Algoritmi di ordinamento</a>
 <ul>
-<li><a href="#org5a6b330">Stabilità</a></li>
-<li><a href="#orge64c13f">Complessità</a>
+<li><a href="#org98b132a">Introduzione</a>
 <ul>
-<li><a href="#orgb49aa20">Spazio</a></li>
-<li><a href="#org0715ed6">Tempo</a></li>
+<li><a href="#org655df71">Stabilità</a></li>
+<li><a href="#orge64c13f">Complessità</a></li>
 </ul>
 </li>
 <li><a href="#org4dbbd7d">Algoritmi elementari</a>
@@ -69,7 +67,7 @@
 <li><a href="#org533273c">Algoritmi avanzati</a>
 <ul>
 <li><a href="#org3c421e4">MergeSort</a></li>
-<li><a href="#org11328cf">QuickSort</a></li>
+<li><a href="#orgfc4ac09">QuickSort</a></li>
 <li><a href="#org54dde00">Heapsort</a></li>
 </ul>
 </li>
@@ -90,44 +88,60 @@
 <div id="outline-container-org3ff630b" class="outline-2">
 <h2 id="org3ff630b">Algoritmi di ordinamento</h2>
 <div class="outline-text-2" id="text-org3ff630b">
+</div>
+<div id="outline-container-org98b132a" class="outline-3">
+<h3 id="org98b132a">Introduzione</h3>
+<div class="outline-text-3" id="text-org98b132a">
 <p>
 In questo corso si tratta soltanto di ordinamento interno, non di quello esterno, in cui i dati vengono prelevati in blocchi dalla memoria di massa.
+</p>
+
+<p>
 Si ordinano array di strutture complesse, in cui uno dei campi viene scelto come chiave per l'ordinamento ed una relazione di ordine viene definita su di esso.
+</p>
+
+<p>
 Durante il corso, si utilizzeranno degli array di interi, per semplificare il ragionamento, che viene poi facilmente espanso al caso generale.
 </p>
 </div>
-<div id="outline-container-org5a6b330" class="outline-3">
-<h3 id="org5a6b330">Stabilità</h3>
-<div class="outline-text-3" id="text-org5a6b330">
+
+<div id="outline-container-org655df71" class="outline-4">
+<h4 id="org655df71">Stabilità</h4>
+<div class="outline-text-4" id="text-org655df71">
 <p>
 Un algoritmo si dice <b>stabile</b> quando, dati due record con la medesima chiave, l'ordine in cui essi si trovano nell'array ordinato è lo stesso in cui si trovavano in quello iniziale.
 </p>
 </div>
 </div>
-<div id="outline-container-orge64c13f" class="outline-3">
-<h3 id="orge64c13f">Complessità</h3>
-<div class="outline-text-3" id="text-orge64c13f">
+
+<div id="outline-container-orge64c13f" class="outline-4">
+<h4 id="orge64c13f">Complessità</h4>
+<div class="outline-text-4" id="text-orge64c13f">
 <p>
 Si studieranno principalmente algoritmi di ordinamento basati su confronti da chiavi. Si valuteranno la complessità in termini di <b>tempo</b> e <b>spazio</b>.
 </p>
 </div>
-<div id="outline-container-orgb49aa20" class="outline-4">
-<h4 id="orgb49aa20">Spazio</h4>
-<div class="outline-text-4" id="text-orgb49aa20">
+
+<ul class="org-ul">
+<li><a id="orgb49aa20"></a>Spazio<br />
+<div class="outline-text-5" id="text-orgb49aa20">
 <p>
 Lo spazio ulteriore a quello necessario per l'array.
 </p>
 </div>
-</div>
-<div id="outline-container-org0715ed6" class="outline-4">
-<h4 id="org0715ed6">Tempo</h4>
-<div class="outline-text-4" id="text-org0715ed6">
+</li>
+
+<li><a id="org0715ed6"></a>Tempo<br />
+<div class="outline-text-5" id="text-org0715ed6">
 <p>
 Si utilizza il numero di confronti come criterio. Infatti, questi sono le operazioni più costose. Se ciascun confronto viene effettuato in tempo costante, il numero di confronti fornisce una stima del tempo di calcolo. Infatti, in base al criterio di costo uniforme, può essere poi molitplicato per il tempo necessario per un singolo confronto (es. O(1) per interi, O(s) per stringhe di lunghezza s) per ottenere una stima del tempo totale.
 </p>
 </div>
+</li>
+</ul>
 </div>
 </div>
+
 <div id="outline-container-org4dbbd7d" class="outline-3">
 <h3 id="org4dbbd7d">Algoritmi elementari</h3>
 <div class="outline-text-3" id="text-org4dbbd7d">
@@ -137,13 +151,56 @@ I primi due algo lavorano in modo incrementale. Una parte è ordinata, l'altra n
 Il bubblesort invece, scambia a coppie e si ferma quando non c'è più modo di scambiare.
 </p>
 </div>
+
 <div id="outline-container-orge3d3dde" class="outline-4">
 <h4 id="orge3d3dde">SelectionSort</h4>
 <div class="outline-text-4" id="text-orge3d3dde">
+<pre class="example" id="orga57e5a6">
+ALGORITMO selectionSort (Array A[0..N-1])
+    FOR k &lt;- 0 to n-2 DO
+        m &lt;- k                            //posizione del minimo
+        FOR j &lt;- k+1 to n-1 DO
+            IF A[j] &lt; A[m] THEN j &lt;- m
+            ENDIF
+        ENDFOR
+        scambia A[m] con A[k]             //sistema il minimo in posizione k
+    ENDFOR
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-go"><span style="color: #a020f0;">package</span> main
+
+<span style="color: #a020f0;">import</span> <span style="color: #8b2252;">"fmt"</span>
+
+<span style="color: #a020f0;">func</span> <span style="color: #0000ff;">selectionSort</span>(<span style="color: #a0522d;">A</span> *[]<span style="color: #228b22;">int</span>) {
+        <span style="color: #a0522d;">n</span> := <span style="color: #483d8b;">len</span>(*A)
+        <span style="color: #a020f0;">for</span> <span style="color: #a0522d;">k</span> := 0; k &lt;= n-2; k++ {
+                <span style="color: #a0522d;">m</span> := k
+                <span style="color: #a020f0;">for</span> <span style="color: #a0522d;">j</span> := k + 1; j &lt;= n-1; j++ {
+                        <span style="color: #a020f0;">if</span> (*A)[j] &lt; (*A)[m] {
+                                m = j
+                        }
+                }
+                (*A)[k], (*A)[m] = (*A)[m], (*A)[k]
+        }
+}
+
+<span style="color: #a020f0;">func</span> <span style="color: #0000ff;">main</span>() {
+        <span style="color: #a020f0;">var</span> <span style="color: #a0522d;">A</span> = &amp;[]<span style="color: #228b22;">int</span>{2, 4, 3, 8, 7, 5, 1, 6}
+        fmt.<span style="color: #0000ff;">Println</span>(*A)
+        <span style="color: #0000ff;">selectionSort</span>(A)
+        fmt.<span style="color: #0000ff;">Println</span>(*A)
+}
+</pre>
 </div>
-<ul class="org-ul">
-<li><a id="org9d5e0be"></a>Generale<br />
-<div class="outline-text-5" id="text-org9d5e0be">
+
+<pre class="example">
+[2 4 3 8 7 5 1 6]
+[1 2 3 4 5 6 7 8]
+</pre>
+
+
+
 <p>
 Ad ogni passo viene selezionato l'elemento che dev'essere inserito in posizione \(k\), posizione dalla quale non verrà più spostato. 
 </p>
@@ -157,12 +214,9 @@ Alla fine del passo, un elemento verrà aggiunto in posizione \(k\), portando gl
 </p>
 
 <p>
-Al passo \(n-1\), i primi \(n-1\) elementi sono ordinati e ne manca \(1\) da ordinare. Il passo quindi è superfluo.
+Al passo \(n-1\), i primi \(n-1\) elementi sono ordinati e ne manca \(1\) da ordinare. L'ultimo passo, quindi, è superfluo e ci fermiamo alla posizione \(n-2\).
 </p>
-</div>
-</li>
-<li><a id="orgab14ee7"></a>Pratico<br />
-<div class="outline-text-5" id="text-orgab14ee7">
+
 <p>
 Se il criterio con cui si vuole ordinare l'array è crescente, l'elemento scelto è il minore.
 </p>
@@ -180,21 +234,27 @@ Arrivati alla fine, scambiamo il minimo con l'elemento attuale e andiamo avanti.
 </p>
 
 <p>
-L'ultimo elemento non viene controllato, perchè si trova automaticamente nella sua posizione. Infatti, dovrei trovare il minimo fra un solo elemento e poi spostare l'elemento trovato nell'unica posizione disponibile, che è quella in cui si trova già
+L'ultimo elemento non viene controllato, perchè si trova automaticamente nella sua posizione. Infatti, dovrei trovare il minimo fra un solo elemento e poi spostare l'elemento trovato nell'unica posizione disponibile, che è quella in cui si trova già.
 </p>
 
-<div class="org-src-container">
-<pre class="src src-go"><span style="color: #a020f0;">func</span> <span style="color: #0000ff;">selectionSort</span>(
-</pre>
+<p>
+Non è stabile. Un esempio è l'array \([10_{1},\;10_{2},\;5] \rightarrow [5,\;10_{2}\;10_{1}]\)
+</p>
 </div>
 
+<ul class="org-ul">
+<li><a id="orgf217dec"></a>Analisi<br />
+<div class="outline-text-5" id="text-orgf217dec">
 <p>
-Non è stabile. Un esempio è l'array \([10_{1},\;10_{2},\;5] \rightarrow [5,\;10_{2}\;10_{1}] \rightarrow \text{done}\)
+Per la stima del tempo, notare che alla \(k\) -esima iterazione, sono stati effettuati \(n-k-1\) confronti.
 </p>
 
 <p>
-Per la stima del tempo, notare che alla \(k\) -esima iterazione, sono stati effettuati \(n-k-1\) confronti.
-Dato che il numero di iterazioni è \(n-2\), il numero totale di confronti è \(\sum_{k=0}^{n-2} (n-k-1)\), che con un cambio di variabile \((n-k-1) = i+1\), diventa &sum;<sub>1</sub><sup>n-1</sup> i$, che per la formula di gauss e risostituendo il valore iniziale, è \(\frac{(n-1)(n)}{2}\), quindi \(\Theta(n^2)\)
+Dato che il numero di iterazioni è \(n-2\), il numero totale di confronti è \(\sum_{k=0}^{n-2} (n-k-1)\), che con un cambio di variabile \((n-k-1) = i+1\), diventa &sum;<sub>1</sub><sup>n-1</sup> i$, che per la formula di gauss e risostituendo il valore iniziale, diventa \(\frac{(n-1)(n)}{2}\), quindi \(\Theta(n^2)\)
+</p>
+
+<p>
+Lo spazio è costante perchè si opera <b>in loco</b>.
 </p>
 </div>
 </li>
@@ -203,16 +263,108 @@ Dato che il numero di iterazioni è \(n-2\), il numero totale di confronti è \(
 <div id="outline-container-orge3d31ec" class="outline-4">
 <h4 id="orge3d31ec">InsertionSort</h4>
 <div class="outline-text-4" id="text-orge3d31ec">
+<pre class="example" id="orgfe70724">
+ALGORITMO insertionSort(Array A[0..N-1])
+    FOR k -&gt; 1 TO N-1 DO
+        x &lt;- A[k]                       // copia l'elemento da inserire
+        j &lt;- k-1
+        WHILE j &gt;= 0 &amp;&amp; x &lt; A[j] DO
+            A[j+1] = A[j]               // shifta verso destra
+            j = j-1
+        A[j-1] = x
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-go"><span style="color: #a020f0;">package</span> main
+
+<span style="color: #a020f0;">import</span> <span style="color: #8b2252;">"fmt"</span>
+<span style="color: #a020f0;">func</span> <span style="color: #0000ff;">insertionSort</span>(<span style="color: #a0522d;">A</span> *[]<span style="color: #228b22;">int</span>)  {
+        <span style="color: #a0522d;">N</span>:= <span style="color: #483d8b;">len</span>(*A)
+        <span style="color: #a020f0;">for</span> <span style="color: #a0522d;">k</span>:=1; k&lt;N; k++{
+                <span style="color: #a0522d;">x</span>:=(*A)[k]
+                <span style="color: #a0522d;">j</span> := k-1
+                <span style="color: #a020f0;">for</span> ;j&gt;=0 &amp;&amp; x &lt; (*A)[j];{
+                        (*A)[j+1] = (*A)[j]
+                        j--
+                }
+                (*A)[j+1] = x
+        }
+}
+
+<span style="color: #a020f0;">func</span> <span style="color: #0000ff;">main</span>() {
+        <span style="color: #a020f0;">var</span> <span style="color: #a0522d;">A</span> = &amp;[]<span style="color: #228b22;">int</span>{2, 4, 3, 8, 7, 5, 1, 6}
+        fmt.<span style="color: #0000ff;">Println</span>(*A)
+        <span style="color: #0000ff;">insertionSort</span>(A)
+        fmt.<span style="color: #0000ff;">Println</span>(*A)
+}
+
+</pre>
+</div>
+
+<pre class="example">
+[2 4 3 8 7 5 1 6]
+[1 2 3 4 5 6 7 8]
+</pre>
+
+
 <p>
-Si scansiona l'array partendo da sinistra. Ogni elemento incontrato viene ripetutamente scambiato con quello precedente, già ordinato, finchè il precedente è minore di esso. A quel punto l'elemento è ordinato e si passa al successivo.
-Il motivo per cui è necessario scambiare ripetutamente è che bisogna shiftare a destra il contenuto dell'intera porzione di array maggiore dell'elemento attuale. Anche cercando il primo elemento minore senza effettuare gli scambi, sarebbe poi necessario effettuare lo stesso numero di scambi per lo shift.
-Allo shift è anche legato il motivo per cui analizzo gli elementi già ordinati partendo da destra (ovvero dal maggiore) e non da sinistra. Infatti, se l'algoritmo partisse da sinistra, una volta trovato il posto giusto, dovrei comunque shiftare tutti gli elementi a destra di quel punto e non soltanto quelli maggiori dell'elemento della sola porzione ordinata.
-Il caso peggiore è l'array decrescente.
-!!!NO!!! Come esempio, considerare il caso in cui l'elemento esaminato sia maggiore, partendo da sinistra e quello in cui sia minore, partendo da destra. Sono entrambi casi peggiori, eppure nel primo caso vengono shiftati tutti.
+Prima del passo principale, i primi \(k\) elementi formano un <b>sotto-array ordinato</b>.
+</p>
+
+<p>
+Il passo consiste nel prendere l'elemento successivo, in posizione \(k\) ed inserirlo nella posizione corretta relativamente al sotto-array iniziale.
+</p>
+
+<p>
+Per farlo, si scansiona il sotto-array <b>da destra verso sinistra</b>, scambiando di volta in volta ogni elemento con il successivo, finchè si arriva ad un elemento minore di quello da inserire.
+</p>
+
+<p>
+A questo punto, oltre ad aver trovato la posizione finale dell'elemento, si è anche realizzato lo shift verso destra di tutte le posizioni successive e basta copiare l'elemento da inserire nella posizione trovata.
+</p>
+
+<p>
+Abbiamo quindi due cicli:
+</p>
+<ul class="org-ul">
+<li>quello <b>esterno</b>, da <b>sinistra verso destra</b>, che trova l'elemento da inserire nel sotto-array precedente;</li>
+<li>quello <b>interno</b>, da <b>destra verso sinistra</b>, che trova la posizione corretta dell'elemento da inserire e shifta gli elementi maggiori.</li>
+</ul>
+
+<p>
 E' stabile.
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="org36bcad6"></a>Alternativa<br />
+<div class="outline-text-5" id="text-org36bcad6">
+<p>
+Un algoritmo in cui il ciclo interno operasse da sinistra verso destra, darebbe luogo allo stesso risultato ma sarebbe meno efficiente.
+</p>
+
+<p>
+In questo caso, dopo aver trovato la posizione corretta, ovvero quella appena precedente al primo elemento maggiore incontrato, bisognerebbe effettuare lo shift di tutti gli elementi verso destra, che comporta una nuovo accesso a memoria per ogni elemento.
+</p>
+
+<p>
+Questa versione effettua tanti accessi a memoria (in lettura) in più quanti sono i confronti che effettua.
+</p>
+
+<p>
+La versione tradizionale ottimizza questo aspetto effettuando una sola lettura, il cui valore viene utilizzato sia per il confronto che per lo shift.
+</p>
+</div>
+</li>
+
+
+<li><a id="orge63da4d"></a>Analisi<br />
+<div class="outline-text-5" id="text-orge63da4d">
+<p>
 \(sum_{k=1}^{k} i\), che per la formula di gauss è \(\frac{(n-1)(n)}{2}\).
 </p>
 </div>
+</li>
+</ul>
 </div>
 <div id="outline-container-org90f0e22" class="outline-4">
 <h4 id="org90f0e22">BubbleSort</h4>
@@ -290,8 +442,8 @@ Quello di cui sopra. Divido l'array, applico il merge per unire. Notare che divi
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="orgb4cfed1"></a>Analisi tempo<br />
-<div class="outline-text-6" id="text-orgb4cfed1">
+<li><a id="org0649c0a"></a>Analisi tempo<br />
+<div class="outline-text-6" id="text-org0649c0a">
 <p>
 0 confronti nel caso base, altrimenti il tempo che impiego è il tempo che impiego per la metà dell'input + n - 1 che è il numero di confronti di merge.
 \(C(n) = C(\frac{n}{2}) + C(\frac{n}{2}) + C_{merge}(n)\) se \(n>1\), \(0\) altrimenti.
@@ -332,8 +484,8 @@ L'analisi del tempo è assolutamente la stessa.
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="orge8a2bf2"></a>Analisi spazio<br />
-<div class="outline-text-7" id="text-orge8a2bf2">
+<li><a id="orgdd9407d"></a>Analisi spazio<br />
+<div class="outline-text-7" id="text-orgdd9407d">
 <p>
 Adesso utilizzo un array dimensionato su quello iniziale, quindi \(\Theta(n)\).
 L'altezza dello stack di ricorsione è la stessa di prima, ma la dimensione dei record è costante. L'occupazione di memoria è quindi \(\Theta(\log n)\). Fra i due prevale \(\Theta(n)\).
@@ -342,8 +494,8 @@ L'altezza dello stack di ricorsione è la stessa di prima, ma la dimensione dei 
 </li>
 </ul>
 </li>
-<li><a id="orgbc10ccd"></a>Stabilità<br />
-<div class="outline-text-6" id="text-orgbc10ccd">
+<li><a id="org47b11bd"></a>Stabilità<br />
+<div class="outline-text-6" id="text-org47b11bd">
 <p>
 Nel <code>merge</code> mi capita di confrontare elementi uguali. Eppure, viene usato il \(\leq\), quindi nel caso in cui l'elemento del primo array sia uguale, viene scelto quello. Nel caso in cui togliessi l'uguale e usassi il semplice \(<\), perderebbe la stabilità.
 </p>
@@ -353,21 +505,21 @@ Nel <code>merge</code> mi capita di confrontare elementi uguali. Eppure, viene u
 </li>
 </ul>
 </div>
-<div id="outline-container-org11328cf" class="outline-4">
-<h4 id="org11328cf">QuickSort</h4>
-<div class="outline-text-4" id="text-org11328cf">
+<div id="outline-container-orgfc4ac09" class="outline-4">
+<h4 id="orgfc4ac09">QuickSort</h4>
+<div class="outline-text-4" id="text-orgfc4ac09">
 <p>
 Nel caso peggiore esegue in theta(n<sup>2</sup>), ma dimostreremo che tale caso avviene molto raramente e il caso medio è molto conveniente.
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="orge0ef9b9"></a>QuickSort<br />
-<div class="outline-text-5" id="text-orge0ef9b9">
+<li><a id="org80198e1"></a>QuickSort<br />
+<div class="outline-text-5" id="text-org80198e1">
 <p>
 Il criterio è di partizionare il mio vettore rispetto a un elemento arbitrario, <b>perno</b> o <b>pivot</b>.
 Dopodichè, metto i numeri più piccoli prima, quelli più grandi dopo, e poi ordino ricorsivamente le due partizioni.
 </p>
-<pre class="example" id="orgf5773df">
+<pre class="example" id="orgfba7345">
 ALGORITMO quickSort(Array A)
 IF lunghezza A&gt;1 THEN
     scegli un elemento x di A
@@ -391,7 +543,7 @@ Scambio i due elementi. Al momento dello scambio, sono sicuro che gli elementi s
 Termino quando gli indici di scansione si incontrano, poi scambio il perno con l'elemento al punto in cui si sono incontrati.
 Inoltre, parto con gli indici fuori di 1, perchè questo mi permette di fare meno confronti.
 </p>
-<pre class="example" id="orgc2c35c8">
+<pre class="example" id="org54074a4">
 ALGORITMO partiziona(Array A, indice i, indice f) -&gt; indice
 perno &lt;- A[i]
 dx &lt;- f
@@ -433,7 +585,7 @@ Credo che lo stesso valga nel caso in cui sposti l'elemento precedente.
 </li>
 <li><a id="org6a61dc1"></a>Unione<br />
 <div class="outline-text-6" id="text-org6a61dc1">
-<pre class="example" id="orgd47fab0">
+<pre class="example" id="org1a55f22">
 PROCEDURA quickSort_inner(Array A, indice i, indice f)
 IF f-i&gt;1 THEN
     m &lt;- partiziona(A,i,f)
@@ -445,8 +597,8 @@ quickSort_inner(A,0,n)
 </pre>
 </div>
 </li>
-<li><a id="orgdbc2bb8"></a>Analisi tempo<br />
-<div class="outline-text-6" id="text-orgdbc2bb8">
+<li><a id="org51196fe"></a>Analisi tempo<br />
+<div class="outline-text-6" id="text-org51196fe">
 <p>
 Negli altri algoritmi, quando divido conosco sempre la grandezza delle parti ottenute. Adesso questa dipende da dove va a finire il perno.
 sia \(C(n)\) il numero di confronti su un array di lunghezza \(n\).
@@ -509,8 +661,8 @@ Non è stabile, esiste una versione che lo renda stabile ma aumentando la costan
 </li>
 </ul>
 </li>
-<li><a id="org15bac06"></a>Analisi spazio<br />
-<div class="outline-text-6" id="text-org15bac06">
+<li><a id="orgac85e67"></a>Analisi spazio<br />
+<div class="outline-text-6" id="text-orgac85e67">
 <p>
 Nel caso di una suddivisione bilanciata, ottengo un'altezza \(\approx \log_{2} n\), simile al mergesort. Infatti, uno dei lati conterrà la metà dell'input, che a sua volta chiamerà metà dell'input, e così via.
 Nel caso di una suddivisione sbilanciata, apro una chiamata ricorsiva per ogni elemento, quindi avrò un'altezza lineare.
@@ -525,7 +677,7 @@ In questo caso mi libero di una delle parti in cui lo stack di attivazione cresc
 Dato che posso invertire l'ordine delle chiamate ricorsive, posso fare la stessa cosa al contrario, ovvero ricorrere sulla parte destra.
 Ognuna ha un caso critico. Posso scrivere una procedura che scelga quale delle due usare secondo un criterio.
 </p>
-<pre class="example" id="org5a195d1">
+<pre class="example" id="org17261d7">
 PROCEDURA quickSort(Array A, indice i, indice f)
 WHILE f-i&gt;1 DO
     m &lt;- partiziona(A,i,f)
@@ -628,9 +780,7 @@ C'è una somiglianza in questo concetto fra l'insert nell'insertionSort e lo ste
 </div>
 </div></div>
 <div id="postamble" class="status">
-<p class="author">Author: vjo</p>
-<p class="date">Created: 2024-11-14 Thu 17:51</p>
-<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.4 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</p>
+<p class="date">Created: 2024-11-15 Fri 13:11</p>
 </div>
 </body>
 </html>

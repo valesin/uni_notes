@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-11-15 Fri 11:12 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AlgoritmoDiPrim</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">AlgoritmoDiPrim</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org2a0ac80">Algoritmo di Prim</a>
+<ul>
+<li><a href="#org949546f"><span class="todo TODO">TODO</span> Cosa è o (omega)?</a></li>
+<li><a href="#org3eed7cf">Esecuzione</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org2a0ac80" class="outline-2">
+<h2 id="org2a0ac80">Algoritmo di Prim</h2>
+<div class="outline-text-2" id="text-org2a0ac80">
+<p>
+Partiamo da un albero costituito da un solo vertice. Ad ogni passo espandiamo \(T\) aggiungendo l'arco di peso minimo e il vertice in cui arriva che connette un vertice dell'albero che ho già con un vertice che sta fuori.
+</p>
+
+<pre class="example" id="orgf7ea8a2">
+Algoritmo Prim (Grafo G=(V,E,o)) -&gt; albero
+    T &lt;- alberto costituito da un unico vertice s \in V qualsiasi
+    WHILE T ha meno di n nodi DO
+        sia(x,y) l'arco di peso minimo con x in t e y non in t
+    aggiungi (x,y) e il vertice x a T
+    END
+    RETURN T
+</pre>
+</div>
+<div id="outline-container-org949546f" class="outline-3">
+<h3 id="org949546f"><span class="todo TODO">TODO</span> Cosa è o (omega)?</h3>
+</div>
+<div id="outline-container-org3eed7cf" class="outline-3">
+<h3 id="org3eed7cf">Esecuzione</h3>
+<div class="outline-text-3" id="text-org3eed7cf">
+<p>
+Parto da un vertice qualunque ed esamino gli archi di frontiera. Fra quelli, scelgo che pesa di meno e aggiungo l'arco e il vertice successivo.
+Alla prossima iterazione, gli archi di frontiera contengono anche quelli precedenti. Analizzo l'insieme aggiornato di archi di frontiera per trovare il minimo, che aggiungerò e così via.
+Una prima implementazione brutale sarebbe scandire ogni volta <b>tutti</b> gli archi, capire quali sono di frontiera e ricordarsi il minimo. Questa implementazione è molto inefficiente.
+Uso invece un implementazione in cui introduco due informazioni aggiuntive
+</p>
+<ul class="org-ul">
+<li>\(\verb|d[v]|\)</li>
+<li>\(\verb|vicino[v]|\)</li>
+</ul>
+<p>
+In cui per ogni vertice salvo la distanza tra il vertice v e vicino[v] solo se quella distanza è minore.
+Inizialmente d è tutto a infinito e vicino è vuoto.
+Scelgo il vertice la cui distanza è minima, ovvero alla prima iterazione uno qualunque.
+Poi analizzo tutti gli archi uscenti dal vertice e aggiorno la tabella quando un arco per raggiungere il vertice esterno costa meno del costo scritto in tabella, che era, se è la prima volta che si riesce a raggiungere quell'arco, infinito, o se quel vertice è stato già raggiunto, il minore dei costi da cui era raggiunto.
+</p>
+
+<p>
+Il problema è che per ognuno degli \(n\) vertici devo trovare il minimo della tabella con \(n\) elementi, per un totale di \(n^{2}\), che porterebbe le prestazioni ad essere minori dell'<a href="kruskal.html#ID-ae91152d-739d-45f7-8db0-24ca2706ae92">algoritmo di Kruskal</a>.
+</p>
+
+<p>
+Devo quindi trovare un modo efficiente per trovare il minimo, quindi si userà una coda con priorità, in cui trovare il minimo ha tempo logaritmico.
+</p>
+
+<p>
+Dato che è un grafo non orientato, ogni arco è rappresentato due volte e quindi gli archi totali sono 2
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2024-11-15 Fri 11:12</p>
+</div>
+</body>
+</html>
