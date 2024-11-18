@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-14 Thu 20:11 -->
+<!-- 2024-11-18 Mon 20:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Data_Link</title>
@@ -52,6 +52,12 @@
 <li><a href="#orgb7c26c1">Data link</a>
 <ul>
 <li><a href="#org47addf5">Bit stuffing</a></li>
+<li><a href="#org29558b7">ARQ</a>
+<ul>
+<li><a href="#org588cc93">Idle RQ</a></li>
+<li><a href="#org3aec6f3">Continuous RQ (Protocolli a finestra)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -114,10 +120,167 @@ L'implementazione del bit stuffing viene effettuata al livello logico dal protoc
 </p>
 </div>
 </div>
+
+<div id="outline-container-org29558b7" class="outline-3">
+<h3 id="org29558b7">ARQ</h3>
+<div class="outline-text-3" id="text-org29558b7">
+<p>
+Per garantire l'<a href="affidabilita.html#ID-3898f6e3-9c94-41fc-bdef-7690d5031ccd">affidabilità</a> a livello 2, si utilizza uno schema di controllo chiamato <b>Automatic Repeat Request</b>, il cui scopo è quello di riconoscere e rispedire i frame corrotti o persi in trasmissione.
+</p>
+
+<p>
+In ogni variante di questo schema usa l'<b>Acknowledgement (<code>ACK</code>)</b>, che consiste in un messaggio di risposta da parte dello host destinatario, attraverso cui viene confermata la corretta ricezione del messaggio originale.
+</p>
+
+<p>
+Un timer viene utilizzato per misurare la distanza dall'invio del frame.
+Il valore di \(T\) deve essere correttamente dimensionato.
+Infatti, un valore troppo elevato comporterebbe una attesa inutile ad ogni mancata ricezione dell'<code>ACK</code>, mentre con un valore troppo ridotto la sorgente potrebbe rimandare la comunicazione mentre l'<code>ACK</code> è in arrivo.
+</p>
+
+<p>
+Inoltre, entrambe le macchine utilizzano delle variabili, chiamate rispettivamente <code>send</code> e <code>receive</code>.
+</p>
+
+<p>
+La politica per l'<code>ACK</code> che a cui si fa riferimento nel corso è quella <b>cumulativa</b>: un <code>ACK</code> di livello \(N\) indica che tutti i frame di livello minore o uguale ad \(N\) sono stati ricevuti.
+</p>
+</div>
+
+<div id="outline-container-org588cc93" class="outline-4">
+<h4 id="org588cc93">Idle RQ</h4>
+<div class="outline-text-4" id="text-org588cc93">
+<p>
+Il sistema più semplice di ARQ è chiamato <i>Idle</i>.
+</p>
+
+<p>
+La macchina sorgente può avere un solo frame in attesa di <code>ACK</code>.
+</p>
+
+<p>
+Dopo un certo tempo \(T\), chiamato <a href="reti.html#ID-a362a05d-2b1c-4a02-b76c-ff3726a289cc">round trip time delay</a>, durante il quale un <code>ACK</code> non è stato ricevuto, la sorgente assume che la comunicazione non sia andata a buon fine e la ripete.
+</p>
+
+<p>
+Ad ogni invio di un frame con \(N=x\), la sorgente rimane in attesa di un <code>ACK</code> con lo stesso valore.
+In caso di mancata ricezione di tale <code>ACK</code>, ritrasmetterà il frame fino alla ricezione dello stesso.
+</p>
+
+<p>
+Dal lato receiver, alla ricezione di un frame di livello \(N\), viene emesso l'<code>ACK</code> dello stesso livello è incrementata la variabile.
+</p>
+
+<p>
+Nei casi in cui l'<code>ACK</code> viene smarrito, si verifica un mismatch delle variabili: infatti, il receiver invia correttamente la risposta al frame \(N\) ed incrementa la propria variabile ad \(N+1\), mentre il sender rimane a \(N\) e rispedisce il frame corrispondente.
+</p>
+
+<p>
+Il receiver è costretto, quindi, a scartare il pacchetto duplicato e reinviare l'<code>ACK</code> precedente.
+</p>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-org3aec6f3" class="outline-4">
+<h4 id="org3aec6f3">Continuous RQ (Protocolli a finestra)</h4>
+<div class="outline-text-4" id="text-org3aec6f3">
+<p>
+Il sistema di Idle è inefficiente, in quanto durante il tempo di propagazione verso e dal ricevitore, la sorgente è ferma.
+</p>
+
+<p>
+Una strategia più efficiente è quella di mandare serie di frame lunghe \(K\) senza aspettare il rispettivo <code>ACK</code>, per poi rispedire quelli persi alla fine della serie.
+</p>
+
+<p>
+Questa strategia aumenta molto l'efficienza, soprattutto nei casi in cui l'<a href="reti.html#ID-b122a89c-84ab-4f3a-add1-4c59f57348de">utilizzo del canale</a> è basso.
+</p>
+
+<p>
+Per ognuno dei \(K\) frame della serie esiste un timer corrispondente nel sender.
+</p>
+
+<p>
+Inoltre, ogni frame è rappresentato da un numero di sequenza, utilizzato per riferirsi ad uno specifico frame attraverso l'<code>ACK</code>.
+</p>
+
+<p>
+La dimensione del numero di sequenza viene inserita nello header ed introduce quindi un overhead. Va quindi mantenuta ridotta.
+</p>
+
+<p>
+Allo stesso tempo, tali numeri devono essere sempre ricondotti ad un unico frame e non possono condurre ad ambiguità.
+</p>
+
+<p>
+Esistono due policy per i protocolli a finestra, <b>Selective Repeat</b> e <b>Go-Back N</b>.
+</p>
+</div>
+
+<ul class="org-ul">
+<li><a id="org11d6931"></a>Selective repeat<br />
+<div class="outline-text-5" id="text-org11d6931">
+<p>
+Il sender invia tutti i frame della sequenza e, quando scopre che uno dei frame è andato perso e quindi è stato inviato un <code>ACK</code> vecchio per la seconda volta, entra in modalità ritrasmissione e lo reinvia.
+</p>
+
+<p>
+Il receiver è costretto a mantenere in buffer tutti i frame successivi a quello smarrito, in modo da riordinarli e processarli una volta ricevuto.
+</p>
+
+<p>
+Quindi <b>il receiving buffer è grande \(K\)</b>.
+</p>
+
+<p>
+Ad ogni <code>ACK(N)</code> ricevuto, la finestra va avanti e nuovi frame vengono spediti.
+</p>
+
+<p>
+Il receiver, alla ricezione di un frame fuori sequenza, reinvia l'<code>ACK</code> dell'ultimo frame ricevuto, così che il sender capisca di dover ritrasmettere il frame appena successivo.
+</p>
+
+<p>
+Dato che l'<code>ACK</code> è cumulativo, è possibile che il receiver abbia ricevuto alcuni dei frame successivi ad \(N\), ma non quello \(N+1\). In tal caso, il valore dell'<code>ACK</code> generato continuerebbe ad essere \(N\), fino alla ricezione del frame \(N+1\). Dopo ciò, il nuovo frame non sarebbe \(N+1\), ma verrebbe aggiornato al valore dell'ultimo frame ricevuto.
+</p>
+
+<p>
+Il <b>numero massimo di frequenza</b> è <b>almeno</b> \(2K\).
+Infatti, il receiver potrebbe possedere già dei frame di una data finestra nel proprio buffer e bisogna discriminare i nuovi.
+</p>
+</div>
+</li>
+
+<li><a id="org3ba2e42"></a>Go-Back-N<br />
+<div class="outline-text-5" id="text-org3ba2e42">
+<p>
+Il sender spedisce \(K\) frame consecutivi e alla fine valuta, in base agli <code>ACK</code> ricevuti, se spedire la finestra da \(K\) successiva, o ritrasmettere l'intera finestra attuale.
+</p>
+
+<p>
+Il sender, quindi, ha bisogno di mantenere <b>un solo frame in buffer</b>; infatti, in caso di corruzione di un frame, esso sarà sicuro che riceverà di nuovo anche tutti quelli precedenti, in ordine.
+</p>
+
+<p>
+La politica Idle RQ è una Go-Back-N con finestra grande \(1\).
+</p>
+
+<p>
+Il <b>numero massimo di frequenza</b> è <b>almeno</b> \(K+1\).
+Infatti, nel caso in cui il receiver non riceva alcun frame di una nuova finestra, continuerà a mandare l'<code>ACK</code> di livello appena precedente. Se la nuova finestra contiene un frame dello stesso livello, si otterebbe un'ambiguità.
+</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-11-14 Thu 20:11</p>
+<p class="date">Created: 2024-11-18 Mon 20:10</p>
 </div>
 </body>
 </html>
