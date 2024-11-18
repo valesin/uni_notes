@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-14 Thu 20:11 -->
+<!-- 2024-11-18 Mon 20:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Retibozza</title>
@@ -70,35 +70,7 @@
 </li>
 </ul>
 </li>
-<li><a href="#orgf24520c">Finora abbiamo capito come, su un canale che collega il nodo a al nodo b, inviare frame in modo affidabile (rimando alle 3 condizioni)</a>
-<ul>
-<li><a href="#orgb62a270">Lo possiamo fare utilizzando la spedizione e la ricezione di un ACK per validare la ricezione del frame, un timer dimensionato opportunamente, un buffer che tenga copia della frame in modo da rimandarlo in caso di scadenza del timer e due variabili, una di trasmissione (Sender) una di ricezione (Receiver) incrementate secondo un algoritmo.</a></li>
-<li><a href="#orgbc4ef78">Questa euristica supera l'impossibilità del problema dei generali bizantini, ma va estesa in modo da accomodare nuove funzioni, come una checksum e la numerazione delle frame.</a></li>
-<li><a href="#org7614008">Il limite, infatti, è che per ogni frame trasmesso, siamo costretti ad aspettare l'intero T. Ecco perchè vogliamo ottimizzare il funzionamento.</a>
-<ul>
-<li><a href="#orgd0c83be">Quando il round-trip è dominato dal tempo di trasmissione, l'utilizzo U (tx su T) è quasi 1, ma nel caso contrario si ottiene un grande vantaggio.</a></li>
-</ul>
-</li>
-<li><a href="#org8005a96">Con i protocolli a finestra, utilizzo le porte IO molto di più, a spese della semplicità dell'architettura software, in quanto mi servirà un algoritmo che raccoglie gli ack e gestisce le sequenze.</a></li>
-<li><a href="#org3c33c2d">Avrò K posizioni nel buffer e K timer, che non sono fisici ma virtuali, che però tutti generano degli interrupt.</a></li>
-<li><a href="#org3af7b2a">Esistono due policies per gestire questa tecnica, che differiscono nella gestione del buffer di ricezione.</a>
-<ul>
-<li><a href="#org45d4ac9">In uno dei due, Go back N, quando il ricevitore scopre che una sola delle frame ha un errore, butta tutte le frame della finestra e le richiede.</a></li>
-<li><a href="#orgbc39e27">La seconda si chiama Selected repeat e utilizza un buffer grande K.</a></li>
-<li><a href="#org5fb3b2c">Con finestra 1, il K è 1 e la policy è una Go back n semplificata.</a></li>
-<li><a href="#org91a9934">TCP usa entrambe. Infatti, chiede di rimandare tutto comunque, ma mantiene tutti i frame in buffer, perchè sa che il sender si risincronizzerà con l'ACK del frame recuperato ( e ipotizzo tutti quelli successivi sbloccati dal recuperato).</a></li>
-</ul>
-</li>
-<li><a href="#org602616e">Per rifermi al singolo frame, ho bisogno di un numero di sequenza.</a>
-<ul>
-<li><a href="#org0e3cce6">Il suo limite sta nella dimensione dell'Header. Più bit metto sulla sequenza, maggiore è l'overhead.</a></li>
-<li><a href="#org594b972">Immaginiamo di usare tanti numeri di frequenza quanti sono i frame in una finestra. Se tutti gli ack vengono smarriti, il ricevitore manderà un NAK, o un ACK cumulativo fino alla finestra precedente, e il sender potrà rimandare la finestra non ricevuta o andare avanti con la prossima, che non sarà accettata dal receiver, e quindi mandare quella non ricevuta. Ma il receiver non potrebbe distinguere fra le due sequenze, in quanto avrebbero esattamente gli stessi numeri di sequenza.</a></li>
-<li><a href="#org65dd550">In gobackn è sufficiente avere k+1 numeri di sequenza, per consentire al ricevitore di discriminare fra vecchia e nuova sequenza.</a></li>
-<li><a href="#org667eb54">In selective repeat, invece, K+1 frame non bastano, ma ne servono 2K. Infatti adesso, un ACK</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a href="#orgf24520c">Finora abbiamo capito come, su un canale che collega il nodo a al nodo b, inviare frame in modo affidabile (rimando alle 3 condizioni)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
 <li><a href="#org5dad09f">A volte la topologia di rete è un grafo parzialmente connesso e in particolare in cui i punti sono collegati fra loro in una <b>maglia</b>, ed è per questo chiamata anche punto-a-punto, ma spesso non è così.</a>
 <ul>
 <li><a href="#org7a155bc">In una LAN (local a.. network) la rete è broadcast, ovvero c'è un dispositivo che comunica a tutti gli altri, compreso quello da cui ha ricevuto il segnale in entrata. Ovvero un HUB, chiamato anche <b>centro stella passivo</b></a></li>
@@ -443,117 +415,7 @@
 </div>
 </div>
 <div id="outline-container-orgf24520c" class="outline-2">
-<h2 id="orgf24520c">Finora abbiamo capito come, su un canale che collega il nodo a al nodo b, inviare frame in modo affidabile (rimando alle 3 condizioni)</h2>
-<div class="outline-text-2" id="text-orgf24520c">
-</div>
-<div id="outline-container-orgb62a270" class="outline-3">
-<h3 id="orgb62a270">Lo possiamo fare utilizzando la spedizione e la ricezione di un ACK per validare la ricezione del frame, un timer dimensionato opportunamente, un buffer che tenga copia della frame in modo da rimandarlo in caso di scadenza del timer e due variabili, una di trasmissione (Sender) una di ricezione (Receiver) incrementate secondo un algoritmo.</h3>
-</div>
-<div id="outline-container-orgbc4ef78" class="outline-3">
-<h3 id="orgbc4ef78">Questa euristica supera l'impossibilità del problema dei generali bizantini, ma va estesa in modo da accomodare nuove funzioni, come una checksum e la numerazione delle frame.</h3>
-</div>
-<div id="outline-container-org7614008" class="outline-3">
-<h3 id="org7614008">Il limite, infatti, è che per ogni frame trasmesso, siamo costretti ad aspettare l'intero T. Ecco perchè vogliamo ottimizzare il funzionamento.</h3>
-<div class="outline-text-3" id="text-org7614008">
-</div>
-<div id="outline-container-orgd0c83be" class="outline-4">
-<h4 id="orgd0c83be">Quando il round-trip è dominato dal tempo di trasmissione, l'utilizzo U (tx su T) è quasi 1, ma nel caso contrario si ottiene un grande vantaggio.</h4>
-<div class="outline-text-4" id="text-orgd0c83be">
-</div>
-<ul class="org-ul">
-<li><a id="orgdaa1c64"></a>Quindi il problema che si risolve con i protocolli a finestra risulta in grandi vantaggi nei casi in cui l'IO sia molto veloce o la distanza molto lungo.<br /></li>
-</ul>
-</div>
-</div>
-<div id="outline-container-org8005a96" class="outline-3">
-<h3 id="org8005a96">Con i protocolli a finestra, utilizzo le porte IO molto di più, a spese della semplicità dell'architettura software, in quanto mi servirà un algoritmo che raccoglie gli ack e gestisce le sequenze.</h3>
-</div>
-<div id="outline-container-org3c33c2d" class="outline-3">
-<h3 id="org3c33c2d">Avrò K posizioni nel buffer e K timer, che non sono fisici ma virtuali, che però tutti generano degli interrupt.</h3>
-</div>
-<div id="outline-container-org3af7b2a" class="outline-3">
-<h3 id="org3af7b2a">Esistono due policies per gestire questa tecnica, che differiscono nella gestione del buffer di ricezione.</h3>
-<div class="outline-text-3" id="text-org3af7b2a">
-</div>
-<div id="outline-container-org45d4ac9" class="outline-4">
-<h4 id="org45d4ac9">In uno dei due, Go back N, quando il ricevitore scopre che una sola delle frame ha un errore, butta tutte le frame della finestra e le richiede.</h4>
-<div class="outline-text-4" id="text-org45d4ac9">
-</div>
-<ul class="org-ul">
-<li><a id="org462f37a"></a>Il problema è nell'efficienza, in quanto richiede di rimandare pacchetti corretti. In compenso utilizza un buffer dimensionato su un singolo frame.<br /></li>
-<li><a id="org585af6e"></a>Nel caso in cui un frame sia persa, il sender continua a inviare la sua intera frame, ma il receiver non accetterà più nessun frame oltre quello sbagliato, ovvero <b>fuori sequenza</b>.<br />
-<ul class="org-ul">
-<li><a id="org3d667de"></a>Inoltre, avviserà il sender che non ha ricevuto quello specifico frame, così il sender glielo rimanderà.<br />
-<ul class="org-ul">
-<li><a id="org6947517"></a>Sul libro, viene utilizzato l'ACK selettivo, ovvero rispondo con l'ACK del frame specifico, così che il NON ACK (NAK) sia un messaggio separato.<br /></li>
-<li><a id="org00eeb01"></a>Quello che usa TCP (e noi), è l'ACK cumulativo, ovvero vuol dire che siamo arrivati fino ad un certo frame e quelli successivi non sono arrivati. In questo modo, il NAK è implicito nel ACK(n-1)<br />
-<ul class="org-ul">
-<li><a id="orge641f03"></a>In questo caso, si risolve anche il problema della perdita di ACK, perchè se N+1 non è ricevuto, ma N sì e quindi si assume che i precedenti siano ricevuti.<br />
-<ul class="org-ul">
-<li><a id="org57b4497"></a>In questo caso, N rimarrebbe in buffer fino alla ricezione di un ACK successivo.<br /></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-<div id="outline-container-orgbc39e27" class="outline-4">
-<h4 id="orgbc39e27">La seconda si chiama Selected repeat e utilizza un buffer grande K.</h4>
-<div class="outline-text-4" id="text-orgbc39e27">
-</div>
-<ul class="org-ul">
-<li><a id="org2a0c1a5"></a>Quando ricevo un fuori sequenza, il receiver ribadisce che l'ultimo frame ricevuto è quello precedente, e il sender glielo rimanderà una volta terminata la finestra attuale<br /></li>
-<li><a id="org0d9f4b2"></a>Questo comporta che il buffer debba essere grande quanto una finestra, così da tenerci i frame successivi a quello perso e poi concatenarli.<br /></li>
-</ul>
-</div>
-<div id="outline-container-org5fb3b2c" class="outline-4">
-<h4 id="org5fb3b2c">Con finestra 1, il K è 1 e la policy è una Go back n semplificata.</h4>
-</div>
-<div id="outline-container-org91a9934" class="outline-4">
-<h4 id="org91a9934">TCP usa entrambe. Infatti, chiede di rimandare tutto comunque, ma mantiene tutti i frame in buffer, perchè sa che il sender si risincronizzerà con l'ACK del frame recuperato ( e ipotizzo tutti quelli successivi sbloccati dal recuperato).</h4>
-</div>
-</div>
-<div id="outline-container-org602616e" class="outline-3">
-<h3 id="org602616e">Per rifermi al singolo frame, ho bisogno di un numero di sequenza.</h3>
-<div class="outline-text-3" id="text-org602616e">
-</div>
-<div id="outline-container-org0e3cce6" class="outline-4">
-<h4 id="org0e3cce6">Il suo limite sta nella dimensione dell'Header. Più bit metto sulla sequenza, maggiore è l'overhead.</h4>
-<div class="outline-text-4" id="text-org0e3cce6">
-</div>
-<ul class="org-ul">
-<li><a id="orge0a21d9"></a>TCP non conta le frame ma il numero di byte spediti, quindi ha bisogno di un numero abbastanza grande.<br /></li>
-</ul>
-</div>
-<div id="outline-container-org594b972" class="outline-4">
-<h4 id="org594b972">Immaginiamo di usare tanti numeri di frequenza quanti sono i frame in una finestra. Se tutti gli ack vengono smarriti, il ricevitore manderà un NAK, o un ACK cumulativo fino alla finestra precedente, e il sender potrà rimandare la finestra non ricevuta o andare avanti con la prossima, che non sarà accettata dal receiver, e quindi mandare quella non ricevuta. Ma il receiver non potrebbe distinguere fra le due sequenze, in quanto avrebbero esattamente gli stessi numeri di sequenza.</h4>
-</div>
-<div id="outline-container-org65dd550" class="outline-4">
-<h4 id="org65dd550">In gobackn è sufficiente avere k+1 numeri di sequenza, per consentire al ricevitore di discriminare fra vecchia e nuova sequenza.</h4>
-<div class="outline-text-4" id="text-org65dd550">
-</div>
-<ul class="org-ul">
-<li><a id="orge814d7f"></a>Infatti, il ricevitore si pianta quando non riceve un frame e butta tutti i successivi. Quindi se perde un frame della finestra, non andrà avanti finchè non riceve il primo di quella finestra, e la finestra che ha perso ha un numero di sequenza del suo primo frame diverso da quello precedente.<br />
-<ul class="org-ul">
-<li><a id="org8068a90"></a>Insomma, ogni finestra inizia con un frame diverso da quello precedente, per qualunque K, perchè se sono in modulo K+1 ed ogni finestra di trasmissione contiene K frame, tornando indietro di K mi porta sempre nell'unico altro elemento dell'insieme K+1, che non faceva parte di K.<br /></li>
-</ul>
-</li>
-</ul>
-</div>
-<div id="outline-container-org667eb54" class="outline-4">
-<h4 id="org667eb54">In selective repeat, invece, K+1 frame non bastano, ma ne servono 2K. Infatti adesso, un ACK</h4>
-<div class="outline-text-4" id="text-org667eb54">
-</div>
-<ul class="org-ul">
-<li><a id="org0acef83"></a>Infatti, il ricevitore tiene in buffer al massimo K elementi e se arrivasse un nuovo elemento, con lo stesso numero di uno di quelli che ha già salvato nel suo buffer, non avrebbe modo di capire che è un frame nuovo e lo rifiuterebbe pensando che sia già accettato.<br /></li>
-<li><a id="org3910edf"></a>Utilizzando 2K numeri di sequenza, sono sicuro che tutti i nuovi frame mandati siano diversi da quelli nel buffer. Infatti, non è possibile che un frame già nel buffer sia rimandato.<br /></li>
-</ul>
-</div>
-</div>
+<h2 id="orgf24520c">Finora abbiamo capito come, su un canale che collega il nodo a al nodo b, inviare frame in modo affidabile (rimando alle 3 condizioni)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
 </div>
 <div id="outline-container-org5dad09f" class="outline-2">
 <h2 id="org5dad09f">A volte la topologia di rete è un grafo parzialmente connesso e in particolare in cui i punti sono collegati fra loro in una <b>maglia</b>, ed è per questo chiamata anche punto-a-punto, ma spesso non è così.</h2>
@@ -1442,7 +1304,7 @@
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-11-14 Thu 20:11</p>
+<p class="date">Created: 2024-11-18 Mon 20:05</p>
 </div>
 </body>
 </html>

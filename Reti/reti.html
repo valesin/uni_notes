@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-14 Thu 19:39 -->
+<!-- 2024-11-18 Mon 20:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Reti</title>
@@ -56,7 +56,8 @@
 <li><a href="#orgda2d940">Parametri e statistiche</a>
 <ul>
 <li><a href="#org05285a8">Round trip time</a></li>
-<li><a href="#org4d33f6a">Altre</a></li>
+<li><a href="#org6e3c7c7">Utilizzo di un canale</a></li>
+<li><a href="#org2b248fc">Altro</a></li>
 </ul>
 </li>
 </ul>
@@ -171,14 +172,26 @@ Sia \(t_{p}\) il tempo di <b>propagazione</b>, ovvero il tempo che i dati impieg
 </p>
 
 <p>
-Allora, il tempo totale di una comunicazione è \(t_{x} + 2t_{p}\).
+Allora, il tempo totale di una comunicazione è \[t_{x} + 2t_{p}\].
 </p>
 </div>
 </div>
 
-<div id="outline-container-org4d33f6a" class="outline-4">
-<h4 id="org4d33f6a">Altre</h4>
-<div class="outline-text-4" id="text-org4d33f6a">
+<div id="outline-container-org6e3c7c7" class="outline-4">
+<h4 id="org6e3c7c7">Utilizzo di un canale</h4>
+<div class="outline-text-4" id="text-org6e3c7c7">
+<p>
+L'utilizzo di un canale è il rapporto del tempo impiegato per immettere un frame sul canale sul tempo che il frame impiega per arrivare a destinazione ed essere confermato mediante <code>ACK</code>.
+</p>
+
+<p>
+La formula, dunque, è \[U = \frac{t_{x}}{t_{x} + 2t_{p}}\].
+</p>
+</div>
+</div>
+<div id="outline-container-org2b248fc" class="outline-4">
+<h4 id="org2b248fc">Altro</h4>
+<div class="outline-text-4" id="text-org2b248fc">
 <p>
 L'<b>error rate</b>, che è caratteristica di un cavo ed è \(10^{-9}\) per la fibra, \(10^{-5}\) per il doppino telefonico e ancora più alta per le reti radio.
 </p>
@@ -327,7 +340,7 @@ uniforme i dati su macchine che potrebbero utilizzare formati diversi. L'importa
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-11-14 Thu 19:39</p>
+<p class="date">Created: 2024-11-18 Mon 20:05</p>
 </div>
 </body>
 </html>

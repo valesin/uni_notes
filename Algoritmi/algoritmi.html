@@ -3,12 +3,44 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-15 Fri 13:11 -->
+<!-- 2024-11-18 Mon 20:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Algoritmi</title>
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="content" class="content">
@@ -25,6 +57,16 @@
 <li><a href="#org10ebd94">Kruskal</a></li>
 <li><a href="#orga4c10ec"><span class="todo TODO">TODO</span> Aggiungere lezione precedente</a></li>
 <li><a href="#org14f8cf6">AlgoritmoDiPrim</a></li>
+</ul>
+</li>
+<li><a href="#org6973a95">Lez 23</a>
+<ul>
+<li><a href="#orge81d136">Distanza fra stringhe</a></li>
+<li><a href="#org1177645">diff con divide et impera</a>
+<ul>
+<li><a href="#orgd03fd02">Principio di ottimalità</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -69,9 +111,58 @@ Strategie greedy differenti
 </div>
 </div>
 </div>
+
+
+
+<div id="outline-container-org6973a95" class="outline-2">
+<h2 id="org6973a95">Lez 23</h2>
+<div class="outline-text-2" id="text-org6973a95">
+<p>
+In alcuni casi, il problema viene scomposto in sottoproblemi più piccoli che ritornano più volte. In certi casi, il calcolo di tali sottoproblemi minori porta ad un aumento disastroso del tempo, alle volte esponenziale.
+Un esempio è il calcolo dei numeri di Fibonacci. Usando la definizione base avrebbe tempo esponenziale, perchè richiede di calcolare molteplici volte lo stesso valore.
+Salvando invece tutti i valori in una tabella, o almeno gli ultimi 2 valori, l'algoritmo esegue in tempo lineare.
+</p>
+</div>
+
+<div id="outline-container-orge81d136" class="outline-3">
+<h3 id="orge81d136">Distanza fra stringhe</h3>
+<div class="outline-text-3" id="text-orge81d136">
+<p>
+Siano ammesse soltanto le tre operazioni di sostituzione, inserimento e cancellazione: allora la distanza di Levenstein (edit distance) è il numero di operazioni necessarie per passare da una stringa all'altra, operando alla fine dell'una per arrivare all'altra.
+Allora si dimostra che se una delle due è vuota, allora il numero di operazioni è uguale alla lunghezza di quella non vuota, perchè serve effettuare tante cancellazioni/inserimenti quante sono le lettere di quella non vuota.
+Se nessuna è vuota, guardo l'ultimo simbolo e se l'ultimo simbolo è uguale, chiamo la funzione ricorsiva sulle stringhe senza ultimo simbolo. Se l'ultimo simbolo è diverso, allora faccio le chiamate ricorsive per ognuno dei tre casi e prendo il minimo fra essi.
+Il problema è che applicando questa strategia, ottengo un equazione di ricorrenza affine a \(3^{n}\). Il motivo per cui le chiamate ricorsive esplodono è proprio che effettuo chiamate sugli stessi argomenti.
+Introduco allora una tabella in cui inserico le informazioni man mano, poi ogni volta che devo calcolare una cella utilizzo le tre caselle adiacenti che contengono informazioni già memorizzate in precedenza. Quando le due lettere correnti sono diverse, al minimo dei tre elementi adiacenti già presenti sommo \(1\). Quando sono uguali, copio il numero adiacente diagonalmente.
+Il motivo per cui si effettuano queste operazioni è che le tre caselle rappresentano i 3 casi, di sostituzione, inserimento o cancellazione. Quando le lettere sono diverse, allora necessariamente ho effettuato una delle operazioni e quindi al valore precedente devo sommare uno. Quando invece le lettere sono ugali, copio il numero della casella diagonale, che corrisponde al valore invariato di entrambe le stringhe con un valore in meno.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1177645" class="outline-3">
+<h3 id="org1177645">diff con divide et impera</h3>
+<div class="outline-text-3" id="text-org1177645">
+<p>
+Nella tecniva divide-et-impera, si sottodivide il problema in sottoproblemi in direzione top-down, risolvendo i sottoproblemi ridotti che giungono dopo la riduzione.
+Nella programmazione dinamica, al contrario, si usa un approccio bottom-up in cui i sottoproblemi minimi sono subito risolti e salvati, in modo che i problemi più grandi possono sfruttare le soluzioni già calcolate.
+La divide-et-impera viene usata quando le istanze dei sottoproblemi sono disgiunte.
+Si chiama programmazione dinamica (molto vecchia) perchè riempire le tabelle veniva anche chiamato programmare le tabelle e riempire quest'ultime è effettuato in modo dinamico.
+</p>
+</div>
+
+<div id="outline-container-orgd03fd02" class="outline-4">
+<h4 id="orgd03fd02">Principio di ottimalità</h4>
+<div class="outline-text-4" id="text-orgd03fd02">
+<p>
+Stiamo risolvendo un problema di ottimizzazione.
+Nel caso della distanza si applica il principio che la soluzione ottima del problema deriva dalle soluzioni ottime dei problemi più piccoli.
+</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-11-15 Fri 13:11</p>
+<p class="date">Created: 2024-11-18 Mon 20:05</p>
 </div>
 </body>
 </html>
