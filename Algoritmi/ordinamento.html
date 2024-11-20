@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-18 Mon 20:05 -->
+<!-- 2024-11-20 Wed 19:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ordinamento</title>
 <meta name="generator" content="Org Mode" />
-<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
 <script>
   window.MathJax = {
     tex: {
@@ -49,53 +49,53 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org3ff630b">Algoritmi di ordinamento</a>
+<li><a href="#orgaaf3b9f">Algoritmi di ordinamento</a>
 <ul>
-<li><a href="#org4e192e3"><span class="todo TODO">TODO</span> Inserire casi migliori e peggiori per ogni algoritmo</a></li>
-<li><a href="#org98b132a">Introduzione</a>
+<li><a href="#org5001f69"><span class="todo TODO">TODO</span> Inserire casi migliori e peggiori per ogni algoritmo</a></li>
+<li><a href="#org670590c">Introduzione</a>
 <ul>
-<li><a href="#org17f7c14">Stabilità</a></li>
-<li><a href="#orge64c13f">Complessità</a></li>
+<li><a href="#org1dac912">Stabilità</a></li>
+<li><a href="#org7f2f2a1">Complessità</a></li>
 </ul>
 </li>
-<li><a href="#org4dbbd7d">Algoritmi elementari</a>
+<li><a href="#orgda7ef56">Algoritmi elementari</a>
 <ul>
-<li><a href="#orge3d3dde">SelectionSort</a></li>
-<li><a href="#orge3d31ec">InsertionSort</a></li>
-<li><a href="#org90f0e22">BubbleSort</a></li>
+<li><a href="#org48ff491">SelectionSort</a></li>
+<li><a href="#org59041c0">InsertionSort</a></li>
+<li><a href="#org95391b8">BubbleSort</a></li>
 </ul>
 </li>
-<li><a href="#org533273c">Algoritmi avanzati</a>
+<li><a href="#orgb25e762">Algoritmi avanzati</a>
 <ul>
-<li><a href="#org3c421e4">MergeSort</a></li>
-<li><a href="#orga58727c">QuickSort</a></li>
-<li><a href="#org54dde00">Heapsort</a></li>
+<li><a href="#org719779b">MergeSort</a></li>
+<li><a href="#org3753944">QuickSort</a></li>
+<li><a href="#org833d49d">Heapsort</a></li>
 </ul>
 </li>
-<li><a href="#org9a58683">Algoritmi senza confronti</a></li>
+<li><a href="#org0f2b90a">Algoritmi senza confronti</a></li>
 </ul>
 </li>
-<li><a href="#org794f2b2">Ragionamenti su binari</a>
+<li><a href="#org3182bc2">Ragionamenti su binari</a>
 <ul>
-<li><a href="#orgcee5ea7"><span class="todo TODO">TODO</span> Ragionare su questo, cosa c'entra il log e come esplicitare attraverso gli esponenti</a></li>
+<li><a href="#org0e4def5"><span class="todo TODO">TODO</span> Ragionare su questo, cosa c'entra il log e come esplicitare attraverso gli esponenti</a></li>
 </ul>
 </li>
-<li><a href="#orgc4aafd3">Trovare limite superiore per somma</a></li>
-<li><a href="#org7c07a32">Riassunto ordinamento basato su confronti</a></li>
-<li><a href="#org6dbe179">Limite inferiore ai metodi basati sui confronti</a></li>
+<li><a href="#orgce23eaa">Trovare limite superiore per somma</a></li>
+<li><a href="#org89018da">Riassunto ordinamento basato su confronti</a></li>
+<li><a href="#orgdf9025c">Limite inferiore ai metodi basati sui confronti</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org3ff630b" class="outline-2">
-<h2 id="org3ff630b">Algoritmi di ordinamento</h2>
-<div class="outline-text-2" id="text-org3ff630b">
+<div id="outline-container-orgaaf3b9f" class="outline-2">
+<h2 id="orgaaf3b9f">Algoritmi di ordinamento</h2>
+<div class="outline-text-2" id="text-orgaaf3b9f">
 </div>
-<div id="outline-container-org4e192e3" class="outline-3">
-<h3 id="org4e192e3"><span class="todo TODO">TODO</span> Inserire casi migliori e peggiori per ogni algoritmo</h3>
+<div id="outline-container-org5001f69" class="outline-3">
+<h3 id="org5001f69"><span class="todo TODO">TODO</span> Inserire casi migliori e peggiori per ogni algoritmo</h3>
 </div>
-<div id="outline-container-org98b132a" class="outline-3">
-<h3 id="org98b132a">Introduzione</h3>
-<div class="outline-text-3" id="text-org98b132a">
+<div id="outline-container-org670590c" class="outline-3">
+<h3 id="org670590c">Introduzione</h3>
+<div class="outline-text-3" id="text-org670590c">
 <p>
 In questo corso si tratta soltanto di ordinamento interno, non di quello esterno, in cui i dati vengono prelevati in blocchi dalla memoria di massa.
 </p>
@@ -109,34 +109,34 @@ Durante il corso, si utilizzeranno degli array di interi, per semplificare il ra
 </p>
 </div>
 
-<div id="outline-container-org17f7c14" class="outline-4">
-<h4 id="org17f7c14">Stabilità</h4>
-<div class="outline-text-4" id="text-org17f7c14">
+<div id="outline-container-org1dac912" class="outline-4">
+<h4 id="org1dac912">Stabilità</h4>
+<div class="outline-text-4" id="text-org1dac912">
 <p>
 Un algoritmo si dice <b>stabile</b> quando, dati due record con la medesima chiave, l'ordine in cui essi si trovano nell'array ordinato è lo stesso in cui si trovavano in quello iniziale.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orge64c13f" class="outline-4">
-<h4 id="orge64c13f">Complessità</h4>
-<div class="outline-text-4" id="text-orge64c13f">
+<div id="outline-container-org7f2f2a1" class="outline-4">
+<h4 id="org7f2f2a1">Complessità</h4>
+<div class="outline-text-4" id="text-org7f2f2a1">
 <p>
 Si studieranno principalmente algoritmi di ordinamento basati su confronti da chiavi. Si valuteranno la complessità in termini di <b>tempo</b> e <b>spazio</b>.
 </p>
 </div>
 
 <ul class="org-ul">
-<li><a id="orgb49aa20"></a>Spazio<br />
-<div class="outline-text-5" id="text-orgb49aa20">
+<li><a id="org9a2a53a"></a>Spazio<br />
+<div class="outline-text-5" id="text-org9a2a53a">
 <p>
 Lo spazio ulteriore a quello necessario per l'array.
 </p>
 </div>
 </li>
 
-<li><a id="org0715ed6"></a>Tempo<br />
-<div class="outline-text-5" id="text-org0715ed6">
+<li><a id="org84e1a7e"></a>Tempo<br />
+<div class="outline-text-5" id="text-org84e1a7e">
 <p>
 Si utilizza il numero di confronti come criterio. Infatti, questi sono le operazioni più costose. Se ciascun confronto viene effettuato in tempo costante, il numero di confronti fornisce una stima del tempo di calcolo. Infatti, in base al criterio di costo uniforme, può essere poi molitplicato per il tempo necessario per un singolo confronto (es. O(1) per interi, O(s) per stringhe di lunghezza s) per ottenere una stima del tempo totale.
 </p>
@@ -146,9 +146,9 @@ Si utilizza il numero di confronti come criterio. Infatti, questi sono le operaz
 </div>
 </div>
 
-<div id="outline-container-org4dbbd7d" class="outline-3">
-<h3 id="org4dbbd7d">Algoritmi elementari</h3>
-<div class="outline-text-3" id="text-org4dbbd7d">
+<div id="outline-container-orgda7ef56" class="outline-3">
+<h3 id="orgda7ef56">Algoritmi elementari</h3>
+<div class="outline-text-3" id="text-orgda7ef56">
 <p>
 I seguenti algoritmi sono eseguiti in tempo O(n<sup>2</sup>). La loro implementazione è semplice, ma l'efficienza limitata. Agiscono tutti <i>in loco</i>, ovvero non necessitano di strutture ausiliare.
 I primi due algo lavorano in modo incrementale. Una parte è ordinata, l'altra no e fra la seconda selezioniamo il posto corretto per aggiungervi un nuovo elemento.
@@ -156,15 +156,15 @@ Il bubblesort invece, scambia a coppie e si ferma quando non c'è più modo di s
 </p>
 </div>
 
-<div id="outline-container-orge3d3dde" class="outline-4">
-<h4 id="orge3d3dde">SelectionSort</h4>
-<div class="outline-text-4" id="text-orge3d3dde">
-<pre class="example" id="orge16da1e">
+<div id="outline-container-org48ff491" class="outline-4">
+<h4 id="org48ff491">SelectionSort</h4>
+<div class="outline-text-4" id="text-org48ff491">
+<pre class="example" id="org97d5010">
 ALGORITMO selectionSort (Array A[0..N-1])
     FOR k &lt;- 0 to n-2 DO
         m &lt;- k                            //posizione del minimo
         FOR j &lt;- k+1 to n-1 DO
-            IF A[j] &lt; A[m] THEN j &lt;- m
+            IF A[j] &lt; A[m] THEN m &lt;- j
             ENDIF
         ENDFOR
         scambia A[m] con A[k]             //sistema il minimo in posizione k
@@ -251,8 +251,8 @@ Un esempio è l'array \([10_{1},\;10_{2},\;5] \rightarrow [5,\;10_{2}\;10_{1}]\)
 </div>
 
 <ul class="org-ul">
-<li><a id="org7834583"></a>Analisi<br />
-<div class="outline-text-5" id="text-org7834583">
+<li><a id="orgfce8089"></a>Analisi<br />
+<div class="outline-text-5" id="text-orgfce8089">
 <p>
 Per la stima del tempo, notare che alla \(k\) -esima iterazione, sono stati effettuati \(n-k-1\) confronti.
 </p>
@@ -268,10 +268,10 @@ Lo spazio è costante perchè si opera <b>in loco</b>.
 </li>
 </ul>
 </div>
-<div id="outline-container-orge3d31ec" class="outline-4">
-<h4 id="orge3d31ec">InsertionSort</h4>
-<div class="outline-text-4" id="text-orge3d31ec">
-<pre class="example" id="org2b299ba">
+<div id="outline-container-org59041c0" class="outline-4">
+<h4 id="org59041c0">InsertionSort</h4>
+<div class="outline-text-4" id="text-org59041c0">
+<pre class="example" id="orgb41b42a">
 ALGORITMO insertionSort(Array A[0..N-1])
     FOR k -&gt; 1 TO N-1 DO
         x &lt;- A[k]                       // copia l'elemento da inserire
@@ -345,8 +345,8 @@ E' stabile.
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org36bcad6"></a>Alternativa<br />
-<div class="outline-text-5" id="text-org36bcad6">
+<li><a id="org191ae15"></a>Alternativa<br />
+<div class="outline-text-5" id="text-org191ae15">
 <p>
 Un algoritmo in cui il ciclo interno operasse da sinistra verso destra, darebbe luogo allo stesso risultato ma sarebbe meno efficiente.
 </p>
@@ -366,8 +366,8 @@ La versione tradizionale ottimizza questo aspetto effettuando una sola lettura, 
 </li>
 
 
-<li><a id="org0f57c5a"></a>Analisi<br />
-<div class="outline-text-5" id="text-org0f57c5a">
+<li><a id="org21c94a6"></a>Analisi<br />
+<div class="outline-text-5" id="text-org21c94a6">
 <p>
 \(sum_{k=1}^{k} i\), che per la formula di gauss è \(\frac{(n-1)(n)}{2}\).
 </p>
@@ -375,10 +375,10 @@ La versione tradizionale ottimizza questo aspetto effettuando una sola lettura, 
 </li>
 </ul>
 </div>
-<div id="outline-container-org90f0e22" class="outline-4">
-<h4 id="org90f0e22">BubbleSort</h4>
-<div class="outline-text-4" id="text-org90f0e22">
-<pre class="example" id="org3e977c8">
+<div id="outline-container-org95391b8" class="outline-4">
+<h4 id="org95391b8">BubbleSort</h4>
+<div class="outline-text-4" id="text-org95391b8">
+<pre class="example" id="orgd1e0f91">
 ALGORITMO bubbleSort(Array A[0..n-1)
 k &lt;- 1                            //contatore della scansione
 scambiato &lt;- false
@@ -457,9 +457,9 @@ Inoltre, alla $n-1$-esima iterazione, gli ultimi \(n-1\) elementi sono ordinati 
 </div>
 
 <ul class="org-ul">
-<li><a id="org3b20fe1"></a>Miglioramento<br />
-<div class="outline-text-5" id="text-org3b20fe1">
-<pre class="example" id="orge26ffdc">
+<li><a id="orgfb60ad0"></a>Miglioramento<br />
+<div class="outline-text-5" id="text-orgfb60ad0">
+<pre class="example" id="org755fb66">
 ALGORITMO bubbleSort(Array A[0..n-1])
     primoInOrdine &lt;- n
     DO
@@ -486,27 +486,27 @@ In particolare, se l'ultimo scambio è stato fra l'elemento in posizione \(j-1\)
 </ul>
 </div>
 </li>
-<li><a id="org2e030f8"></a>Analisi<br />
-<div class="outline-text-5" id="text-org2e030f8">
+<li><a id="orgedb82be"></a>Analisi<br />
+<div class="outline-text-5" id="text-orgedb82be">
 </div>
 <ul class="org-ul">
-<li><a id="org2ca99d6"></a>Caso peggiore<br />
-<div class="outline-text-6" id="text-org2ca99d6">
+<li><a id="org733a272"></a>Caso peggiore<br />
+<div class="outline-text-6" id="text-org733a272">
 <p>
 Con un minimo alla fine dell'array, nella versione non migliorata da Knuth, ogni iterazione \(k\) del ciclo esterno dà luogo a \(n-k\) confronti. Dato che \(k\) va da \(1\) a \(n-1\), si ottiene
 \[ \sum_{k=1}^{n-1} n-k \; =\; \sum_{k=1}^{n-1} n - \sum_{k=1}^{n-1} k \; = \; n(n-1) - \frac{n(n-1)}{2} \; = \; \frac{n(n-1)}{2} \; = \; O(n^{2})\].
 </p>
 </div>
 </li>
-<li><a id="org1b35390"></a>Caso migliore<br />
-<div class="outline-text-6" id="text-org1b35390">
+<li><a id="orgb016ff9"></a>Caso migliore<br />
+<div class="outline-text-6" id="text-orgb016ff9">
 <p>
 Array già ordinato, \(n-1\) confronti
 </p>
 </div>
 </li>
-<li><a id="orgcfa3459"></a>Caso peggiore<br />
-<div class="outline-text-6" id="text-orgcfa3459">
+<li><a id="org7f667d8"></a>Caso peggiore<br />
+<div class="outline-text-6" id="text-org7f667d8">
 <p>
 Con un minimo alla fine dell'array, devo effettuare $n-1
 </p>
@@ -517,25 +517,26 @@ Con un minimo alla fine dell'array, devo effettuare $n-1
 </ul>
 </div>
 </div>
-<div id="outline-container-org533273c" class="outline-3">
-<h3 id="org533273c">Algoritmi avanzati</h3>
-<div class="outline-text-3" id="text-org533273c">
+<div id="outline-container-orgb25e762" class="outline-3">
+<h3 id="orgb25e762">Algoritmi avanzati</h3>
+<div class="outline-text-3" id="text-orgb25e762">
 <p>
 I seguenti algoritmi sono eseguiti in un tempo \(O(n\log n)\), che è il limite inferiore di confronti necessari per ordinare un array di interi.
 Solo lo HeapSort è in loco, mentre il QuickSort e il MergeSort utilizzano strutture aggiuntive per la ricorsione o per un array aggiuntivo.
 </p>
 </div>
-<div id="outline-container-org3c421e4" class="outline-4">
-<h4 id="org3c421e4">MergeSort</h4>
-<div class="outline-text-4" id="text-org3c421e4">
+
+<div id="outline-container-org719779b" class="outline-4">
+<h4 id="org719779b">MergeSort</h4>
+<div class="outline-text-4" id="text-org719779b">
 <p>
 Il MergeSort si basa sullo scomporre il problema dell'ordinamento di un array all'ordinamento delle due metà ed alla loro fusione (<i>merge</i>).
 </p>
 </div>
 
 <ul class="org-ul">
-<li><a id="orgcfe0da2"></a>Merge<br />
-<div class="outline-text-5" id="text-orgcfe0da2">
+<li><a id="orgdbb352b"></a>Merge<br />
+<div class="outline-text-5" id="text-orgdbb352b">
 <p>
 Da due array <b>già ordinati</b> \(B\) e \(C\) si vuole ottenere un array \(X\) che contenga tutti gli elementi di \(B\) e \(C\), correttamente ordinati, sfruttando il fatto che i due array iniziali siano già ordinati.
 </p>
@@ -551,8 +552,8 @@ Questa tecnica è usata anche per fondere memorie esterne.
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org93e82ca"></a>Analisi<br />
-<div class="outline-text-6" id="text-org93e82ca">
+<li><a id="org7b64c9e"></a>Analisi<br />
+<div class="outline-text-6" id="text-org7b64c9e">
 <p>
 Il caso peggiore avviene quando all'iterazione \(n+m-2\) la lunghezza di entrambi gli array è \(1\).
 2 esempi, [1&#x2026;50] e 100, devo scandire tutto il primo. Altro, [pari], [dispari], ne consumo uno alla volta.
@@ -561,9 +562,9 @@ Il caso peggiore avviene quando all'iterazione \(n+m-2\) la lunghezza di entramb
 </li>
 </ul>
 </li>
-<li><a id="org5e5bd8e"></a>Sort<br />
-<div class="outline-text-5" id="text-org5e5bd8e">
-<pre class="example" id="orgd8ce80a">
+<li><a id="orga976dff"></a>Sort<br />
+<div class="outline-text-5" id="text-orga976dff">
+<pre class="example" id="org21c810a">
 ALGORITMO mergeSort(Array A[0..n-1])
     IF n&gt;1 THEN
         m = n/2
@@ -580,8 +581,8 @@ L'ordinamento di un array consiste, quindi, nell dividere l'array in due sottoar
 </div>
 
 <ul class="org-ul">
-<li><a id="org8bc6a2e"></a>Analisi tempo<br />
-<div class="outline-text-6" id="text-org8bc6a2e">
+<li><a id="org0d32658"></a>Analisi tempo<br />
+<div class="outline-text-6" id="text-org0d32658">
 <p>
 Il problema dell'ordinamento delle metà viene dimezzato ad ogni iterazione, richiedendo
 </p>
@@ -595,11 +596,11 @@ Con i miei calcoli, arrivo a nlg(n) - n + 1. Usando le proprietà di prima, cons
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org2476faa"></a><span class="todo TODO">TODO</span> Riempire con equazione sulle slides<br /></li>
+<li><a id="org03531ce"></a><span class="todo TODO">TODO</span> Riempire con equazione sulle slides<br /></li>
 </ul>
 </li>
-<li><a id="orgfa10bc6"></a>Analizi spazio<br />
-<div class="outline-text-6" id="text-orgfa10bc6">
+<li><a id="org1041f39"></a>Analizi spazio<br />
+<div class="outline-text-6" id="text-org1041f39">
 <p>
 Sia \(H(n)\) l'altezza massima dello stack di ricorsione, ovvero quanti record di attivazione possono esistere allo stesso momento, in funzione di \(n\)?
 Se \(n=1\), \(H(n)=1\), ovvero l'unica chiamata che termina subito con il caso base.
@@ -608,8 +609,8 @@ Per \(n\) potenza di \(2\), si ottiene \(H(n)=1+\log_{2} n\). In generale, \(H(n
 </p>
 </div>
 </li>
-<li><a id="org0e4d9b0"></a>Implementazione quasi in loco<br />
-<div class="outline-text-6" id="text-org0e4d9b0">
+<li><a id="org65417a9"></a>Implementazione quasi in loco<br />
+<div class="outline-text-6" id="text-org65417a9">
 <p>
 L'implementazione precedente occupa tanto spazio inutile. Ogni chiamata ricorsiva che rimane aperta, mantiene in memoria il contenuto dell'array in cui quella precedente viene divisa.
 Se si riesce a ottimizzare quella parte, si potrebbe risparmiare una gran parte di memoria.
@@ -627,8 +628,8 @@ L'analisi del tempo è assolutamente la stessa.
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org7c17a2a"></a>Analisi spazio<br />
-<div class="outline-text-7" id="text-org7c17a2a">
+<li><a id="orgb361bb8"></a>Analisi spazio<br />
+<div class="outline-text-7" id="text-orgb361bb8">
 <p>
 Adesso utilizzo un array dimensionato su quello iniziale, quindi \(\Theta(n)\).
 L'altezza dello stack di ricorsione è la stessa di prima, ma la dimensione dei record è costante. L'occupazione di memoria è quindi \(\Theta(\log n)\). Fra i due prevale \(\Theta(n)\).
@@ -637,8 +638,8 @@ L'altezza dello stack di ricorsione è la stessa di prima, ma la dimensione dei 
 </li>
 </ul>
 </li>
-<li><a id="org65fe249"></a>Stabilità<br />
-<div class="outline-text-6" id="text-org65fe249">
+<li><a id="orgca47e09"></a>Stabilità<br />
+<div class="outline-text-6" id="text-orgca47e09">
 <p>
 Nel <code>merge</code> mi capita di confrontare elementi uguali. Eppure, viene usato il \(\leq\), quindi nel caso in cui l'elemento del primo array sia uguale, viene scelto quello. Nel caso in cui togliessi l'uguale e usassi il semplice \(<\), perderebbe la stabilità.
 </p>
@@ -648,21 +649,21 @@ Nel <code>merge</code> mi capita di confrontare elementi uguali. Eppure, viene u
 </li>
 </ul>
 </div>
-<div id="outline-container-orga58727c" class="outline-4">
-<h4 id="orga58727c">QuickSort</h4>
-<div class="outline-text-4" id="text-orga58727c">
+<div id="outline-container-org3753944" class="outline-4">
+<h4 id="org3753944">QuickSort</h4>
+<div class="outline-text-4" id="text-org3753944">
 <p>
 Nel caso peggiore esegue in theta(n<sup>2</sup>), ma dimostreremo che tale caso avviene molto raramente e il caso medio è molto conveniente.
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="orgad658cb"></a>QuickSort<br />
-<div class="outline-text-5" id="text-orgad658cb">
+<li><a id="org56cbcde"></a>QuickSort<br />
+<div class="outline-text-5" id="text-org56cbcde">
 <p>
 Il criterio è di partizionare il mio vettore rispetto a un elemento arbitrario, <b>perno</b> o <b>pivot</b>.
 Dopodichè, metto i numeri più piccoli prima, quelli più grandi dopo, e poi ordino ricorsivamente le due partizioni.
 </p>
-<pre class="example" id="org0455b39">
+<pre class="example" id="org4e41885">
 ALGORITMO quickSort(Array A)
 IF lunghezza A&gt;1 THEN
     scegli un elemento x di A
@@ -674,8 +675,8 @@ IF lunghezza A&gt;1 THEN
 </pre>
 </div>
 <ul class="org-ul">
-<li><a id="orgdd91400"></a>Partizionamento<br />
-<div class="outline-text-6" id="text-orgdd91400">
+<li><a id="org0ddf47a"></a>Partizionamento<br />
+<div class="outline-text-6" id="text-org0ddf47a">
 <p>
 Il partizionamento va fatto "spendendo poco", ovvero facendo pochi confronti e senza usare memoria aggiuntiva. Se non avessi alcun <i>constraint</i>, mi basterebbe usare memoria aggiuntiva arbitraria per dividere gli elementi.
 Per far sì che operi in loco, il mio algoritmo <code>partiziona</code>, dovrebbe partizionare A[i..f-1] rispetto a un elemento, in modo che prima del perno ci siano gli elementi minori e dopo quelli maggiori. Alla fine, l'algoritmo deve restituire la posizione del perno, in quanto dovrò operare soltanto sulle partizioni alla sua destra e alla sinistra. Infatti, il perno si trova nella sua posizione definitiva. <sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>
@@ -686,7 +687,7 @@ Scambio i due elementi. Al momento dello scambio, sono sicuro che gli elementi s
 Termino quando gli indici di scansione si incontrano, poi scambio il perno con l'elemento al punto in cui si sono incontrati.
 Inoltre, parto con gli indici fuori di 1, perchè questo mi permette di fare meno confronti.
 </p>
-<pre class="example" id="orgc5cbec9">
+<pre class="example" id="orgef701a6">
 ALGORITMO partiziona(Array A, indice i, indice f) -&gt; indice
 perno &lt;- A[i]
 dx &lt;- f
@@ -705,16 +706,16 @@ In un array già ordinato, dx si sposta fino a sbattere contro il perno. Sx far�
 </div>
 
 <ul class="org-ul">
-<li><a id="org608f4bc"></a><span class="todo TODO">TODO</span> Controllare perchè presumo che l'ultimo elemento sia minore del perno.<br />
-<div class="outline-text-7" id="text-org608f4bc">
+<li><a id="org636720c"></a><span class="todo TODO">TODO</span> Controllare perchè presumo che l'ultimo elemento sia minore del perno.<br />
+<div class="outline-text-7" id="text-org636720c">
 <p>
 A un certo punto dx arriverà sul perno, che non è maggiore di sè stesso e quindi la condizione si annullerà.
 </p>
 </div>
 </li>
 
-<li><a id="orgab72193"></a><span class="todo TODO">TODO</span> Controllare in che modo il controllo triplice eviti confronti inutili.<br />
-<div class="outline-text-7" id="text-orgab72193">
+<li><a id="orge823269"></a><span class="todo TODO">TODO</span> Controllare in che modo il controllo triplice eviti confronti inutili.<br />
+<div class="outline-text-7" id="text-orge823269">
 <p>
 Sposto e poi controllo perchè così sono sicuro che l'elemento sia stato valutato una volta che vado avanti (?).
 Quando scambio gli elementi ai due indici, sono già sicuro che entrambi si trovino nella posizione corretta. Non mi serve fare il controllo di nuovo. Posso quindi skippare il controllo dell'elemento appena scambiato. Spostare prima del controllo mi garantisce questo.
@@ -723,12 +724,12 @@ Credo che lo stesso valga nel caso in cui sposti l'elemento precedente.
 </div>
 </li>
 
-<li><a id="orge1ff752"></a><span class="todo TODO">TODO</span> Non è uguale scambiare sx al posto di dx, perchè sx a volte scavalca. Controllare perchè<br /></li>
+<li><a id="orgca0ca5f"></a><span class="todo TODO">TODO</span> Non è uguale scambiare sx al posto di dx, perchè sx a volte scavalca. Controllare perchè<br /></li>
 </ul>
 </li>
-<li><a id="org6a61dc1"></a>Unione<br />
-<div class="outline-text-6" id="text-org6a61dc1">
-<pre class="example" id="org76e9bab">
+<li><a id="org5de816e"></a>Unione<br />
+<div class="outline-text-6" id="text-org5de816e">
+<pre class="example" id="org38829e7">
 PROCEDURA quickSort_inner(Array A, indice i, indice f)
 IF f-i&gt;1 THEN
     m &lt;- partiziona(A,i,f)
@@ -740,8 +741,8 @@ quickSort_inner(A,0,n)
 </pre>
 </div>
 </li>
-<li><a id="org5bbb5ec"></a>Analisi tempo<br />
-<div class="outline-text-6" id="text-org5bbb5ec">
+<li><a id="org2f3e70d"></a>Analisi tempo<br />
+<div class="outline-text-6" id="text-org2f3e70d">
 <p>
 Negli altri algoritmi, quando divido conosco sempre la grandezza delle parti ottenute. Adesso questa dipende da dove va a finire il perno.
 sia \(C(n)\) il numero di confronti su un array di lunghezza \(n\).
@@ -750,8 +751,8 @@ Nel caso ricorrente, \(C_{part}(n) + C(k)  + C(n-k-1))\), dove \(k\) è il numer
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org8fbd248"></a>Caso peggiore<br />
-<div class="outline-text-7" id="text-org8fbd248">
+<li><a id="orgeb4b572"></a>Caso peggiore<br />
+<div class="outline-text-7" id="text-orgeb4b572">
 <p>
 Il caso peggiore è quello in cui la somma fra i due termini massimizzano il risultato.
 Si può dimostrare che il massimo si ottiene quando la partizione è sbilanciata. Intuizione: sto usando divide et impera. Se divido il problema in uno di dimensione \(1\) e l'altro di dimensione \(n-1\), allora ho guadagnato molto poco.
@@ -761,19 +762,19 @@ Un numero quasi preciso è \(\approx \frac{n^{2}}{2}\)
 </p>
 </div>
 </li>
-<li><a id="orgd2cbdd4"></a>Caso migliore<br />
-<div class="outline-text-7" id="text-orgd2cbdd4">
+<li><a id="orgd5af3e8"></a>Caso migliore<br />
+<div class="outline-text-7" id="text-orgd5af3e8">
 <p>
 Voglio trovare la coppia che minimizza la somma, quindi \(\min (C_{w}(k)+C_{w}(n-k-1)|k=0..n-1)\).
 Infatti, in questo caso otterrei \(c_{b}(n) = n+2C_{b}(\frac{n}{2}\), che è dimostrabile sia \(\approx n \log_{2} n\). Notare che questo è un numero preciso e non una stima.
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org70009d9"></a>Il risultato della somma della coppia è una combinazione non lineare (quadratica). Questo significa che il vantaggio ottenuto dal bilanciamento è esponenziale. Ovvero, diminuire uno dei fattori mi da un vantaggio maggiore che aumentare l'altro della stessa quantità. Si può immaginare come una parabola in cui seleziono due punti sui due lati.<br /></li>
+<li><a id="org91e05b2"></a>Il risultato della somma della coppia è una combinazione non lineare (quadratica). Questo significa che il vantaggio ottenuto dal bilanciamento è esponenziale. Ovvero, diminuire uno dei fattori mi da un vantaggio maggiore che aumentare l'altro della stessa quantità. Si può immaginare come una parabola in cui seleziono due punti sui due lati.<br /></li>
 </ul>
 </li>
-<li><a id="org286d979"></a>Caso medio<br />
-<div class="outline-text-7" id="text-org286d979">
+<li><a id="orgdaa4ff2"></a>Caso medio<br />
+<div class="outline-text-7" id="text-orgdaa4ff2">
 <p>
 Prendo la somma dei tempi di tutti i casi possibili e poi la divido per il numero di casi, ovvero una semplice media.
 \(C(n) = 0\) se \(n\leq 1\)
@@ -792,11 +793,11 @@ Altrimenti scegliamo come perno un elemento a caso, lo scambiamo con il primo e 
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org339b220"></a><span class="todo TODO">TODO</span> Continuare dimostrazione<br /></li>
+<li><a id="org8fb4737"></a><span class="todo TODO">TODO</span> Continuare dimostrazione<br /></li>
 </ul>
 </li>
-<li><a id="org23b4f79"></a>Osservazioni<br />
-<div class="outline-text-7" id="text-org23b4f79">
+<li><a id="orgcd3cf2c"></a>Osservazioni<br />
+<div class="outline-text-7" id="text-orgcd3cf2c">
 <p>
 Non è stabile, esiste una versione che lo renda stabile ma aumentando la costante
 </p>
@@ -804,23 +805,23 @@ Non è stabile, esiste una versione che lo renda stabile ma aumentando la costan
 </li>
 </ul>
 </li>
-<li><a id="org5977bf5"></a>Analisi spazio<br />
-<div class="outline-text-6" id="text-org5977bf5">
+<li><a id="org6c1a2b1"></a>Analisi spazio<br />
+<div class="outline-text-6" id="text-org6c1a2b1">
 <p>
 Nel caso di una suddivisione bilanciata, ottengo un'altezza \(\approx \log_{2} n\), simile al mergesort. Infatti, uno dei lati conterrà la metà dell'input, che a sua volta chiamerà metà dell'input, e così via.
 Nel caso di una suddivisione sbilanciata, apro una chiamata ricorsiva per ogni elemento, quindi avrò un'altezza lineare.
 </p>
 </div>
 </li>
-<li><a id="org92d7341"></a>Ottimizzazioni<br />
-<div class="outline-text-6" id="text-org92d7341">
+<li><a id="org46a6d19"></a>Ottimizzazioni<br />
+<div class="outline-text-6" id="text-org46a6d19">
 <p>
 Notare che la seconda chiamata ricorsiva è in coda. Posso, dunque ottimizzare questa parte. Cancello la seconda chiamata ricorsiva, trasformo l'IF in un WHILE.
 In questo caso mi libero di una delle parti in cui lo stack di attivazione cresce. Trasformando la chiamata ricorsiva destra in un iterazione, risolvo i casi in cui il perno è il minore ( o maggiore? ), perchè in quel caso la parte sinistra non cresceva, mentre la destra sì.
 Dato che posso invertire l'ordine delle chiamate ricorsive, posso fare la stessa cosa al contrario, ovvero ricorrere sulla parte destra.
 Ognuna ha un caso critico. Posso scrivere una procedura che scelga quale delle due usare secondo un criterio.
 </p>
-<pre class="example" id="org5326013">
+<pre class="example" id="orgcf31282">
 PROCEDURA quickSort(Array A, indice i, indice f)
 WHILE f-i&gt;1 DO
     m &lt;- partiziona(A,i,f)
@@ -843,48 +844,48 @@ Nel caso in cui le partizioni siano sbilanciate, sceglierò sempre quella minore
 </li>
 </ul>
 </div>
-<div id="outline-container-org54dde00" class="outline-4">
-<h4 id="org54dde00">Heapsort</h4>
-<div class="outline-text-4" id="text-org54dde00">
+<div id="outline-container-org833d49d" class="outline-4">
+<h4 id="org833d49d">Heapsort</h4>
+<div class="outline-text-4" id="text-org833d49d">
 <p>
 to be filled
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org9a58683" class="outline-3">
-<h3 id="org9a58683">Algoritmi senza confronti</h3>
-<div class="outline-text-3" id="text-org9a58683">
+<div id="outline-container-org0f2b90a" class="outline-3">
+<h3 id="org0f2b90a">Algoritmi senza confronti</h3>
+<div class="outline-text-3" id="text-org0f2b90a">
 <p>
 Fill !
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org794f2b2" class="outline-2">
-<h2 id="org794f2b2">Ragionamenti su binari</h2>
-<div class="outline-text-2" id="text-org794f2b2">
+<div id="outline-container-org3182bc2" class="outline-2">
+<h2 id="org3182bc2">Ragionamenti su binari</h2>
+<div class="outline-text-2" id="text-org3182bc2">
 <p>
 Sommatoria da i=0 a k-1 di 2<sup>i</sup>. Penso alla codifica binaria. Quella sommatoria è uguale a tutti 1. Prendo il binario successivo, che ha una cifra in più, con la più grande settata a uno e tutte le successive 0. Quel numero è 2<sup>k</sup>. Poi sottraggo uno.
 Il doppio di un binario è uno shift verso sinistra.
 \(\forall n \in \mathbb{Z}, \; \exists N : N = 2^{k}, k\in\mathbb{Z}, \; t.c. \; n\leq N\l<2n\), ovvero, c'è sempre una potenza di due che è uguale al numero o minore del doppio.
 </p>
 </div>
-<div id="outline-container-orgcee5ea7" class="outline-3">
-<h3 id="orgcee5ea7"><span class="todo TODO">TODO</span> Ragionare su questo, cosa c'entra il log e come esplicitare attraverso gli esponenti</h3>
+<div id="outline-container-org0e4def5" class="outline-3">
+<h3 id="org0e4def5"><span class="todo TODO">TODO</span> Ragionare su questo, cosa c'entra il log e come esplicitare attraverso gli esponenti</h3>
 </div>
 </div>
-<div id="outline-container-orgc4aafd3" class="outline-2">
-<h2 id="orgc4aafd3">Trovare limite superiore per somma</h2>
-<div class="outline-text-2" id="text-orgc4aafd3">
+<div id="outline-container-orgce23eaa" class="outline-2">
+<h2 id="orgce23eaa">Trovare limite superiore per somma</h2>
+<div class="outline-text-2" id="text-orgce23eaa">
 <p>
 Si utilizza una proprietà in base a cui il valore di una sommatoria è sicuramente inferiore dell'integrale sullo stesso intervallo (quindi quello che termina al numero successivo a quello in cui termina la somma). Il calcolo dell'integrale mi da una stima superiore.
 </p>
 </div>
 </div>
-<div id="outline-container-org7c07a32" class="outline-2">
-<h2 id="org7c07a32">Riassunto ordinamento basato su confronti</h2>
-<div class="outline-text-2" id="text-org7c07a32">
+<div id="outline-container-org89018da" class="outline-2">
+<h2 id="org89018da">Riassunto ordinamento basato su confronti</h2>
+<div class="outline-text-2" id="text-org89018da">
 <p>
 Nel selectionSort, la prima parte contiene degli elementi già ordinati e ogni volta cerchiamo il minimo della seconda parte e lo mettiamo al posto giusto. Il tempo e \(\Theta n^{2}\) sempre, mentre lo spazio è costante.
 L'insertionSort ha \(\Theta n^{2}\) nel caso peggiore, ma \(n-1\) nel caso di array già ordinato
@@ -896,9 +897,9 @@ In heapsort il numero di confronti è \(\Theta(n\log n)\), opera in loco e non �
 </p>
 </div>
 </div>
-<div id="outline-container-org6dbe179" class="outline-2">
-<h2 id="org6dbe179">Limite inferiore ai metodi basati sui confronti</h2>
-<div class="outline-text-2" id="text-org6dbe179">
+<div id="outline-container-orgdf9025c" class="outline-2">
+<h2 id="orgdf9025c">Limite inferiore ai metodi basati sui confronti</h2>
+<div class="outline-text-2" id="text-orgdf9025c">
 <p>
 Vogliamo rispondere alla domanda: "è possibile ordinare array di \(n\) elementi utilizzando un numero di confronti tra chiavi che cresca meno di \(n\log n\)? No.
 Consideriamo un albero di decisione, ovvero un albero in cui i nodi interni sono delle domande con delle risposte binarie. Per alcune domande, questo albero risulta essere abbastanza bilanciato, mentre in altri casi cresce solo da una parte, ad esempio l'albero di ricerca di un array se le domande fossero "è maggiore della metà" o "è questo o no?".
@@ -923,7 +924,7 @@ C'è una somiglianza in questo concetto fra l'insert nell'insertionSort e lo ste
 </div>
 </div></div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-11-18 Mon 20:05</p>
+<p class="date">Created: 2024-11-20 Wed 19:49</p>
 </div>
 </body>
 </html>

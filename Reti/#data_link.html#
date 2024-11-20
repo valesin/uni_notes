@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-20 Wed 19:49 -->
+<!-- 2024-11-20 Wed 19:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Data Link</title>
 <meta name="generator" content="Org Mode" />
-<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
+<link rel="stylesheet" href="simple.css" />
 <script>
   window.MathJax = {
     tex: {
@@ -49,13 +49,13 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orga78266d">Data link</a>
+<li><a href="#org573f1db">Data link</a>
 <ul>
-<li><a href="#orgfc8c996">Bit stuffing</a></li>
-<li><a href="#org74a964e">ARQ</a>
+<li><a href="#org6565c67">Bit stuffing</a></li>
+<li><a href="#orga3163a5">ARQ</a>
 <ul>
-<li><a href="#org121e40d">Idle RQ</a></li>
-<li><a href="#orge1a3c9c">Continuous RQ (Protocolli a finestra)</a></li>
+<li><a href="#org6b7797b">Idle RQ</a></li>
+<li><a href="#org5789db6">Continuous RQ (Protocolli a finestra)</a></li>
 </ul>
 </li>
 </ul>
@@ -64,17 +64,17 @@
 </div>
 </div>
 
-<div id="outline-container-orga78266d" class="outline-2">
-<h2 id="orga78266d">Data link</h2>
-<div class="outline-text-2" id="text-orga78266d">
+<div id="outline-container-org573f1db" class="outline-2">
+<h2 id="org573f1db">Data link</h2>
+<div class="outline-text-2" id="text-org573f1db">
 <p>
 Il livello 2 si occupa di preparare i bit che il livello 1 introduce fisicamente nel cavo.
 </p>
 </div>
 
-<div id="outline-container-orgfc8c996" class="outline-3">
-<h3 id="orgfc8c996">Bit stuffing</h3>
-<div class="outline-text-3" id="text-orgfc8c996">
+<div id="outline-container-org6565c67" class="outline-3">
+<h3 id="org6565c67">Bit stuffing</h3>
+<div class="outline-text-3" id="text-org6565c67">
 <p>
 Dal cavo viene emessa una tensione variabile in Volt, attraverso cui vengono codificati i dati, rappresentati mediante dei bit.
 </p>
@@ -121,9 +121,9 @@ L'implementazione del bit stuffing viene effettuata al livello logico dal protoc
 </div>
 </div>
 
-<div id="outline-container-org74a964e" class="outline-3">
-<h3 id="org74a964e">ARQ</h3>
-<div class="outline-text-3" id="text-org74a964e">
+<div id="outline-container-orga3163a5" class="outline-3">
+<h3 id="orga3163a5">ARQ</h3>
+<div class="outline-text-3" id="text-orga3163a5">
 <p>
 Per garantire l'<a href="affidabilita.html#ID-3898f6e3-9c94-41fc-bdef-7690d5031ccd">affidabilità</a> a livello 2, si utilizza uno schema di controllo chiamato <b>Automatic Repeat Request</b>, il cui scopo è quello di riconoscere e rispedire i frame corrotti o persi in trasmissione.
 </p>
@@ -147,9 +147,9 @@ La politica per l'<code>ACK</code> che a cui si fa riferimento nel corso è quel
 </p>
 </div>
 
-<div id="outline-container-org121e40d" class="outline-4">
-<h4 id="org121e40d">Idle RQ</h4>
-<div class="outline-text-4" id="text-org121e40d">
+<div id="outline-container-org6b7797b" class="outline-4">
+<h4 id="org6b7797b">Idle RQ</h4>
+<div class="outline-text-4" id="text-org6b7797b">
 <p>
 Il sistema più semplice di ARQ è chiamato <i>Idle</i>.
 </p>
@@ -184,9 +184,9 @@ Il receiver è costretto, quindi, a scartare il pacchetto duplicato e reinviare 
 
 
 
-<div id="outline-container-orge1a3c9c" class="outline-4">
-<h4 id="orge1a3c9c">Continuous RQ (Protocolli a finestra)</h4>
-<div class="outline-text-4" id="text-orge1a3c9c">
+<div id="outline-container-org5789db6" class="outline-4">
+<h4 id="org5789db6">Continuous RQ (Protocolli a finestra)</h4>
+<div class="outline-text-4" id="text-org5789db6">
 <p>
 Il sistema di Idle è inefficiente, in quanto durante il tempo di propagazione verso e dal ricevitore, la sorgente è ferma.
 </p>
@@ -221,8 +221,8 @@ Esistono due policy per i protocolli a finestra, <b>Selective Repeat</b> e <b>Go
 </div>
 
 <ul class="org-ul">
-<li><a id="orgc9cddac"></a>Selective repeat<br />
-<div class="outline-text-5" id="text-orgc9cddac">
+<li><a id="orgf85f2b0"></a>Selective repeat<br />
+<div class="outline-text-5" id="text-orgf85f2b0">
 <p>
 Il sender invia tutti i frame della sequenza e, quando scopre che uno dei frame è andato perso e quindi è stato inviato un <code>ACK</code> vecchio per la seconda volta, entra in modalità ritrasmissione e lo reinvia.
 </p>
@@ -254,8 +254,8 @@ Infatti, il receiver potrebbe possedere già dei frame di una data finestra nel 
 </div>
 </li>
 
-<li><a id="orga99a860"></a>Go-Back-N<br />
-<div class="outline-text-5" id="text-orga99a860">
+<li><a id="org2c1336f"></a>Go-Back-N<br />
+<div class="outline-text-5" id="text-org2c1336f">
 <p>
 Il sender spedisce \(K\) frame consecutivi e alla fine valuta, in base agli <code>ACK</code> ricevuti, se spedire la finestra da \(K\) successiva, o ritrasmettere l'intera finestra attuale.
 </p>
@@ -280,7 +280,7 @@ Infatti, nel caso in cui il receiver non riceva alcun frame di una nuova finestr
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-11-20 Wed 19:49</p>
+<p class="date">Created: 2024-11-20 Wed 19:31</p>
 </div>
 </body>
 </html>

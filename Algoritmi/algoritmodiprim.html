@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-15 Fri 11:12 -->
+<!-- 2024-11-20 Wed 19:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AlgoritmoDiPrim</title>
 <meta name="generator" content="Org Mode" />
-<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
 <script>
   window.MathJax = {
     tex: {
@@ -49,23 +49,23 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org2a0ac80">Algoritmo di Prim</a>
+<li><a href="#orgb80719d">Algoritmo di Prim</a>
 <ul>
-<li><a href="#org949546f"><span class="todo TODO">TODO</span> Cosa è o (omega)?</a></li>
-<li><a href="#org3eed7cf">Esecuzione</a></li>
+<li><a href="#orge4b2826"><span class="todo TODO">TODO</span> Cosa è o (omega)?</a></li>
+<li><a href="#org56e27e7">Esecuzione</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org2a0ac80" class="outline-2">
-<h2 id="org2a0ac80">Algoritmo di Prim</h2>
-<div class="outline-text-2" id="text-org2a0ac80">
+<div id="outline-container-orgb80719d" class="outline-2">
+<h2 id="orgb80719d">Algoritmo di Prim</h2>
+<div class="outline-text-2" id="text-orgb80719d">
 <p>
 Partiamo da un albero costituito da un solo vertice. Ad ogni passo espandiamo \(T\) aggiungendo l'arco di peso minimo e il vertice in cui arriva che connette un vertice dell'albero che ho già con un vertice che sta fuori.
 </p>
 
-<pre class="example" id="orgf7ea8a2">
+<pre class="example" id="org96de716">
 Algoritmo Prim (Grafo G=(V,E,o)) -&gt; albero
     T &lt;- alberto costituito da un unico vertice s \in V qualsiasi
     WHILE T ha meno di n nodi DO
@@ -75,12 +75,12 @@ Algoritmo Prim (Grafo G=(V,E,o)) -&gt; albero
     RETURN T
 </pre>
 </div>
-<div id="outline-container-org949546f" class="outline-3">
-<h3 id="org949546f"><span class="todo TODO">TODO</span> Cosa è o (omega)?</h3>
+<div id="outline-container-orge4b2826" class="outline-3">
+<h3 id="orge4b2826"><span class="todo TODO">TODO</span> Cosa è o (omega)?</h3>
 </div>
-<div id="outline-container-org3eed7cf" class="outline-3">
-<h3 id="org3eed7cf">Esecuzione</h3>
-<div class="outline-text-3" id="text-org3eed7cf">
+<div id="outline-container-org56e27e7" class="outline-3">
+<h3 id="org56e27e7">Esecuzione</h3>
+<div class="outline-text-3" id="text-org56e27e7">
 <p>
 Parto da un vertice qualunque ed esamino gli archi di frontiera. Fra quelli, scelgo che pesa di meno e aggiungo l'arco e il vertice successivo.
 Alla prossima iterazione, gli archi di frontiera contengono anche quelli precedenti. Analizzo l'insieme aggiornato di archi di frontiera per trovare il minimo, che aggiungerò e così via.
@@ -114,7 +114,7 @@ Dato che è un grafo non orientato, ogni arco è rappresentato due volte e quind
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-11-15 Fri 11:12</p>
+<p class="date">Created: 2024-11-20 Wed 19:49</p>
 </div>
 </body>
 </html>

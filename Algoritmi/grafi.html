@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-15 Fri 18:03 -->
+<!-- 2024-11-20 Wed 19:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Grafi</title>
 <meta name="generator" content="Org Mode" />
-<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
 <script>
   window.MathJax = {
     tex: {
@@ -49,37 +49,37 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org99bd04e">Definizioni</a></li>
-<li><a href="#org0b3a02f">Rappresentazioni</a>
+<li><a href="#org92e36db">Definizioni</a></li>
+<li><a href="#org12b9d9c">Rappresentazioni</a>
 <ul>
-<li><a href="#org635ba79">Liste</a>
+<li><a href="#org7f557eb">Liste</a>
 <ul>
-<li><a href="#org4252270">Lista di archi</a></li>
-<li><a href="#org2247106">Lista di adiacenza</a></li>
-<li><a href="#org9009331">Lista di incidenza</a></li>
+<li><a href="#org45b56cf">Lista di archi</a></li>
+<li><a href="#orgb16bf07">Lista di adiacenza</a></li>
+<li><a href="#org8b2314a">Lista di incidenza</a></li>
 </ul>
 </li>
-<li><a href="#orge15ec80">Matrici</a>
+<li><a href="#org6bf3b74">Matrici</a>
 <ul>
-<li><a href="#org0eab2ec">Matrice di adiacenza</a></li>
-<li><a href="#org3623203">Matrice di incidenza</a></li>
+<li><a href="#org2c27b72">Matrice di adiacenza</a></li>
+<li><a href="#orgdb9f7c7">Matrice di incidenza</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orga313a60">Attraversamento di grafi</a>
+<li><a href="#org1ee4046">Attraversamento di grafi</a>
 <ul>
-<li><a href="#orge218b8e">Visita in ampiezza (breadth-first search)</a></li>
-<li><a href="#org9962e8e">Visita in profondità (depth-first search)</a></li>
+<li><a href="#org0587bd1">Visita in ampiezza (breadth-first search)</a></li>
+<li><a href="#orgbd0b48f">Visita in profondità (depth-first search)</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org99bd04e" class="outline-2">
-<h2 id="org99bd04e">Definizioni</h2>
-<div class="outline-text-2" id="text-org99bd04e">
+<div id="outline-container-org92e36db" class="outline-2">
+<h2 id="org92e36db">Definizioni</h2>
+<div class="outline-text-2" id="text-org92e36db">
 <p>
 \(\newtheorem{theorem}{Teorema}\)
 Un grafo \(G=(V,E)\) modella la "connessione" o "relazione" fra coppie di oggetti e consiste in:
@@ -148,27 +148,27 @@ $\exists$ un circuito euleriano *se e solo se* $\forall v,\;\delta(v)$ è pari.
 </div>
 </div>
 
-<div id="outline-container-org0b3a02f" class="outline-2">
-<h2 id="org0b3a02f">Rappresentazioni</h2>
-<div class="outline-text-2" id="text-org0b3a02f">
+<div id="outline-container-org12b9d9c" class="outline-2">
+<h2 id="org12b9d9c">Rappresentazioni</h2>
+<div class="outline-text-2" id="text-org12b9d9c">
 <p>
 Esistono vari modi per rappresentare un grafo, che influenzano la struttura e l'efficienza degli algoritmi.
 </p>
 </div>
 
-<div id="outline-container-org635ba79" class="outline-3">
-<h3 id="org635ba79">Liste</h3>
-<div class="outline-text-3" id="text-org635ba79">
+<div id="outline-container-org7f557eb" class="outline-3">
+<h3 id="org7f557eb">Liste</h3>
+<div class="outline-text-3" id="text-org7f557eb">
 </div>
-<div id="outline-container-org4252270" class="outline-4">
-<h4 id="org4252270">Lista di archi</h4>
-<div class="outline-text-4" id="text-org4252270">
+<div id="outline-container-org45b56cf" class="outline-4">
+<h4 id="org45b56cf">Lista di archi</h4>
+<div class="outline-text-4" id="text-org45b56cf">
 <p>
 Rappresento soltanto gli archi, il cui numero varia tra \(0\), nel grafo con solo vertici, a \(n^{2}\) nel grafo in cui ogni vertice è connesso ad ogni altro, compreso sè stesso.
 </p>
 
 <p>
-Se il grafo è connesso, ovvero se esiste una catena tra ogni coppia di vertici, allora la versione con meno archi in assoluto è un [BROKEN LINK: 6daa15a6-652a-4fce-9082-f5973b568401].
+Se il grafo è connesso, ovvero se esiste una catena tra ogni coppia di vertici, allora la versione con meno archi in assoluto è un .
 </p>
 
 <p>
@@ -181,7 +181,7 @@ Lo spazio è \(\Theta(m+n)\) e il tempo \(\Theta(m)\)
 </p>
 
 <div class="org-src-container">
-<pre class="src src-go" id="org264fc23"><span style="color: #a020f0;">type</span> <span style="color: #228b22;">Arco</span>[T <span style="color: #228b22;">any</span>] <span style="color: #a020f0;">struct</span> {
+<pre class="src src-go" id="orgc50ff03"><span style="color: #a020f0;">type</span> <span style="color: #228b22;">Arco</span>[T <span style="color: #228b22;">any</span>] <span style="color: #a020f0;">struct</span> {
         From, To *<span style="color: #228b22;">Vertices</span>[T]
 }
 
@@ -195,9 +195,9 @@ Lo spazio è \(\Theta(m+n)\) e il tempo \(\Theta(m)\)
 </div>
 </div>
 
-<div id="outline-container-org2247106" class="outline-4">
-<h4 id="org2247106">Lista di adiacenza</h4>
-<div class="outline-text-4" id="text-org2247106">
+<div id="outline-container-orgb16bf07" class="outline-4">
+<h4 id="orgb16bf07">Lista di adiacenza</h4>
+<div class="outline-text-4" id="text-orgb16bf07">
 <p>
 Non viene salvata una lista che contiene gli archi incidenti a qualunque vertice, ma raggruppati per vertice.
 Ogni elemento della lista contiene la lista di tutti i vertici adiacenti ad esso.
@@ -208,9 +208,9 @@ Uno svantaggio che rimane è che in un arco orientato, trovare gli archi entrant
 </div>
 </div>
 
-<div id="outline-container-org9009331" class="outline-4">
-<h4 id="org9009331">Lista di incidenza</h4>
-<div class="outline-text-4" id="text-org9009331">
+<div id="outline-container-org8b2314a" class="outline-4">
+<h4 id="org8b2314a">Lista di incidenza</h4>
+<div class="outline-text-4" id="text-org8b2314a">
 <p>
 Un mix fra una lista di adiacenza e una lista di archi.
 Si mantiene una lista di archi in una lista esterna e una pseudo-lista di adiacenza che punta agli elementi della prima
@@ -219,13 +219,13 @@ Si mantiene una lista di archi in una lista esterna e una pseudo-lista di adiace
 </div>
 </div>
 
-<div id="outline-container-orge15ec80" class="outline-3">
-<h3 id="orge15ec80">Matrici</h3>
-<div class="outline-text-3" id="text-orge15ec80">
+<div id="outline-container-org6bf3b74" class="outline-3">
+<h3 id="org6bf3b74">Matrici</h3>
+<div class="outline-text-3" id="text-org6bf3b74">
 </div>
-<div id="outline-container-org0eab2ec" class="outline-4">
-<h4 id="org0eab2ec">Matrice di adiacenza</h4>
-<div class="outline-text-4" id="text-org0eab2ec">
+<div id="outline-container-org2c27b72" class="outline-4">
+<h4 id="org2c27b72">Matrice di adiacenza</h4>
+<div class="outline-text-4" id="text-org2c27b72">
 <p>
 Una matrice quadrata di 0 e 1 i cui indici sono i vertici e il cui valore per ogni posto è 1 se il vertice della colonna è adiacente a quello della riga.
 </p>
@@ -262,9 +262,9 @@ Se, invece, si usasse la vera algebra, si scoprirebbe il numero di cammini da un
 </div>
 </div>
 
-<div id="outline-container-org3623203" class="outline-4">
-<h4 id="org3623203">Matrice di incidenza</h4>
-<div class="outline-text-4" id="text-org3623203">
+<div id="outline-container-orgdb9f7c7" class="outline-4">
+<h4 id="orgdb9f7c7">Matrice di incidenza</h4>
+<div class="outline-text-4" id="text-orgdb9f7c7">
 <p>
 La matrice è grande \(n\times m\) e ha i vertici sulle righe e gli archi sulle colonne. Il valore è 1 se l'arco corrispondente esce dal vertice corrispondente, -1 se entra e 0 se non lo riguarda.
 Viene usata molto poco.
@@ -274,9 +274,9 @@ Viene usata molto poco.
 </div>
 </div>
 
-<div id="outline-container-orga313a60" class="outline-2">
-<h2 id="orga313a60">Attraversamento di grafi</h2>
-<div class="outline-text-2" id="text-orga313a60">
+<div id="outline-container-org1ee4046" class="outline-2">
+<h2 id="org1ee4046">Attraversamento di grafi</h2>
+<div class="outline-text-2" id="text-org1ee4046">
 <p>
 Definiamoci un grafo di esempio
 </p>
@@ -284,9 +284,9 @@ Definiamoci un grafo di esempio
 
 
 
-<div id="outline-container-orge218b8e" class="outline-3">
-<h3 id="orge218b8e">Visita in ampiezza (breadth-first search)</h3>
-<div class="outline-text-3" id="text-orge218b8e">
+<div id="outline-container-org0587bd1" class="outline-3">
+<h3 id="org0587bd1">Visita in ampiezza (breadth-first search)</h3>
+<div class="outline-text-3" id="text-org0587bd1">
 <p>
 Si inizia visitando un vertice s, si visitano poi i vertici adiacenti ad s, poi quelli adiacenti a quelli appena visitati e così via.
 Nel caso in cui il grafo sia rappresentato attraverso liste &#x2026;
@@ -297,7 +297,7 @@ Nel caso in cui sia una matrice di incidenza, devo scorrere tutti gli \(m\) arch
 Questo è l'esempio di una visita in ampiezza di un grafo non orientato connesso a partire da un vertice <code>s</code> e costruzione di un albero ricoprente ottenuto selezionando gli archi secondo l’ordine della visita.
 </p>
 
-<pre class="example" id="org8c2bb0b">
+<pre class="example" id="org63f5463">
 ALGORITMO visitaInAmpiezza(grafo G=(V,E), vertice s) -&gt; albero
 C &lt;- coda vuota
 T &lt;- ({s}, [])
@@ -364,9 +364,9 @@ Nella tecnica mostrata, la dimensione massima della coda è uguale al massimo de
 </div>
 </div>
 
-<div id="outline-container-org9962e8e" class="outline-3">
-<h3 id="org9962e8e">Visita in profondità (depth-first search)</h3>
-<div class="outline-text-3" id="text-org9962e8e">
+<div id="outline-container-orgbd0b48f" class="outline-3">
+<h3 id="orgbd0b48f">Visita in profondità (depth-first search)</h3>
+<div class="outline-text-3" id="text-orgbd0b48f">
 <p>
 Partiamo da un nodo e andiamo quanto più in fondo possibile, per poi fare backtracking e tornare al primo nodo non visitato.
 </p>
@@ -410,7 +410,7 @@ Ne consegue che in un grafo non orientato, l'adiacenza è simmetrica, ma nel cas
 </div>
 </div></div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-11-15 Fri 18:03</p>
+<p class="date">Created: 2024-11-20 Wed 19:49</p>
 </div>
 </body>
 </html>
