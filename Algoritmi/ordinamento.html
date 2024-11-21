@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-20 Wed 19:49 -->
+<!-- 2024-11-21 Thu 19:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ordinamento</title>
@@ -15,6 +15,7 @@
       ams: {
         multlineWidth: '85%'
       },
+      {packages: {'[+]': ['mathtools']}},
       tags: 'ams',
       tagSide: 'right',
       tagIndent: '.8em'
@@ -31,8 +32,12 @@
     },
     output: {
       font: 'mathjax-modern',
-      displayOverflow: 'overflow'
-    }
+      displayOverflow: 'scale'
+    },
+    loader: {
+      load: ['[tex]/mathtools']
+    },
+};
   };
 </script>
 
@@ -54,7 +59,7 @@
 <li><a href="#org5001f69"><span class="todo TODO">TODO</span> Inserire casi migliori e peggiori per ogni algoritmo</a></li>
 <li><a href="#org670590c">Introduzione</a>
 <ul>
-<li><a href="#org1dac912">Stabilità</a></li>
+<li><a href="#org4047b58">Stabilità</a></li>
 <li><a href="#org7f2f2a1">Complessità</a></li>
 </ul>
 </li>
@@ -68,7 +73,7 @@
 <li><a href="#orgb25e762">Algoritmi avanzati</a>
 <ul>
 <li><a href="#org719779b">MergeSort</a></li>
-<li><a href="#org3753944">QuickSort</a></li>
+<li><a href="#org62433cd">QuickSort</a></li>
 <li><a href="#org833d49d">Heapsort</a></li>
 </ul>
 </li>
@@ -109,9 +114,9 @@ Durante il corso, si utilizzeranno degli array di interi, per semplificare il ra
 </p>
 </div>
 
-<div id="outline-container-org1dac912" class="outline-4">
-<h4 id="org1dac912">Stabilità</h4>
-<div class="outline-text-4" id="text-org1dac912">
+<div id="outline-container-org4047b58" class="outline-4">
+<h4 id="org4047b58">Stabilità</h4>
+<div class="outline-text-4" id="text-org4047b58">
 <p>
 Un algoritmo si dice <b>stabile</b> quando, dati due record con la medesima chiave, l'ordine in cui essi si trovano nell'array ordinato è lo stesso in cui si trovavano in quello iniziale.
 </p>
@@ -159,7 +164,7 @@ Il bubblesort invece, scambia a coppie e si ferma quando non c'è più modo di s
 <div id="outline-container-org48ff491" class="outline-4">
 <h4 id="org48ff491">SelectionSort</h4>
 <div class="outline-text-4" id="text-org48ff491">
-<pre class="example" id="org97d5010">
+<pre class="example" id="org14a96eb">
 ALGORITMO selectionSort (Array A[0..N-1])
     FOR k &lt;- 0 to n-2 DO
         m &lt;- k                            //posizione del minimo
@@ -251,8 +256,8 @@ Un esempio è l'array \([10_{1},\;10_{2},\;5] \rightarrow [5,\;10_{2}\;10_{1}]\)
 </div>
 
 <ul class="org-ul">
-<li><a id="orgfce8089"></a>Analisi<br />
-<div class="outline-text-5" id="text-orgfce8089">
+<li><a id="orgd647c9d"></a>Analisi<br />
+<div class="outline-text-5" id="text-orgd647c9d">
 <p>
 Per la stima del tempo, notare che alla \(k\) -esima iterazione, sono stati effettuati \(n-k-1\) confronti.
 </p>
@@ -271,7 +276,7 @@ Lo spazio è costante perchè si opera <b>in loco</b>.
 <div id="outline-container-org59041c0" class="outline-4">
 <h4 id="org59041c0">InsertionSort</h4>
 <div class="outline-text-4" id="text-org59041c0">
-<pre class="example" id="orgb41b42a">
+<pre class="example" id="org7013090">
 ALGORITMO insertionSort(Array A[0..N-1])
     FOR k -&gt; 1 TO N-1 DO
         x &lt;- A[k]                       // copia l'elemento da inserire
@@ -366,8 +371,8 @@ La versione tradizionale ottimizza questo aspetto effettuando una sola lettura, 
 </li>
 
 
-<li><a id="org21c94a6"></a>Analisi<br />
-<div class="outline-text-5" id="text-org21c94a6">
+<li><a id="org0e0d2c0"></a>Analisi<br />
+<div class="outline-text-5" id="text-org0e0d2c0">
 <p>
 \(sum_{k=1}^{k} i\), che per la formula di gauss è \(\frac{(n-1)(n)}{2}\).
 </p>
@@ -378,7 +383,7 @@ La versione tradizionale ottimizza questo aspetto effettuando una sola lettura, 
 <div id="outline-container-org95391b8" class="outline-4">
 <h4 id="org95391b8">BubbleSort</h4>
 <div class="outline-text-4" id="text-org95391b8">
-<pre class="example" id="orgd1e0f91">
+<pre class="example" id="orgfbbf45a">
 ALGORITMO bubbleSort(Array A[0..n-1)
 k &lt;- 1                            //contatore della scansione
 scambiato &lt;- false
@@ -459,7 +464,7 @@ Inoltre, alla $n-1$-esima iterazione, gli ultimi \(n-1\) elementi sono ordinati 
 <ul class="org-ul">
 <li><a id="orgfb60ad0"></a>Miglioramento<br />
 <div class="outline-text-5" id="text-orgfb60ad0">
-<pre class="example" id="org755fb66">
+<pre class="example" id="org9e58791">
 ALGORITMO bubbleSort(Array A[0..n-1])
     primoInOrdine &lt;- n
     DO
@@ -486,27 +491,27 @@ In particolare, se l'ultimo scambio è stato fra l'elemento in posizione \(j-1\)
 </ul>
 </div>
 </li>
-<li><a id="orgedb82be"></a>Analisi<br />
-<div class="outline-text-5" id="text-orgedb82be">
+<li><a id="org5c6598c"></a>Analisi<br />
+<div class="outline-text-5" id="text-org5c6598c">
 </div>
 <ul class="org-ul">
-<li><a id="org733a272"></a>Caso peggiore<br />
-<div class="outline-text-6" id="text-org733a272">
+<li><a id="orgaf282f2"></a>Caso peggiore<br />
+<div class="outline-text-6" id="text-orgaf282f2">
 <p>
 Con un minimo alla fine dell'array, nella versione non migliorata da Knuth, ogni iterazione \(k\) del ciclo esterno dà luogo a \(n-k\) confronti. Dato che \(k\) va da \(1\) a \(n-1\), si ottiene
 \[ \sum_{k=1}^{n-1} n-k \; =\; \sum_{k=1}^{n-1} n - \sum_{k=1}^{n-1} k \; = \; n(n-1) - \frac{n(n-1)}{2} \; = \; \frac{n(n-1)}{2} \; = \; O(n^{2})\].
 </p>
 </div>
 </li>
-<li><a id="orgb016ff9"></a>Caso migliore<br />
-<div class="outline-text-6" id="text-orgb016ff9">
+<li><a id="org50d02d2"></a>Caso migliore<br />
+<div class="outline-text-6" id="text-org50d02d2">
 <p>
 Array già ordinato, \(n-1\) confronti
 </p>
 </div>
 </li>
-<li><a id="org7f667d8"></a>Caso peggiore<br />
-<div class="outline-text-6" id="text-org7f667d8">
+<li><a id="orgbcb94a4"></a>Caso peggiore<br />
+<div class="outline-text-6" id="text-orgbcb94a4">
 <p>
 Con un minimo alla fine dell'array, devo effettuare $n-1
 </p>
@@ -552,11 +557,26 @@ Questa tecnica è usata anche per fondere memorie esterne.
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org7b64c9e"></a>Analisi<br />
-<div class="outline-text-6" id="text-org7b64c9e">
+<li><a id="org092ff12"></a>Analisi<br />
+<div class="outline-text-6" id="text-org092ff12">
 <p>
 Il caso peggiore avviene quando all'iterazione \(n+m-2\) la lunghezza di entrambi gli array è \(1\).
-2 esempi, [1&#x2026;50] e 100, devo scandire tutto il primo. Altro, [pari], [dispari], ne consumo uno alla volta.
+Questo accade quando entrambi gli ultimi elementi sono più grandi di ogni altro elemento dell'altro array, escluso l'ultimo.
+Ovvero nelle situazioni di questo tipo:
+\[A = [e_{1},\cdots,e_{x},a]\quad b = [f_{1},\cdots,f_{x},b] \quad\quad a>f_{n},\;b>e_{n},\quad 1\leq n\leq x \]
+</p>
+
+<p>
+Alcuni esempi diversi fra loro sono:
+</p>
+<ul class="org-ul">
+<li>\([1..50]\quad[1..50]\).</li>
+<li>\([2,4,6,8]\quad[1,3,5,7]\)</li>
+<li>\([1..10]\quad[100]\)</li>
+</ul>
+
+<p>
+Il numero di confronti in tali casi è \(n-1\), perchè ogni elemento verrà confrontato con quello dell'altro array, finchè non si arriva al punto in cui un array è vuoto e l'altro contiene un solo elemento, che è il massimo e va semplicemente copiato nell'ultima posizione dell'array risultante.
 </p>
 </div>
 </li>
@@ -564,7 +584,7 @@ Il caso peggiore avviene quando all'iterazione \(n+m-2\) la lunghezza di entramb
 </li>
 <li><a id="orga976dff"></a>Sort<br />
 <div class="outline-text-5" id="text-orga976dff">
-<pre class="example" id="org21c810a">
+<pre class="example" id="org7b48322">
 ALGORITMO mergeSort(Array A[0..n-1])
     IF n&gt;1 THEN
         m = n/2
@@ -576,29 +596,170 @@ ALGORITMO mergeSort(Array A[0..n-1])
     
 </pre>
 <p>
-L'ordinamento di un array consiste, quindi, nell dividere l'array in due sottoarray di dimensione \(\ceil \frac{n}{2}\) e \(\floor \frac{n}{2}\), ordinarli mediante chiamata ricorsiva e poi unirli con l'algoritmo <code>merge</code>.
+L'ordinamento di un array consiste nel dividere l'array da ordinare in due sottoarray di dimensione \(\lceil \frac{n}{2}\rceil\) e \(\lfloor \frac{n}{2}\rfloor\), ordinarli mediante chiamata ricorsiva e poi unirli con l'algoritmo <code>merge</code>.
 </p>
 </div>
 
 <ul class="org-ul">
-<li><a id="org0d32658"></a>Analisi tempo<br />
-<div class="outline-text-6" id="text-org0d32658">
+<li><a id="orgee98d66"></a>Analisi tempo<br />
+<div class="outline-text-6" id="text-orgee98d66">
 <p>
-Il problema dell'ordinamento delle metà viene dimezzato ad ogni iterazione, richiedendo
+Ogni chiamata ricorsiva dell'algoritmo viene eseguita su un input che è la metà di quello originario.
 </p>
 
+<p>
+Quando l'input raggiunge la dimensione di \(1\), non viene eseguita alcuna operazione.
+</p>
 
 <p>
-0 confronti nel caso base, altrimenti il tempo che impiego è il tempo che impiego per la metà dell'input + n - 1 che è il numero di confronti di merge.
-\(C(n) = C(\frac{n}{2}) + C(\frac{n}{2}) + C_{merge}(n)\) se \(n>1\), \(0\) altrimenti.
-Per calcolare l'equazione, espando la definizione sfruttando le proprietà delle potenze e dell'esponenziale.
+Il numero di confronti richiesto dal MergeSort su un input \(n\), indicato con \(C(n)\), è quindi
+\[C(n) = C(\lfloor\frac {n}{2}\rfloor + C(\lceil\frac{n}{2}\rceil) + n - 1\]
+</p>
+
+<p>
+Per semplificare i calcoli, supponiamo \(n\) pari ed otteniamo \(C(n) = 2C(\frac {n}{2}) + n - 1\)
+</p>
+
+<p>
+Usando il metodo di sostituzione:
+</p>
+
+<p>
+<b><b>Step 1: Dividi entrambi i lati per \(n\)</b></b>
+</p>
+
+<p>
+\[ \dfrac{C(n)}{n} = \dfrac{2C\left(\dfrac{n}{2}\right)}{n} + \dfrac{n-1}{n} \]
+</p>
+
+<p>
+<b><b>Step 2: Muovi il \(2\) al denominatore</b></b>
+</p>
+
+<p>
+\[ \dfrac{C(n)}{n} = \dfrac{C\left(\dfrac{n}{2}\right)}{\dfrac{n}{2}} + 1 - \dfrac{1}{n} \]
+</p>
+
+<p>
+<b><b>Step 3: Sostituisci con una nuova funzione</b></b>
+</p>
+
+<p>
+\[ f(n) = \dfrac{C(n)}{n} \]
+</p>
+
+<p>
+Quindi la nuova equazione diventa:
+</p>
+
+<p>
+\[ f(n) = f\left(\dfrac{n}{2}\right) + 1 - \dfrac{1}{n} \]
+</p>
+
+<p>
+<b><b>Step 4: Espandi ricorsivamente</b></b>
+</p>
+
+\begin{align*}
+f(n) &= f\left(\dfrac{n}{2}\right) + 1 - \dfrac{1}{n} \\
+&= \left[f\left(\dfrac{n}{4}\right) + 1 - \dfrac{2}{n}\right] + 1 - \dfrac{1}{n} \\
+&= f\left(\dfrac{n}{4}\right) + 2 - \dfrac{3}{n} \\
+&= f\left(\dfrac{n}{2^i}\right) + i - \frac{\sum_{k=0}^{i}2^{k}}{n}
+\end{align*}
+
+
+<p>
+Notare che \(\sum_{k=0}^{i}2^{k} = \dfrac{2^i-1}{n}\)
+</p>
+
+<p>
+<b><b>Step 5: Trova il caso in cui la ricorsione si ferma</b></b>
+</p>
+
+<p>
+Quando \[ \dfrac{n}{2^i} = 1 \]
+Allora \[ n = 2^i \]
+Quindi \[ i = \log_2 n \]
+</p>
+
+<p>
+<b><b>Step 6: Sostituisci il valore trovato</b></b>
+</p>
+
+<p>
+\[ f(n) = f(1) + \log_2 n - \dfrac{n-1}{n} \]
+</p>
+
+<p>
+<b><b>Step 7: Risolvi per C(n)</b></b>
+</p>
+
+<p>
+Dato che \[ f(n) = \dfrac{C(n)}{n} \]
+</p>
+
+<p>
+Moltiplica entrambi i lati per \(n\):
+</p>
+
+<p>
+\[ C(n) = n \cdot f(1) + n\log_2 n - (n-1) \]
+\[ C(n) = n\log_2 n + O(n) \]
+</p>
+
+<p>
+Infine:
+</p>
+
+<p>
+\[ C(n) = O(n\log n) \]
+</p>
+
+<p>
 Con i miei calcoli, arrivo a nlg(n) - n + 1. Usando le proprietà di prima, considero l'N maggiore dell n in binario, e poi considero il 2 n maggiore dell'altro 2 n. Mi esce fuori un numero più alto dell'altro, ma sempre nell'ordine di n log n.
 </p>
 </div>
 <ul class="org-ul">
+<li><a id="orgd3eb1a9"></a>Nota<br />
+<div class="outline-text-7" id="text-orgd3eb1a9">
+<p>
+Perchè divido per \(n\) e muovo il \(2\) al denominatore?
+</p>
+
+
+<blockquote>
+<p>
+Dividing by n in the recurrence relation is not strictly necessary, but it's a helpful technique for several intuitive reasons:
+</p>
+
+<ol class="org-ol">
+<li><b><b>Pattern Recognition:</b></b>
+When we divide by n, we get:
+\[ \frac{C(n)}{n} = \frac{C(n/2)}{n/2} + 1 - \frac{1}{n} \]
+This transformation helps us see a clearer pattern. By defining f(n) = C(n)/n, we get:
+\[ f(n) = f(n/2) + 1 - \frac{1}{n} \]
+This is much simpler to work with than the original equation.</li>
+
+<li><b><b>Telescoping Series:</b></b>
+The division by n transforms the recurrence into a form that resembles a telescoping series. When we expand it:
+\[ f(n) = f(n/2) + 1 - \frac{1}{n} \]
+\[ f(n/2) = f(n/4) + 1 - \frac{2}{n} \]
+\[ f(n/4) = f(n/8) + 1 - \frac{4}{n} \]
+Each step adds a constant term (1) and a decreasing fraction, making the pattern easier to spot and sum.</li>
+
+<li><b><b>Normalization:</b></b>
+By dividing by n, we're essentially "normalizing" the cost at each level relative to the input size. This helps us see how the cost per element changes as we go deeper in the recursion.</li>
+
+<li><b><b>Mathematical Intuition:</b></b>
+Without division by n, we would need to track larger terms and their relationships. The division helps reduce the complexity of each term, making the mathematical manipulation more manageable.</li>
+</ol>
+</blockquote>
+</div>
+</li>
 <li><a id="org03531ce"></a><span class="todo TODO">TODO</span> Riempire con equazione sulle slides<br /></li>
 </ul>
 </li>
+
 <li><a id="org1041f39"></a>Analizi spazio<br />
 <div class="outline-text-6" id="text-org1041f39">
 <p>
@@ -628,8 +789,8 @@ L'analisi del tempo è assolutamente la stessa.
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="orgb361bb8"></a>Analisi spazio<br />
-<div class="outline-text-7" id="text-orgb361bb8">
+<li><a id="org1c194d1"></a>Analisi spazio<br />
+<div class="outline-text-7" id="text-org1c194d1">
 <p>
 Adesso utilizzo un array dimensionato su quello iniziale, quindi \(\Theta(n)\).
 L'altezza dello stack di ricorsione è la stessa di prima, ma la dimensione dei record è costante. L'occupazione di memoria è quindi \(\Theta(\log n)\). Fra i due prevale \(\Theta(n)\).
@@ -638,8 +799,8 @@ L'altezza dello stack di ricorsione è la stessa di prima, ma la dimensione dei 
 </li>
 </ul>
 </li>
-<li><a id="orgca47e09"></a>Stabilità<br />
-<div class="outline-text-6" id="text-orgca47e09">
+<li><a id="org482bb3a"></a>Stabilità<br />
+<div class="outline-text-6" id="text-org482bb3a">
 <p>
 Nel <code>merge</code> mi capita di confrontare elementi uguali. Eppure, viene usato il \(\leq\), quindi nel caso in cui l'elemento del primo array sia uguale, viene scelto quello. Nel caso in cui togliessi l'uguale e usassi il semplice \(<\), perderebbe la stabilità.
 </p>
@@ -649,21 +810,21 @@ Nel <code>merge</code> mi capita di confrontare elementi uguali. Eppure, viene u
 </li>
 </ul>
 </div>
-<div id="outline-container-org3753944" class="outline-4">
-<h4 id="org3753944">QuickSort</h4>
-<div class="outline-text-4" id="text-org3753944">
+<div id="outline-container-org62433cd" class="outline-4">
+<h4 id="org62433cd">QuickSort</h4>
+<div class="outline-text-4" id="text-org62433cd">
 <p>
 Nel caso peggiore esegue in theta(n<sup>2</sup>), ma dimostreremo che tale caso avviene molto raramente e il caso medio è molto conveniente.
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org56cbcde"></a>QuickSort<br />
-<div class="outline-text-5" id="text-org56cbcde">
+<li><a id="org2ee21f7"></a>QuickSort<br />
+<div class="outline-text-5" id="text-org2ee21f7">
 <p>
 Il criterio è di partizionare il mio vettore rispetto a un elemento arbitrario, <b>perno</b> o <b>pivot</b>.
 Dopodichè, metto i numeri più piccoli prima, quelli più grandi dopo, e poi ordino ricorsivamente le due partizioni.
 </p>
-<pre class="example" id="org4e41885">
+<pre class="example" id="org5b1ddcc">
 ALGORITMO quickSort(Array A)
 IF lunghezza A&gt;1 THEN
     scegli un elemento x di A
@@ -687,7 +848,7 @@ Scambio i due elementi. Al momento dello scambio, sono sicuro che gli elementi s
 Termino quando gli indici di scansione si incontrano, poi scambio il perno con l'elemento al punto in cui si sono incontrati.
 Inoltre, parto con gli indici fuori di 1, perchè questo mi permette di fare meno confronti.
 </p>
-<pre class="example" id="orgef701a6">
+<pre class="example" id="org09f9ca5">
 ALGORITMO partiziona(Array A, indice i, indice f) -&gt; indice
 perno &lt;- A[i]
 dx &lt;- f
@@ -729,7 +890,7 @@ Credo che lo stesso valga nel caso in cui sposti l'elemento precedente.
 </li>
 <li><a id="org5de816e"></a>Unione<br />
 <div class="outline-text-6" id="text-org5de816e">
-<pre class="example" id="org38829e7">
+<pre class="example" id="org56a5050">
 PROCEDURA quickSort_inner(Array A, indice i, indice f)
 IF f-i&gt;1 THEN
     m &lt;- partiziona(A,i,f)
@@ -741,8 +902,8 @@ quickSort_inner(A,0,n)
 </pre>
 </div>
 </li>
-<li><a id="org2f3e70d"></a>Analisi tempo<br />
-<div class="outline-text-6" id="text-org2f3e70d">
+<li><a id="org1bd28bd"></a>Analisi tempo<br />
+<div class="outline-text-6" id="text-org1bd28bd">
 <p>
 Negli altri algoritmi, quando divido conosco sempre la grandezza delle parti ottenute. Adesso questa dipende da dove va a finire il perno.
 sia \(C(n)\) il numero di confronti su un array di lunghezza \(n\).
@@ -751,8 +912,8 @@ Nel caso ricorrente, \(C_{part}(n) + C(k)  + C(n-k-1))\), dove \(k\) è il numer
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="orgeb4b572"></a>Caso peggiore<br />
-<div class="outline-text-7" id="text-orgeb4b572">
+<li><a id="orga70c55d"></a>Caso peggiore<br />
+<div class="outline-text-7" id="text-orga70c55d">
 <p>
 Il caso peggiore è quello in cui la somma fra i due termini massimizzano il risultato.
 Si può dimostrare che il massimo si ottiene quando la partizione è sbilanciata. Intuizione: sto usando divide et impera. Se divido il problema in uno di dimensione \(1\) e l'altro di dimensione \(n-1\), allora ho guadagnato molto poco.
@@ -762,8 +923,8 @@ Un numero quasi preciso è \(\approx \frac{n^{2}}{2}\)
 </p>
 </div>
 </li>
-<li><a id="orgd5af3e8"></a>Caso migliore<br />
-<div class="outline-text-7" id="text-orgd5af3e8">
+<li><a id="org02662b9"></a>Caso migliore<br />
+<div class="outline-text-7" id="text-org02662b9">
 <p>
 Voglio trovare la coppia che minimizza la somma, quindi \(\min (C_{w}(k)+C_{w}(n-k-1)|k=0..n-1)\).
 Infatti, in questo caso otterrei \(c_{b}(n) = n+2C_{b}(\frac{n}{2}\), che è dimostrabile sia \(\approx n \log_{2} n\). Notare che questo è un numero preciso e non una stima.
@@ -805,8 +966,8 @@ Non è stabile, esiste una versione che lo renda stabile ma aumentando la costan
 </li>
 </ul>
 </li>
-<li><a id="org6c1a2b1"></a>Analisi spazio<br />
-<div class="outline-text-6" id="text-org6c1a2b1">
+<li><a id="orgea4ae84"></a>Analisi spazio<br />
+<div class="outline-text-6" id="text-orgea4ae84">
 <p>
 Nel caso di una suddivisione bilanciata, ottengo un'altezza \(\approx \log_{2} n\), simile al mergesort. Infatti, uno dei lati conterrà la metà dell'input, che a sua volta chiamerà metà dell'input, e così via.
 Nel caso di una suddivisione sbilanciata, apro una chiamata ricorsiva per ogni elemento, quindi avrò un'altezza lineare.
@@ -821,7 +982,7 @@ In questo caso mi libero di una delle parti in cui lo stack di attivazione cresc
 Dato che posso invertire l'ordine delle chiamate ricorsive, posso fare la stessa cosa al contrario, ovvero ricorrere sulla parte destra.
 Ognuna ha un caso critico. Posso scrivere una procedura che scelga quale delle due usare secondo un criterio.
 </p>
-<pre class="example" id="orgcf31282">
+<pre class="example" id="orgae3b03a">
 PROCEDURA quickSort(Array A, indice i, indice f)
 WHILE f-i&gt;1 DO
     m &lt;- partiziona(A,i,f)
@@ -924,7 +1085,7 @@ C'è una somiglianza in questo concetto fra l'insert nell'insertionSort e lo ste
 </div>
 </div></div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-11-20 Wed 19:49</p>
+<p class="date">Created: 2024-11-21 Thu 19:36</p>
 </div>
 </body>
 </html>

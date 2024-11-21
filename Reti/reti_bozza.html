@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-20 Wed 19:49 -->
+<!-- 2024-11-21 Thu 17:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Retibozza</title>
@@ -318,6 +318,72 @@
 <li><a href="#orgd4bd902">Il TCP garantisce che la comunicazione sia <b>affidabile</b> e <b>ordinata</b>.</a></li>
 <li><a href="#orgcdb1ac6">Lo header TCP è rappresentato in pagine larghe 32 bit.</a></li>
 <li><a href="#orge718e2f">Come si diceva, TCP è orientato alla connessione.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org3538b86">Quindi siamo arrivati al SYN che uno manda per aprire la connessione, con un numero di sequenza generato in numero casuale. Il canale è bidirezionale e quindi avviene tutto nello stesso modo in entrambi gli host.</a>
+<ul>
+<li><a href="#org72e74e8">Il SYN parte a 1, in risposta il SYN è a uno e anche l'ACK, che indica che il campo Ack è significativo e tale campo è numDiSequenza +1, per indicare che quello è il prossimo bit che si è pronti a ricevere.</a>
+<ul>
+<li><a href="#org7ed05d8">Ovviamente manda anche il proprio numero di sequenza.</a></li>
+</ul>
+</li>
+<li><a href="#orgc8e913c">Se tutto va a buon fine, la terza risposta dal sender è uguale alla seconda dal receiver e da lì in poi la connessione è aperta.</a></li>
+<li><a href="#org65de0c2">C'è un timer che garantisce che se l'ACK viene perso, o impiega troppo tempo ad arrivare, venga mandato un messaggio con RESET a 1 che annulla l'handshake, che va rieffettuato</a></li>
+<li><a href="#org890739d">In ogni header è indicato il Max Segment Size, che indica la dimensione massima di segmento che l'host può gestire senza andare in overflow.</a>
+<ul>
+<li><a href="#org63276af">La dimensione Standard, quando il campo è vuoto, il segmento è di 536 byte.</a></li>
+</ul>
+</li>
+<li><a href="#org2159bbb">L'obiettivo di TCP è trasferire i dati nel miglior modo, garantendo affidabilità, gest.errori, ordine ecc., e anche farlo in modo efficiente, evitando un overhead eccessivo</a></li>
+<li><a href="#orgb9e6539">Il motivo per cui viene scelta 536 byte è che siamo sicuri che il livello IP non frammenterà tale segmento in più pacchetti.</a>
+<ul>
+<li><a href="#orge75410c">Per ogni frammentazione effettuata dall'IP, serve copiare sia header TCP che IP, introducendo overhead.</a></li>
+<li><a href="#org09d1e2c">Inoltre, essendo la rete best-effort, quanti più sotto-segmenti vengono mandati quanto più è probabile che avvengano dei problemi che dovranno essere poi gestiti</a></li>
+</ul>
+</li>
+<li><a href="#org86b89ae">Immaginiamo di avere una connessione A-B in TCP, necessariamente bidirezionale.</a>
+<ul>
+<li><a href="#org580be74">Dato che noi analizziamo solo i casi "unidirezionali", noi valutiamo solo SendingBuffer e TcpSendingBuffer nel sender, e i corrispondenti ma per il receiver nel receiver.</a></li>
+<li><a href="#orgc6db2d3">Assumiamo che la segment size sia 500.</a></li>
+<li><a href="#org8b477ee">L'applicazione lato sender scrive 2000 byte nell'SB della socket esposto.</a></li>
+<li><a href="#orge3fb696">Ovviamente, va eseguita una frammentazione a livello trasporto.</a></li>
+<li><a href="#org5815b14">Nel sending buffer della TCP, nascosto al livello applicazione, vengono copiati e segmentati opportunamente i byte del buffer superiore.</a></li>
+<li><a href="#orgf29282b">Nello header è presente l'informazione SEQ=X. Il payload sarà dal byte X a quello X + 499</a></li>
+<li><a href="#org4c1bafd">Nel frattempo, il receiver si aspettava il Sequence Number = X e così si accerta che l'ordine sia corretto.</a></li>
+<li><a href="#org86143cb">I dati arrivano nel buffer inferiore, ma dato che l'ordine è corretto, vengono subito copiati nel buffer superiore.</a></li>
+<li><a href="#orgb8c0578">Lo header risposta del receiving buffer contiene il campo ACK a 1 e quello Ack a X + 500, che è il primo byte successivo a quello ricevuto.</a></li>
+<li><a href="#org61aee21">Il sender elimina dal buffer del TCP il segmento corrispondente.</a></li>
+<li><a href="#org0e06d69">Allora, il prossimo segmento mandato è quello che parte da X+500 e questo valore è nel SEQ dello header.</a></li>
+<li><a href="#org0d4e8bc">Anche questo pacchetto è in ordine e quindi va subito spostato nel buffer superiore.</a></li>
+<li><a href="#orgd3d49ea">Analogamente al messaggio precedente, il receiver risponde con un Ack = X+1000.</a></li>
+<li><a href="#org7b34045">Procedo così fino allo svuotamento del buffer di invio.</a></li>
+</ul>
+</li>
+<li><a href="#org3a39050">Nella configurazione precedente, c'è un problema nel caso in cui ho bisogno di (real-time?) ad esempio ssh su una console remota.</a>
+<ul>
+<li><a href="#org0ec4b2c">Voglio che i dati vengano processati byte per byte</a></li>
+<li><a href="#org5299901">Allora uso la flag PUSH, in modo che TCP spedisca il singolo byte, senza arrivare ad una dimensione del segmento di 500 byte come prima</a></li>
+<li><a href="#org294ca81">Quando PUSH viene usata, il receiver manda un regolare ACK, con Ack X+1</a></li>
+<li><a href="#orgc322e91">In questo caso, però, viene fatta una eco dello stesso byte, questa volta</a></li>
+<li><a href="#org9a63762">Il motivo per cui viene fatta la eco è che il sender prende input a tastiera ma non mostra direttamente a schermo, perchè non è sicuro che dall'altra parte sia correttamente ricevuto. Solo quando si è sicuri che dall'altra parte sia stato ricevuto, viene stampato a tastiera</a></li>
+</ul>
+</li>
+<li><a href="#orgbc5c1d3">Per garantire&#x2026;(?) viene introdotto il delay acknowledgment.</a>
+<ul>
+<li><a href="#org1ae5703">La questione è che TCP ignora l'obiettivo delle applicazioni, ma loro lo sanno e potrebbero voler inserire più informazioni nello header.</a></li>
+<li><a href="#org72c70d3">Immaginiamo una situazione come prima: si riceve un byte pushato.</a></li>
+<li><a href="#org5e93aee">Il receiver, però, non risponde subito con un Ack, ma aspetta un tempo (standard 200ms).</a></li>
+<li><a href="#orgfa76d92">Se in quel tempo arriva qualcosa nel buffer di invio del ricevitore, quei dati vengono incorporati nel messaggio di Ack.</a></li>
+<li><a href="#org52c1864">In questo caso, quando la eco viene aggiunta nel buffer di invio della ricezione, viene inserita nello stesso frame di Ack. Così ri risparmia un messaggio TCP.</a></li>
+<li><a href="#org6f67756">Questa soluzione è efficiente dal punto di vista di rete, ma inefficiente dal punto di vista della user-experience.</a></li>
+<li><a href="#org71f649b"></a></li>
+</ul>
+</li>
+<li><a href="#orge0ae2b2">In caso di errori, è lo stesso TCP che se ne accorge e cerca di sanarlo.</a>
+<ul>
+<li><a href="#org2c98e8f">TCP è orientato allo stream.</a></li>
 </ul>
 </li>
 </ul>
@@ -1769,9 +1835,371 @@ lesgoski
 </div>
 </div>
 </div>
+<div id="outline-container-org3538b86" class="outline-2">
+<h2 id="org3538b86">Quindi siamo arrivati al SYN che uno manda per aprire la connessione, con un numero di sequenza generato in numero casuale. Il canale è bidirezionale e quindi avviene tutto nello stesso modo in entrambi gli host.</h2>
+<div class="outline-text-2" id="text-org3538b86">
+</div>
+<div id="outline-container-org72e74e8" class="outline-3">
+<h3 id="org72e74e8">Il SYN parte a 1, in risposta il SYN è a uno e anche l'ACK, che indica che il campo Ack è significativo e tale campo è numDiSequenza +1, per indicare che quello è il prossimo bit che si è pronti a ricevere.</h3>
+<div class="outline-text-3" id="text-org72e74e8">
+</div>
+<div id="outline-container-org7ed05d8" class="outline-4">
+<h4 id="org7ed05d8">Ovviamente manda anche il proprio numero di sequenza.</h4>
+</div>
+</div>
+<div id="outline-container-orgc8e913c" class="outline-3">
+<h3 id="orgc8e913c">Se tutto va a buon fine, la terza risposta dal sender è uguale alla seconda dal receiver e da lì in poi la connessione è aperta.</h3>
+</div>
+<div id="outline-container-org65de0c2" class="outline-3">
+<h3 id="org65de0c2">C'è un timer che garantisce che se l'ACK viene perso, o impiega troppo tempo ad arrivare, venga mandato un messaggio con RESET a 1 che annulla l'handshake, che va rieffettuato</h3>
+<div class="outline-text-3" id="text-org65de0c2">
+<pre class="example" id="org5e005ee">
+Let me explain why starting sequence numbers in the Transport layer are random:
+
+    Security: Random initial sequence numbers help prevent TCP sequence prediction attacks. If sequence numbers were predictable, attackers could potentially hijack TCP connections by guessing the next sequence number.
+
+    Connection Uniqueness: Random sequence numbers reduce the likelihood of old segments from previous connections being mistakenly accepted as valid in new connections between the same endpoints.
+
+    Prevents Segment Mix-up: If multiple connections are established between the same hosts, random sequence numbers help ensure segments from different connections don't get mixed up.
+
+    Protection against Spoofing: Random initial sequence numbers make it harder for attackers to inject fake segments into an existing connection since they would need to guess the correct sequence number.
+
+    Avoids Overlap: In case of delayed segments from previous connections, random sequence numbers help prevent confusion between old and new data streams.
+
+This randomization is a crucial security measure in modern TCP implementations and helps maintain the integrity and reliability of network communications.
+</pre>
+</div>
+</div>
+<div id="outline-container-org890739d" class="outline-3">
+<h3 id="org890739d">In ogni header è indicato il Max Segment Size, che indica la dimensione massima di segmento che l'host può gestire senza andare in overflow.</h3>
+<div class="outline-text-3" id="text-org890739d">
+</div>
+<div id="outline-container-org63276af" class="outline-4">
+<h4 id="org63276af">La dimensione Standard, quando il campo è vuoto, il segmento è di 536 byte.</h4>
+</div>
+</div>
+<div id="outline-container-org2159bbb" class="outline-3">
+<h3 id="org2159bbb">L'obiettivo di TCP è trasferire i dati nel miglior modo, garantendo affidabilità, gest.errori, ordine ecc., e anche farlo in modo efficiente, evitando un overhead eccessivo</h3>
+</div>
+<div id="outline-container-orgb9e6539" class="outline-3">
+<h3 id="orgb9e6539">Il motivo per cui viene scelta 536 byte è che siamo sicuri che il livello IP non frammenterà tale segmento in più pacchetti.</h3>
+<div class="outline-text-3" id="text-orgb9e6539">
+</div>
+<div id="outline-container-orge75410c" class="outline-4">
+<h4 id="orge75410c">Per ogni frammentazione effettuata dall'IP, serve copiare sia header TCP che IP, introducendo overhead.</h4>
+</div>
+<div id="outline-container-org09d1e2c" class="outline-4">
+<h4 id="org09d1e2c">Inoltre, essendo la rete best-effort, quanti più sotto-segmenti vengono mandati quanto più è probabile che avvengano dei problemi che dovranno essere poi gestiti</h4>
+</div>
+</div>
+<div id="outline-container-org86b89ae" class="outline-3">
+<h3 id="org86b89ae">Immaginiamo di avere una connessione A-B in TCP, necessariamente bidirezionale.</h3>
+<div class="outline-text-3" id="text-org86b89ae">
+</div>
+<div id="outline-container-org580be74" class="outline-4">
+<h4 id="org580be74">Dato che noi analizziamo solo i casi "unidirezionali", noi valutiamo solo SendingBuffer e TcpSendingBuffer nel sender, e i corrispondenti ma per il receiver nel receiver.</h4>
+</div>
+<div id="outline-container-orgc6db2d3" class="outline-4">
+<h4 id="orgc6db2d3">Assumiamo che la segment size sia 500.</h4>
+</div>
+<div id="outline-container-org8b477ee" class="outline-4">
+<h4 id="org8b477ee">L'applicazione lato sender scrive 2000 byte nell'SB della socket esposto.</h4>
+</div>
+<div id="outline-container-orge3fb696" class="outline-4">
+<h4 id="orge3fb696">Ovviamente, va eseguita una frammentazione a livello trasporto.</h4>
+<div class="outline-text-4" id="text-orge3fb696">
+</div>
+<ul class="org-ul">
+<li><a id="org8bb18d1"></a>Assumiamo per ora che non avvengano problemi nella trasmissione.<br /></li>
+</ul>
+</div>
+<div id="outline-container-org5815b14" class="outline-4">
+<h4 id="org5815b14">Nel sending buffer della TCP, nascosto al livello applicazione, vengono copiati e segmentati opportunamente i byte del buffer superiore.</h4>
+</div>
+<div id="outline-container-orgf29282b" class="outline-4">
+<h4 id="orgf29282b">Nello header è presente l'informazione SEQ=X. Il payload sarà dal byte X a quello X + 499</h4>
+<div class="outline-text-4" id="text-orgf29282b">
+</div>
+<ul class="org-ul">
+<li><a id="org50f2b3c"></a>X è in realtà X+1 se la connessione è appena stata instaurata, ma per semplicità si considera X il valore corrente.<br /></li>
+</ul>
+</div>
+<div id="outline-container-org4c1bafd" class="outline-4">
+<h4 id="org4c1bafd">Nel frattempo, il receiver si aspettava il Sequence Number = X e così si accerta che l'ordine sia corretto.</h4>
+</div>
+<div id="outline-container-org86143cb" class="outline-4">
+<h4 id="org86143cb">I dati arrivano nel buffer inferiore, ma dato che l'ordine è corretto, vengono subito copiati nel buffer superiore.</h4>
+</div>
+<div id="outline-container-orgb8c0578" class="outline-4">
+<h4 id="orgb8c0578">Lo header risposta del receiving buffer contiene il campo ACK a 1 e quello Ack a X + 500, che è il primo byte successivo a quello ricevuto.</h4>
+<div class="outline-text-4" id="text-orgb8c0578">
+</div>
+<ul class="org-ul">
+<li><a id="orgdb507bb"></a>Implicitamente vuol dire che il segmento precedente è correttamente ricevuto.<br /></li>
+</ul>
+</div>
+<div id="outline-container-org61aee21" class="outline-4">
+<h4 id="org61aee21">Il sender elimina dal buffer del TCP il segmento corrispondente.</h4>
+</div>
+<div id="outline-container-org0e06d69" class="outline-4">
+<h4 id="org0e06d69">Allora, il prossimo segmento mandato è quello che parte da X+500 e questo valore è nel SEQ dello header.</h4>
+</div>
+<div id="outline-container-org0d4e8bc" class="outline-4">
+<h4 id="org0d4e8bc">Anche questo pacchetto è in ordine e quindi va subito spostato nel buffer superiore.</h4>
+<div class="outline-text-4" id="text-org0d4e8bc">
+</div>
+<ul class="org-ul">
+<li><a id="org62ef1bf"></a>Il TCP tiene tutti i segmenti non in ordine nel buffer inferiore.<br /></li>
+<li><a id="orga4cf229"></a>Ogni segmento correttamente ricevuto, ma successivo ad un segmento non ricevuto, rimane nel buffer inferiore.<br /></li>
+</ul>
+</div>
+<div id="outline-container-orgd3d49ea" class="outline-4">
+<h4 id="orgd3d49ea">Analogamente al messaggio precedente, il receiver risponde con un Ack = X+1000.</h4>
+<div class="outline-text-4" id="text-orgd3d49ea">
+</div>
+<ul class="org-ul">
+<li><a id="org3d8aa15"></a>Anche adesso, il sender si libera del segmento.<br /></li>
+</ul>
+</div>
+<div id="outline-container-org7b34045" class="outline-4">
+<h4 id="org7b34045">Procedo così fino allo svuotamento del buffer di invio.</h4>
+</div>
+</div>
+<div id="outline-container-org3a39050" class="outline-3">
+<h3 id="org3a39050">Nella configurazione precedente, c'è un problema nel caso in cui ho bisogno di (real-time?) ad esempio ssh su una console remota.</h3>
+<div class="outline-text-3" id="text-org3a39050">
+</div>
+<div id="outline-container-org0ec4b2c" class="outline-4">
+<h4 id="org0ec4b2c">Voglio che i dati vengano processati byte per byte</h4>
+</div>
+<div id="outline-container-org5299901" class="outline-4">
+<h4 id="org5299901">Allora uso la flag PUSH, in modo che TCP spedisca il singolo byte, senza arrivare ad una dimensione del segmento di 500 byte come prima</h4>
+</div>
+<div id="outline-container-org294ca81" class="outline-4">
+<h4 id="org294ca81">Quando PUSH viene usata, il receiver manda un regolare ACK, con Ack X+1</h4>
+</div>
+<div id="outline-container-orgc322e91" class="outline-4">
+<h4 id="orgc322e91">In questo caso, però, viene fatta una eco dello stesso byte, questa volta</h4>
+</div>
+<div id="outline-container-org9a63762" class="outline-4">
+<h4 id="org9a63762">Il motivo per cui viene fatta la eco è che il sender prende input a tastiera ma non mostra direttamente a schermo, perchè non è sicuro che dall'altra parte sia correttamente ricevuto. Solo quando si è sicuri che dall'altra parte sia stato ricevuto, viene stampato a tastiera</h4>
+<div class="outline-text-4" id="text-org9a63762">
+<pre class="example" id="org5ff13ae">
+Let me explain why TCP echoes bytes with the PUSH flag:
+
+    Data Acknowledgment vs Echo:
+
+    The ACK simply acknowledges receipt of data
+    The echo (sending the same byte back) serves a different purpose: it confirms the connection is still alive and functioning in both directions
+
+    Key Benefits of Echoing:
+
+    Tests bi-directional data flow
+    Helps detect half-open connections
+    Provides an additional validation mechanism beyond simple acknowledgment
+    Useful for interactive applications where immediate response is needed
+
+    Relationship to PUSH Flag:
+
+    The PUSH flag indicates that data should be delivered to the application immediately
+    Echoing PUSH-flagged bytes ensures the urgent nature of the data is maintained in both directions
+    This is particularly important for interactive protocols like Telnet where character-by-character feedback is needed
+
+The echo mechanism complements ACKs rather than duplicating them - ACKs confirm receipt, while echoes validate the full duplex nature of the connection and maintain interactive responsiveness.
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbc5c1d3" class="outline-3">
+<h3 id="orgbc5c1d3">Per garantire&#x2026;(?) viene introdotto il delay acknowledgment.</h3>
+<div class="outline-text-3" id="text-orgbc5c1d3">
+</div>
+<div id="outline-container-org1ae5703" class="outline-4">
+<h4 id="org1ae5703">La questione è che TCP ignora l'obiettivo delle applicazioni, ma loro lo sanno e potrebbero voler inserire più informazioni nello header.</h4>
+</div>
+<div id="outline-container-org72c70d3" class="outline-4">
+<h4 id="org72c70d3">Immaginiamo una situazione come prima: si riceve un byte pushato.</h4>
+</div>
+<div id="outline-container-org5e93aee" class="outline-4">
+<h4 id="org5e93aee">Il receiver, però, non risponde subito con un Ack, ma aspetta un tempo (standard 200ms).</h4>
+</div>
+<div id="outline-container-orgfa76d92" class="outline-4">
+<h4 id="orgfa76d92">Se in quel tempo arriva qualcosa nel buffer di invio del ricevitore, quei dati vengono incorporati nel messaggio di Ack.</h4>
+<div class="outline-text-4" id="text-orgfa76d92">
+</div>
+<ul class="org-ul">
+<li><a id="orgf660b55"></a>In questo caso, sia sequence che ack number sono considerati. Seq è quello che ti do, ack quello che prendo.<br />
+<ul class="org-ul">
+<li><a id="orgfe872a1"></a>Prima invece, il campo sequence non era mai impostato<br /></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="outline-container-org52c1864" class="outline-4">
+<h4 id="org52c1864">In questo caso, quando la eco viene aggiunta nel buffer di invio della ricezione, viene inserita nello stesso frame di Ack. Così ri risparmia un messaggio TCP.</h4>
+<div class="outline-text-4" id="text-org52c1864">
+<pre class="example" id="orgade25fb">
+Let me explain a common TCP optimization technique from computer networking. This technique is called "Delayed Acknowledgment" or "Delayed ACK."
+
+The Delayed ACK technique involves:
+
+    Deliberately waiting for a short period (typically around 200ms) before sending an ACK
+    During this wait period, if the receiving host has data to send back to the sender, it can combine (piggyback) the ACK with this outgoing data
+    The wait period also allows the receiver to potentially combine multiple ACKs into a single response if more segments arrive during the delay
+
+This technique helps improve network efficiency by:
+
+    Reducing protocol overhead
+    Minimizing the number of small packets on the network
+    Taking advantage of bi-directional data flow
+    Optimizing bandwidth usage by combining ACKs with data when possible
+
+However, Delayed ACK is not used in all cases - for example, every second full-sized segment must be acknowledged immediately to maintain TCP's flow control mechanisms.
+</pre>
+</div>
+<ul class="org-ul">
+<li><a id="org60d6e00"></a>Il prossimo messaggio del sender sarà sia un ACK della echo che un send del byte successivo.<br /></li>
+</ul>
+</div>
+<div id="outline-container-org6f67756" class="outline-4">
+<h4 id="org6f67756">Questa soluzione è efficiente dal punto di vista di rete, ma inefficiente dal punto di vista della user-experience.</h4>
+<div class="outline-text-4" id="text-org6f67756">
+</div>
+<ul class="org-ul">
+<li><a id="org14c1cba"></a>Per trovare un compromesso fra rete e user-experience, si utilizza la tecnica del <b>NAGLE</b>.<br />
+<ul class="org-ul">
+<li><a id="orgaf41dd5"></a>Ho un sender con una serie di segmenti composti da un singolo byte da pushare.<br /></li>
+<li><a id="org72f15a8"></a>Come prima, mando un segmento con il byte, il receiver lo riceve e aspetta 200ms.<br />
+<ul class="org-ul">
+<li><a id="orgbdd96d2"></a>L'applicazione riceve il byte e fa la ACK + echo, con SEQ = Y, PUSH attivato, ACK attivato e Ack = X + 1<br /></li>
+</ul>
+</li>
+<li><a id="orgd778eda"></a>I successivi byte vengono impacchettati in un singolo segmento e mandati tutti insieme. Il receiver risponde con l'ack.<br />
+<ul class="org-ul">
+<li><a id="org75b138e"></a><span class="todo TODO">TODO</span> Capire se viene effettuata la echo dei byte in blocco e se viene fatta byte per byte o cumulativa.<br />
+<div class="outline-text-7" id="text-org75b138e">
+<pre class="example" id="orgc6acbb6">
+No, when using Nagle's algorithm, the block of bytes in the second segment is not echoed, and the ACK does not contain an echo of the whole block. Here's why:
+
+    First byte behavior:
+
+    The first byte is sent immediately (Nagle allows this)
+    This byte gets acknowledged and echoed (typical for interactive data)
+
+    Block of bytes behavior:
+
+    The subsequent block is sent as a single segment due to Nagle's algorithm
+    The receiver only sends an ACK for this data
+    The block is NOT echoed back
+
+The reason for this difference is:
+
+    Single byte echoing is typically used for interactive traffic (like telnet) where immediate feedback is needed
+    Larger blocks of data don't need character-by-character echo feedback
+    Echoing large blocks would be inefficient and isn't necessary for bulk data transfer
+    The ACK alone is sufficient to confirm receipt of the block
+
+This behavior helps optimize network performance by:
+
+    Reducing unnecessary network traffic
+    Preventing excessive echoing of bulk data
+    Maintaining interactivity where needed (single bytes)
+    Providing reliable delivery confirmation through ACKs
+</pre>
+
+<pre class="example" id="orgefddbc7">
+The echo of the first byte in Nagle's algorithm serves these specific purposes:
+
+    Connection Validation:
+
+    The echo of the first byte confirms that the connection is fully functional in both directions
+    It quickly verifies that the remote end is responsive and processing data
+
+    Interactive Feedback:
+
+    For interactive applications (like telnet or ssh), the first byte often represents a keystroke
+    Users need immediate feedback for this first input to confirm their interaction
+    The echo provides visual confirmation that the connection is working
+
+    Fast Start Verification:
+
+    Rather than waiting for the full data transfer to verify connection quality
+    The single byte echo serves as a quick initial test of the connection
+
+    Protocol Efficiency:
+
+    Only echoing the first byte (not the subsequent block) is a compromise between:
+        Providing necessary interactive feedback
+        Avoiding unnecessary network overhead for bulk data
+    After the initial verification, regular ACKs are sufficient for bulk data transfer
+
+This selective echoing behavior combines the benefits of interactive responsiveness for the initial byte with efficient bulk transfer for subsequent data.
+</pre>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="outline-container-org71f649b" class="outline-4">
+<h4 id="org71f649b"></h4>
+</div>
+</div>
+<div id="outline-container-orge0ae2b2" class="outline-3">
+<h3 id="orge0ae2b2">In caso di errori, è lo stesso TCP che se ne accorge e cerca di sanarlo.</h3>
+<div class="outline-text-3" id="text-orge0ae2b2">
+</div>
+<div id="outline-container-org2c98e8f" class="outline-4">
+<h4 id="org2c98e8f">TCP è orientato allo stream.</h4>
+<div class="outline-text-4" id="text-org2c98e8f">
+</div>
+<ul class="org-ul">
+<li><a id="org4992802"></a>Abbiamo già visto che a livello 2 ogni pacchetto è identificato da un numero che viene utilizzato per riconoscere i frame su cui avviene l'errore.<br /></li>
+<li><a id="orga49755b"></a>In TCP l'idea del sequence number è che, conoscendo la dimensione del file \(N\), il segmento va da \(X\) a \(X+N\).<br /></li>
+<li><a id="orgbb15908"></a>Ci interessa capire fino a che punto dello stream è stato ricevuto tutto correttamente.<br />
+<ul class="org-ul">
+<li><a id="org491ed31"></a>Ovvero, l'indice \(K<N\) fino a cui è assicurata la comunicazione avvenuta correttamente.<br /></li>
+</ul>
+</li>
+<li><a id="orgdbd45b8"></a>Quindi il sequence number sommato al payload, mi da il nuovo numero di sequenza.<br /></li>
+<li><a id="org6a30872"></a>Immaginiamo di avere una situazione in cui l'app sender debba spedire 2400 byte con una dimensione del segmento di 500.<br /></li>
+<li><a id="orgf747320"></a>Il primo segmento viene spedito con SEQ=X.<br /></li>
+<li><a id="orgd0a369f"></a>Il secondo viene spedito senza aspettare l'ACK, con SEQ=X+500<br /></li>
+<li><a id="orgc3a1e4d"></a>Si immagini adesso che il secondo segmento venga perso.<br /></li>
+<li><a id="org1c7d32b"></a>Nel frattempo, il receiver risponde con un ACK per il primo segmento, ovvero con Ack X + 500 e dato che il segmento è nell'ordine corretto, questo viene spedito al buffer superiore.<br /></li>
+<li><a id="org0907426"></a>Quando il secondo segmento è spedito ma non è stato ricevuto l'ack corrispondente, il segmento è ancora nel sending buffer del tcp del sender.<br /></li>
+<li><a id="org8b23e50"></a>Comunque non aspetto l'ACK del secondo, perchè essendoci la rete per mezzo, non posso sapere se arriverà a breve o non arriverà.<br /></li>
+<li><a id="orge8334ee"></a>Quindi mando il terzo, con SEQ=X+1000.<br /></li>
+<li><a id="org56ab3ae"></a>Quando il receiver riceve questo segmento, lo mette nel suo buffer, ma risponde con lo stesso ACK di prima.<br />
+<ul class="org-ul">
+<li><a id="org7b1eb6e"></a>Ovvero, si intende che sebbene qualcosa sia ricevuto, non "riempie lo spazio" di ciò che non era stato ricevuto.<br /></li>
+</ul>
+</li>
+<li><a id="orgd74504d"></a>La questione è che ogni segmento attiva un timer. Finchè il timer non scade, TCP prosegue con <b>tutti</b> i segmenti successivi in buffer d'invio.<br /></li>
+<li><a id="orgf4db157"></a>Quando il timer scade, soltanto quello specifico segmento viene inviato.<br /></li>
+<li><a id="org689bdaf"></a>A questo punto, il ricevitore si renderà conto che quel segmento, il secondo in questo caso, va posizionato prima dei successivi, che già possiede nel buffer. Allora tutti quelli successivi saranno sbloccati ed il prossimo ACK li includerà. Si parla quindi di ACK cumulativo.<br /></li>
+<li><a id="orge5372c3"></a>Questa roba si chiama <b>fast retransmit</b>, ovvero la ritrasmissione di un singolo segmento.<br /></li>
+<li><a id="orgdd7d330"></a>Il timer è pensato per considerare il caso di perdita, anche abbastanza inusuale, sovradimensionato.<br /></li>
+<li><a id="orgb4cd209"></a>Si usa però anche una strategia del triplo ACK: al terzo ACK uguale ricevuto, viene inviato il segmento corrispondente.<br /></li>
+<li><a id="orgcb2f285"></a>Usando queste due strategie, si limita il danno sull'efficienza del timeout e si rende più veloce l'invio dei segmenti precedenti.<br />
+<ul class="org-ul">
+<li><a id="orgffe6243"></a>Ad esempio, si fa in modo che tutti i segmenti in coda nel buffer a cui serve quello perso per sbloccarsi, debbano aspettare al massimo T ma spesso anche di meno, così da ridurre lo spazio di memoria occupato.<br /></li>
+</ul>
+</li>
+<li><a id="org317d4ea"></a>Il timer è anche molto utile per gli ultimi (?)2 segmenti, dopo i quali non esistono 3 ack che facciano partire la ritrasmissione.<br />
+<ul class="org-ul">
+<li><a id="org5f2c9fc"></a><span class="todo TODO">TODO</span> Per quanti segmenti vale questa proprietà<br /></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-11-20 Wed 19:49</p>
+<p class="date">Created: 2024-11-21 Thu 17:02</p>
 </div>
 </body>
 </html>

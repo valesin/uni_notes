@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-20 Wed 19:49 -->
+<!-- 2024-11-21 Thu 17:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Algoritmi</title>
@@ -50,16 +50,10 @@
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
 <li><a href="#orgac5493e">Ordinamento</a></li>
-<li><a href="#org13f1a67">Strutture</a>
-<ul>
-<li><a href="#orgae5d67d">Coda con priorità</a>
-<ul>
-<li><a href="#org165b144">Heap</a></li>
-</ul>
-</li>
-<li><a href="#org941f68f">Liste (niente a riguardo)</a></li>
-</ul>
-</li>
+<li><a href="#orgddb46b1">Alberi</a></li>
+<li><a href="#org9d4fd8b">Heap e code con priorità</a></li>
+<li><a href="#orge78101e">Analisi ammortizzata</a></li>
+<li><a href="#orgac4ade6">Union-Find</a></li>
 <li><a href="#org178c95a">Grafi</a></li>
 <li><a href="#orgc905642">Alberi ricoprenti minimi</a>
 <ul>
@@ -68,7 +62,7 @@
 <li><a href="#orgafc467a">AlgoritmoDiPrim</a></li>
 </ul>
 </li>
-<li><a href="#orgd687d87">Lez 23</a>
+<li><a href="#orga490adf">Programmazione dinamica</a>
 <ul>
 <li><a href="#orgf1c06b5">Distanza fra stringhe</a></li>
 <li><a href="#org791a6d8">diff con divide et impera</a>
@@ -78,14 +72,10 @@
 </li>
 </ul>
 </li>
-<li><a href="#org036ff84">Lez24</a>
-<ul>
 <li><a href="#org2607ddf">Cammini minimi</a>
 <ul>
 <li><a href="#orgc584eea">Rappresentazioni</a></li>
 <li><a href="#orgb2ccc7b">Problemi sui cammini minimi</a></li>
-</ul>
-</li>
 <li><a href="#orgf232acb">Floyd-Marshall</a></li>
 </ul>
 </li>
@@ -96,21 +86,17 @@
 <div id="outline-container-orgac5493e" class="outline-2">
 <h2 id="orgac5493e"><a href="ordinamento.html#ID-b3612a70-1431-4665-9189-87a36fe5ab15">Ordinamento</a></h2>
 </div>
-<div id="outline-container-org13f1a67" class="outline-2">
-<h2 id="org13f1a67">Strutture</h2>
-<div class="outline-text-2" id="text-org13f1a67">
+<div id="outline-container-orgddb46b1" class="outline-2">
+<h2 id="orgddb46b1">Alberi</h2>
 </div>
-<div id="outline-container-orgae5d67d" class="outline-3">
-<h3 id="orgae5d67d">Coda con priorità</h3>
-<div class="outline-text-3" id="text-orgae5d67d">
+<div id="outline-container-org9d4fd8b" class="outline-2">
+<h2 id="org9d4fd8b">Heap e code con priorità</h2>
 </div>
-<div id="outline-container-org165b144" class="outline-4">
-<h4 id="org165b144">Heap</h4>
+<div id="outline-container-orge78101e" class="outline-2">
+<h2 id="orge78101e">Analisi ammortizzata</h2>
 </div>
-</div>
-<div id="outline-container-org941f68f" class="outline-3">
-<h3 id="org941f68f">Liste (niente a riguardo)</h3>
-</div>
+<div id="outline-container-orgac4ade6" class="outline-2">
+<h2 id="orgac4ade6">Union-Find</h2>
 </div>
 <div id="outline-container-org178c95a" class="outline-2">
 <h2 id="org178c95a">Grafi</h2>
@@ -144,11 +130,9 @@ Strategie greedy differenti
 </div>
 </div>
 
-
-
-<div id="outline-container-orgd687d87" class="outline-2">
-<h2 id="orgd687d87">Lez 23</h2>
-<div class="outline-text-2" id="text-orgd687d87">
+<div id="outline-container-orga490adf" class="outline-2">
+<h2 id="orga490adf">Programmazione dinamica</h2>
+<div class="outline-text-2" id="text-orga490adf">
 <p>
 In alcuni casi, il problema viene scomposto in sottoproblemi più piccoli che ritornano più volte. In certi casi, il calcolo di tali sottoproblemi minori porta ad un aumento disastroso del tempo, alle volte esponenziale.
 Un esempio è il calcolo dei numeri di Fibonacci. Usando la definizione base avrebbe tempo esponenziale, perchè richiede di calcolare molteplici volte lo stesso valore.
@@ -192,13 +176,9 @@ Nel caso della distanza si applica il principio che la soluzione ottima del prob
 </div>
 </div>
 </div>
-<div id="outline-container-org036ff84" class="outline-2">
-<h2 id="org036ff84">Lez24</h2>
-<div class="outline-text-2" id="text-org036ff84">
-</div>
-<div id="outline-container-org2607ddf" class="outline-3">
-<h3 id="org2607ddf">Cammini minimi</h3>
-<div class="outline-text-3" id="text-org2607ddf">
+<div id="outline-container-org2607ddf" class="outline-2">
+<h2 id="org2607ddf">Cammini minimi</h2>
+<div class="outline-text-2" id="text-org2607ddf">
 <p>
 Definiamo il cammino minimo un cammino il cui peso è minore o uguale di ogni altro cammino.
 Le proprietà dei cammini minimi sono le seguenti:
@@ -208,17 +188,17 @@ Le proprietà dei cammini minimi sono le seguenti:
 <li>se ci sono pesi negativi ma non cicli di peso negativo allora dato un cammino da x a y, esiste sempre un cammino minimo da x a y che è di peso positivo.</li>
 </ul>
 </div>
-<div id="outline-container-orgc584eea" class="outline-4">
-<h4 id="orgc584eea">Rappresentazioni</h4>
-<div class="outline-text-4" id="text-orgc584eea">
+<div id="outline-container-orgc584eea" class="outline-3">
+<h3 id="orgc584eea">Rappresentazioni</h3>
+<div class="outline-text-3" id="text-orgc584eea">
 <ul class="org-ul">
 <li>matrice dei pesi: utile per fare manipolazioni algebriche</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb2ccc7b" class="outline-4">
-<h4 id="orgb2ccc7b">Problemi sui cammini minimi</h4>
-<div class="outline-text-4" id="text-orgb2ccc7b">
+<div id="outline-container-orgb2ccc7b" class="outline-3">
+<h3 id="orgb2ccc7b">Problemi sui cammini minimi</h3>
+<div class="outline-text-3" id="text-orgb2ccc7b">
 <ul class="org-ul">
 <li>trovare il cammino minimo fra due vertici</li>
 <li>trovare i cammini minimi fra un vertice s e gli altri</li>
@@ -229,7 +209,6 @@ Le proprietà dei cammini minimi sono le seguenti:
 Inoltre, possiamo voler vedere come una tabella di cammini minimi cambia all'inserimento di un nuovo vertice.
 Ovvero, aggiunte una riga ed una colonna
 </p>
-</div>
 </div>
 </div>
 <div id="outline-container-orgf232acb" class="outline-3">
@@ -249,7 +228,7 @@ Quando \(k=0\), allora
 <p>
 Nel passo generale, mi trovo a conoscere la strada fra due elementi e la condizione viene rilassata. Così, posso valutare se passare attraverso i nuovi vertici o meno.
 </p>
-<pre class="example" id="org73f448e">
+<pre class="example" id="org5bddd41">
 ALGORITMO FloydMarshall(Grafo G) -&gt; Matrice
     Siano D0[1..n, 1..n],...,D0[1..n,1..n] matrici
     # gestisco il caso di k=0
@@ -272,7 +251,7 @@ Si può ridurre l'utilizzo di memoria, utilizzando una sola matrice, considerand
 Ovve
 </p>
 
-<pre class="example" id="org7c77e39">
+<pre class="example" id="orgeed9296">
 ALGORITMO FloydMarshall(Grafo G) -&gt; Matrice
     CAMBIO
     Abbiamo una sola matrice
@@ -308,7 +287,7 @@ Notare che l'algoritmo di floyd marshall prevede che non ci siano cicli negativi
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-11-20 Wed 19:49</p>
+<p class="date">Created: 2024-11-21 Thu 17:02</p>
 </div>
 </body>
 </html>

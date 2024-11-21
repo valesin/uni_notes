@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-20 Wed 19:49 -->
+<!-- 2024-11-21 Thu 17:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Data Link</title>
@@ -251,9 +251,150 @@ Dato che l'<code>ACK</code> è cumulativo, è possibile che il receiver abbia ri
 Il <b>numero massimo di frequenza</b> è <b>almeno</b> \(2K\).
 Infatti, il receiver potrebbe possedere già dei frame di una data finestra nel proprio buffer e bisogna discriminare i nuovi.
 </p>
+
+<pre class="example" id="org7fa96f7">
+In the ARQ of the data link, if using a Selective Repeat protocol, if the third of 5 frames does not get received from the receiver and we are using a cumulative ACK, what is the ACK that gets sent to the sender?
+
+Let me help explain how Selective Repeat ARQ handles this scenario.
+
+In Selective Repeat ARQ with cumulative ACKs, when frame 3 out of frames 1,2,3,4,5 is lost, the receiver would send ACK 2. Here's why:
+
+    A cumulative ACK N means "all frames up to and including N have been received correctly"
+    In this case, frames 1 and 2 were received correctly, but frame 3 was lost
+    Even if frames 4 and 5 arrived correctly, the receiver cannot acknowledge them in the cumulative ACK since frame 3 is missing
+    Therefore, the receiver sends ACK 2, indicating that all frames up to and including frame 2 have been received correctly
+
+Note that in Selective Repeat ARQ, the receiver would also send individual ACKs for frames 4 and 5 separately (since they were received correctly), but the cumulative ACK would still be ACK 2 until frame 3 is successfully received.
+
+This is different from Go-Back-N where frames after a lost frame would be discarded. In Selective Repeat, these subsequent frames are buffered by the receiver while waiting for the retransmission of frame 3.
+In the same situation as above, what would the sender do after receiving a cumulative ACK of 2?
+
+In Selective Repeat ARQ, after receiving a cumulative ACK of 2, the sender would:
+
+    Clear frames 1 and 2 from its sending buffer (since they are confirmed as received)
+    Retransmit only frame 3 (since it was not acknowledged)
+    Keep frames 4 and 5 in the buffer, but NOT retransmit them (unlike Go-Back-N)
+    Continue with new transmissions if the window permits
+
+This is one of the key advantages of Selective Repeat over Go-Back-N: only the lost frame (frame 3) needs to be retransmitted, while in Go-Back-N, the sender would have to retransmit frames 3, 4, and 5. This makes Selective Repeat more efficient, especially when the error rate is high or when the bandwidth-delay product is large.
+
+The sender will maintain frames 4 and 5 in its buffer until they are acknowledged, either through subsequent cumulative ACKs (after frame 3 is successfully received) or through individual ACKs specific to those frames.
+Are individual ACKs always used in Selective Repeat ARQ Protocols?
+
+No, individual ACKs are not always used in Selective Repeat ARQ protocols. There are two main approaches for acknowledgments in Selective Repeat ARQ:
+
+    Cumulative ACKs only:
+
+    Only uses cumulative ACKs that acknowledge all frames up to a certain sequence number
+    Simpler to implement but less efficient
+    Requires more retransmissions since the sender can't know which frames after a lost frame were received successfully
+
+    Combined approach (both cumulative and selective ACKs):
+
+    Uses both cumulative ACKs and individual selective ACKs
+    More efficient since the sender knows exactly which frames were received
+    More complex to implement due to additional overhead and logic needed to handle both types of ACKs
+    Requires more header space to carry the selective ACK information
+
+The choice between these approaches often depends on the specific implementation and requirements of the system, considering factors like:
+
+    Available bandwidth for control messages
+    Implementation complexity requirements
+    Performance needs
+    Memory constraints
+
+Most modern implementations tend to use the combined approach for better efficiency, but simpler implementations might only use cumulative ACKs.
+If the cumulative ONLY approach is used, and, as above, the third on 5 frame gets lost, the receiver answers with ACK 2
+This response could not be shown as it violates GitHub’s content policies.
+If in Selective Repeat ARQ, the cumulative ONLY approach is used, and, as above, the third on 5 frame gets lost, the receiver answers with ACK 2. Does the sender try to send EVERY frame after the second?
+
+No, in Selective Repeat ARQ, even with cumulative-only ACKs, the sender would NOT retransmit every frame after frame 2.
+
+This is a key distinction between Selective Repeat ARQ and Go-Back-N:
+
+    The sender will only retransmit frame 3 (the lost frame)
+    Frames 4 and 5 remain in the sender's buffer but are NOT retransmitted
+    The sender waits for the timeout of frame 3 specifically
+
+This behavior remains true even without individual ACKs because:
+
+    The protocol is still "Selective" Repeat - meaning it selectively retransmits only lost frames
+    The "Selective" part refers to the retransmission strategy, not necessarily the ACK mechanism
+    The absence of individual ACKs makes the protocol less efficient (since the sender can't know if frames 4 and 5 were received) but doesn't change its fundamental selective retransmission behavior
+
+The main difference when using only cumulative ACKs is that the sender has less information about which frames after the lost one were successfully received, but it still doesn't retransmit them unnecessarily.
+Help me understand the behaviour of the sender, specifically about the interrupt that is generated at the end of the trasmission of the 5 frames, but the ACK is 2.
+The sender goes into "retransmitting" mode and sends the third frame ONLY, right? Does it wait specifically for the ACK of that specific frame?
+Thus, can we say that in case of a frame lost, the ARQ Selective Repeat behaves like an IDLE RQ, until the next ACK is received?
+
+Let me clarify the behavior of Selective Repeat ARQ in this specific scenario:
+
+After sending frames 1-5 and receiving ACK 2:
+
+    When the transmission interrupt occurs (after frame 5):
+        The sender knows frames 1 and 2 were successful (due to ACK 2)
+        Frame 3 is identified as the next needed frame
+
+    Retransmission behavior:
+        Yes, the sender only retransmits frame 3
+        After sending frame 3, it waits for an acknowledgment
+        During this time, it's not completely idle as in Stop-and-Wait/IDLE RQ
+
+The key difference from IDLE RQ is:
+
+    In IDLE RQ, the sender truly stops and waits for an ACK before sending anything else
+    In Selective Repeat, while waiting for frame 3's ACK:
+        The sender can still send new frames if they fit within the sending window
+        It can process ACKs for other frames (if using selective ACKs)
+        Only the specific slot for frame 3 is blocked until its ACK is received
+
+So no, it's not exactly like IDLE RQ because the protocol maintains its window-based operation. The sender is only "selective" about retransmitting frame 3, but the rest of the window mechanism continues to function.
+When the sender retrasmists the frame 3, does it send the next 4 frames that would fit in the window of 5?
+
+No, when the sender retransmits frame 3, it does NOT send the next 4 frames that would fit in the window. Here's what happens:
+
+In Selective Repeat ARQ, frames 4 and 5 are already in transit/buffer and haven't been acknowledged yet. The sender:
+
+    Retransmits only frame 3
+    Keeps frames 4 and 5 in its buffer (they were already sent)
+    Can send NEW frames only for the remaining slots in the window (if any)
+
+For a window size of 5, in this scenario:
+
+    Frames 1,2 are confirmed (ACK 2)
+    Frame 3 is being retransmitted
+    Frames 4,5 are in buffer, waiting for acknowledgment
+    There are no free slots in the window for new frames yet
+
+The sender won't retransmit frames 4 and 5 because:
+
+    They might have been received correctly
+    This would waste bandwidth
+    It goes against the "selective" nature of the protocol
+
+The window will advance and allow new frames only after receiving further acknowledgments.
+So, when the sender enters the "retransmit" mode, it only sends ONE frame and waits for its ACK specifically
+
+Yes, that's exactly right! When the sender enters "retransmit" mode in Selective Repeat ARQ:
+
+    It sends ONLY the lost frame (frame 3 in our example)
+    Waits specifically for the acknowledgment of this frame
+    During this wait:
+        It keeps frames 4 and 5 in its buffer
+        Doesn't retransmit frames 4 and 5
+        Doesn't send new frames that might fit in the window
+
+This is indeed more similar to Stop-and-Wait behavior, but ONLY for this specific frame being retransmitted. The protocol is being "selective" by:
+
+    Identifying which specific frame was lost (frame 3)
+    Retransmitting only that frame
+    Waiting for its specific acknowledgment
+
+This is much more efficient than Go-Back-N, where all frames after the lost one would be retransmitted, and it maintains the integrity of the data transfer by ensuring the lost frame is properly received before moving forward with that specific sequence number.
+
+</pre>
 </div>
 </li>
-
 <li><a id="orga99a860"></a>Go-Back-N<br />
 <div class="outline-text-5" id="text-orga99a860">
 <p>
@@ -280,7 +421,7 @@ Infatti, nel caso in cui il receiver non riceva alcun frame di una nuova finestr
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-11-20 Wed 19:49</p>
+<p class="date">Created: 2024-11-21 Thu 17:02</p>
 </div>
 </body>
 </html>
