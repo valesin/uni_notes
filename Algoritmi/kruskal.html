@@ -3,80 +3,18 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-20 Wed 19:49 -->
+<!-- 2024-12-18 Wed 14:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Kruskal</title>
+<title>&lrm;</title>
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
-<script>
-  window.MathJax = {
-    tex: {
-      ams: {
-        multlineWidth: '85%'
-      },
-      tags: 'ams',
-      tagSide: 'right',
-      tagIndent: '.8em'
-    },
-    chtml: {
-      scale: 1.0,
-      displayAlign: 'center',
-      displayIndent: '0em'
-    },
-    svg: {
-      scale: 1.0,
-      displayAlign: 'center',
-      displayIndent: '0em'
-    },
-    output: {
-      font: 'mathjax-modern',
-      displayOverflow: 'overflow'
-    }
-  };
-</script>
-
-<script
-  id="MathJax-script"
-  async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">Kruskal</h1>
-<div id="table-of-contents" role="doc-toc">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents" role="doc-toc">
-<ul>
-<li><a href="#orgcef16fb">Analisi</a></li>
-</ul>
-</div>
-</div>
-<p>
-&#x2026; Aggiungere
-</p>
-
-<p>
-Abbiamo il concetto di foresta, ovvero tanti alberi separati i cui vertici vengono di volta in volta connessi.
-Collegare significa unire i due insiemi, che inizialmente sono singoletti. Quando provo ad unire due vertici che appartengono già allo stesso insieme, recupero facilmente questa informazione e deduco che sono già connessi, quindi non li collego.
-</p>
-
-<div id="outline-container-orgcef16fb" class="outline-2">
-<h2 id="orgcef16fb">Analisi</h2>
-<div class="outline-text-2" id="text-orgcef16fb">
-<p>
-Innanzitutto ordino, con un tempo di mlgm nello heap sort
-</p>
-
-<p>
-Alla fine ottengo \(O(m \log m) + O(n) + O(m \log n) + O(n)\). Sfrutto il fatto che in un grafo connesso (deve essere necessariamente connesso, perchè?) \(n-1 < m < n^{2}\) e quindi \(O(m) < O(n^{2})\), che posso sostituirlo e così ottengo il risultato finale.
-</p>
-</div>
-</div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-11-20 Wed 19:49</p>
+<p class="date">Created: 2024-12-18 Wed 14:55</p>
 </div>
 </body>
 </html>

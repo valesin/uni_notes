@@ -3,44 +3,41 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-21 Thu 17:02 -->
+<!-- 2024-12-18 Wed 14:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Algoritmi</title>
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
 <script>
-  window.MathJax = {
-    tex: {
-      ams: {
-        multlineWidth: '85%'
+    window.MathJax = {
+      tex: {
+        ams: { multlineWidth: '85%' },
+        {packages: {'[+]': ['mathtools']}},
+        tags: 'ams',
+        tagSide: 'right',
+        tagIndent: '.8em'
       },
-      tags: 'ams',
-      tagSide: 'right',
-      tagIndent: '.8em'
-    },
-    chtml: {
-      scale: 1.0,
-      displayAlign: 'center',
-      displayIndent: '0em'
-    },
-    svg: {
-      scale: 1.0,
-      displayAlign: 'center',
-      displayIndent: '0em'
-    },
-    output: {
-      font: 'mathjax-modern',
-      displayOverflow: 'overflow'
-    }
-  };
-</script>
-
-<script
-  id="MathJax-script"
-  async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
+      chtml: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      svg: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      output: {
+        font: 'mathjax-modern',
+        displayOverflow: 'scale'
+      },
+      loader: {
+        load: ['[tex]/mathtools']
+      },
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <div id="content" class="content">
@@ -49,90 +46,120 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgac5493e">Ordinamento</a></li>
-<li><a href="#orgddb46b1">Alberi</a></li>
-<li><a href="#org9d4fd8b">Heap e code con priorità</a></li>
-<li><a href="#orge78101e">Analisi ammortizzata</a></li>
-<li><a href="#orgac4ade6">Union-Find</a></li>
-<li><a href="#org178c95a">Grafi</a></li>
-<li><a href="#orgc905642">Alberi ricoprenti minimi</a>
+<li><a href="#orgf06eb99">Ordinamento</a></li>
+<li><a href="#org831784d">Heap e code con priorità</a></li>
+<li><a href="#org7bf3a72">Analisi ammortizzata</a></li>
+<li><a href="#org250370d">Union-Find</a></li>
+<li><a href="#org3532643">Grafi</a></li>
+<li><a href="#orgedbc764">Alberi ricoprenti minimi</a></li>
+<li><a href="#orgad0eedd">Programmazione dinamica</a>
 <ul>
-<li><a href="#org35c2729">Kruskal</a></li>
-<li><a href="#orgfe8d082"><span class="todo TODO">TODO</span> Aggiungere lezione precedente</a></li>
-<li><a href="#orgafc467a">AlgoritmoDiPrim</a></li>
-</ul>
-</li>
-<li><a href="#orga490adf">Programmazione dinamica</a>
+<li><a href="#org9624d0a">Distanza fra stringhe</a></li>
+<li><a href="#orgc83b963">diff con divide et impera</a>
 <ul>
-<li><a href="#orgf1c06b5">Distanza fra stringhe</a></li>
-<li><a href="#org791a6d8">diff con divide et impera</a>
-<ul>
-<li><a href="#org9b091e8">Principio di ottimalità</a></li>
+<li><a href="#orge6850f8">Principio di ottimalità</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org2607ddf">Cammini minimi</a>
+<li><a href="#org79c915b">Cammini minimi</a>
 <ul>
-<li><a href="#orgc584eea">Rappresentazioni</a></li>
-<li><a href="#orgb2ccc7b">Problemi sui cammini minimi</a></li>
-<li><a href="#orgf232acb">Floyd-Marshall</a></li>
+<li><a href="#orgbaf89fc">Rappresentazioni</a></li>
+<li><a href="#orgf38b23a">Problemi sui cammini minimi</a></li>
+<li><a href="#org8bee181">Floyd-Marshall</a></li>
+</ul>
+</li>
+<li><a href="#orgaea6bc3">Bellman-Ford</a>
+<ul>
+<li><a href="#org87fa9cd">In Marshall</a></li>
+</ul>
+</li>
+<li><a href="#orgd706779">Dijkstra</a>
+<ul>
+<li><a href="#org5819814">Analisi</a>
+<ul>
+<li><a href="#orgb1eea95">Rappresentazione</a></li>
+<li><a href="#orgc6f9043">Tempo</a></li>
+<li><a href="#orge13a794">Come ricavare i cammini minimi</a></li>
+<li><a href="#org18f487c">Cosa succede se un peso è negativo?</a></li>
+</ul>
+</li>
+<li><a href="#orgf34094f"><span class="todo TODO">TODO</span> Riflettere sul caso in cui il secondo vertice sia a distanza uno, ma quelli successivi siano a distanza 1000, , quindi A&#x2013;1&#x2013;B&#x2013;1000&#x2013;C, ma anche A&#x2013;2&#x2013;D&#x2013;2&#x2013;C.</a></li>
+</ul>
+</li>
+<li><a href="#org6c5c29f">Ricapitolando sui grafi</a>
+<ul>
+<li><a href="#org76431ea">Cammino minimo tra ogni coppia di vertici:</a></li>
+<li><a href="#orgba2b846">Cammini minimi da un vertice ad ogni altro</a></li>
+<li><a href="#org9c51942">Cammino minimo tra due vertici</a></li>
+</ul>
+</li>
+<li><a href="#org5d5b091">Strutture per salvare dati</a>
+<ul>
+<li><a href="#org1578d0a">Alberi di ricerca</a>
+<ul>
+<li><a href="#org31f4f0f">Alberi di ricerca binari</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgd4b8d44"><span class="todo TODO">TODO</span> FILL WITH SOME LESSONS</a></li>
+<li><a href="#orgf15ba2d">Lez n</a>
+<ul>
+<li><a href="#org33771d6">Risorse necessarie e sufficienti</a></li>
+<li><a href="#orgdf14e3c">Tempo polinomiale</a>
+<ul>
+<li><a href="#org7baf32e">Classe P</a></li>
+</ul>
+</li>
+<li><a href="#org21c8a80">Tipologie di problemi</a>
+<ul>
+<li><a href="#orgdfaf3bc">Ricerca</a></li>
+<li><a href="#orgeb20082">Ottimizzazione</a></li>
+<li><a href="#orgf5c6028">Decisione</a></li>
+<li><a href="#org88b6177">Ottimizzazione vs Decisione</a></li>
+<li><a href="#org586167f">Problemi di decisioni e classi di complessità</a></li>
+<li><a href="#org8477619">Relazioni Spazio/Tempo</a></li>
+<li><a href="#org5cc7af2">Altra relazione Spazio/Tempo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org865f771"><span class="todo TODO">TODO</span> N lezioni in mezzo, forse 3?</a></li>
+<li><a href="#org15aa0d8">Lezione dopo</a></li>
+<li><a href="#org18b222b">Note random</a></li>
+<li><a href="#org23d9d1e">Note esercizio</a>
+<ul>
+<li><a href="#org5bcecff">Esercizio delle baite e i ladri</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgac5493e" class="outline-2">
-<h2 id="orgac5493e"><a href="ordinamento.html#ID-b3612a70-1431-4665-9189-87a36fe5ab15">Ordinamento</a></h2>
-</div>
-<div id="outline-container-orgddb46b1" class="outline-2">
-<h2 id="orgddb46b1">Alberi</h2>
-</div>
-<div id="outline-container-org9d4fd8b" class="outline-2">
-<h2 id="org9d4fd8b">Heap e code con priorità</h2>
-</div>
-<div id="outline-container-orge78101e" class="outline-2">
-<h2 id="orge78101e">Analisi ammortizzata</h2>
-</div>
-<div id="outline-container-orgac4ade6" class="outline-2">
-<h2 id="orgac4ade6">Union-Find</h2>
-</div>
-<div id="outline-container-org178c95a" class="outline-2">
-<h2 id="org178c95a">Grafi</h2>
-</div>
-<div id="outline-container-orgc905642" class="outline-2">
-<h2 id="orgc905642">Alberi ricoprenti minimi</h2>
-<div class="outline-text-2" id="text-orgc905642">
-<p>
-Strategie greedy differenti
-</p>
-<ul class="org-ul">
-<li>Kruskal
-<ul class="org-ul">
-<li>Soluzione parziale: foresta di alberi con insieme di vertici V</li>
-<li>Inizialmente: tutti i vertici, nessun arco</li>
-</ul></li>
-<li>Prim</li>
-</ul>
-</div>
-
-<div id="outline-container-org35c2729" class="outline-3">
-<h3 id="org35c2729"><a href="kruskal.html#ID-ae91152d-739d-45f7-8db0-24ca2706ae92">Kruskal</a></h3>
-</div>
-<div id="outline-container-orgfe8d082" class="outline-3">
-<h3 id="orgfe8d082"><span class="todo TODO">TODO</span> Aggiungere lezione precedente</h3>
-</div>
-<div id="outline-container-orgafc467a" class="outline-3">
-<h3 id="orgafc467a"><a href="algoritmodiprim.html#ID-8efdf95f-db48-4ddd-8446-ba66233df723">AlgoritmoDiPrim</a></h3>
-<div class="outline-text-3" id="text-orgafc467a">
+<div id="outline-container-orgf06eb99" class="outline-2">
+<h2 id="orgf06eb99"><a href="ordinamento.html#ID-b3612a70-1431-4665-9189-87a36fe5ab15">Ordinamento</a></h2>
+<div class="outline-text-2" id="text-orgf06eb99">
 </div>
 </div>
+<div id="outline-container-org831784d" class="outline-2">
+<h2 id="org831784d">Heap e code con priorità</h2>
 </div>
-
-<div id="outline-container-orga490adf" class="outline-2">
-<h2 id="orga490adf">Programmazione dinamica</h2>
-<div class="outline-text-2" id="text-orga490adf">
+<div id="outline-container-org7bf3a72" class="outline-2">
+<h2 id="org7bf3a72">Analisi ammortizzata</h2>
+</div>
+<div id="outline-container-org250370d" class="outline-2">
+<h2 id="org250370d">Union-Find</h2>
+</div>
+<div id="outline-container-org3532643" class="outline-2">
+<h2 id="org3532643">Grafi</h2>
+</div>
+<div id="outline-container-orgedbc764" class="outline-2">
+<h2 id="orgedbc764"><a href="alberi_ricoprenti_minimi.html#ID-94806abe-b1c8-4dab-9164-40a8c53db1a2">Alberi ricoprenti minimi</a></h2>
+</div>
+<div id="outline-container-orgad0eedd" class="outline-2">
+<h2 id="orgad0eedd">Programmazione dinamica</h2>
+<div class="outline-text-2" id="text-orgad0eedd">
 <p>
 In alcuni casi, il problema viene scomposto in sottoproblemi più piccoli che ritornano più volte. In certi casi, il calcolo di tali sottoproblemi minori porta ad un aumento disastroso del tempo, alle volte esponenziale.
 Un esempio è il calcolo dei numeri di Fibonacci. Usando la definizione base avrebbe tempo esponenziale, perchè richiede di calcolare molteplici volte lo stesso valore.
@@ -140,9 +167,9 @@ Salvando invece tutti i valori in una tabella, o almeno gli ultimi 2 valori, l'a
 </p>
 </div>
 
-<div id="outline-container-orgf1c06b5" class="outline-3">
-<h3 id="orgf1c06b5">Distanza fra stringhe</h3>
-<div class="outline-text-3" id="text-orgf1c06b5">
+<div id="outline-container-org9624d0a" class="outline-3">
+<h3 id="org9624d0a">Distanza fra stringhe</h3>
+<div class="outline-text-3" id="text-org9624d0a">
 <p>
 Siano ammesse soltanto le tre operazioni di sostituzione, inserimento e cancellazione: allora la distanza di Levenstein (edit distance) è il numero di operazioni necessarie per passare da una stringa all'altra, operando alla fine dell'una per arrivare all'altra.
 Allora si dimostra che se una delle due è vuota, allora il numero di operazioni è uguale alla lunghezza di quella non vuota, perchè serve effettuare tante cancellazioni/inserimenti quante sono le lettere di quella non vuota.
@@ -154,9 +181,9 @@ Il motivo per cui si effettuano queste operazioni è che le tre caselle rapprese
 </div>
 </div>
 
-<div id="outline-container-org791a6d8" class="outline-3">
-<h3 id="org791a6d8">diff con divide et impera</h3>
-<div class="outline-text-3" id="text-org791a6d8">
+<div id="outline-container-orgc83b963" class="outline-3">
+<h3 id="orgc83b963">diff con divide et impera</h3>
+<div class="outline-text-3" id="text-orgc83b963">
 <p>
 Nella tecniva divide-et-impera, si sottodivide il problema in sottoproblemi in direzione top-down, risolvendo i sottoproblemi ridotti che giungono dopo la riduzione.
 Nella programmazione dinamica, al contrario, si usa un approccio bottom-up in cui i sottoproblemi minimi sono subito risolti e salvati, in modo che i problemi più grandi possono sfruttare le soluzioni già calcolate.
@@ -165,9 +192,9 @@ Si chiama programmazione dinamica (molto vecchia) perchè riempire le tabelle ve
 </p>
 </div>
 
-<div id="outline-container-org9b091e8" class="outline-4">
-<h4 id="org9b091e8">Principio di ottimalità</h4>
-<div class="outline-text-4" id="text-org9b091e8">
+<div id="outline-container-orge6850f8" class="outline-4">
+<h4 id="orge6850f8">Principio di ottimalità</h4>
+<div class="outline-text-4" id="text-orge6850f8">
 <p>
 Stiamo risolvendo un problema di ottimizzazione.
 Nel caso della distanza si applica il principio che la soluzione ottima del problema deriva dalle soluzioni ottime dei problemi più piccoli.
@@ -176,9 +203,9 @@ Nel caso della distanza si applica il principio che la soluzione ottima del prob
 </div>
 </div>
 </div>
-<div id="outline-container-org2607ddf" class="outline-2">
-<h2 id="org2607ddf">Cammini minimi</h2>
-<div class="outline-text-2" id="text-org2607ddf">
+<div id="outline-container-org79c915b" class="outline-2">
+<h2 id="org79c915b">Cammini minimi</h2>
+<div class="outline-text-2" id="text-org79c915b">
 <p>
 Definiamo il cammino minimo un cammino il cui peso è minore o uguale di ogni altro cammino.
 Le proprietà dei cammini minimi sono le seguenti:
@@ -188,17 +215,17 @@ Le proprietà dei cammini minimi sono le seguenti:
 <li>se ci sono pesi negativi ma non cicli di peso negativo allora dato un cammino da x a y, esiste sempre un cammino minimo da x a y che è di peso positivo.</li>
 </ul>
 </div>
-<div id="outline-container-orgc584eea" class="outline-3">
-<h3 id="orgc584eea">Rappresentazioni</h3>
-<div class="outline-text-3" id="text-orgc584eea">
+<div id="outline-container-orgbaf89fc" class="outline-3">
+<h3 id="orgbaf89fc">Rappresentazioni</h3>
+<div class="outline-text-3" id="text-orgbaf89fc">
 <ul class="org-ul">
 <li>matrice dei pesi: utile per fare manipolazioni algebriche</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb2ccc7b" class="outline-3">
-<h3 id="orgb2ccc7b">Problemi sui cammini minimi</h3>
-<div class="outline-text-3" id="text-orgb2ccc7b">
+<div id="outline-container-orgf38b23a" class="outline-3">
+<h3 id="orgf38b23a">Problemi sui cammini minimi</h3>
+<div class="outline-text-3" id="text-orgf38b23a">
 <ul class="org-ul">
 <li>trovare il cammino minimo fra due vertici</li>
 <li>trovare i cammini minimi fra un vertice s e gli altri</li>
@@ -211,9 +238,9 @@ Ovvero, aggiunte una riga ed una colonna
 </p>
 </div>
 </div>
-<div id="outline-container-orgf232acb" class="outline-3">
-<h3 id="orgf232acb">Floyd-Marshall</h3>
-<div class="outline-text-3" id="text-orgf232acb">
+<div id="outline-container-org8bee181" class="outline-3">
+<h3 id="org8bee181">Floyd-Marshall</h3>
+<div class="outline-text-3" id="text-org8bee181">
 <p>
 Determinare \(d_{ij}\) per ogni elemento, ovvero costruire la tabella.
 Scompongo il problema nel considerare nei passi intermendi soltanto gli elementi fino ad un certo indice, indicato con \(k\) in superscript, rilassando man mano \(k\).
@@ -228,7 +255,7 @@ Quando \(k=0\), allora
 <p>
 Nel passo generale, mi trovo a conoscere la strada fra due elementi e la condizione viene rilassata. Così, posso valutare se passare attraverso i nuovi vertici o meno.
 </p>
-<pre class="example" id="org5bddd41">
+<pre class="example" id="orgba9df13">
 ALGORITMO FloydMarshall(Grafo G) -&gt; Matrice
     Siano D0[1..n, 1..n],...,D0[1..n,1..n] matrici
     # gestisco il caso di k=0
@@ -251,7 +278,7 @@ Si può ridurre l'utilizzo di memoria, utilizzando una sola matrice, considerand
 Ovve
 </p>
 
-<pre class="example" id="orgeed9296">
+<pre class="example" id="org795f471">
 ALGORITMO FloydMarshall(Grafo G) -&gt; Matrice
     CAMBIO
     Abbiamo una sola matrice
@@ -285,9 +312,396 @@ Notare che l'algoritmo di floyd marshall prevede che non ci siano cicli negativi
 </div>
 </div>
 </div>
+<div id="outline-container-orgaea6bc3" class="outline-2">
+<h2 id="orgaea6bc3">Bellman-Ford</h2>
+<div class="outline-text-2" id="text-orgaea6bc3">
+<p>
+Input: un grafo \(G=(V,E)\), \(s\) il vertice di partenza e \(\omega\) un arco.
+Tengo poi \(d(v)\), vettore delle distanze, che contiene la distanza fra \(s\) e \(v\), minima parziale o alla fine quella corretta.
+Inizialmente il vettore è \(0\) per l'arco iniziale e \(\infty\) per ogni altro.
+Ad ogni passo aggiungo un arco e considero che se il cammino verso un vertice v è più breve del valore che è già scritto in v, lo diminuisco.
+Ad ogni passo, poi, faccio questa operazione su ogni arco anche quelli infiniti.
+Dopo \(n-1\) passi avrò in ogni elemento del vettore delle distanze la lunghezza del cammino minimo dal vertice iniziale alla fine.
+Mi trova i cammini minimi semlici.
+</p>
+<pre class="example" id="orgf08b6c7">
+Sia d[v] un vettore con indici in V
+d[s]
+</pre>
+</div>
+<div id="outline-container-org87fa9cd" class="outline-3">
+<h3 id="org87fa9cd">In Marshall</h3>
+<div class="outline-text-3" id="text-org87fa9cd">
+<p>
+Prendevamo i e j e provavamo a passare per k. Mettevo insieme due cammini, da i a k e da k a j e mi chiedevo se fosse meglio.
+Adesso prendiamo un cammino già esistente ed un solo arco, ad ogni passo e viene fatto per tutti i vertici e tutti gli archi.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd706779" class="outline-2">
+<h2 id="orgd706779">Dijkstra</h2>
+<div class="outline-text-2" id="text-orgd706779">
+<p>
+Opera in modo greedy.
+Ogni volta scegliamo tra tutti i vertici con distanza provvisoria, scegliamo il vertice con distanza minima e la faccio diventare definitiva.
+Diciamo che tale vertice sia \(u\). Guardo tutti i suoi vertici adiacenti. Uno di essi è \(v\). Se la distanza fra \(u\) e \(v\) è minore di quella provvisoria, la si aggiorna.
+</p>
+<pre class="example" id="orgcfabb77">
+ALGORITMO dijkstra
+    istanzio d[v] e lo riempio con 0 sul vertice di partenza e infinito per gli altri
+    C &lt;- V (cosa?)
+    WHILE C!=vuoto DO
+        u &lt;- elemento don D[V] minima
+        C &lt;- C senza u
+        FOR EACH (u,v)\inE DO
+            se la distanza con u e la distanza fra u e v è minore di quella scritta su dv,
+            allora la distanza dv diventa quella verso u più la distanza fra u e v
+</pre>
+<p>
+La differenza con bellman ford è che il for each interno era su tutti gli archi del grafo, ma in questo è su tutti gli archi che escono da U
+</p>
+</div>
+<div id="outline-container-org5819814" class="outline-3">
+<h3 id="org5819814">Analisi</h3>
+<div class="outline-text-3" id="text-org5819814">
+</div>
+<div id="outline-container-orgb1eea95" class="outline-4">
+<h4 id="orgb1eea95">Rappresentazione</h4>
+<div class="outline-text-4" id="text-orgb1eea95">
+<p>
+Innanzitutto, come ci conviene rappresentare il grafo. Lista di adiacenza (o incidenza).
+La condizione del while dipende da C, che contiene i vertici, quindi sono \(n\) iterazioni.
+La ricerca del minimo per trovare u anche costa \(n\).
+Queste due cose ci porterebbero ad avere già \(n^{2}\).
+Potrei tenerlo ordinato, ma ad ogni aggiornamento dovrei riordinarlo, che è inefficiente.
+Usiamo quindi una coda con priorità, molto simile a quella dell'Algoritmo di Prim(dove però usavo la distanza dell'arco sulla frontiera).
+In questa coda ci sono i vertici candidati e la priorità sarà la distanza provvisoria.
+Quindi rendo C una coda con priorità e ci metto tutti i vertici all'inizio.
+Quando faccio il passo, tiro fuori l'elemento minimo dalla coda e poi una volta stabilita la nuova distanza, aggiorno il valore nella coda
+</p>
+</div>
+</div>
+<div id="outline-container-orgc6f9043" class="outline-4">
+<h4 id="orgc6f9043">Tempo</h4>
+<div class="outline-text-4" id="text-orgc6f9043">
+<p>
+L'inizializzazione mi costa n
+Il riempiemnto di C mi costa n
+Ora passiamo al while: esso va eseguito \(n\) volte, perchè la coda contiene tutti i vertici e ne preleviamo uno ogni volta.
+Le operazioni all'interno sono:
+</p>
+<ul class="org-ul">
+<li>deleteMin(): sappiamo che costa O(log n)</li>
+<li>for Each, la cui lunghezza singola è variabile, ma massimo O(m)
+<ul class="org-ul">
+<li>dentro il for each ci sono varie operazioni costanti, ma anche una changekey, che costa O(log n), perchè è una coda di priorita sui vertici.</li>
+</ul></li>
+</ul>
+<p>
+Dato che il while è eseguito n volte, il delete min ha un costo complessivo di nlogn,
+per il for each notiamo che le lunghezze si escludono l'un l'altra, quindi eseguita per ogni arco è complessivamente \(m\) e quindi il changekey è mlogn
+Arriviamo a \(O(n\log n) + O(m\log n)\). Assumiamo che il grafo sia connesso (perchè voglio cercare i cammini minimi verso ogni arco). Allora devono esserci almeno \(n-1\) archi. Dato che \(m\) è sicuramente maggiore di \(n\), nella formula precedente prevale \(O(m\log n)\).
+Notare che con heap di fibonacci esce fuori nlog n + m, che quando m aumenta tanto è un miglioramento significativo
+</p>
+</div>
+</div>
+<div id="outline-container-orge13a794" class="outline-4">
+<h4 id="orge13a794">Come ricavare i cammini minimi</h4>
+<div class="outline-text-4" id="text-orge13a794">
+<p>
+Il cambiamento è semplicemente che ogni volta che stabilisco che la strada più breve verso v passa per u, salvo che il predecessore di v è u. Alla fine mi basta risalire da un qualunque vertice a quello di partenza.
+Risalendo, mi esce fuori un albero che è l'albero dei cammini minimi, ovvero contiene tutti i vertici del grafo con le minori distanze dal vertice.
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="org3afa05e"></a>Differenze con albero ricoprente minimo<br />
+<div class="outline-text-5" id="text-org3afa05e">
+<p>
+Il problema dell'albero ricoprente minimo riguarda soltanto i grafi non orientati.
+La questione è che nell'albero ricoprente minimo io voglio minimizzare i problemi degli archi in generale.
+Nel problema di dijkstra, io voglio minimizzare i singoli cammini.
+Problemi tipici da esame:
+</p>
+<ul class="org-ul">
+<li>Immaginiamo che il grafo rappresenti una mappa stradale e sotto alcune strade bisogna collocare la fibra ottica, e bisogna raggiungere i vari vertici. Siccome la fibra ottica costa tanto, bisogna minimizzare in totale la lunghezza della fibra. Voglio coprire ogni vertice e voglio farlo con la quantità minore di fibra. ALBERO RICOPRENTE MINIMO</li>
+<li>Posta pneumatica: un sistema di tubi in cui si mette un messaggio. Serve un tubo apposta che colleghi ogni singola sorgente con un destinatario. Immaginiamo di avere una centrale. Lì bisogna minimizzare la lunghezza del singolo tubo che collega la centrale con ogni stazione. CAMMINI MINIMI.</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-org18f487c" class="outline-4">
+<h4 id="org18f487c">Cosa succede se un peso è negativo?</h4>
+<div class="outline-text-4" id="text-org18f487c">
+<p>
+Non lavora correttamente per pesi negativi. Perchè se avessi pesi negativi, dovrei mettere in discussione le scelte, ma questo non è possibile con la strategia greedy.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf34094f" class="outline-3">
+<h3 id="orgf34094f"><span class="todo TODO">TODO</span> Riflettere sul caso in cui il secondo vertice sia a distanza uno, ma quelli successivi siano a distanza 1000, , quindi A&#x2013;1&#x2013;B&#x2013;1000&#x2013;C, ma anche A&#x2013;2&#x2013;D&#x2013;2&#x2013;C.</h3>
+</div>
+</div>
+<div id="outline-container-org6c5c29f" class="outline-2">
+<h2 id="org6c5c29f">Ricapitolando sui grafi</h2>
+<div class="outline-text-2" id="text-org6c5c29f">
+</div>
+<div id="outline-container-org76431ea" class="outline-3">
+<h3 id="org76431ea">Cammino minimo tra ogni coppia di vertici:</h3>
+<div class="outline-text-3" id="text-org76431ea">
+<p>
+floyd marshall, n cubo, anche archi di peso negativo, ma no cicli
+</p>
+</div>
+</div>
+<div id="outline-container-orgba2b846" class="outline-3">
+<h3 id="orgba2b846">Cammini minimi da un vertice ad ogni altro</h3>
+<div class="outline-text-3" id="text-orgba2b846">
+<p>
+dijkstra mlgn, no archi negativi,,,,bellman ford, m * n, anche archi di peso negatico, ma no cicli
+</p>
+</div>
+</div>
+<div id="outline-container-org9c51942" class="outline-3">
+<h3 id="org9c51942">Cammino minimo tra due vertici</h3>
+<div class="outline-text-3" id="text-org9c51942">
+<p>
+non c'è un algoritmo specifico. comunque mi basta usare quelli fino ad ogni altro fino a trovare quello che mi interessa
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org5d5b091" class="outline-2">
+<h2 id="org5d5b091">Strutture per salvare dati</h2>
+<div class="outline-text-2" id="text-org5d5b091">
+<p>
+Abbiamo già visto altre strutture per salvare dati: in un array ordinato, trovare è facile ma inserire no.
+Nelle liste l'inserimento è facile ma la ricerca è sempre difficile.
+Vedremo adesso delle strutture ad albero per la ricerca.
+</p>
+</div>
+<div id="outline-container-org1578d0a" class="outline-3">
+<h3 id="org1578d0a">Alberi di ricerca</h3>
+<div class="outline-text-3" id="text-org1578d0a">
+</div>
+<div id="outline-container-org31f4f0f" class="outline-4">
+<h4 id="org31f4f0f">Alberi di ricerca binari</h4>
+<div class="outline-text-4" id="text-org31f4f0f">
+<p>
+Un albero binario di ricerca è un albero binario in cui per ogni nodo \(n\), tutte le chiavi contenute nel sottoalbero sinistro sono minori di \(n\) e tutte quelle nell'albero destro sono maggiori.
+Per implementarli, uso puntatori ai due sottoalberi.
+La cosa interessante è che effettuando una visita simmetrica su tale albero, trovo tutte le chiavi in ordine crescente.
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="org0c3ab15"></a>Trovare il nodo con chiave max<br />
+<div class="outline-text-5" id="text-org0c3ab15">
+<p>
+Mi basta scendere a destra fino ad arrivare al nodo senza figlio destro, o restituire null se l'albero è nuovo.
+</p>
+</div>
+</li>
+<li><a id="org7b10925"></a>Ricerca ricorsiva<br />
+<div class="outline-text-5" id="text-org7b10925">
+<p>
+Parto dalla definizione ricorsiva dell'albero.
+In base al valore della radice proseguo a sinistra o a destra.
+Nella ricerca ricorsiva ho delle chiamate in coda. Posso ottimizzarla e farla iterativa.
+</p>
+</div>
+</li>
+<li><a id="org56e1fdd"></a>Inserimento<br />
+<div class="outline-text-5" id="text-org56e1fdd">
+<p>
+Seguo il percorso della ricerca e quando trovo la chiave minore vi inserisco l'elemento.
+</p>
+
+<p>
+Nell'inserimento iterativo, ho due puntatori: quello che cerca ed iln segugio. Una volta che quello che cerca ha trovato la posizione, avrà perso l'informazione.
+</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd4b8d44" class="outline-2">
+<h2 id="orgd4b8d44"><span class="todo TODO">TODO</span> FILL WITH SOME LESSONS</h2>
+</div>
+<div id="outline-container-orgf15ba2d" class="outline-2">
+<h2 id="orgf15ba2d">Lez n</h2>
+<div class="outline-text-2" id="text-orgf15ba2d">
+<p>
+Se abbiamo un problema risolvibile da un algoritmo, è utile considerare le risorse necessarie per svolgere l'algoritmo e quelle per risolvere il problema in generale.
+</p>
+</div>
+<div id="outline-container-org33771d6" class="outline-3">
+<h3 id="org33771d6">Risorse necessarie e sufficienti</h3>
+<div class="outline-text-3" id="text-org33771d6">
+<p>
+Data una risorsa computazionale (tempo, spazio), si dice che questa sia sufficiente quando esiste un algoritmo che risolve il problema pi utilizzando su ogni input di lunghezza n al più f(n) risorse r(per n maggiori di 0).
+Si dice inferiore se per qualunque algoritmo esiste un input per cui servono almeno g(n) risorse.
+f e g sono funzioni che dato in input naturale restituiscono il consumo di quella risorsa, naturale.
+</p>
+</div>
+</div>
+<div id="outline-container-orgdf14e3c" class="outline-3">
+<h3 id="orgdf14e3c">Tempo polinomiale</h3>
+<div class="outline-text-3" id="text-orgdf14e3c">
+<p>
+Una classe di complessità contiene problemi che possono essere risolti utilizzando la stessa quantità di una risorsa.
+Vogliamo introdurre una formalità per collegare i problemi, potenzialmente diversi.
+Abbiamo un problema \(\Pi \subseteq I\times S\), dove I è l'universo delle istanze(input) e s l'universo delle soluzioni.
+Allora &#x2026; FILL WITH FORMALIZATION
+Esempio Albero Ricoprente:
+I = grafi non orientati
+S = alaberi
+(x,s)&isin; pi sse s è un albero ricoprente per il grafo x
+</p>
+</div>
+<div id="outline-container-org7baf32e" class="outline-4">
+<h4 id="org7baf32e">Classe P</h4>
+<div class="outline-text-4" id="text-org7baf32e">
+<p>
+Classe dei problemi risolvibili in tempo polinomiale rispetto alla dimensione dell input, esempi sono l'ordinamento, l'albero ricoprente minimo o la moltiplicazione di matrici
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org21c8a80" class="outline-3">
+<h3 id="org21c8a80">Tipologie di problemi</h3>
+<div class="outline-text-3" id="text-org21c8a80">
+</div>
+<div id="outline-container-orgdfaf3bc" class="outline-4">
+<h4 id="orgdfaf3bc">Ricerca</h4>
+<div class="outline-text-4" id="text-orgdfaf3bc">
+<p>
+Dato l'i, voglio trovare l's tale per cui x,s in P
+</p>
+</div>
+</div>
+<div id="outline-container-orgeb20082" class="outline-4">
+<h4 id="orgeb20082">Ottimizzazione</h4>
+<div class="outline-text-4" id="text-orgeb20082">
+<p>
+Dato l'i, trovare s tale per cui x,s soddisfa un certo criterio di ottimalita, ad esempio massimo minimo
+</p>
+</div>
+</div>
+<div id="outline-container-orgf5c6028" class="outline-4">
+<h4 id="orgf5c6028">Decisione</h4>
+<div class="outline-text-4" id="text-orgf5c6028">
+<p>
+Risposta binaria
+</p>
+</div>
+</div>
+<div id="outline-container-org88b6177" class="outline-4">
+<h4 id="org88b6177">Ottimizzazione vs Decisione</h4>
+<div class="outline-text-4" id="text-org88b6177">
+<p>
+Un problema di ottimizzazione è almeno difficile come quello di decisione e di solito è vero anche il contrario. 
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="org42068cb"></a>Clique<br />
+<div class="outline-text-5" id="text-org42068cb">
+<p>
+Immaginiamo l'ottimizzazione in cui dato un grafo non orientato si vuole trovare un sottofrafo completo con il max numero di vertici
+Immaginiamo poi il problema di decisione in cui dato un grafo ed un intero, si vuole capire se il grafo contiene una clique di k vertici.
+La questione è che se riesco a trovare la soluzione al primo, trovo anche quella del secondo.
+Infatti, se il grafo contiene una clique di x &gt; k vertici, la risposta al secondo problema è sicuramente positiva.
+</p>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-org586167f" class="outline-4">
+<h4 id="org586167f">Problemi di decisioni e classi di complessità</h4>
+<div class="outline-text-4" id="text-org586167f">
+<p>
+TIME(t(n)) SPACE(t(n)) sono le classi di problemi risolvibili in un tempo o spazio uguale alle funzioni.
+La classe P di fatto è definita solo sui problemi di decisione risolvibili in tempo polinomiale
+</p>
+</div>
+</div>
+<div id="outline-container-org8477619" class="outline-4">
+<h4 id="org8477619">Relazioni Spazio/Tempo</h4>
+<div class="outline-text-4" id="text-org8477619">
+<p>
+In tempo T quanto spazio riusciamo a utilizzare.
+Si consideri che in istruzioni macchina si visitano al massimo k celle (k fissato), quindi lo spazio è minore di k t e se t è polinomiale, lo sarà anche lo spazio.
+Quindi tutti i problemi che risolvo in tempo polinomiale sono risolti anche in spazio polinomiale
+</p>
+</div>
+</div>
+<div id="outline-container-org5cc7af2" class="outline-4">
+<h4 id="org5cc7af2">Altra relazione Spazio/Tempo</h4>
+<div class="outline-text-4" id="text-org5cc7af2">
+<p>
+Consideriamo innanzitutto che i problemi che stiamo considerando sono risolti dall'algoritmo in questione e quindi terminano sempre.
+Immaginiamo che ci sia un while con 3 variabili booleane come condizione e che vengono manipolate all'interno del while (senza influenze esterne), allora il numero massimo di iterazioni che siamo sicuri non costituiscano loop sono 8, ovvero \(2^{3\)}$, dopodichè è sicuramente un loop.
+Consideriamo di avere dello spazio, con s celle da k bit, quindi sk bit in totale.
+Il numero di possibili configurazioni è \(2^{sk}\).
+Un programma è in un loop infinito quando esegue di nuovo una stessa istruzione.
+Se il numero di passi effettuati è \(p\), allora dopo aver effettuato \(t > p\cdot 2^{sk}\), siamo entrati in un loop infinito.
+Se il programma termina, il numero di passi dev'essere necessariamente inferiore di questo limite.
+Quindi, se lo spazio è polinomiale, il tempo è al massimo esponenziale.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org865f771" class="outline-2">
+<h2 id="org865f771"><span class="todo TODO">TODO</span> N lezioni in mezzo, forse 3?</h2>
+</div>
+<div id="outline-container-org15aa0d8" class="outline-2">
+<h2 id="org15aa0d8">Lezione dopo</h2>
+<div class="outline-text-2" id="text-org15aa0d8">
+<p>
+Vengono introdotte delle proprietà di transitività sui problemi polinomiali (guardare!)
+Bisogna guardare bene la lezione perchè non ci ho capito un cazzo.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org18b222b" class="outline-2">
+<h2 id="org18b222b">Note random</h2>
+<div class="outline-text-2" id="text-org18b222b">
+<p>
+Nell'esercizio sul grafo, è importante scegliere l'algoritmo in modo oculato e descriverlo bene a parole, scrivendo lo pseudocodice ad alto livello in modo descrittivo e senza livello alle strutture sottostanti.
+</p>
+
+<p>
+Stare attenti a tutte le condizioni da soddisfare o output da risolvere, che di solito sono un pelo differenti dall'algoritmo originale.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org23d9d1e" class="outline-2">
+<h2 id="org23d9d1e">Note esercizio</h2>
+<div class="outline-text-2" id="text-org23d9d1e">
+<p>
+Quando si analizzano dei cicli, è importante stabilire se le operazioni interne siano costanti e in particolare specificare di usare il criterio di costo uniforme.
+</p>
+</div>
+
+<div id="outline-container-org5bcecff" class="outline-3">
+<h3 id="org5bcecff">Esercizio delle baite e i ladri</h3>
+<div class="outline-text-3" id="text-org5bcecff">
+<p>
+Usiamo floyd marshall un po' modificato perchè non serve costruire la matrice iniziale, ma viene fornita in input.
+Per l'ordinamento, indichiamo semplicemente di costruire un vettore di record e ordinarlo rispetto al campo tempo utilizzando un algoritmo di nostra scelta. L'analisi del tempo è immediata perchè la costruzione del vettore costa n<sup>2</sup> e l'ordinamento costa n<sup>2</sup> log n<sup>2</sup>. Attenzione a questa ultima cosa.
+Guardare 16 settembre 2022 per esame su programmazione dinamica
+</p>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-11-21 Thu 17:02</p>
+<p class="date">Created: 2024-12-18 Wed 14:55</p>
 </div>
 </body>
 </html>

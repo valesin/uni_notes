@@ -3,44 +3,41 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-20 Wed 19:49 -->
+<!-- 2024-12-18 Wed 14:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Grafi</title>
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
 <script>
-  window.MathJax = {
-    tex: {
-      ams: {
-        multlineWidth: '85%'
+    window.MathJax = {
+      tex: {
+        ams: { multlineWidth: '85%' },
+        {packages: {'[+]': ['mathtools']}},
+        tags: 'ams',
+        tagSide: 'right',
+        tagIndent: '.8em'
       },
-      tags: 'ams',
-      tagSide: 'right',
-      tagIndent: '.8em'
-    },
-    chtml: {
-      scale: 1.0,
-      displayAlign: 'center',
-      displayIndent: '0em'
-    },
-    svg: {
-      scale: 1.0,
-      displayAlign: 'center',
-      displayIndent: '0em'
-    },
-    output: {
-      font: 'mathjax-modern',
-      displayOverflow: 'overflow'
-    }
-  };
-</script>
-
-<script
-  id="MathJax-script"
-  async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
+      chtml: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      svg: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      output: {
+        font: 'mathjax-modern',
+        displayOverflow: 'scale'
+      },
+      loader: {
+        load: ['[tex]/mathtools']
+      },
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <div id="content" class="content">
@@ -49,37 +46,75 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org92e36db">Definizioni</a></li>
-<li><a href="#org12b9d9c">Rappresentazioni</a>
+<li><a href="#orgd62ac90">Definizioni</a></li>
+<li><a href="#org843706e">Rappresentazioni</a>
 <ul>
-<li><a href="#org7f557eb">Liste</a>
+<li><a href="#org7ec6c96">Liste</a>
 <ul>
-<li><a href="#org45b56cf">Lista di archi</a></li>
-<li><a href="#orgb16bf07">Lista di adiacenza</a></li>
-<li><a href="#org8b2314a">Lista di incidenza</a></li>
+<li><a href="#org7583fa9">Lista di archi</a></li>
+<li><a href="#orgc237d13">Lista di adiacenza</a></li>
+<li><a href="#org9870353">Lista di incidenza</a></li>
 </ul>
 </li>
-<li><a href="#org6bf3b74">Matrici</a>
+<li><a href="#orgdad3a65">Matrici</a>
 <ul>
-<li><a href="#org2c27b72">Matrice di adiacenza</a></li>
-<li><a href="#orgdb9f7c7">Matrice di incidenza</a></li>
+<li><a href="#orgb578300">Matrice di adiacenza</a></li>
+<li><a href="#org7411b8d">Matrice di incidenza</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org1ee4046">Attraversamento di grafi</a>
+<li><a href="#orgae3ff18">Attraversamento di grafi</a>
 <ul>
-<li><a href="#org0587bd1">Visita in ampiezza (breadth-first search)</a></li>
-<li><a href="#orgbd0b48f">Visita in profondità (depth-first search)</a></li>
+<li><a href="#orgdde9531">Visita in ampiezza (breadth-first search)</a></li>
+<li><a href="#org149983f">Visita in profondità (depth-first search)</a></li>
+</ul>
+</li>
+<li><a href="#org28948c8">Alberi ricoprenti minimi</a>
+<ul>
+<li><a href="#orgc87b158">Kruskal</a></li>
+<li><a href="#org73c48e3"><span class="todo TODO">TODO</span> Aggiungere lezione precedente</a></li>
+<li><a href="#org0c38a2f">AlgoritmoDiPrim</a></li>
+</ul>
+</li>
+<li><a href="#org70115c3">Cammini minimi</a>
+<ul>
+<li><a href="#org30d66c8">Rappresentazioni</a></li>
+<li><a href="#orgc210726">Problemi sui cammini minimi</a></li>
+<li><a href="#org6793da5">Floyd-Marshall</a></li>
+</ul>
+</li>
+<li><a href="#org54aab2a">Bellman-Ford</a>
+<ul>
+<li><a href="#org8e774c4">In Marshall</a></li>
+</ul>
+</li>
+<li><a href="#org6ad7ab6">Dijkstra</a>
+<ul>
+<li><a href="#org650fa35">Analisi</a>
+<ul>
+<li><a href="#orgf7c6329">Rappresentazione</a></li>
+<li><a href="#orge80e04d">Tempo</a></li>
+<li><a href="#org080e18f">Come ricavare i cammini minimi</a></li>
+<li><a href="#org57f36cf">Cosa succede se un peso è negativo?</a></li>
+</ul>
+</li>
+<li><a href="#org745c4f6"><span class="todo TODO">TODO</span> Riflettere sul caso in cui il secondo vertice sia a distanza uno, ma quelli successivi siano a distanza 1000, , quindi A&#x2013;1&#x2013;B&#x2013;1000&#x2013;C, ma anche A&#x2013;2&#x2013;D&#x2013;2&#x2013;C.</a></li>
+</ul>
+</li>
+<li><a href="#orgf75cfdd">Ricapitolando sui grafi</a>
+<ul>
+<li><a href="#org3add255">Cammino minimo tra ogni coppia di vertici:</a></li>
+<li><a href="#org8e9a34e">Cammini minimi da un vertice ad ogni altro</a></li>
+<li><a href="#org2b9521f">Cammino minimo tra due vertici</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-
-<div id="outline-container-org92e36db" class="outline-2">
-<h2 id="org92e36db">Definizioni</h2>
-<div class="outline-text-2" id="text-org92e36db">
+<div id="outline-container-orgd62ac90" class="outline-2">
+<h2 id="orgd62ac90">Definizioni</h2>
+<div class="outline-text-2" id="text-orgd62ac90">
 <p>
 \(\newtheorem{theorem}{Teorema}\)
 Un grafo \(G=(V,E)\) modella la "connessione" o "relazione" fra coppie di oggetti e consiste in:
@@ -148,21 +183,21 @@ $\exists$ un circuito euleriano *se e solo se* $\forall v,\;\delta(v)$ è pari.
 </div>
 </div>
 
-<div id="outline-container-org12b9d9c" class="outline-2">
-<h2 id="org12b9d9c">Rappresentazioni</h2>
-<div class="outline-text-2" id="text-org12b9d9c">
+<div id="outline-container-org843706e" class="outline-2">
+<h2 id="org843706e">Rappresentazioni</h2>
+<div class="outline-text-2" id="text-org843706e">
 <p>
 Esistono vari modi per rappresentare un grafo, che influenzano la struttura e l'efficienza degli algoritmi.
 </p>
 </div>
 
-<div id="outline-container-org7f557eb" class="outline-3">
-<h3 id="org7f557eb">Liste</h3>
-<div class="outline-text-3" id="text-org7f557eb">
+<div id="outline-container-org7ec6c96" class="outline-3">
+<h3 id="org7ec6c96">Liste</h3>
+<div class="outline-text-3" id="text-org7ec6c96">
 </div>
-<div id="outline-container-org45b56cf" class="outline-4">
-<h4 id="org45b56cf">Lista di archi</h4>
-<div class="outline-text-4" id="text-org45b56cf">
+<div id="outline-container-org7583fa9" class="outline-4">
+<h4 id="org7583fa9">Lista di archi</h4>
+<div class="outline-text-4" id="text-org7583fa9">
 <p>
 Rappresento soltanto gli archi, il cui numero varia tra \(0\), nel grafo con solo vertici, a \(n^{2}\) nel grafo in cui ogni vertice è connesso ad ogni altro, compreso sè stesso.
 </p>
@@ -181,11 +216,11 @@ Lo spazio è \(\Theta(m+n)\) e il tempo \(\Theta(m)\)
 </p>
 
 <div class="org-src-container">
-<pre class="src src-go" id="orgc50ff03"><span style="color: #a020f0;">type</span> <span style="color: #228b22;">Arco</span>[T <span style="color: #228b22;">any</span>] <span style="color: #a020f0;">struct</span> {
-        From, To *<span style="color: #228b22;">Vertices</span>[T]
+<pre class="src src-go" id="orgd35f5a1"><span style="color: #a020f0;">type</span> <span style="color: #228b22;">Arco</span>[T <span style="color: #228b22;">any</span>] <span style="color: #a020f0;">struct</span> {
+        From, To *<span style="color: #228b22;">Vertice</span>[T]
 }
 
-<span style="color: #a020f0;">type</span> <span style="color: #228b22;">Vertices</span>[T <span style="color: #228b22;">any</span>] <span style="color: #a020f0;">struct</span> {
+<span style="color: #a020f0;">type</span> <span style="color: #228b22;">Vertice</span>[T <span style="color: #228b22;">any</span>] <span style="color: #a020f0;">struct</span> {
         val <span style="color: #228b22;">T</span>
 }
 
@@ -195,9 +230,9 @@ Lo spazio è \(\Theta(m+n)\) e il tempo \(\Theta(m)\)
 </div>
 </div>
 
-<div id="outline-container-orgb16bf07" class="outline-4">
-<h4 id="orgb16bf07">Lista di adiacenza</h4>
-<div class="outline-text-4" id="text-orgb16bf07">
+<div id="outline-container-orgc237d13" class="outline-4">
+<h4 id="orgc237d13">Lista di adiacenza</h4>
+<div class="outline-text-4" id="text-orgc237d13">
 <p>
 Non viene salvata una lista che contiene gli archi incidenti a qualunque vertice, ma raggruppati per vertice.
 Ogni elemento della lista contiene la lista di tutti i vertici adiacenti ad esso.
@@ -205,27 +240,104 @@ In questo modo, la lista di vertici può essere rappresentata mediante un array 
 In questo modo, lo spazio rimane \(\Theta(m+n)\), ma il tempo è \(\Theta(\max(\delta(m)))\)
 Uno svantaggio che rimane è che in un arco orientato, trovare gli archi entranti richiede di scansionare tutti gli archi.
 </p>
+<div class="org-src-container">
+<pre class="src src-go" id="orgf8887bb">
+<span style="color: #b22222;">// </span><span style="color: #b22222;">this is wrong. The content of the node used to be the same as the name of the vertex. Not true.</span>
+  <span style="color: #a020f0;">type</span> <span style="color: #228b22;">Vertice</span>[T <span style="color: #228b22;">comparable</span>] <span style="color: #a020f0;">struct</span> {
+          adiacenti *<span style="color: #228b22;">mylib.ListaDoppia</span>[Vertice[T]]
+  }
+
+  <span style="color: #a020f0;">type</span> <span style="color: #228b22;">Grafo</span>[T <span style="color: #228b22;">comparable</span>] <span style="color: #a020f0;">struct</span> {
+          vertici <span style="color: #a020f0;">map</span>[<span style="color: #228b22;">string</span>]<span style="color: #228b22;">Vertice</span>[T]
+  }
+
+  <span style="color: #a020f0;">func</span> <span style="color: #0000ff;">nuovoGrafo</span>[T <span style="color: #228b22;">comparable</span>]() *Grafo[T] {
+      <span style="color: #a020f0;">return</span> &amp;Grafo[T]{
+          <span style="color: #008b8b;">vertici</span>: <span style="color: #483d8b;">make</span>(<span style="color: #a020f0;">map</span>[<span style="color: #228b22;">T</span>]<span style="color: #228b22;">Vertice</span>[T]),
+      }
+  }
+
+  <span style="color: #a020f0;">func</span> (<span style="color: #a0522d;">g</span> *<span style="color: #228b22;">Grafo</span>[T]) <span style="color: #0000ff;">aggiungiVertice</span>(<span style="color: #a0522d;">v</span> <span style="color: #228b22;">T</span>) {
+          <span style="color: #a020f0;">if</span> <span style="color: #a0522d;">_</span>, <span style="color: #a0522d;">exists</span> := g.vertici[v]; !exists {
+                  g.vertici[v] = Vertice[T]{
+                          <span style="color: #008b8b;">adiacenti</span>: mylib.ListaDoppia[T].<span style="color: #0000ff;">CreaLista</span>(), 
+                  }
+          }
+  }
+
+  <span style="color: #a020f0;">func</span> (<span style="color: #a0522d;">g</span> *<span style="color: #228b22;">Grafo</span>[T]) <span style="color: #0000ff;">aggiungiArco</span>(<span style="color: #a0522d;">v</span>, <span style="color: #a0522d;">w</span> <span style="color: #228b22;">T</span>) {
+          g.<span style="color: #0000ff;">aggiungiVertice</span>(v)
+          g.<span style="color: #0000ff;">aggiungiVertice</span>(w)
+
+          <span style="color: #a0522d;">vertex</span> := g.vertici[v]
+            vertex.adiacenti.<span style="color: #0000ff;">aggiungiInCoda</span>(g.vertici[w])
+          g.vertici[v] = vertex
+  }
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org8b2314a" class="outline-4">
-<h4 id="org8b2314a">Lista di incidenza</h4>
-<div class="outline-text-4" id="text-org8b2314a">
+<div id="outline-container-org9870353" class="outline-4">
+<h4 id="org9870353">Lista di incidenza</h4>
+<div class="outline-text-4" id="text-org9870353">
 <p>
 Un mix fra una lista di adiacenza e una lista di archi.
 Si mantiene una lista di archi in una lista esterna e una pseudo-lista di adiacenza che punta agli elementi della prima
 </p>
+<div class="org-src-container">
+<pre class="src src-go" id="org3d7eaab"><span style="color: #a020f0;">type</span> <span style="color: #228b22;">Graph</span> <span style="color: #a020f0;">struct</span> {
+      vertices <span style="color: #a020f0;">map</span>[<span style="color: #228b22;">int</span>]*<span style="color: #228b22;">Vertex</span>
+}
+
+<span style="color: #a020f0;">type</span> <span style="color: #228b22;">Vertex</span> <span style="color: #a020f0;">struct</span> {
+        ID <span style="color: #228b22;">int</span>
+        outgoing <span style="color: #228b22;">mylib.ListaDoppia</span>[Edge]
+}
+
+<span style="color: #a020f0;">type</span> <span style="color: #228b22;">Edge</span> {
+        from <span style="color: #228b22;">Vertex</span>
+        to <span style="color: #228b22;">Vertex</span>
+        weight <span style="color: #228b22;">float64</span>
+}
+
+<span style="color: #a020f0;">func</span> <span style="color: #0000ff;">createGraph</span>[T <span style="color: #228b22;">comparable</span>]() <span style="color: #228b22;">Graph</span> {
+        <span style="color: #a020f0;">return</span> &amp;<span style="color: #228b22;">Graph</span>{<span style="color: #483d8b;">make</span>(<span style="color: #a020f0;">map</span>[<span style="color: #228b22;">int</span>]*<span style="color: #228b22;">Vertex</span>)}
+}
+
+<span style="color: #a020f0;">func</span> (<span style="color: #a0522d;">g</span> *<span style="color: #228b22;">Graph</span>) <span style="color: #0000ff;">addVertex</span>(<span style="color: #a0522d;">id</span> <span style="color: #228b22;">int</span>) {
+        <span style="color: #a020f0;">if</span> <span style="color: #a0522d;">_</span>, <span style="color: #a0522d;">exists</span> := g.vertices[id]; !<span style="color: #228b22;">exists</span>{
+                g.vertices[id] = &amp;<span style="color: #228b22;">Vertex</span>{
+                        <span style="color: #008b8b;">ID</span>: id,
+                        outgoing : mylib.CreaLista[Edge]
+                        }
+        }
+}
+
+<span style="color: #a020f0;">func</span> (<span style="color: #a0522d;">g</span> *<span style="color: #228b22;">Graph</span>) <span style="color: #0000ff;">addEdge</span>(<span style="color: #a0522d;">from</span>, <span style="color: #a0522d;">to</span> <span style="color: #228b22;">int</span>, <span style="color: #a0522d;">weight</span> <span style="color: #228b22;">float64</span>) {
+        g.<span style="color: #0000ff;">addVertex</span>(from)
+        g.<span style="color: #0000ff;">addVertex</span>(to)
+
+        <span style="color: #a0522d;">edge</span> := &amp;<span style="color: #228b22;">Edge</span>{
+                <span style="color: #008b8b;">from</span>: from,
+                <span style="color: #008b8b;">to</span>: to,
+                <span style="color: #008b8b;">weight</span>: weight
+        }
+
+        g.vertices[from].outgoing.<span style="color: #0000ff;">AggiungiInCoda</span>(edge)
+</pre>
+</div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org6bf3b74" class="outline-3">
-<h3 id="org6bf3b74">Matrici</h3>
-<div class="outline-text-3" id="text-org6bf3b74">
+<div id="outline-container-orgdad3a65" class="outline-3">
+<h3 id="orgdad3a65">Matrici</h3>
+<div class="outline-text-3" id="text-orgdad3a65">
 </div>
-<div id="outline-container-org2c27b72" class="outline-4">
-<h4 id="org2c27b72">Matrice di adiacenza</h4>
-<div class="outline-text-4" id="text-org2c27b72">
+<div id="outline-container-orgb578300" class="outline-4">
+<h4 id="orgb578300">Matrice di adiacenza</h4>
+<div class="outline-text-4" id="text-orgb578300">
 <p>
 Una matrice quadrata di 0 e 1 i cui indici sono i vertici e il cui valore per ogni posto è 1 se il vertice della colonna è adiacente a quello della riga.
 </p>
@@ -262,9 +374,9 @@ Se, invece, si usasse la vera algebra, si scoprirebbe il numero di cammini da un
 </div>
 </div>
 
-<div id="outline-container-orgdb9f7c7" class="outline-4">
-<h4 id="orgdb9f7c7">Matrice di incidenza</h4>
-<div class="outline-text-4" id="text-orgdb9f7c7">
+<div id="outline-container-org7411b8d" class="outline-4">
+<h4 id="org7411b8d">Matrice di incidenza</h4>
+<div class="outline-text-4" id="text-org7411b8d">
 <p>
 La matrice è grande \(n\times m\) e ha i vertici sulle righe e gli archi sulle colonne. Il valore è 1 se l'arco corrispondente esce dal vertice corrispondente, -1 se entra e 0 se non lo riguarda.
 Viene usata molto poco.
@@ -274,19 +386,13 @@ Viene usata molto poco.
 </div>
 </div>
 
-<div id="outline-container-org1ee4046" class="outline-2">
-<h2 id="org1ee4046">Attraversamento di grafi</h2>
-<div class="outline-text-2" id="text-org1ee4046">
-<p>
-Definiamoci un grafo di esempio
-</p>
+<div id="outline-container-orgae3ff18" class="outline-2">
+<h2 id="orgae3ff18">Attraversamento di grafi</h2>
+<div class="outline-text-2" id="text-orgae3ff18">
 </div>
-
-
-
-<div id="outline-container-org0587bd1" class="outline-3">
-<h3 id="org0587bd1">Visita in ampiezza (breadth-first search)</h3>
-<div class="outline-text-3" id="text-org0587bd1">
+<div id="outline-container-orgdde9531" class="outline-3">
+<h3 id="orgdde9531">Visita in ampiezza (breadth-first search)</h3>
+<div class="outline-text-3" id="text-orgdde9531">
 <p>
 Si inizia visitando un vertice s, si visitano poi i vertici adiacenti ad s, poi quelli adiacenti a quelli appena visitati e così via.
 Nel caso in cui il grafo sia rappresentato attraverso liste &#x2026;
@@ -297,7 +403,7 @@ Nel caso in cui sia una matrice di incidenza, devo scorrere tutti gli \(m\) arch
 Questo è l'esempio di una visita in ampiezza di un grafo non orientato connesso a partire da un vertice <code>s</code> e costruzione di un albero ricoprente ottenuto selezionando gli archi secondo l’ordine della visita.
 </p>
 
-<pre class="example" id="org63f5463">
+<pre class="example" id="org3eadf02">
 ALGORITMO visitaInAmpiezza(grafo G=(V,E), vertice s) -&gt; albero
 C &lt;- coda vuota
 T &lt;- ({s}, [])
@@ -345,28 +451,103 @@ Nella tecnica mostrata, la dimensione massima della coda è uguale al massimo de
 </p>
 
 <div class="org-src-container">
-<pre class="src src-go"><span style="color: #a020f0;">func</span> <span style="color: #0000ff;">bfs</span>[T <span style="color: #228b22;">any</span>](g <span style="color: #228b22;">Grafo</span>[T]) {
-        <span style="color: #b22222;">//</span><span style="color: #b22222;">Inizio con una coda vuota</span>
-        <span style="color: #a0522d;">q</span> := mylib.NewQueue[T]
-        fmt.<span style="color: #0000ff;">Println</span>(q)
-}
+<pre class="src src-go"><span style="color: #a020f0;">package</span> main
 
-<span style="color: #a020f0;">func</span> <span style="color: #0000ff;">main</span>() {
-        <span style="color: #a0522d;">g</span> := Grafo[int]{
-                {<span style="color: #008b8b;">From</span>: &amp;Vertices[int]{1}, <span style="color: #008b8b;">To</span>: &amp;Vertices[int]{2}},
-                {<span style="color: #008b8b;">From</span>: &amp;Vertices[int]{1}, <span style="color: #008b8b;">To</span>: &amp;Vertices[int]{3}},
-                {<span style="color: #008b8b;">From</span>: &amp;Vertices[int]{3}, <span style="color: #008b8b;">To</span>: &amp;Vertices[int]{4}},
+<span style="color: #a020f0;">import</span> <span style="color: #8b2252;">"fmt"</span>
+<span style="color: #a020f0;">import</span> <span style="color: #8b2252;">"mylib"</span>
+
+<span style="color: #b22222;">// </span><span style="color: #b22222;">this is wrong. The content of the node used to be the same as the name of the vertex. Not true.</span>
+  <span style="color: #a020f0;">type</span> <span style="color: #228b22;">Vertice</span>[T <span style="color: #228b22;">comparable</span>] <span style="color: #a020f0;">struct</span> {
+          adiacenti *<span style="color: #228b22;">mylib.ListaDoppia</span>[Vertice[T]]
+  }
+
+  <span style="color: #a020f0;">type</span> <span style="color: #228b22;">Grafo</span>[T <span style="color: #228b22;">comparable</span>] <span style="color: #a020f0;">struct</span> {
+          vertici <span style="color: #a020f0;">map</span>[<span style="color: #228b22;">string</span>]<span style="color: #228b22;">Vertice</span>[T]
+  }
+
+  <span style="color: #a020f0;">func</span> <span style="color: #0000ff;">nuovoGrafo</span>[T <span style="color: #228b22;">comparable</span>]() *Grafo[T] {
+      <span style="color: #a020f0;">return</span> &amp;Grafo[T]{
+          <span style="color: #008b8b;">vertici</span>: <span style="color: #483d8b;">make</span>(<span style="color: #a020f0;">map</span>[<span style="color: #228b22;">T</span>]<span style="color: #228b22;">Vertice</span>[T]),
+      }
+  }
+
+  <span style="color: #a020f0;">func</span> (<span style="color: #a0522d;">g</span> *<span style="color: #228b22;">Grafo</span>[T]) <span style="color: #0000ff;">aggiungiVertice</span>(<span style="color: #a0522d;">v</span> <span style="color: #228b22;">T</span>) {
+          <span style="color: #a020f0;">if</span> <span style="color: #a0522d;">_</span>, <span style="color: #a0522d;">exists</span> := g.vertici[v]; !exists {
+                  g.vertici[v] = Vertice[T]{
+                          <span style="color: #008b8b;">adiacenti</span>: mylib.ListaDoppia[T].<span style="color: #0000ff;">CreaLista</span>(), 
+                  }
+          }
+  }
+
+  <span style="color: #a020f0;">func</span> (<span style="color: #a0522d;">g</span> *<span style="color: #228b22;">Grafo</span>[T]) <span style="color: #0000ff;">aggiungiArco</span>(<span style="color: #a0522d;">v</span>, <span style="color: #a0522d;">w</span> <span style="color: #228b22;">T</span>) {
+          g.<span style="color: #0000ff;">aggiungiVertice</span>(v)
+          g.<span style="color: #0000ff;">aggiungiVertice</span>(w)
+
+          <span style="color: #a0522d;">vertex</span> := g.vertici[v]
+            vertex.adiacenti.<span style="color: #0000ff;">aggiungiInCoda</span>(g.vertici[w])
+          g.vertici[v] = vertex
+  }
+
+  <span style="color: #a020f0;">func</span> <span style="color: #0000ff;">main</span>() {
+
+
+  }
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-go"><span style="color: #a020f0;">package</span> main
+
+<span style="color: #a020f0;">import</span> <span style="color: #8b2252;">"fmt"</span>
+<span style="color: #a020f0;">import</span> <span style="color: #8b2252;">"mylib"</span>
+
+<span style="color: #b22222;">// </span><span style="color: #b22222;">this is wrong. The content of the node used to be the same as the name of the vertex. Not true.</span>
+  <span style="color: #a020f0;">type</span> <span style="color: #228b22;">Vertice</span>[T <span style="color: #228b22;">comparable</span>] <span style="color: #a020f0;">struct</span> {
+          adiacenti *<span style="color: #228b22;">mylib.ListaDoppia</span>[Vertice[T]]
+  }
+
+  <span style="color: #a020f0;">type</span> <span style="color: #228b22;">Grafo</span>[T <span style="color: #228b22;">comparable</span>] <span style="color: #a020f0;">struct</span> {
+          vertici <span style="color: #a020f0;">map</span>[<span style="color: #228b22;">string</span>]<span style="color: #228b22;">Vertice</span>[T]
+  }
+
+  <span style="color: #a020f0;">func</span> <span style="color: #0000ff;">nuovoGrafo</span>[T <span style="color: #228b22;">comparable</span>]() *Grafo[T] {
+      <span style="color: #a020f0;">return</span> &amp;Grafo[T]{
+          <span style="color: #008b8b;">vertici</span>: <span style="color: #483d8b;">make</span>(<span style="color: #a020f0;">map</span>[<span style="color: #228b22;">T</span>]<span style="color: #228b22;">Vertice</span>[T]),
+      }
+  }
+
+  <span style="color: #a020f0;">func</span> (<span style="color: #a0522d;">g</span> *<span style="color: #228b22;">Grafo</span>[T]) <span style="color: #0000ff;">aggiungiVertice</span>(<span style="color: #a0522d;">v</span> <span style="color: #228b22;">T</span>) {
+          <span style="color: #a020f0;">if</span> <span style="color: #a0522d;">_</span>, <span style="color: #a0522d;">exists</span> := g.vertici[v]; !exists {
+                  g.vertici[v] = Vertice[T]{
+                          <span style="color: #008b8b;">adiacenti</span>: mylib.ListaDoppia[T].<span style="color: #0000ff;">CreaLista</span>(), 
+                  }
+          }
+  }
+
+  <span style="color: #a020f0;">func</span> (<span style="color: #a0522d;">g</span> *<span style="color: #228b22;">Grafo</span>[T]) <span style="color: #0000ff;">aggiungiArco</span>(<span style="color: #a0522d;">v</span>, <span style="color: #a0522d;">w</span> <span style="color: #228b22;">T</span>) {
+          g.<span style="color: #0000ff;">aggiungiVertice</span>(v)
+          g.<span style="color: #0000ff;">aggiungiVertice</span>(w)
+
+          <span style="color: #a0522d;">vertex</span> := g.vertici[v]
+            vertex.adiacenti.<span style="color: #0000ff;">aggiungiInCoda</span>(g.vertici[w])
+          g.vertici[v] = vertex
+  }
+
+<span style="color: #a020f0;">func</span> <span style="color: #0000ff;">main</span>(){
+        <span style="color: #a0522d;">g</span> := nuovoGrafo[int]()
+        g.<span style="color: #0000ff;">aggiungiArco</span>(1, 2)
+        g.<span style="color: #0000ff;">aggiungiArco</span>(2, 3)
+        g.<span style="color: #0000ff;">aggiungiArco</span>(3, 4)
+        g.<span style="color: #0000ff;">aggiungiArco</span>(2, 4)
         }
-        <span style="color: #0000ff;">bfs</span>(g)
-}
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgbd0b48f" class="outline-3">
-<h3 id="orgbd0b48f">Visita in profondità (depth-first search)</h3>
-<div class="outline-text-3" id="text-orgbd0b48f">
+<div id="outline-container-org149983f" class="outline-3">
+<h3 id="org149983f">Visita in profondità (depth-first search)</h3>
+<div class="outline-text-3" id="text-org149983f">
 <p>
 Partiamo da un nodo e andiamo quanto più in fondo possibile, per poi fare backtracking e tornare al primo nodo non visitato.
 </p>
@@ -398,19 +579,353 @@ La procedura ricorsiva è incapsulata in una funzione esterna che maschera l'uti
 </div>
 </div>
 </div>
+
+
+<div id="outline-container-org28948c8" class="outline-2">
+<h2 id="org28948c8">Alberi ricoprenti minimi</h2>
+<div class="outline-text-2" id="text-org28948c8">
+<p>
+Un cammino fra due vertici \(x\) e \(y\) in un grafo, è una sequenza di vertici \(v_{n}\) con \(0<n<k\) tale per cui \(v_{0}=x\), \(v_{k} = y\) e \((v_{n-1},v_{n}) \in E \;\forall n\).
+</p>
+
+<p>
+Un cammino semplice è un cammino senza ripetizioni ed è <b>sempre</b> possibile ottenerlo a partire da un cammino qualunque.
+</p>
+
+<p>
+Due vertici collegati da un cammino sono detti <b>connessi</b> e un grafo non orientato è detto connesso se tutte le sue coppie di vertici lo sono fra loro.
+</p>
+
+<p>
+Un <b>albero</b> è un grafo non orientato connesso e privo di cicli.
+</p>
+
+<p>
+Quindi, un grafo è un albero se e solo se tra ogni coppia di vertici vi è un unico cammino semplice.
+</p>
+
+<p>
+Ogni albero di \(n\) vertici contiene \(n-1\) archi.
+</p>
+
+<p>
+Di conseguenza, se ad un albero togliamo un arco, non sarà più connesso, in quanto un vertice non sarà più raggiungibile. Se ne aggiungiamo uno, non sarà più un albero, in quanto si creerà un ciclo.
+</p>
+
+<p>
+Un <b>albero ricoprente</b> è un sottografo \(G'\) di \(G\) con gli stessi vertici ed un sottoinsieme dei suoi archi, tale per cui \(G'\) è connesso e privo di cicli.
+</p>
+
+<p>
+Se gli archi sono pesati, allora può essere utile trovare l'<b>albero ricoprente minimo</b>, ovvero quello la cui somma totale degli archi è minima.
+</p>
+
+<p>
+Strategie greedy differenti
+</p>
+<ul class="org-ul">
+<li>Kruskal
+<ul class="org-ul">
+<li>Soluzione parziale: foresta di alberi con insieme di vertici V</li>
+<li>Inizialmente: tutti i vertici, nessun arco</li>
+</ul></li>
+<li>Prim</li>
+</ul>
+</div>
+<div id="outline-container-orgc87b158" class="outline-3">
+<h3 id="orgc87b158"></h3>
+</div>
+<div id="outline-container-org73c48e3" class="outline-3">
+<h3 id="org73c48e3"><span class="todo TODO">TODO</span> Aggiungere lezione precedente</h3>
+</div>
+<div id="outline-container-org0c38a2f" class="outline-3">
+<h3 id="org0c38a2f"><a href="algoritmodiprim.html#ID-8efdf95f-db48-4ddd-8446-ba66233df723">AlgoritmoDiPrim</a></h3>
+</div>
+</div>
+
+<div id="outline-container-org70115c3" class="outline-2">
+<h2 id="org70115c3">Cammini minimi</h2>
+<div class="outline-text-2" id="text-org70115c3">
+<p>
+Definiamo il cammino minimo un cammino il cui peso è minore o uguale di ogni altro cammino.
+Le proprietà dei cammini minimi sono le seguenti:
+</p>
+<ul class="org-ul">
+<li>se tutti i pesi sono positivi, allora ogni cammino minimo è semplice.</li>
+<li>se ci sono pesi negativi ma non cicli di peso negativo allora dato un cammino da x a y, esiste sempre un cammino minimo da x a y che è di peso positivo.</li>
+</ul>
+</div>
+<div id="outline-container-org30d66c8" class="outline-3">
+<h3 id="org30d66c8">Rappresentazioni</h3>
+<div class="outline-text-3" id="text-org30d66c8">
+<ul class="org-ul">
+<li>matrice dei pesi: utile per fare manipolazioni algebriche</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc210726" class="outline-3">
+<h3 id="orgc210726">Problemi sui cammini minimi</h3>
+<div class="outline-text-3" id="text-orgc210726">
+<ul class="org-ul">
+<li>trovare il cammino minimo fra due vertici</li>
+<li>trovare i cammini minimi fra un vertice s e gli altri</li>
+<li>trovare i cammini minimi fra ogni coppia di vertici</li>
+</ul>
+
+<p>
+Inoltre, possiamo voler vedere come una tabella di cammini minimi cambia all'inserimento di un nuovo vertice.
+Ovvero, aggiunte una riga ed una colonna
+</p>
+</div>
+</div>
+<div id="outline-container-org6793da5" class="outline-3">
+<h3 id="org6793da5">Floyd-Marshall</h3>
+<div class="outline-text-3" id="text-org6793da5">
+<p>
+Determinare \(d_{ij}\) per ogni elemento, ovvero costruire la tabella.
+Scompongo il problema nel considerare nei passi intermendi soltanto gli elementi fino ad un certo indice, indicato con \(k\) in superscript, rilassando man mano \(k\).
+Quando \(k=0\), allora
+</p>
+<ul class="org-ul">
+<li>due vertici sono collegati, il peso è la loro distanza (ignoro tutti gli altri element)</li>
+<li>0 se è lo stesso vertice</li>
+<li>infinito altrimenti, ovvero se non c'è un collegamento fra i due elementi con più di un</li>
+</ul>
+
+<p>
+Nel passo generale, mi trovo a conoscere la strada fra due elementi e la condizione viene rilassata. Così, posso valutare se passare attraverso i nuovi vertici o meno.
+</p>
+<pre class="example" id="org0f39142">
+ALGORITMO FloydMarshall(Grafo G) -&gt; Matrice
+    Siano D0[1..n, 1..n],...,D0[1..n,1..n] matrici
+    # gestisco il caso di k=0
+    FOR i&lt;-1 TO n DO
+        FOR j&lt;-i TO n DO
+            IF i=j THEN D[i,j] &lt;- 0
+            ELSE IF c'è i-j fra gli archi THEN D0[i,j] &lt;- o(i,j)
+            ELSE inf
+    # passo generale
+    FOR k=1 to n DO
+        FOR i&lt;-1 TO n DO
+            FOR j&lt;-i TO n DO
+                IF la distanza fra i e k più quella fra k e j è minore di quella fra i e j (nella matrice precedente) THEN
+                THEN questa è la nuova distanza
+                ELSE lasciala
+</pre>
+<p>
+^ Spazio n<sup>3</sup>
+Si può ridurre l'utilizzo di memoria, utilizzando una sola matrice, considerando che i valori i-k e k-j non cambiano nell'aggiornare una matrice.
+Ovve
+</p>
+
+<pre class="example" id="org739bd59">
+ALGORITMO FloydMarshall(Grafo G) -&gt; Matrice
+    CAMBIO
+    Abbiamo una sola matrice
+    # gestisco il caso di k=0
+    FOR i&lt;-1 TO n DO
+        FOR j&lt;-i TO n DO
+            IF i=j THEN D[i,j] &lt;- 0
+            ELSE IF c'è i-j fra gli archi THEN D0[i,j] &lt;- o(i,j)
+            ELSE inf
+    # passo generale
+    FOR k=1 to n DO
+        FOR i&lt;-1 TO n DO
+            FOR j&lt;-i TO n DO
+                CAMBIO
+                Prendo la distanza i-k k-j nella stessa matrice
+                e aggiorno pure
+</pre>
+<p>
+Spazio n<sup>2</sup>
+</p>
+
+<p>
+Come stabilire adesso il cammino minimo?
+Ho una matrice ausiliaria P in cui P[i,j]
+indica il nodo che mi ha portato lì. In questo modo, prendo il valore minore della riga(?non ne sono sicuro) e recupero chi mi ci ha portato
+</p>
+
+<p>
+Notare che l'algoritmo di floyd marshall prevede che non ci siano cicli negativi, ma è corretto anche in caso di pesi negativi.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org54aab2a" class="outline-2">
+<h2 id="org54aab2a">Bellman-Ford</h2>
+<div class="outline-text-2" id="text-org54aab2a">
+<p>
+Input: un grafo \(G=(V,E)\), \(s\) il vertice di partenza e \(\omega\) un arco.
+Tengo poi \(d(v)\), vettore delle distanze, che contiene la distanza fra \(s\) e \(v\), minima parziale o alla fine quella corretta.
+Inizialmente il vettore è \(0\) per l'arco iniziale e \(\infty\) per ogni altro.
+Ad ogni passo aggiungo un arco e considero che se il cammino verso un vertice v è più breve del valore che è già scritto in v, lo diminuisco.
+Ad ogni passo, poi, faccio questa operazione su ogni arco anche quelli infiniti.
+Dopo \(n-1\) passi avrò in ogni elemento del vettore delle distanze la lunghezza del cammino minimo dal vertice iniziale alla fine.
+Mi trova i cammini minimi semlici.
+</p>
+<pre class="example" id="orgfa1de99">
+Sia d[v] un vettore con indici in V
+d[s]
+</pre>
+</div>
+<div id="outline-container-org8e774c4" class="outline-3">
+<h3 id="org8e774c4">In Marshall</h3>
+<div class="outline-text-3" id="text-org8e774c4">
+<p>
+Prendevamo i e j e provavamo a passare per k. Mettevo insieme due cammini, da i a k e da k a j e mi chiedevo se fosse meglio.
+Adesso prendiamo un cammino già esistente ed un solo arco, ad ogni passo e viene fatto per tutti i vertici e tutti gli archi.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org6ad7ab6" class="outline-2">
+<h2 id="org6ad7ab6">Dijkstra</h2>
+<div class="outline-text-2" id="text-org6ad7ab6">
+<p>
+Opera in modo greedy.
+Ogni volta scegliamo tra tutti i vertici con distanza provvisoria, scegliamo il vertice con distanza minima e la faccio diventare definitiva.
+Diciamo che tale vertice sia \(u\). Guardo tutti i suoi vertici adiacenti. Uno di essi è \(v\). Se la distanza fra \(u\) e \(v\) è minore di quella provvisoria, la si aggiorna.
+</p>
+<pre class="example" id="orga7c7595">
+ALGORITMO dijkstra
+    istanzio d[v] e lo riempio con 0 sul vertice di partenza e infinito per gli altri
+    C &lt;- V (cosa?)
+    WHILE C!=vuoto DO
+        u &lt;- elemento don D[V] minima
+        C &lt;- C senza u
+        FOR EACH (u,v)\inE DO
+            se la distanza con u e la distanza fra u e v è minore di quella scritta su dv,
+            allora la distanza dv diventa quella verso u più la distanza fra u e v
+</pre>
+<p>
+La differenza con bellman ford è che il for each interno era su tutti gli archi del grafo, ma in questo è su tutti gli archi che escono da U
+</p>
+</div>
+<div id="outline-container-org650fa35" class="outline-3">
+<h3 id="org650fa35">Analisi</h3>
+<div class="outline-text-3" id="text-org650fa35">
+</div>
+<div id="outline-container-orgf7c6329" class="outline-4">
+<h4 id="orgf7c6329">Rappresentazione</h4>
+<div class="outline-text-4" id="text-orgf7c6329">
+<p>
+Innanzitutto, come ci conviene rappresentare il grafo. Lista di adiacenza (o incidenza).
+La condizione del while dipende da C, che contiene i vertici, quindi sono \(n\) iterazioni.
+La ricerca del minimo per trovare u anche costa \(n\).
+Queste due cose ci porterebbero ad avere già \(n^{2}\).
+Potrei tenerlo ordinato, ma ad ogni aggiornamento dovrei riordinarlo, che è inefficiente.
+Usiamo quindi una coda con priorità, molto simile a quella dell'Algoritmo di Prim(dove però usavo la distanza dell'arco sulla frontiera).
+In questa coda ci sono i vertici candidati e la priorità sarà la distanza provvisoria.
+Quindi rendo C una coda con priorità e ci metto tutti i vertici all'inizio.
+Quando faccio il passo, tiro fuori l'elemento minimo dalla coda e poi una volta stabilita la nuova distanza, aggiorno il valore nella coda
+</p>
+</div>
+</div>
+<div id="outline-container-orge80e04d" class="outline-4">
+<h4 id="orge80e04d">Tempo</h4>
+<div class="outline-text-4" id="text-orge80e04d">
+<p>
+L'inizializzazione mi costa n
+Il riempiemnto di C mi costa n
+Ora passiamo al while: esso va eseguito \(n\) volte, perchè la coda contiene tutti i vertici e ne preleviamo uno ogni volta.
+Le operazioni all'interno sono:
+</p>
+<ul class="org-ul">
+<li>deleteMin(): sappiamo che costa O(log n)</li>
+<li>for Each, la cui lunghezza singola è variabile, ma massimo O(m)
+<ul class="org-ul">
+<li>dentro il for each ci sono varie operazioni costanti, ma anche una changekey, che costa O(log n), perchè è una coda di priorita sui vertici.</li>
+</ul></li>
+</ul>
+<p>
+Dato che il while è eseguito n volte, il delete min ha un costo complessivo di nlogn,
+per il for each notiamo che le lunghezze si escludono l'un l'altra, quindi eseguita per ogni arco è complessivamente \(m\) e quindi il changekey è mlogn
+Arriviamo a \(O(n\log n) + O(m\log n)\). Assumiamo che il grafo sia connesso (perchè voglio cercare i cammini minimi verso ogni arco). Allora devono esserci almeno \(n-1\) archi. Dato che \(m\) è sicuramente maggiore di \(n\), nella formula precedente prevale \(O(m\log n)\).
+Notare che con heap di fibonacci esce fuori nlog n + m, che quando m aumenta tanto è un miglioramento significativo
+</p>
+</div>
+</div>
+<div id="outline-container-org080e18f" class="outline-4">
+<h4 id="org080e18f">Come ricavare i cammini minimi</h4>
+<div class="outline-text-4" id="text-org080e18f">
+<p>
+Il cambiamento è semplicemente che ogni volta che stabilisco che la strada più breve verso v passa per u, salvo che il predecessore di v è u. Alla fine mi basta risalire da un qualunque vertice a quello di partenza.
+Risalendo, mi esce fuori un albero che è l'albero dei cammini minimi, ovvero contiene tutti i vertici del grafo con le minori distanze dal vertice.
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="org9f53d30"></a>Differenze con albero ricoprente minimo<br />
+<div class="outline-text-5" id="text-org9f53d30">
+<p>
+Il problema dell'albero ricoprente minimo riguarda soltanto i grafi non orientati.
+La questione è che nell'albero ricoprente minimo io voglio minimizzare i problemi degli archi in generale.
+Nel problema di dijkstra, io voglio minimizzare i singoli cammini.
+Problemi tipici da esame:
+</p>
+<ul class="org-ul">
+<li>Immaginiamo che il grafo rappresenti una mappa stradale e sotto alcune strade bisogna collocare la fibra ottica, e bisogna raggiungere i vari vertici. Siccome la fibra ottica costa tanto, bisogna minimizzare in totale la lunghezza della fibra. Voglio coprire ogni vertice e voglio farlo con la quantità minore di fibra. ALBERO RICOPRENTE MINIMO</li>
+<li>Posta pneumatica: un sistema di tubi in cui si mette un messaggio. Serve un tubo apposta che colleghi ogni singola sorgente con un destinatario. Immaginiamo di avere una centrale. Lì bisogna minimizzare la lunghezza del singolo tubo che collega la centrale con ogni stazione. CAMMINI MINIMI.</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-org57f36cf" class="outline-4">
+<h4 id="org57f36cf">Cosa succede se un peso è negativo?</h4>
+<div class="outline-text-4" id="text-org57f36cf">
+<p>
+Non lavora correttamente per pesi negativi. Perchè se avessi pesi negativi, dovrei mettere in discussione le scelte, ma questo non è possibile con la strategia greedy.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org745c4f6" class="outline-3">
+<h3 id="org745c4f6"><span class="todo TODO">TODO</span> Riflettere sul caso in cui il secondo vertice sia a distanza uno, ma quelli successivi siano a distanza 1000, , quindi A&#x2013;1&#x2013;B&#x2013;1000&#x2013;C, ma anche A&#x2013;2&#x2013;D&#x2013;2&#x2013;C.</h3>
+</div>
+</div>
+<div id="outline-container-orgf75cfdd" class="outline-2">
+<h2 id="orgf75cfdd">Ricapitolando sui grafi</h2>
+<div class="outline-text-2" id="text-orgf75cfdd">
+</div>
+<div id="outline-container-org3add255" class="outline-3">
+<h3 id="org3add255">Cammino minimo tra ogni coppia di vertici:</h3>
+<div class="outline-text-3" id="text-org3add255">
+<p>
+floyd marshall, n cubo, anche archi di peso negativo, ma no cicli
+</p>
+</div>
+</div>
+<div id="outline-container-org8e9a34e" class="outline-3">
+<h3 id="org8e9a34e">Cammini minimi da un vertice ad ogni altro</h3>
+<div class="outline-text-3" id="text-org8e9a34e">
+<p>
+dijkstra mlgn, no archi negativi,,,,bellman ford, m * n, anche archi di peso negatico, ma no cicli
+</p>
+</div>
+</div>
+<div id="outline-container-org2b9521f" class="outline-3">
+<h3 id="org2b9521f">Cammino minimo tra due vertici</h3>
+<div class="outline-text-3" id="text-org2b9521f">
+<p>
+non c'è un algoritmo specifico. comunque mi basta usare quelli fino ad ogni altro fino a trovare quello che mi interessa
+</p>
+</div>
+</div>
+</div>
 <div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
 <div id="text-footnotes">
 
 <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
-Ne consegue che in un grafo non orientato, l'adiacenza è simmetrica, ma nel caso di un grafo orientato no. 
+Ne consegue che in un grafo non orientato, l'adiacenza è simmetrica, ma nel caso di un grafo orientato no.
 </p></div></div>
 
 
 </div>
 </div></div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-11-20 Wed 19:49</p>
+<p class="date">Created: 2024-12-18 Wed 14:55</p>
 </div>
 </body>
 </html>

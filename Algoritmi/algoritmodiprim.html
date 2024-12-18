@@ -3,44 +3,41 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-20 Wed 19:49 -->
+<!-- 2024-12-18 Wed 14:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AlgoritmoDiPrim</title>
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
 <script>
-  window.MathJax = {
-    tex: {
-      ams: {
-        multlineWidth: '85%'
+    window.MathJax = {
+      tex: {
+        ams: { multlineWidth: '85%' },
+        {packages: {'[+]': ['mathtools']}},
+        tags: 'ams',
+        tagSide: 'right',
+        tagIndent: '.8em'
       },
-      tags: 'ams',
-      tagSide: 'right',
-      tagIndent: '.8em'
-    },
-    chtml: {
-      scale: 1.0,
-      displayAlign: 'center',
-      displayIndent: '0em'
-    },
-    svg: {
-      scale: 1.0,
-      displayAlign: 'center',
-      displayIndent: '0em'
-    },
-    output: {
-      font: 'mathjax-modern',
-      displayOverflow: 'overflow'
-    }
-  };
-</script>
-
-<script
-  id="MathJax-script"
-  async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
+      chtml: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      svg: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      output: {
+        font: 'mathjax-modern',
+        displayOverflow: 'scale'
+      },
+      loader: {
+        load: ['[tex]/mathtools']
+      },
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <div id="content" class="content">
@@ -49,23 +46,22 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgb80719d">Algoritmo di Prim</a>
+<li><a href="#org1caa38b">Algoritmo di Prim</a>
 <ul>
-<li><a href="#orge4b2826"><span class="todo TODO">TODO</span> Cosa è o (omega)?</a></li>
-<li><a href="#org56e27e7">Esecuzione</a></li>
+<li><a href="#org65022ee">Esecuzione</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb80719d" class="outline-2">
-<h2 id="orgb80719d">Algoritmo di Prim</h2>
-<div class="outline-text-2" id="text-orgb80719d">
+<div id="outline-container-org1caa38b" class="outline-2">
+<h2 id="org1caa38b">Algoritmo di Prim</h2>
+<div class="outline-text-2" id="text-org1caa38b">
 <p>
 Partiamo da un albero costituito da un solo vertice. Ad ogni passo espandiamo \(T\) aggiungendo l'arco di peso minimo e il vertice in cui arriva che connette un vertice dell'albero che ho già con un vertice che sta fuori.
 </p>
 
-<pre class="example" id="org96de716">
+<pre class="example" id="org85dfd58">
 Algoritmo Prim (Grafo G=(V,E,o)) -&gt; albero
     T &lt;- alberto costituito da un unico vertice s \in V qualsiasi
     WHILE T ha meno di n nodi DO
@@ -75,12 +71,9 @@ Algoritmo Prim (Grafo G=(V,E,o)) -&gt; albero
     RETURN T
 </pre>
 </div>
-<div id="outline-container-orge4b2826" class="outline-3">
-<h3 id="orge4b2826"><span class="todo TODO">TODO</span> Cosa è o (omega)?</h3>
-</div>
-<div id="outline-container-org56e27e7" class="outline-3">
-<h3 id="org56e27e7">Esecuzione</h3>
-<div class="outline-text-3" id="text-org56e27e7">
+<div id="outline-container-org65022ee" class="outline-3">
+<h3 id="org65022ee">Esecuzione</h3>
+<div class="outline-text-3" id="text-org65022ee">
 <p>
 Parto da un vertice qualunque ed esamino gli archi di frontiera. Fra quelli, scelgo che pesa di meno e aggiungo l'arco e il vertice successivo.
 Alla prossima iterazione, gli archi di frontiera contengono anche quelli precedenti. Analizzo l'insieme aggiornato di archi di frontiera per trovare il minimo, che aggiungerò e così via.
@@ -99,7 +92,7 @@ Poi analizzo tutti gli archi uscenti dal vertice e aggiorno la tabella quando un
 </p>
 
 <p>
-Il problema è che per ognuno degli \(n\) vertici devo trovare il minimo della tabella con \(n\) elementi, per un totale di \(n^{2}\), che porterebbe le prestazioni ad essere minori dell'<a href="kruskal.html#ID-ae91152d-739d-45f7-8db0-24ca2706ae92">algoritmo di Kruskal</a>.
+Il problema è che per ognuno degli \(n\) vertici devo trovare il minimo della tabella con \(n\) elementi, per un totale di \(n^{2}\), che porterebbe le prestazioni ad essere minori dell'.
 </p>
 
 <p>
@@ -114,7 +107,7 @@ Dato che è un grafo non orientato, ogni arco è rappresentato due volte e quind
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-11-20 Wed 19:49</p>
+<p class="date">Created: 2024-12-18 Wed 14:55</p>
 </div>
 </body>
 </html>
