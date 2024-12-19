@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2024-12-18 Wed 14:55 -->
+<!-- 2024-12-18 Wed 15:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AlgoritmoDiPrim</title>
+<title>Algoritmo di Prim</title>
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
 <script>
@@ -41,73 +41,195 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">AlgoritmoDiPrim</h1>
+<h1 class="title">Algoritmo di Prim</h1>
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org1caa38b">Algoritmo di Prim</a>
+<li><a href="#org045b6cc">Prim</a>
 <ul>
-<li><a href="#org65022ee">Esecuzione</a></li>
+<li>
+<ul>
+<li><a href="#orgf5a2ec7">Idea generale</a></li>
+<li><a href="#org08d911f">Implementazione</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org1caa38b" class="outline-2">
-<h2 id="org1caa38b">Algoritmo di Prim</h2>
-<div class="outline-text-2" id="text-org1caa38b">
+<div id="outline-container-org045b6cc" class="outline-2">
+<h2 id="org045b6cc">Prim</h2>
+<div class="outline-text-2" id="text-org045b6cc">
+</div>
+<div id="outline-container-orgf5a2ec7" class="outline-4">
+<h4 id="orgf5a2ec7">Idea generale</h4>
+<div class="outline-text-4" id="text-orgf5a2ec7">
 <p>
-Partiamo da un albero costituito da un solo vertice. Ad ogni passo espandiamo \(T\) aggiungendo l'arco di peso minimo e il vertice in cui arriva che connette un vertice dell'albero che ho già con un vertice che sta fuori.
+Nel passo generico, l'insieme dei vertici del grafo originario è diviso in due sottoinsiemi: i vertici che fanno parte di \(T\) e sono quindi già connessi a tutti gli altri vertici in \(T\), e quelli che non ne fanno ancora parte.
 </p>
 
-<pre class="example" id="org85dfd58">
-Algoritmo Prim (Grafo G=(V,E,o)) -&gt; albero
-    T &lt;- alberto costituito da un unico vertice s \in V qualsiasi
-    WHILE T ha meno di n nodi DO
-        sia(x,y) l'arco di peso minimo con x in t e y non in t
-    aggiungi (x,y) e il vertice x a T
-    END
+<p>
+Un arco è detto <b>di frontiera</b> se i suoi estremi sono uno in \(T\) e l'altro fuori.
+</p>
+
+<p>
+Viene quindi scelto l'arco di frontiera meno costoso, scandendo <b>tutti gli archi uscenti</b> da ogni vertice in \(T\).
+</p>
+
+<p>
+L'arco selezionato e il nuovo vertice che permette di raggiungere vengono aggiunti alla soluzione.
+</p>
+
+<p>
+Si ripete il passo generico fino all'inserimento in \(T\) di tutti i vertici del grafo originario.
+</p>
+
+<pre class="example" id="org184f718">
+ALGORITMO Prim (grafo connesso non orientato G=(V,E,omega)) -&gt; albero
+    T &lt;- (V_t &lt;- {s}, E_t &lt;- (/))
+    WHILE T ha meno di n vertici DO
+        sia (x,y) \in E l'arco di peso minimo con x \in V_t e y \notin V_t
+        V_t &lt;- V_t \cup {y}
+        E_t &lt;- E_t \cup {(x,y)}
     RETURN T
 </pre>
 </div>
-<div id="outline-container-org65022ee" class="outline-3">
-<h3 id="org65022ee">Esecuzione</h3>
-<div class="outline-text-3" id="text-org65022ee">
+</div>
+
+
+<div id="outline-container-org08d911f" class="outline-4">
+<h4 id="org08d911f">Implementazione</h4>
+<div class="outline-text-4" id="text-org08d911f">
 <p>
-Parto da un vertice qualunque ed esamino gli archi di frontiera. Fra quelli, scelgo che pesa di meno e aggiungo l'arco e il vertice successivo.
-Alla prossima iterazione, gli archi di frontiera contengono anche quelli precedenti. Analizzo l'insieme aggiornato di archi di frontiera per trovare il minimo, che aggiungerò e così via.
-Una prima implementazione brutale sarebbe scandire ogni volta <b>tutti</b> gli archi, capire quali sono di frontiera e ricordarsi il minimo. Questa implementazione è molto inefficiente.
-Uso invece un implementazione in cui introduco due informazioni aggiuntive
+:ID:       dbe54f3f-f439-47e7-a916-799ca54bdf7c
 </p>
-<ul class="org-ul">
-<li>\(\verb|d[v]|\)</li>
-<li>\(\verb|vicino[v]|\)</li>
-</ul>
 <p>
-In cui per ogni vertice salvo la distanza tra il vertice v e vicino[v] solo se quella distanza è minore.
-Inizialmente d è tutto a infinito e vicino è vuoto.
-Scelgo il vertice la cui distanza è minima, ovvero alla prima iterazione uno qualunque.
-Poi analizzo tutti gli archi uscenti dal vertice e aggiorno la tabella quando un arco per raggiungere il vertice esterno costa meno del costo scritto in tabella, che era, se è la prima volta che si riesce a raggiungere quell'arco, infinito, o se quel vertice è stato già raggiunto, il minore dei costi da cui era raggiunto.
+La corretta esecuzione dell'algoritmo prevede che venga scelto un arco di frontiera con costo minimo.
 </p>
 
 <p>
-Il problema è che per ognuno degli \(n\) vertici devo trovare il minimo della tabella con \(n\) elementi, per un totale di \(n^{2}\), che porterebbe le prestazioni ad essere minori dell'.
-</p>
-
-<p>
-Devo quindi trovare un modo efficiente per trovare il minimo, quindi si userà una coda con priorità, in cui trovare il minimo ha tempo logaritmico.
-</p>
-
-<p>
-Dato che è un grafo non orientato, ogni arco è rappresentato due volte e quindi gli archi totali sono 2
+Un metodo immediato per scegliere l'arco adeguato sarebbe iterare attraverso tutte le liste di adiacenza, di lunghezza \(O(n)\), per ogni vertice in \(V_{t}\), ad ogni ad ognuna delle \(n\) iterazioni. Si otterebbe tempo \(O(n^{3})\).
 </p>
 </div>
+
+<ul class="org-ul">
+<li><a id="orgce611f3"></a>Mediante vettori delle distanze e dei vicini<br />
+<div class="outline-text-5" id="text-orgce611f3">
+<p>
+Occupando dello spazio aggiuntivo costante, salviamo le seguenti informazioni per ogni vertice \(v\):
+</p>
+<ul class="org-ul">
+<li><code>d[v]</code>, che contiene il peso dell'arco di frontiera che porta a \(v\), \(\infty\) se non esiste;</li>
+<li><code>vicino[v]</code>, che contiene il vertice a cui l'arco di frontiera di distanza <code>d[v]</code> è incidente.</li>
+</ul>
+
+<p>
+Supponendo che le strutture vengano aggiornate correttamente, il tempo diventa dell'ordine di \(O(n^{2})\), in quanto basta iterare attraverso la lista di adiacenza soltanto del nuovo vertice.
+</p>
+
+<p>
+La scelta del vertice <b>fuori frontiera</b> raggiungibile con costo minore viene effettuata all'inizio di ogni iterazione del ciclo principale.
+</p>
+
+<p>
+Una volta scelto il vertice da raggiungere, questo viene aggiunto alla soluzione e, salvo che si tratti del primo, viene aggiunto anche l'arco che ci ha permesso di raggiungerlo, il cui altro estremo è salvato in <code>vicino[d]</code>.
+</p>
+
+<p>
+L'aggiornamento delle strutture avviene dopo l'inserimento di un arco ed un vertice nella soluzione. In particolare, quando un nuovo vertice viene aggiunto, si controllano tutti i <b>nuovi</b> archi di frontiera ad esso incidenti e se uno di essi porta ad un vertice esterno con un costo minore di quello correntemente presente in <code>d[v]</code>, quest'ultimo viene aggiornato, e <code>vicino[d]</code> viene aggiornato con il vertice in questione.
+</p>
+
+<pre class="example" id="orgfe4268e">
+ALGORITMO Prim (grafo connesso non orientato G=(V,E, omega))
+Siano d e vicino vettori con indici in V
+FOREACH v \in V DO
+    d[v] = \infty
+DO
+    y = vertice v in V \ V_t con d[v] minimo
+    // aggiungi y alla soluzione
+    V \cup {y}
+
+    // aggiungi l'arco che ha portato al vettore scelto
+    // tranne quando nessun'arco mi ci ha portato, ovvero alla prima iterazione
+    IF d[y] != \infty THEN
+        x &lt;- vicino[y]
+        E_t &lt;- E_t \cup {(x,y)}
+
+    // aggiorna i vettori
+    FOREACH (y,z) \in E DO
+        IF Z \notin V_t AND \omega(y,z) &lt; d[z] THEN
+            d[z] &lt;- \omega(y,z)
+            vicino[z] = y
+
+WHILE V \ V_t != \emptyset
+RETURN T
+</pre>
+
+<p>
+Da finire
+</p>
+<div class="org-src-container">
+<pre class="src src-go"><span style="color: #a020f0;">func</span> (<span style="color: #a0522d;">G</span> <span style="color: #228b22;">Graph</span>) <span style="color: #0000ff;">prim</span>() <span style="color: #228b22;">Graph</span> {
+        <span style="color: #b22222;">// </span><span style="color: #b22222;">Crea i due vettori</span>
+        <span style="color: #a0522d;">d</span> := <span style="color: #483d8b;">make</span>([]<span style="color: #228b22;">float64</span>, <span style="color: #483d8b;">len</span>(G.vertices))
+        <span style="color: #a0522d;">vicino</span> := <span style="color: #483d8b;">make</span>([]*<span style="color: #228b22;">Vertex</span>, <span style="color: #483d8b;">len</span>(G.vertices))
+        <span style="color: #a020f0;">for</span> <span style="color: #a0522d;">i</span>, <span style="color: #a0522d;">_</span> := <span style="color: #a020f0;">range</span> d {
+                d[i] = math.MaxInt
+        }
+        <span style="color: #b22222;">// </span><span style="color: #b22222;">Crea nuovo da restituire</span>
+        <span style="color: #a0522d;">T</span> := <span style="color: #0000ff;">createGraph</span>()
+        <span style="color: #b22222;">// </span><span style="color: #b22222;">Ciclo interno</span>
+        <span style="color: #a020f0;">for</span> {
+
+                <span style="color: #b22222;">// </span><span style="color: #b22222;">Scegli vertice che costa di meno da raggiungere</span>
+                <span style="color: #a0522d;">minI</span> := 0
+                <span style="color: #a0522d;">minV</span> := d[0]
+                <span style="color: #a020f0;">for</span> <span style="color: #a0522d;">i</span> := 1; i &lt; <span style="color: #483d8b;">len</span>(d); i++ {
+                        <span style="color: #a020f0;">if</span> d[i] &lt; minV {
+                                minI = i
+                        }
+                }
+                <span style="color: #a0522d;">y</span> := G.vertices[minI]
+
+                <span style="color: #b22222;">// </span><span style="color: #b22222;">A parte la prima volta, aggiungi l'arco che ti porta a y</span>
+                <span style="color: #a020f0;">if</span> d[y] != math.MaxInt {
+                        vici
+                }
+
+                <span style="color: #a020f0;">if</span> <span style="color: #483d8b;">len</span>(T.vertices)-<span style="color: #483d8b;">len</span>(G.vertices) == 0 {
+                        <span style="color: #a020f0;">break</span>
+                }
+        }
+        <span style="color: #b22222;">// </span><span style="color: #b22222;">Scegli il vertice con D minimo</span>
+
+}
+
+<span style="color: #a020f0;">func</span> <span style="color: #0000ff;">main</span>() {
+        <span style="color: #a0522d;">G</span> := <span style="color: #0000ff;">createGraph</span>()
+        G.<span style="color: #0000ff;">addEdge</span>(1, 2, 2.5)
+
+        G.<span style="color: #0000ff;">printGraph</span>()
+}
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="orgb8b8422"></a>Mediante <b>coda con priorità</b><br />
+<div class="outline-text-5" id="text-orgb8b8422">
+<p>
+Diocane
+</p>
+</div>
+</li>
+</ul>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-12-18 Wed 14:55</p>
+<p class="date">Created: 2024-12-18 Wed 15:28</p>
 </div>
 </body>
 </html>

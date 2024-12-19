@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2024-12-18 Wed 14:55 -->
+<!-- 2024-12-18 Wed 15:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Alberi ricoprenti minimi</title>
@@ -48,18 +48,8 @@
 <ul>
 <li><a href="#org3b14e40">Alberi ricoprenti minimi</a>
 <ul>
-<li><a href="#orgbe7f3c8">Kruskal</a>
-<ul>
-<li><a href="#orgb74ffba">Idea generale</a></li>
-<li><a href="#orgfd6ebdb">Implementazione</a></li>
-</ul>
-</li>
-<li><a href="#org404f27c">Prim</a>
-<ul>
-<li><a href="#org541fdb2">Idea generale</a></li>
-<li><a href="#org550ec3e">Implementazione</a></li>
-</ul>
-</li>
+<li><a href="#org8338146">Algoritmo di Kruskal</a></li>
+<li><a href="#org6066d4f">Algoritmo di Prim</a></li>
 </ul>
 </li>
 </ul>
@@ -98,291 +88,17 @@ Questo è uno dei casi in cui la <b>strategia greedy</b> fornisce un risultato o
 </p>
 </div>
 
-<div id="outline-container-orgbe7f3c8" class="outline-3">
-<h3 id="orgbe7f3c8">Kruskal</h3>
-<div class="outline-text-3" id="text-orgbe7f3c8">
-</div>
-<div id="outline-container-orgb74ffba" class="outline-4">
-<h4 id="orgb74ffba">Idea generale</h4>
-<div class="outline-text-4" id="text-orgb74ffba">
-<p>
-Nell'algoritmo di Kruskal si sfrutta il concetto di <b>connessione</b>, creando una foresta di alberi <i>parzialmente ricoprenti</i> incrementalmente aggiornati e uniti fra loro, che eventualmente si uniranno in un unico albero ricoprente minimo.
-</p>
-
-<p>
-L'idea è che un arco che collega due vertici è utile soltanto se tali vertici non sono già connessi, altrimenti causerebbe un ciclo.
-</p>
-
-<p>
-Viene scandita la <b>lista di archi</b> ed ogni arco che collega due vertici <b>non ancora connessi</b> viene aggiunto alla soluzione. In questo modo, gli alberi di cui i due vertici fanno parte vengono uniti e diventano un nuovo albero (step valido per induzione).
-</p>
-
-<p>
-Per garantire la condizione di <b>ottimalità</b>, gli archi vengono scanditi in ordine crescente di peso. In questo modo, gli \(n-1\) archi aggiunti costituiscono la configurazione con peso complessivo minimo.
-</p>
-
-<pre class="example" id="org11a48fa">
-ALGORITMO Kruskal(grafo connesso non orientato G=(V,E, omega)) -&gt; albero
-    ordina l'insieme E in base ai pesi in modo non decrescente
-    T = (V, insieme vuoto di archi)
-    FOR EACH (x,y) \in E secondo l'ordine DO
-        IF x e y non sono connessi in T THEN
-            aggiungi (x,y) in T
-    RETURN T
-</pre>
-
-<p>
-Intuitivamente, la soluzione è ottima perché l'obiettivo è soltanto di <b>connettere</b> un vertice, e questo viene fatto nel modo meno costoso possibile. Non esistono situazioni in cui una decisione localmente non ottima risulta in una scelta più conveniente in un passo successivo. Se una coppia di vertici poteva essere connessa con archi meno costosi, sarebbe già stato fatto. Se non è ancora connessa e si scansiona l'arco che permette di farlo, quello è il meno costoso per raggiungere tale obiettivo.
-</p>
-
-<p>
-Quindi, ogni soluzione parziale localmente ottima è anche parte della soluzione ottima finale, ed ogni altra soluzione parziale può essere scartata.
-</p>
-
-<p>
-La differenza fra la ricerca di alberi ricoprenti minimi e di cammini minimi sta proprio in questa proprietà.
-Quando cerco un cammino minimo, il fatto che due vertici siano connessi grazie a un arco non implica che quell'arco faccia parte del cammino minimo.
-</p>
-
-<p>
-Non posso fare altro che ragionare sull'intero cammino. Un nuovo arco che arriva non è o parte della soluzione o meno. Non so se fa parte della soluzione e, ancora peggio, cambia anche il giudizio sugli altri archi. Caso perfetto per la programmazione dinamica.
-</p>
-</div>
+<div id="outline-container-org8338146" class="outline-3">
+<h3 id="org8338146"><a href="algoritmo_di_kruskal.html#ID-1abea2e3-689f-432c-9963-e6f70802a191">Algoritmo di Kruskal</a></h3>
 </div>
 
-<div id="outline-container-orgfd6ebdb" class="outline-4">
-<h4 id="orgfd6ebdb">Implementazione</h4>
-<div class="outline-text-4" id="text-orgfd6ebdb">
-<p>
-Per implementare l'idea generale appena esposta, è necessario utilizzare una struttura che, correttamente aggiornata, ci permetta di stabilire facilmente se due vertici siano già connessi.
-</p>
-
-<p>
-In questo modo, durante l'esecuzione dell'algoritmo si avrà una foresta d'alberi, i cui alberi si fonderanno fino a raggiungere l'unico albero della soluzione.
-</p>
-
-<p>
-Verrà utilizzata la struttura <b>Union-Find</b>. La connessione di due vertici fra loro avviene attraverso la <i>union</i>, mentre la verifica di connessione fra due vertici viene effettuata confrontando il risultato della <i>find</i> di entrambi.
-</p>
-
-<pre class="example" id="org89a7422">
-ALGORITMO Kruskal(grafo connesso non orientato G=(V,E, omega)) -&gt; albero
-    ordina l'insieme E in base ai pesi in modo non decrescente
-    T &lt;- (V, (/))
-    Sia P una partizione inizialmente vuota
-    FOREACH v \in V DO P.makeSet(v)
-    FOREACH (x,y) \in E secondo l'ordine DO
-        t_x &lt;- P.find(x)
-        t_y &lt;- P.find(y)
-        IF t_x != t_y THEN
-            P.union(t_x, t_y)
-            aggiungi a T l'arco (x,y)
-    RETURN T
-</pre>
-</div>
-<ul class="org-ul">
-<li><a id="orge9db3d8"></a>Analisi<br />
-<div class="outline-text-5" id="text-orge9db3d8">
-<p>
-Siano \(n\) il numero di vertici e \(m\) il numero di archi.
-</p>
-
-<p>
-L'ordinamento iniziale viene effettuato in \(O(m \log m)\)
-</p>
-
-<p>
-Per le operazioni sulla UnionFind, supponendo l'utilizzo della versione <b>QuickUnion</b> con bilanciamento in altezza, si ottiene:
-</p>
-<ul class="org-ul">
-<li>\(n\) operazioni <code>makeset</code>: tempo totale \(O(n)\),</li>
-<li>\(2m\) operazioni <code>Find</code>: tempo totale \(O(m\log n)\),</li>
-<li>\(n-1\) operazioni <code>Union</code> (una per ogni arco aggiunto): tempo totale \(O(n)\).</li>
-</ul>
-
-<p>
-Complessivamente, ottengo
-</p>
-
-<p>
-\[O(m \log m) + O(n) + O(m \log n) + O(n)\]
-</p>
-
-<p>
-Dato che \(n-1 < m < n^{2}\) e quindi \(O(m) < O(n^{2})\), ottengo
-</p>
-
-<p>
-\[O(m \log n^{2}) + O(m \log n) = O(m\log n)\]
-</p>
-
-<p>
-perchè \(O(m\log n^{2}) = O(2m\log n) = O(m\log n)\)
-</p>
-</div>
-</li>
-<li><a id="orgde03e2d"></a><span class="todo TODO">TODO</span> Calcolare analisi con RadixSort e compressione di cammino<br /></li>
-</ul>
-</div>
-</div>
-<div id="outline-container-org404f27c" class="outline-3">
-<h3 id="org404f27c">Prim</h3>
-<div class="outline-text-3" id="text-org404f27c">
-</div>
-<div id="outline-container-org541fdb2" class="outline-4">
-<h4 id="org541fdb2">Idea generale</h4>
-<div class="outline-text-4" id="text-org541fdb2">
-<p>
-Nel passo generico, l'insieme dei vertici del grafo originario è diviso in due sottoinsiemi: i vertici che fanno parte di \(T\) e sono quindi già connessi a tutti gli altri vertici in \(T\), e quelli che non ne fanno ancora parte.
-</p>
-
-<p>
-Un arco è detto <b>di frontiera</b> se i suoi estremi sono uno in \(T\) e l'altro fuori.
-</p>
-
-<p>
-Viene quindi scelto l'arco di frontiera meno costoso, scandendo <b>tutti gli archi uscenti</b> da ogni vertice in \(T\).
-</p>
-
-<p>
-L'arco selezionato e il nuovo vertice che permette di raggiungere vengono aggiunti alla soluzione.
-</p>
-
-<p>
-Si ripete il passo generico fino all'inserimento in \(T\) di tutti i vertici del grafo originario.
-</p>
-
-<pre class="example" id="org768ca2f">
-ALGORITMO Prim (grafo connesso non orientato G=(V,E,omega)) -&gt; albero
-    T &lt;- (V_t &lt;- {s}, E_t &lt;- (/))
-    WHILE T ha meno di n vertici DO
-        sia (x,y) \in E l'arco di peso minimo con x \in V_t e y \notin V_t
-        V_t &lt;- V_t \cup {y}
-        E_t &lt;- E_t \cup {(x,y)}
-    RETURN T
-</pre>
-</div>
-</div>
-
-<div id="outline-container-org550ec3e" class="outline-4">
-<h4 id="org550ec3e">Implementazione</h4>
-<div class="outline-text-4" id="text-org550ec3e">
-<p>
-La corretta esecuzione dell'algoritmo prevede che venga scelto un arco di frontiera con costo minimo.
-</p>
-
-<p>
-Un metodo immediato per fare questo sarebbe iterare attraverso l'intero vettore degli archi, ma dato che il numero di archi è sicuramente compreso fra \(n-1\) e \(\frac{(n-1)n}{2}\), si otterebbe un tempo sull'ordine di \(O(n^{2})\).
-</p>
-
-<p>
-Teniamo presente che la scelta dev'essere effettuata fra i vertici in \(V\setminus V_{t}\), ovvero fra i vertici \(v\) non ancora presenti nella soluzione \(V_{t}\).
-</p>
-
-<p>
-Occupando dello spazio aggiuntivo costante, salviamo le seguenti informazioni per ogni vertice \(v\):
-</p>
-<ul class="org-ul">
-<li><code>d[v]</code>, che contiene il peso dell'arco di frontiera che porta a \(v\), \(\infty\) se non esiste;</li>
-<li><code>vicino[v]</code>, che contiene il vertice a cui l'arco di frontiera di distanza <code>d[v]</code> è incidente.</li>
-</ul>
-
-<p>
-Supponendo che le strutture vengano aggiornate correttamente, il tempo rimane sull'ordine di \(O(n^{2})\), ma questa volta iterando attraverso ogni vertice e non ogni arco, quindi con un numero complessivo di iterazioni minore.
-</p>
-
-<p>
-La scelta del vertice <b>fuori frontiera</b> raggiungibile con costo minore viene effettuata all'inizio di ogni iterazione del ciclo principale.
-</p>
-
-<p>
-Una volta scelto il vertice da raggiungere, questo viene aggiunto alla soluzione e, salvo che si tratti del primo, anche l'arco che ci ha permesso di raggiungerlo, il cui altro estremo è salvato in <code>vicino[d]</code>.
-</p>
-
-<p>
-L'aggiornamento delle strutture avviene dopo l'inserimento di un arco ed un vertice nella soluzione. In particolare, quando un nuovo vertice viene aggiunto, si controllano tutti i <b>nuovi</b> archi di frontiera ad esso incidenti e se uno di essi porta ad un vertice esterno con un costo minore di quello correntemente presente in <code>d[v]</code>, quest'ultimo viene aggiornato, e <code>vicino[d]</code> viene aggiornato con il vertice in questione.
-</p>
-
-<pre class="example" id="org3b98926">
-ALGORITMO Prim (grafo connesso non orientato G=(V,E, omega))
-Siano d e vicino vettori con indici in V
-FOREACH v \in V DO
-    d[v] = \infty
-DO
-    y = vertice v in V \ V_t con d[v] minimo
-    // aggiungi y alla soluzione
-    V \cup {y}
-
-    // aggiungi l'arco che ha portato al vettore scelto
-    // tranne quando nessun'arco mi ci ha portato, ovvero alla prima iterazione
-    IF d[y] != \infty THEN
-        x &lt;- vicino[y]
-        E_t &lt;- E_t \cup {(x,y)}
-
-    // aggiorna i vettori
-    FOREACH (y,z) \in E DO
-        IF Z \notin V_t AND \omega(y,z) &lt; d[z] THEN
-            d[z] &lt;- \omega(y,z)
-            vicino[z] = y
-
-WHILE V \ V_t != \emptyset
-RETURN T
-</pre>
-
-<p>
-Da finire
-</p>
-<div class="org-src-container">
-<pre class="src src-go"><span style="color: #a020f0;">func</span> (<span style="color: #a0522d;">G</span> <span style="color: #228b22;">Graph</span>) <span style="color: #0000ff;">prim</span>() <span style="color: #228b22;">Graph</span> {
-        <span style="color: #b22222;">// </span><span style="color: #b22222;">Crea i due vettori</span>
-        <span style="color: #a0522d;">d</span> := <span style="color: #483d8b;">make</span>([]<span style="color: #228b22;">float64</span>, <span style="color: #483d8b;">len</span>(G.vertices))
-        <span style="color: #a0522d;">vicino</span> := <span style="color: #483d8b;">make</span>([]*<span style="color: #228b22;">Vertex</span>, <span style="color: #483d8b;">len</span>(G.vertices))
-        <span style="color: #a020f0;">for</span> <span style="color: #a0522d;">i</span>, <span style="color: #a0522d;">_</span> := <span style="color: #a020f0;">range</span> d {
-                d[i] = math.MaxInt
-        }
-        <span style="color: #b22222;">// </span><span style="color: #b22222;">Crea nuovo da restituire</span>
-        <span style="color: #a0522d;">T</span> := <span style="color: #0000ff;">createGraph</span>()
-        <span style="color: #b22222;">// </span><span style="color: #b22222;">Ciclo interno</span>
-        <span style="color: #a020f0;">for</span> {
-
-                <span style="color: #b22222;">// </span><span style="color: #b22222;">Scegli vertice che costa di meno da raggiungere</span>
-                <span style="color: #a0522d;">minI</span> := 0
-                <span style="color: #a0522d;">minV</span> := d[0]
-                <span style="color: #a020f0;">for</span> <span style="color: #a0522d;">i</span> := 1; i &lt; <span style="color: #483d8b;">len</span>(d); i++ {
-                        <span style="color: #a020f0;">if</span> d[i] &lt; minV {
-                                minI = i
-                        }
-                }
-                <span style="color: #a0522d;">y</span> := G.vertices[minI]
-
-                <span style="color: #b22222;">// </span><span style="color: #b22222;">A parte la prima volta, aggiungi l'arco che ti porta a y</span>
-                <span style="color: #a020f0;">if</span> d[y] != math.MaxInt {
-                        vici
-                }
-
-                <span style="color: #a020f0;">if</span> <span style="color: #483d8b;">len</span>(T.vertices)-<span style="color: #483d8b;">len</span>(G.vertices) == 0 {
-                        <span style="color: #a020f0;">break</span>
-                }
-        }
-        <span style="color: #b22222;">// </span><span style="color: #b22222;">Scegli il vertice con D minimo</span>
-
-}
-
-<span style="color: #a020f0;">func</span> <span style="color: #0000ff;">main</span>() {
-        <span style="color: #a0522d;">G</span> := <span style="color: #0000ff;">createGraph</span>()
-        G.<span style="color: #0000ff;">addEdge</span>(1, 2, 2.5)
-
-        G.<span style="color: #0000ff;">printGraph</span>()
-}
-</pre>
-</div>
-</div>
-</div>
+<div id="outline-container-org6066d4f" class="outline-3">
+<h3 id="org6066d4f"><a href="algoritmodiprim.html#ID-8efdf95f-db48-4ddd-8446-ba66233df723">Algoritmo di Prim</a></h3>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-12-18 Wed 14:55</p>
+<p class="date">Created: 2024-12-18 Wed 15:28</p>
 </div>
 </body>
 </html>
