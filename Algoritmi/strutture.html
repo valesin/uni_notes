@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2024-12-18 Wed 14:55 -->
+<!-- 2025-01-22 Wed 20:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Strutture</title>
@@ -46,25 +46,58 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org4fdf897">Strutture dati</a>
+<li><a href="#org45dae5f">Strutture dati</a>
 <ul>
-<li><a href="#org14e1fd7">Dizionario</a></li>
-<li><a href="#org48c947d">Strutture indicizzate (array)</a></li>
-<li><a href="#org7d2d12a">Strutture collegate</a>
+<li><a href="#orgf3f2dff">Dizionario</a></li>
+<li><a href="#org53c6644">Strutture indicizzate (array)</a></li>
+<li><a href="#org000f4e3">Strutture collegate</a>
 <ul>
-<li><a href="#org55c09f1">Liste concatenate</a></li>
+<li><a href="#org23ec440">Liste concatenate</a>
+<ul>
+<li><a href="#orgebb7ebb">Lista lineare</a>
+<ul>
+<li><a href="#orge53d4a1">Ricerca in una lista lineare</a></li>
+<li><a href="#org93acec9">Inserimento in una lista lineare</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orge440bd6">Tipi di dati</a>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org9445fea">Tipi di dati</a>
 <ul>
-<li><a href="#org91b8bf3">Dizionario</a></li>
-<li><a href="#orgc69b4b1">Pila</a></li>
-<li><a href="#org9ecd956">Heap</a></li>
-<li><a href="#orgc767b1e">UnionFind</a>
+<li><a href="#org3d6f669">Dizionario</a></li>
+<li><a href="#orgea7fe5b">Pila</a></li>
+<li><a href="#orgddcc103">Heap</a></li>
+<li><a href="#orgb9fbe6c">UnionFind</a>
 <ul>
-<li><a href="#org4cfcfed">Rappresentazione</a></li>
+<li><a href="#orga7b7f85">Rappresentazione</a>
+<ul>
+<li><a href="#org0a49cc8">QuickFind</a>
+<ul>
+<li><a href="#org8e371fa">QuickFind con bilanciamento</a>
+<ul>
+<li><a href="#org5dd858d"><span class="todo TODO">TODO</span> Controllare perchè quello è il costo ammortizzato</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org225f8a7">QuickUnion</a>
+<ul>
+<li><a href="#org6992675">QuickUnion con UNION bilanciato By Rank.</a>
+<ul>
+<li><a href="#org8e86090"><span class="todo TODO">TODO</span> Scrivere pseudocodice</a></li>
+</ul>
+</li>
+<li><a href="#org87baafb">By size</a></li>
+<li><a href="#org640e3e5">Compressione del cammino</a></li>
+<li><a href="#org3d33d4a">Logaritmo iterato</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -72,17 +105,17 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org4fdf897" class="outline-2">
-<h2 id="org4fdf897">Strutture dati</h2>
-<div class="outline-text-2" id="text-org4fdf897">
+<div id="outline-container-org45dae5f" class="outline-2">
+<h2 id="org45dae5f">Strutture dati</h2>
+<div class="outline-text-2" id="text-org45dae5f">
 <p>
 Specifica organizzazione delle informazioni che permette di realizzare e implementare un determinato tipo di dati.
 Per lo stesso tipo di dati, posso utilizzare strutture diverse.
 </p>
 </div>
-<div id="outline-container-org14e1fd7" class="outline-3">
-<h3 id="org14e1fd7">Dizionario</h3>
-<div class="outline-text-3" id="text-org14e1fd7">
+<div id="outline-container-orgf3f2dff" class="outline-3">
+<h3 id="orgf3f2dff">Dizionario</h3>
+<div class="outline-text-3" id="text-orgf3f2dff">
 <p>
 In un dizionario, posso implementare un array ordinato in base alla chiave.
 In questo caso, la ricerca richiederebbe \((\Theta \log n)\). L'inserimento \(\Theta(n)\), perchè dovrei trovare il posto giusto, ma poi trovare tutti i successivi. Quindi questa struttura è utile nei casi in cui devo cercare molto ed inserire poco.
@@ -92,9 +125,9 @@ Un altro modo è con le tabelle hash, che vedremo più avanti.
 </p>
 </div>
 </div>
-<div id="outline-container-org48c947d" class="outline-3">
-<h3 id="org48c947d">Strutture indicizzate (array)</h3>
-<div class="outline-text-3" id="text-org48c947d">
+<div id="outline-container-org53c6644" class="outline-3">
+<h3 id="org53c6644">Strutture indicizzate (array)</h3>
+<div class="outline-text-3" id="text-org53c6644">
 <ul class="org-ul">
 <li>Allocate in una porzione contigua di memoria</li>
 <li>Accesso mediante indice (posizione)</li>
@@ -106,30 +139,30 @@ La limitazione è che non è possibile aggiungere altre posizioni, quindi prendo
 </p>
 </div>
 </div>
-<div id="outline-container-org7d2d12a" class="outline-3">
-<h3 id="org7d2d12a">Strutture collegate</h3>
-<div class="outline-text-3" id="text-org7d2d12a">
+<div id="outline-container-org000f4e3" class="outline-3">
+<h3 id="org000f4e3">Strutture collegate</h3>
+<div class="outline-text-3" id="text-org000f4e3">
 <ul class="org-ul">
 <li>Non necessariamente sono allocate in una porzione contigua di memoria</li>
 <li>La loro dimensione può cambiare dinamicamente</li>
 </ul>
 </div>
-<div id="outline-container-org55c09f1" class="outline-4">
-<h4 id="org55c09f1">Liste concatenate</h4>
-<div class="outline-text-4" id="text-org55c09f1">
+<div id="outline-container-org23ec440" class="outline-4">
+<h4 id="org23ec440">Liste concatenate</h4>
+<div class="outline-text-4" id="text-org23ec440">
 </div>
-<ul class="org-ul">
-<li><a id="org148a818"></a>Lista lineare<br />
-<div class="outline-text-5" id="text-org148a818">
+<div id="outline-container-orgebb7ebb" class="outline-5">
+<h5 id="orgebb7ebb">Lista lineare</h5>
+<div class="outline-text-5" id="text-orgebb7ebb">
 <p>
 Un insieme ordinato di nodi collegati linearmente uno dopo l'altro.
 Ogni nodo contiene un dato della collezione, di solito una collezione fra cui uno che ha il ruolo di chiave, e un riferimento al nodo successivo.
 </p>
 </div>
-<ul class="org-ul">
-<li><a id="org4aea7f9"></a>Ricerca in una lista lineare<br />
-<div class="outline-text-6" id="text-org4aea7f9">
-<pre class="example" id="org021f652">
+<div id="outline-container-orge53d4a1" class="outline-6">
+<h6 id="orge53d4a1">Ricerca in una lista lineare</h6>
+<div class="outline-text-6" id="text-orge53d4a1">
+<pre class="example" id="org771f005">
 FUNZIONE trova(Lista L, tipoChiave k) -&gt; Nodo
 p &lt;- L
 WHILE p != null AND p.chiave != k DO
@@ -139,7 +172,7 @@ RETURN p
 <p>
 Se la lista è ordinata, però, potrei effettuare delle ottimizzazioni, ad esempio potrei fermarmi quando trovo un elemento più grande di quello che cerco.
 </p>
-<pre class="example" id="org916986b">
+<pre class="example" id="org2f5761b">
 FUNZIONE trova(Lista L, tipoChiave k) -&gt; Nodo
 p &lt;- L
 WHILE p != null AND p.chiave != k DO
@@ -150,55 +183,54 @@ ELSE
     RETURN p
 </pre>
 </div>
-</li>
-<li><a id="org1882943"></a>Inserimento in una lista lineare<br />
-<div class="outline-text-6" id="text-org1882943">
+</div>
+<div id="outline-container-org93acec9" class="outline-6">
+<h6 id="org93acec9">Inserimento in una lista lineare</h6>
+<div class="outline-text-6" id="text-org93acec9">
 <p>
 &#x2026; Inserire il semplice codice per fare questa cosa
 </p>
 </div>
-</li>
-</ul>
-</li>
-</ul>
 </div>
 </div>
 </div>
-<div id="outline-container-orge440bd6" class="outline-2">
-<h2 id="orge440bd6">Tipi di dati</h2>
-<div class="outline-text-2" id="text-orge440bd6">
+</div>
+</div>
+<div id="outline-container-org9445fea" class="outline-2">
+<h2 id="org9445fea">Tipi di dati</h2>
+<div class="outline-text-2" id="text-org9445fea">
 <p>
 Il tipo di una variabile è l'insieme dei valori che la variabile può assumere e le relative operazioni su esso definite.
 </p>
 </div>
-<div id="outline-container-org91b8bf3" class="outline-3">
-<h3 id="org91b8bf3">Dizionario</h3>
-<div class="outline-text-3" id="text-org91b8bf3">
+<div id="outline-container-org3d6f669" class="outline-3">
+<h3 id="org3d6f669">Dizionario</h3>
+<div class="outline-text-3" id="text-org3d6f669">
 <p>
 Collezione di elementi, ciascuno dei quali è caratterizzato da una chiave, che appartiene a un dominio totalmente ordinato.
 Le operazioni tipicamente definite su esso sono inserimento, ricerca e cancellazione.
 </p>
 </div>
 </div>
-<div id="outline-container-orgc69b4b1" class="outline-3">
-<h3 id="orgc69b4b1">Pila</h3>
-<div class="outline-text-3" id="text-orgc69b4b1">
+<div id="outline-container-orgea7fe5b" class="outline-3">
+<h3 id="orgea7fe5b">Pila</h3>
+<div class="outline-text-3" id="text-orgea7fe5b">
 <p>
 Collezione di dati con organizzazione Last-In-First-Out
 </p>
 </div>
 </div>
-<div id="outline-container-org9ecd956" class="outline-3">
-<h3 id="org9ecd956">Heap</h3>
-<div class="outline-text-3" id="text-org9ecd956">
+<div id="outline-container-orgddcc103" class="outline-3">
+<h3 id="orgddcc103">Heap</h3>
+<div class="outline-text-3" id="text-orgddcc103">
 <p>
 to be filled
 </p>
 </div>
 </div>
-<div id="outline-container-orgc767b1e" class="outline-3">
-<h3 id="orgc767b1e">UnionFind</h3>
-<div class="outline-text-3" id="text-orgc767b1e">
+<div id="outline-container-orgb9fbe6c" class="outline-3">
+<h3 id="orgb9fbe6c">UnionFind</h3>
+<div class="outline-text-3" id="text-orgb9fbe6c">
 <p>
 3 operazioni definite:
 </p>
@@ -208,40 +240,40 @@ to be filled
 <li>Makeset(x), che crea un set che contiene l'elemento x</li>
 </ul>
 </div>
-<div id="outline-container-org4cfcfed" class="outline-4">
-<h4 id="org4cfcfed">Rappresentazione</h4>
-<div class="outline-text-4" id="text-org4cfcfed">
+<div id="outline-container-orga7b7f85" class="outline-4">
+<h4 id="orga7b7f85">Rappresentazione</h4>
+<div class="outline-text-4" id="text-orga7b7f85">
 <p>
 Ogni insieme è rappresentato da un albero con radice, dove la radice è il nome dell'insieme, i nodi gli elementi dell'insieme. Questi alberi sono rappresentati da puntatori verso l'alto.
 Una partizione è invece rappresentata da foreste di alberi.
 </p>
 </div>
-<ul class="org-ul">
-<li><a id="org077fae9"></a>QuickFind<br />
-<div class="outline-text-5" id="text-org077fae9">
+<div id="outline-container-org0a49cc8" class="outline-5">
+<h5 id="org0a49cc8">QuickFind</h5>
+<div class="outline-text-5" id="text-org0a49cc8">
 <p>
 Gli elementi dell'insieme stanno sulle foglie. Il nome è la radice, che è quindi un nodo speciale.
 In questo caso, sia il makeset che la find hanno un tempo costante. Il motivo per cui la find ha questo tempo asintotico è che, conoscendo l'elemento, basta salire di un livello per trovare il nome dell'insieme.
 Nel caso della union, però, diventa necessario spostare i puntatori di tutti gli elementi, che nel caso in cui uno dei due insiemi abbia \(n-1\) elementi, ha costo lineare.
 </p>
 </div>
-<ul class="org-ul">
-<li><a id="org8cc2904"></a>QuickFind con bilanciamento<br />
-<div class="outline-text-6" id="text-org8cc2904">
+<div id="outline-container-org8e371fa" class="outline-6">
+<h6 id="org8e371fa">QuickFind con bilanciamento</h6>
+<div class="outline-text-6" id="text-org8e371fa">
 <p>
 Salvo nella radice anche la cardinalità. In questo modo, sposto gli elementi sempre dall'insieme minore a quello maggiore, quindi il caso peggiore diventa quello in cui sposto \(\frac{n}{2}\) elementi.
 Il risparmio è poco significativo, perchè il tempo rimane
 Si può dimostrare che effettuando una sequenza di \(n\) MAKESET e \(O(n)\) UNION e FIND il tempo totale è \(O(n\log n)\), per cui il tempo ammortizzato di per la union è \(O(\log n)\).
 </p>
 </div>
-<ul class="org-ul">
-<li><a id="org3c64776"></a><span class="todo TODO">TODO</span> Controllare perchè quello è il costo ammortizzato<br /></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a id="org4a99701"></a>QuickUnion<br />
-<div class="outline-text-5" id="text-org4a99701">
+<div id="outline-container-org5dd858d" class="outline-7">
+<h7 id="org5dd858d"><span class="todo TODO">TODO</span> Controllare perchè quello è il costo ammortizzato</h7>
+</div>
+</div>
+</div>
+<div id="outline-container-org225f8a7" class="outline-5">
+<h5 id="org225f8a7">QuickUnion</h5>
+<div class="outline-text-5" id="text-org225f8a7">
 <p>
 In questo caso, gli alberi possono essere di varie altezze, gli elementi dell'insieme sono nei nodi, compresa la radice, che in più da il nome all'insieme.
 Il <code>makeset</code> si fa in tempo costante come nella quickFind.
@@ -251,9 +283,9 @@ Il caso peggiore è la sequenza di makeset in cui inizio ad unire in sequenza, o
 Per evitare questo caso, e anche quelli sconvenienti in generale, devo tenere sotto controllo l'altezza degli alberi.
 </p>
 </div>
-<ul class="org-ul">
-<li><a id="org2e30276"></a>QuickUnion con UNION bilanciato By Rank.<br />
-<div class="outline-text-6" id="text-org2e30276">
+<div id="outline-container-org6992675" class="outline-6">
+<h6 id="org6992675">QuickUnion con UNION bilanciato By Rank.</h6>
+<div class="outline-text-6" id="text-org6992675">
 <p>
 Quando devo unire degli alberi, controllo l'altezza di entrambi e attacco quello più basso all'altro. In questo modo, l'altezza dell'albero non aumenta mai, tranne che quando gli alberi hanno la stessa dimensione.
 Diventa necessario mantenere l'altezza dell'albero.
@@ -268,19 +300,21 @@ Il corollario di questa dimostrazione è che se ho \(n\) nodi, l'altezza è al p
 Insomma, la find dovra risalire sempre al massimo questa altezza e quindi ha tempo logaritmico.
 </p>
 </div>
-<ul class="org-ul">
-<li><a id="org1872569"></a><span class="todo TODO">TODO</span> Scrivere pseudocodice<br /></li>
-</ul>
-</li>
-<li><a id="org5b7dca8"></a>By size<br />
-<div class="outline-text-6" id="text-org5b7dca8">
+<div id="outline-container-org8e86090" class="outline-7">
+<h7 id="org8e86090"><span class="todo TODO">TODO</span> Scrivere pseudocodice</h7>
+</div>
+</div>
+<div id="outline-container-org87baafb" class="outline-6">
+<h6 id="org87baafb">By size</h6>
+<div class="outline-text-6" id="text-org87baafb">
 <p>
 Si bilancia per dimensione e non per altezza, con risultati assolutamente affini ai precedenti.
 </p>
 </div>
-</li>
-<li><a id="org559e96c"></a>Compressione del cammino<br />
-<div class="outline-text-6" id="text-org559e96c">
+</div>
+<div id="outline-container-org640e3e5" class="outline-6">
+<h6 id="org640e3e5">Compressione del cammino</h6>
+<div class="outline-text-6" id="text-org640e3e5">
 <p>
 Per migliorare ulteriormente, schiaccio l'albero durante la find.
 Supponiamo di fare una find di un albero in cui uno dei sottoalberi ha altezza maggiore.
@@ -288,23 +322,22 @@ Tutti i nodi che incontro diventano, alla fine della find, figli della radice.
 Il tempo asintotico della find rimane uguale, perchè il tempo per spostare i puntatori è lineare con il numero di nodi incontrati, ed il numero di nodi incontrati è lineare con l'altezza dell'albero, per lo stesso motivo per cui la find ha tempo logaritmico con l'altezza.
 </p>
 </div>
-</li>
-<li><a id="org7dd73e8"></a>Logaritmo iterato<br />
-<div class="outline-text-6" id="text-org7dd73e8">
+</div>
+<div id="outline-container-org3d33d4a" class="outline-6">
+<h6 id="org3d33d4a">Logaritmo iterato</h6>
+<div class="outline-text-6" id="text-org3d33d4a">
 <p>
 Una funzione che cresce così lentamente da poter essere considerata costante, infatti arriva a 5 per \(2^{65}\), il valore più grande tipicamente rappresentabile sui calcolatori.
 </p>
 </div>
-</li>
-</ul>
-</li>
-</ul>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-12-18 Wed 14:55</p>
+<p class="date">Created: 2025-01-22 Wed 20:15</p>
 </div>
 </body>
 </html>

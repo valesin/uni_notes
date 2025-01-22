@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2024-12-18 Wed 15:28 -->
+<!-- 2025-01-22 Wed 20:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Algoritmo di Kruskal</title>
@@ -46,28 +46,35 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org7175e18">Kruskal</a>
+<li><a href="#org6fd51cd">Kruskal</a>
 <ul>
-<li><a href="#orgd868db3">Idea generale</a></li>
-<li><a href="#orgeb4e936">Implementazione</a>
+<li><a href="#org6cb503b">Idea generale</a></li>
+<li><a href="#org7abdd8f">Implementazione</a>
 <ul>
-<li><a href="#org574359f">Analisi</a></li>
-<li><a href="#org7abbd2c"><span class="todo TODO">TODO</span> Calcolare analisi con RadixSort e compressione di cammino</a></li>
+<li><a href="#orgda62788">Analisi</a></li>
+<li><a href="#orgc252530"><span class="todo TODO">TODO</span> Calcolare analisi con RadixSort e compressione di cammino</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
+</li>
+<li><a href="#org2f16ab6">Anki</a>
+<ul>
+<li><a href="#org2ea987b">Qual è lo pseudocodice ad alto livello dell'algoritmo di Kruskal?</a></li>
+<li><a href="#orgb75e5c2">Qual è lo pseudocodice ad alto livello dell'algoritmo di Kruskal?</a></li>
+<li><a href="#org62a78c7">Qual è lo pseudocodice dell'implementazione dell'algoritmo di Kruskal?</a></li>
+<li><a href="#orgdb388ce">Qual è l'analisi asintotica dell'algoritmo di Kruskal?</a></li>
+</ul>
 </div>
 </div>
-<div id="outline-container-org7175e18" class="outline-2">
-<h2 id="org7175e18">Kruskal</h2>
-<div class="outline-text-2" id="text-org7175e18">
+<div id="outline-container-org6fd51cd" class="outline-3">
+<h3 id="org6fd51cd">Kruskal</h3>
+<div class="outline-text-3" id="text-org6fd51cd">
 </div>
-
-<div id="outline-container-orgd868db3" class="outline-3">
-<h3 id="orgd868db3">Idea generale</h3>
-<div class="outline-text-3" id="text-orgd868db3">
+<div id="outline-container-org6cb503b" class="outline-4">
+<h4 id="org6cb503b">Idea generale</h4>
+<div class="outline-text-4" id="text-org6cb503b">
 <p>
 Nell'algoritmo di Kruskal si sfrutta il concetto di <b>connessione</b>, creando una foresta di alberi <i>parzialmente ricoprenti</i> incrementalmente aggiornati e uniti fra loro, che eventualmente si uniranno in un unico albero ricoprente minimo.
 </p>
@@ -84,7 +91,7 @@ Viene scandita la <b>lista di archi</b> ed ogni arco che collega due vertici <b>
 Per garantire la condizione di <b>ottimalità</b>, gli archi vengono scanditi in ordine crescente di peso. In questo modo, gli \(n-1\) archi aggiunti costituiscono la configurazione con peso complessivo minimo.
 </p>
 
-<pre class="example" id="orgd5f51d0">
+<pre class="example" id="orgcbc64a4">
 ALGORITMO Kruskal(grafo connesso non orientato G=(V,E, omega)) -&gt; albero
     ordina l'insieme E in base ai pesi in modo non decrescente
     T = (V, insieme vuoto di archi)
@@ -112,10 +119,9 @@ Non posso fare altro che ragionare sull'intero cammino. Un nuovo arco che arriva
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgeb4e936" class="outline-3">
-<h3 id="orgeb4e936">Implementazione</h3>
-<div class="outline-text-3" id="text-orgeb4e936">
+<div id="outline-container-org7abdd8f" class="outline-4">
+<h4 id="org7abdd8f">Implementazione</h4>
+<div class="outline-text-4" id="text-org7abdd8f">
 <p>
 Per implementare l'idea generale appena esposta, è necessario utilizzare una struttura che, correttamente aggiornata, ci permetta di stabilire facilmente se due vertici siano già connessi.
 </p>
@@ -128,7 +134,7 @@ In questo modo, durante l'esecuzione dell'algoritmo si avrà una foresta d'alber
 Verrà utilizzata la struttura <b>Union-Find</b>. La connessione di due vertici fra loro avviene attraverso la <i>union</i>, mentre la verifica di connessione fra due vertici viene effettuata confrontando il risultato della <i>find</i> di entrambi.
 </p>
 
-<pre class="example" id="org42e7761">
+<pre class="example" id="org3acd6d7">
 ALGORITMO Kruskal(grafo connesso non orientato G=(V,E, omega)) -&gt; albero
     ordina l'insieme E in base ai pesi in modo non decrescente
     T &lt;- (V, (/))
@@ -143,9 +149,9 @@ ALGORITMO Kruskal(grafo connesso non orientato G=(V,E, omega)) -&gt; albero
     RETURN T
 </pre>
 </div>
-<div id="outline-container-org574359f" class="outline-4">
-<h4 id="org574359f">Analisi</h4>
-<div class="outline-text-4" id="text-org574359f">
+<div id="outline-container-orgda62788" class="outline-5">
+<h5 id="orgda62788">Analisi</h5>
+<div class="outline-text-5" id="text-orgda62788">
 <p>
 Siano \(n\) il numero di vertici e \(m\) il numero di archi.
 </p>
@@ -184,14 +190,96 @@ perchè \(O(m\log n^{2}) = O(2m\log n) = O(m\log n)\)
 </p>
 </div>
 </div>
-<div id="outline-container-org7abbd2c" class="outline-4">
-<h4 id="org7abbd2c"><span class="todo TODO">TODO</span> Calcolare analisi con RadixSort e compressione di cammino</h4>
+<div id="outline-container-orgc252530" class="outline-5">
+<h5 id="orgc252530"><span class="todo TODO">TODO</span> Calcolare analisi con RadixSort e compressione di cammino</h5>
+</div>
+</div>
+</div>
+<div id="outline-container-org2f16ab6" class="outline-2">
+<h2 id="org2f16ab6">Anki</h2>
+<div class="outline-text-2" id="text-org2f16ab6">
+</div>
+<div id="outline-container-org2ea987b" class="outline-3">
+<h3 id="org2ea987b">Qual è lo pseudocodice ad alto livello dell'algoritmo di Kruskal?</h3>
+</div>
+<div id="outline-container-orgb75e5c2" class="outline-3">
+<h3 id="orgb75e5c2">Qual è lo pseudocodice ad alto livello dell'algoritmo di Kruskal?</h3>
+<div class="outline-text-3" id="text-orgb75e5c2">
+<pre class="example" id="orgc18224f">
+ALGORITMO Kruskal(grafo connesso non orientato G=(V,E, omega)) -&gt; albero
+    ordina l'insieme E in base ai pesi in modo non decrescente
+    T = (V, insieme vuoto di archi)
+    FOR EACH (x,y) \in E secondo l'ordine DO
+        IF x e y non sono connessi in T THEN
+            aggiungi (x,y) in T
+    RETURN T
+</pre>
+</div>
+</div>
+<div id="outline-container-org62a78c7" class="outline-3">
+<h3 id="org62a78c7">Qual è lo pseudocodice dell'implementazione dell'algoritmo di Kruskal?</h3>
+<div class="outline-text-3" id="text-org62a78c7">
+<pre class="example" id="org91986f5">
+ALGORITMO Kruskal(grafo connesso non orientato G=(V,E, omega)) -&gt; albero
+    ordina l'insieme E in base ai pesi in modo non decrescente
+    T &lt;- (V, (/))
+    Sia P una partizione inizialmente vuota
+    FOREACH v \in V DO P.makeSet(v)
+    FOREACH (x,y) \in E secondo l'ordine DO
+        t_x &lt;- P.find(x)
+        t_y &lt;- P.find(y)
+        IF t_x != t_y THEN
+            P.union(t_x, t_y)
+            aggiungi a T l'arco (x,y)
+    RETURN T
+</pre>
+</div>
+</div>
+<div id="outline-container-orgdb388ce" class="outline-3">
+<h3 id="orgdb388ce">Qual è l'analisi asintotica dell'algoritmo di Kruskal?</h3>
+<div class="outline-text-3" id="text-orgdb388ce">
+<p>
+Siano \(n\) il numero di vertici e \(m\) il numero di archi.
+</p>
+
+<p>
+L'ordinamento iniziale viene effettuato in \(O(m \log m)\)
+</p>
+
+<p>
+Per le operazioni sulla UnionFind, supponendo l'utilizzo della versione <b>QuickUnion</b> con bilanciamento in altezza, si ottiene:
+</p>
+<ul class="org-ul">
+<li>\(n\) operazioni <code>makeset</code>: tempo totale \(O(n)\),</li>
+<li>\(2m\) operazioni <code>Find</code>: tempo totale \(O(m\log n)\),</li>
+<li>\(n-1\) operazioni <code>Union</code> (una per ogni arco aggiunto): tempo totale \(O(n)\).</li>
+</ul>
+
+<p>
+Complessivamente, ottengo
+</p>
+
+<p>
+\[O(m \log m) + O(n) + O(m \log n) + O(n)\]
+</p>
+
+<p>
+Dato che \(n-1 < m < n^{2}\) e quindi \(O(m) < O(n^{2})\), ottengo
+</p>
+
+<p>
+\[O(m \log n^{2}) + O(m \log n) = O(m\log n)\]
+</p>
+
+<p>
+perchè \(O(m\log n^{2}) = O(2m\log n) = O(m\log n)\)
+</p>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2024-12-18 Wed 15:28</p>
+<p class="date">Created: 2025-01-22 Wed 20:15</p>
 </div>
 </body>
 </html>
