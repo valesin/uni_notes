@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-01-22 Wed 20:15 -->
+<!-- 2025-01-28 Tue 17:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ricerca</title>
@@ -46,116 +46,116 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org75338e9">Array</a>
+<li><a href="#org78d928f">Array</a>
 <ul>
-<li><a href="#org1e56b27">Collezione di elementi dello stesso tipo, accessibili in base alla posizione.</a></li>
-<li><a href="#org99517f9">Memorizzato in una porzione contigua di memoria.</a></li>
-<li><a href="#orge83878e">Accessibile mediante <i>indice</i>.</a>
+<li><a href="#orgc30f507">Collezione di elementi dello stesso tipo, accessibili in base alla posizione.</a></li>
+<li><a href="#orga9b4b67">Memorizzato in una porzione contigua di memoria.</a></li>
+<li><a href="#orgba713cf">Accessibile mediante <i>indice</i>.</a>
 <ul>
-<li><a href="#orgd47200c">Questo comporta che il tempo di accesso sia indipendente dalla posizione del dato.</a>
+<li><a href="#org4c1aa21">Questo comporta che il tempo di accesso sia indipendente dalla posizione del dato.</a>
 <ul>
-<li><a href="#orge924602">Sfrutta l'architettura della memoria RAM.</a></li>
+<li><a href="#orgf447ee7">Sfrutta l'architettura della memoria RAM.</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org947cb5c">E' una struttura statica.</a>
+<li><a href="#orgb530936">E' una struttura statica.</a>
 <ul>
-<li><a href="#orgafcefd4">Non si può modificare la dimensione dopo la dichiarazione iniziale.</a></li>
-<li><a href="#org1dcbb8b">Infatti, cadrebbe la condizione della porzione contigua di memoria.</a>
+<li><a href="#orgc8407b9">Non si può modificare la dimensione dopo la dichiarazione iniziale.</a></li>
+<li><a href="#org08db387">Infatti, cadrebbe la condizione della porzione contigua di memoria.</a>
 <ul>
-<li><a href="#org41e5bdd">Una soluzione sarebbe quella di riallocare l'intero array, ma è molto costoso.</a></li>
+<li><a href="#org32c7922">Una soluzione sarebbe quella di riallocare l'intero array, ma è molto costoso.</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgaa1e42a">La variabile array è un <b>puntatore</b> all'array.</a>
+<li><a href="#org83d289e">La variabile array è un <b>puntatore</b> all'array.</a>
 <ul>
-<li><a href="#org02b622b">Questo comporta che diverse variabili puntino allo stesso array sottostante.</a>
+<li><a href="#org2e376bb">Questo comporta che diverse variabili puntino allo stesso array sottostante.</a>
 <ul>
-<li><a href="#orgcb26b9b">Non succede in go.</a></li>
+<li><a href="#org52e24fa">Non succede in go.</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org33e9ba8">Ricerca in un array</a>
+<li><a href="#org40b526a">Ricerca in un array</a>
 <ul>
-<li><a href="#org722e40c">Ricerca sequenziale</a>
+<li><a href="#org77a9ac0">Ricerca sequenziale</a>
 <ul>
-<li><a href="#orgda3aaa1">Notare che nel caso in cui le condizioni fossero verificate in ordine contrario, si accederebbe ad una posizione inesistente, generando un errore.</a></li>
-<li><a href="#org97e2635">Attenzione al fatto che l'AND non è commutativo, come in logica, e le condizioni vengono verificate in ordine.</a></li>
-<li><a href="#org1c59598">Inoltre, per la <b>lazy evaluation</b>, se una condizione si rivela falsa, la successiva non viene verificata.</a></li>
+<li><a href="#org5bb78f5">Notare che nel caso in cui le condizioni fossero verificate in ordine contrario, si accederebbe ad una posizione inesistente, generando un errore.</a></li>
+<li><a href="#org68930d8">Attenzione al fatto che l'AND non è commutativo, come in logica, e le condizioni vengono verificate in ordine.</a></li>
+<li><a href="#org6c84b9a">Inoltre, per la <b>lazy evaluation</b>, se una condizione si rivela falsa, la successiva non viene verificata.</a></li>
 </ul>
 </li>
-<li><a href="#org3e4ce31">Ricerca dicotomica</a>
+<li><a href="#orge4706fc">Ricerca dicotomica</a>
 <ul>
-<li><a href="#orgca9d1a6">Il tempo è logaritmico, mentre lo spazio è eccessivo. Sarebbe meglio trovare un modo per operare in loco.</a>
+<li><a href="#orge491628">Il tempo è logaritmico, mentre lo spazio è eccessivo. Sarebbe meglio trovare un modo per operare in loco.</a>
 <ul>
-<li><a href="#orga7cf8df">Notare che per il tempo si usa \(\theta{(n)}\) e non \(\O{(n)}\), perchè esiste un caso per ogni lunghezza in cui il tempo è effettivamente \(\log(n)\)</a></li>
+<li><a href="#orgd7ab0c3">Notare che per il tempo si usa \(\theta{(n)}\) e non \(\O{(n)}\), perchè esiste un caso per ogni lunghezza in cui il tempo è effettivamente \(\log(n)\)</a></li>
 </ul>
 </li>
-<li><a href="#orgd9aa318">Il tipo di ricorsione usato in <code>ricercaRic</code> è chiamato "in coda" o "terminale".</a>
+<li><a href="#orge22f7b5">Il tipo di ricorsione usato in <code>ricercaRic</code> è chiamato "in coda" o "terminale".</a>
 <ul>
-<li><a href="#org2362842">La chiamata risolutiva non termina l'algoritmo, ma restituisce il valore a quelle superiori, fino ad arrivare alla prima.</a></li>
+<li><a href="#orgb1894a6">La chiamata risolutiva non termina l'algoritmo, ma restituisce il valore a quelle superiori, fino ad arrivare alla prima.</a></li>
 </ul>
 </li>
-<li><a href="#org405d3c0">La ricorsione "in coda" occupa tanto spazio inutile, ma si crea facilmente una versione iterativa che risolve lo stesso problema, occupando meno spazio.</a></li>
-<li><a href="#orgd106420">Ogni algoritmo ricorsivo può essere trasformato in uno iterativo. A volte, però, farlo non fornisce alcun vantaggio, in quanto è necessario creare uno stack manualmente.</a></li>
-</ul>
-</li>
+<li><a href="#orgaebb712">La ricorsione "in coda" occupa tanto spazio inutile, ma si crea facilmente una versione iterativa che risolve lo stesso problema, occupando meno spazio.</a></li>
+<li><a href="#orgf12cdd5">Ogni algoritmo ricorsivo può essere trasformato in uno iterativo. A volte, però, farlo non fornisce alcun vantaggio, in quanto è necessario creare uno stack manualmente.</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
+</li>
+</ul>
 </div>
 </div>
-<div id="outline-container-org75338e9" class="outline-2">
-<h2 id="org75338e9">Array</h2>
-<div class="outline-text-2" id="text-org75338e9">
+<div id="outline-container-org78d928f" class="outline-2">
+<h2 id="org78d928f">Array</h2>
+<div class="outline-text-2" id="text-org78d928f">
 </div>
-<div id="outline-container-org1e56b27" class="outline-3">
-<h3 id="org1e56b27">Collezione di elementi dello stesso tipo, accessibili in base alla posizione.</h3>
+<div id="outline-container-orgc30f507" class="outline-3">
+<h3 id="orgc30f507">Collezione di elementi dello stesso tipo, accessibili in base alla posizione.</h3>
 </div>
-<div id="outline-container-org99517f9" class="outline-3">
-<h3 id="org99517f9">Memorizzato in una porzione contigua di memoria.</h3>
+<div id="outline-container-orga9b4b67" class="outline-3">
+<h3 id="orga9b4b67">Memorizzato in una porzione contigua di memoria.</h3>
 </div>
-<div id="outline-container-orge83878e" class="outline-3">
-<h3 id="orge83878e">Accessibile mediante <i>indice</i>.</h3>
-<div class="outline-text-3" id="text-orge83878e">
+<div id="outline-container-orgba713cf" class="outline-3">
+<h3 id="orgba713cf">Accessibile mediante <i>indice</i>.</h3>
+<div class="outline-text-3" id="text-orgba713cf">
 </div>
-<div id="outline-container-orgd47200c" class="outline-4">
-<h4 id="orgd47200c">Questo comporta che il tempo di accesso sia indipendente dalla posizione del dato.</h4>
-<div class="outline-text-4" id="text-orgd47200c">
+<div id="outline-container-org4c1aa21" class="outline-4">
+<h4 id="org4c1aa21">Questo comporta che il tempo di accesso sia indipendente dalla posizione del dato.</h4>
+<div class="outline-text-4" id="text-org4c1aa21">
 </div>
-<div id="outline-container-orge924602" class="outline-5">
-<h5 id="orge924602">Sfrutta l'architettura della memoria RAM.</h5>
-</div>
-</div>
-</div>
-<div id="outline-container-org947cb5c" class="outline-3">
-<h3 id="org947cb5c">E' una struttura statica.</h3>
-<div class="outline-text-3" id="text-org947cb5c">
-</div>
-<div id="outline-container-orgafcefd4" class="outline-4">
-<h4 id="orgafcefd4">Non si può modificare la dimensione dopo la dichiarazione iniziale.</h4>
-</div>
-<div id="outline-container-org1dcbb8b" class="outline-4">
-<h4 id="org1dcbb8b">Infatti, cadrebbe la condizione della porzione contigua di memoria.</h4>
-<div class="outline-text-4" id="text-org1dcbb8b">
-</div>
-<div id="outline-container-org41e5bdd" class="outline-5">
-<h5 id="org41e5bdd">Una soluzione sarebbe quella di riallocare l'intero array, ma è molto costoso.</h5>
+<div id="outline-container-orgf447ee7" class="outline-5">
+<h5 id="orgf447ee7">Sfrutta l'architettura della memoria RAM.</h5>
 </div>
 </div>
 </div>
-<div id="outline-container-orgaa1e42a" class="outline-3">
-<h3 id="orgaa1e42a">La variabile array è un <b>puntatore</b> all'array.</h3>
-<div class="outline-text-3" id="text-orgaa1e42a">
+<div id="outline-container-orgb530936" class="outline-3">
+<h3 id="orgb530936">E' una struttura statica.</h3>
+<div class="outline-text-3" id="text-orgb530936">
 </div>
-<div id="outline-container-org02b622b" class="outline-4">
-<h4 id="org02b622b">Questo comporta che diverse variabili puntino allo stesso array sottostante.</h4>
-<div class="outline-text-4" id="text-org02b622b">
+<div id="outline-container-orgc8407b9" class="outline-4">
+<h4 id="orgc8407b9">Non si può modificare la dimensione dopo la dichiarazione iniziale.</h4>
+</div>
+<div id="outline-container-org08db387" class="outline-4">
+<h4 id="org08db387">Infatti, cadrebbe la condizione della porzione contigua di memoria.</h4>
+<div class="outline-text-4" id="text-org08db387">
+</div>
+<div id="outline-container-org32c7922" class="outline-5">
+<h5 id="org32c7922">Una soluzione sarebbe quella di riallocare l'intero array, ma è molto costoso.</h5>
+</div>
+</div>
+</div>
+<div id="outline-container-org83d289e" class="outline-3">
+<h3 id="org83d289e">La variabile array è un <b>puntatore</b> all'array.</h3>
+<div class="outline-text-3" id="text-org83d289e">
+</div>
+<div id="outline-container-org2e376bb" class="outline-4">
+<h4 id="org2e376bb">Questo comporta che diverse variabili puntino allo stesso array sottostante.</h4>
+<div class="outline-text-4" id="text-org2e376bb">
 <div class="org-src-container">
 <pre class="src src-go"><span style="color: #a0522d;">A</span> := [3]<span style="color: #228b22;">int</span>{1,2,3}
 <span style="color: #a0522d;">B</span> := A
@@ -164,19 +164,19 @@ fmt.<span style="color: #0000ff;">Println</span>(A[1], B[1])
 </pre>
 </div>
 </div>
-<div id="outline-container-orgcb26b9b" class="outline-5">
-<h5 id="orgcb26b9b">Non succede in go.</h5>
+<div id="outline-container-org52e24fa" class="outline-5">
+<h5 id="org52e24fa">Non succede in go.</h5>
 </div>
 </div>
 </div>
-<div id="outline-container-org33e9ba8" class="outline-3">
-<h3 id="org33e9ba8">Ricerca in un array</h3>
-<div class="outline-text-3" id="text-org33e9ba8">
+<div id="outline-container-org40b526a" class="outline-3">
+<h3 id="org40b526a">Ricerca in un array</h3>
+<div class="outline-text-3" id="text-org40b526a">
 </div>
-<div id="outline-container-org722e40c" class="outline-4">
-<h4 id="org722e40c">Ricerca sequenziale</h4>
-<div class="outline-text-4" id="text-org722e40c">
-<pre class="example" id="org7f6edac">
+<div id="outline-container-org77a9ac0" class="outline-4">
+<h4 id="org77a9ac0">Ricerca sequenziale</h4>
+<div class="outline-text-4" id="text-org77a9ac0">
+<pre class="example" id="orgfc8d5f0">
 ALGORITMO ricercaSequenziale( Array A[0..n-1], elemento x) -&gt; indice
 i &lt;- 0
 WHILE  ( i &lt; n AND A[i] /= x )  DO
@@ -185,20 +185,20 @@ IF ( i = n) THEN RETURN -1
     ELSE RETURN i
 </pre>
 </div>
-<div id="outline-container-orgda3aaa1" class="outline-5">
-<h5 id="orgda3aaa1">Notare che nel caso in cui le condizioni fossero verificate in ordine contrario, si accederebbe ad una posizione inesistente, generando un errore.</h5>
+<div id="outline-container-org5bb78f5" class="outline-5">
+<h5 id="org5bb78f5">Notare che nel caso in cui le condizioni fossero verificate in ordine contrario, si accederebbe ad una posizione inesistente, generando un errore.</h5>
 </div>
-<div id="outline-container-org97e2635" class="outline-5">
-<h5 id="org97e2635">Attenzione al fatto che l'AND non è commutativo, come in logica, e le condizioni vengono verificate in ordine.</h5>
+<div id="outline-container-org68930d8" class="outline-5">
+<h5 id="org68930d8">Attenzione al fatto che l'AND non è commutativo, come in logica, e le condizioni vengono verificate in ordine.</h5>
 </div>
-<div id="outline-container-org1c59598" class="outline-5">
-<h5 id="org1c59598">Inoltre, per la <b>lazy evaluation</b>, se una condizione si rivela falsa, la successiva non viene verificata.</h5>
+<div id="outline-container-org6c84b9a" class="outline-5">
+<h5 id="org6c84b9a">Inoltre, per la <b>lazy evaluation</b>, se una condizione si rivela falsa, la successiva non viene verificata.</h5>
 </div>
 </div>
-<div id="outline-container-org3e4ce31" class="outline-4">
-<h4 id="org3e4ce31">Ricerca dicotomica</h4>
-<div class="outline-text-4" id="text-org3e4ce31">
-<pre class="example" id="org9a1083c">
+<div id="outline-container-orge4706fc" class="outline-4">
+<h4 id="orge4706fc">Ricerca dicotomica</h4>
+<div class="outline-text-4" id="text-orge4706fc">
+<pre class="example" id="org039a7a0">
 FUNZIONE ricercaRic( Array A, indice sx, indice dx, elemento x) -&gt; indice
     IF (dx&lt;=sx) THEN RETURN -1    // se la porzione compresa fra indici è vuota, ho scansionato l'intero array, oppure è vuoto
     ELSE
@@ -213,26 +213,26 @@ ALGORITMO ricercaBinaria ( Array A[0..n-1], x) -&gt; indice
     RETURN ricercaRic(A,0,n,x)
 </pre>
 </div>
-<div id="outline-container-orgca9d1a6" class="outline-5">
-<h5 id="orgca9d1a6">Il tempo è logaritmico, mentre lo spazio è eccessivo. Sarebbe meglio trovare un modo per operare in loco.</h5>
-<div class="outline-text-5" id="text-orgca9d1a6">
+<div id="outline-container-orge491628" class="outline-5">
+<h5 id="orge491628">Il tempo è logaritmico, mentre lo spazio è eccessivo. Sarebbe meglio trovare un modo per operare in loco.</h5>
+<div class="outline-text-5" id="text-orge491628">
 </div>
-<div id="outline-container-orga7cf8df" class="outline-6">
-<h6 id="orga7cf8df">Notare che per il tempo si usa \(\theta{(n)}\) e non \(\O{(n)}\), perchè esiste un caso per ogni lunghezza in cui il tempo è effettivamente \(\log(n)\)</h6>
-</div>
-</div>
-<div id="outline-container-orgd9aa318" class="outline-5">
-<h5 id="orgd9aa318">Il tipo di ricorsione usato in <code>ricercaRic</code> è chiamato "in coda" o "terminale".</h5>
-<div class="outline-text-5" id="text-orgd9aa318">
-</div>
-<div id="outline-container-org2362842" class="outline-6">
-<h6 id="org2362842">La chiamata risolutiva non termina l'algoritmo, ma restituisce il valore a quelle superiori, fino ad arrivare alla prima.</h6>
+<div id="outline-container-orgd7ab0c3" class="outline-6">
+<h6 id="orgd7ab0c3">Notare che per il tempo si usa \(\theta{(n)}\) e non \(\O{(n)}\), perchè esiste un caso per ogni lunghezza in cui il tempo è effettivamente \(\log(n)\)</h6>
 </div>
 </div>
-<div id="outline-container-org405d3c0" class="outline-5">
-<h5 id="org405d3c0">La ricorsione "in coda" occupa tanto spazio inutile, ma si crea facilmente una versione iterativa che risolve lo stesso problema, occupando meno spazio.</h5>
-<div class="outline-text-5" id="text-org405d3c0">
-<pre class="example" id="orgc235ada">
+<div id="outline-container-orge22f7b5" class="outline-5">
+<h5 id="orge22f7b5">Il tipo di ricorsione usato in <code>ricercaRic</code> è chiamato "in coda" o "terminale".</h5>
+<div class="outline-text-5" id="text-orge22f7b5">
+</div>
+<div id="outline-container-orgb1894a6" class="outline-6">
+<h6 id="orgb1894a6">La chiamata risolutiva non termina l'algoritmo, ma restituisce il valore a quelle superiori, fino ad arrivare alla prima.</h6>
+</div>
+</div>
+<div id="outline-container-orgaebb712" class="outline-5">
+<h5 id="orgaebb712">La ricorsione "in coda" occupa tanto spazio inutile, ma si crea facilmente una versione iterativa che risolve lo stesso problema, occupando meno spazio.</h5>
+<div class="outline-text-5" id="text-orgaebb712">
+<pre class="example" id="org3a30ac9">
 ALGORITMO ricercaBinaria( Array A[0..n-1], elemento x ) -&gt; indice
    sx &lt;- 0
    dx &lt;- n
@@ -249,15 +249,15 @@ Notare che l'estremo destro è sempre escluso, mentre quello sinistro incluso.
 </p>
 </div>
 </div>
-<div id="outline-container-orgd106420" class="outline-5">
-<h5 id="orgd106420">Ogni algoritmo ricorsivo può essere trasformato in uno iterativo. A volte, però, farlo non fornisce alcun vantaggio, in quanto è necessario creare uno stack manualmente.</h5>
+<div id="outline-container-orgf12cdd5" class="outline-5">
+<h5 id="orgf12cdd5">Ogni algoritmo ricorsivo può essere trasformato in uno iterativo. A volte, però, farlo non fornisce alcun vantaggio, in quanto è necessario creare uno stack manualmente.</h5>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-01-22 Wed 20:15</p>
+<p class="date">Created: 2025-01-28 Tue 17:23</p>
 </div>
 </body>
 </html>

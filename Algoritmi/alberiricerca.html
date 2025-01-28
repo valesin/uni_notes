@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+<head>
+<!-- 2025-01-28 Tue 17:24 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Alberiricerca</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
+<script>
+    window.MathJax = {
+      tex: {
+        ams: { multlineWidth: '85%' },
+        {packages: {'[+]': ['mathtools']}},
+        tags: 'ams',
+        tagSide: 'right',
+        tagIndent: '.8em'
+      },
+      chtml: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      svg: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      output: {
+        font: 'mathjax-modern',
+        displayOverflow: 'scale'
+      },
+      loader: {
+        load: ['[tex]/mathtools']
+      },
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Alberiricerca</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org34acc93">Alberi di ricerca binari</a></li>
+<li><a href="#orgab036c6">Alberi AVL</a></li>
+<li><a href="#orgb7c0082">Alberi 2-3</a></li>
+<li><a href="#org6167f4f"><span class="todo NEXT">NEXT</span> B-alberi</a></li>
+</ul>
+</div>
+</div>
+<p>
+In un <b>dizionario</b> implementato mediante un array, su cui sono definite le tre operazioni di <code>insert</code>, <code>delete</code> e <code>find</code>, il tempo dipende dall'ordinamento delle chiavi.
+</p>
+
+<p>
+Se le chiavi sono ordinate:
+</p>
+<ul class="org-ul">
+<li>\(O(n)\) <code>insert</code>, iterando attraverso l'intera lista per trovare il posto giusto</li>
+<li>\(O(n)\) <code>delete</code>, shiftando a sinistra tutti gli elementi successivi a quello eliminato</li>
+<li>\(O(\log n)\), con la ricerca binaria</li>
+</ul>
+
+<p>
+Se le chiavi non sono ordinate:
+</p>
+<ul class="org-ul">
+<li>\(O(1)\) <code>insert</code>, inserendo arbitrariamente</li>
+<li>\(O(n)\) <code>delete</code>, shiftando a sinistra tutti gli elementi successivi a quello eliminato</li>
+<li>\(O(n)\), iterando attraverso tutti gli elementi</li>
+</ul>
+<div id="outline-container-org34acc93" class="outline-2">
+<h2 id="org34acc93">Alberi di ricerca binari</h2>
+<div class="outline-text-2" id="text-org34acc93">
+<p>
+Un albero binario di ricerca è un albero binario in cui per ogni nodo \(n\), tutte le chiavi contenute nel sottoalbero sinistro sono minori di \(n\) e tutte quelle nell'albero destro sono maggiori.
+</p>
+
+<p>
+Una visita simmetrica su tale albero restituisce tutte le chiavi in ordine crescente.
+</p>
+
+<p>
+Alcuni delle operazioni possibili sono:
+</p>
+<ul class="org-ul">
+<li><b>Trova elemento massimo</b>: si scende a destra fino ad arrivare al primo nodo senza figlio destro. <code>null</code> se l'albero è vuoto.</li>
+
+<li><b>Ricerca</b>: In base al valore della chiave proseguo a sinistra o a destra fino ad arrivare all'elemento cercato, o ad una chiave senza figli.
+Può essere resa iterativa perchè ha una ricorsione in coda</li>
+
+<li><b>Inserimento</b>:
+Seguo il percorso della ricerca e quando trovo la chiave minore vi inserisco l'elemento.
+Nell'inserimento iterativo, ho due puntatori: quello che cerca ed il segugio.</li>
+
+<li><b>Trova predecessore</b>:
+Ci sono 2 casi, in relazione al nodo \(u\) da cancellare:
+<ul class="org-ul">
+<li>\(u\) ha un figlio sinistro. Allora il predecessore è il massimo del sottoalbero sinistro.</li>
+
+<li>\(u\) non ha un figlio sinistro. Allora il predecessore è il primo antenato il cui figlio destro è anche antenato di \(u\).
+Ovvero, risalendo da \(u\), la prima a svolta verso sinistra finisce nel predecessore di \(u\), oppure si può dire che dato il primo antenato di \(u\) che è un figlio destro, suo padre sarà il predecessore.</li>
+</ul></li>
+
+<li><b>Cancellazione</b>:
+Ci sono 3 casi:
+<ul class="org-ul">
+<li>Se il nodo è una foglia, lo cancello e basta</li>
+
+<li>Se il nodo ha un solo figlio, cancello il nodo e collego il figlio al nonno</li>
+
+<li>Se il nodo ha due figli, recupero il suo predecessore e lo copio nel nodo da cancellare, poi cancello il predecessore secondo le regole precedenti. (Notare che il predecessore è il nodo più a destra del sottoalbero sinistro e quindi non può avere due figli, ma 0 o 1 a sinistra.)</li>
+</ul></li>
+</ul>
+
+
+
+
+<p>
+Tutte queste operazioni operano in \(O(h)\), in quanto vengono eseguite scendendo di un livello fino ad arrivare alle foglie.
+</p>
+
+<p>
+Nel caso di un albero <b>sbilanciato</b>, \(h=n\) e si ottiene un tempo lineare.
+</p>
+
+<p>
+Mantenendo il bilanciamento dell'albero, ci si avvicina al caso ottimo in cui \(h=\log_{2} n\).
+</p>
+</div>
+</div>
+<div id="outline-container-orgab036c6" class="outline-2">
+<h2 id="orgab036c6">Alberi AVL</h2>
+<div class="outline-text-2" id="text-orgab036c6">
+<p>
+Definiamo il <b>fattore di bilanciamento</b> \(\beta\) di un nodo come la differenza dell'altezza dei suoi due sottoalberi.
+</p>
+
+<p>
+Ne segue che un albero binario completo ha \(\beta = 0\) per tutti i suoi nodi.
+</p>
+
+<p>
+Un <b>albero AVL</b> è un albero binario in cui ogni nodo ha \(\beta\leq 1\).
+</p>
+
+<p>
+Si dimostra che l'altezza di questi alberi è sempre \(O(\log n)\).
+</p>
+</div>
+</div>
+<div id="outline-container-orgb7c0082" class="outline-2">
+<h2 id="orgb7c0082">Alberi 2-3</h2>
+</div>
+<div id="outline-container-org6167f4f" class="outline-2">
+<h2 id="org6167f4f"><span class="todo NEXT">NEXT</span> B-alberi</h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2025-01-28 Tue 17:24</p>
+</div>
+</body>
+</html>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-01-22 Wed 20:15 -->
+<!-- 2025-01-28 Tue 17:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DivideEtImpera</title>
@@ -46,21 +46,21 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgfa561b1">Tecnica "Divide-et-impera"</a></li>
-<li><a href="#orgad9cca4">Casi in cui Divide-et-Impera migliora le prestazioni</a>
+<li><a href="#org45eff38">Tecnica "Divide-et-impera"</a></li>
+<li><a href="#orgfefa681">Casi in cui Divide-et-Impera migliora le prestazioni</a>
 <ul>
-<li><a href="#org0169d54">Calcolo del minimo</a>
+<li><a href="#orgdd19eec">Calcolo del minimo</a>
 <ul>
-<li><a href="#org8e4b339">Analisi numero confronti</a></li>
+<li><a href="#orgb4cb767">Analisi numero confronti</a></li>
 </ul>
 </li>
-<li><a href="#org8b03387">Somma di matrici \(n\times n\)</a></li>
-<li><a href="#org2b0e5d4">Prodotto di matrici \(n\times n\)</a>
+<li><a href="#org372a7d4">Somma di matrici \(n\times n\)</a></li>
+<li><a href="#org21c7604">Prodotto di matrici \(n\times n\)</a>
 <ul>
-<li><a href="#org80143be">Ottimizzazione</a>
+<li><a href="#orgc75f3e4">Ottimizzazione</a>
 <ul>
-<li><a href="#orgf1cf3f4">Divide-et-impera "immediato"</a></li>
-<li><a href="#org19eaaea">Algoritmo di Strassen</a></li>
+<li><a href="#orgf03bbd3">Divide-et-impera "immediato"</a></li>
+<li><a href="#org34e66d0">Algoritmo di Strassen</a></li>
 </ul>
 </li>
 </ul>
@@ -70,9 +70,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orgfa561b1" class="outline-2">
-<h2 id="orgfa561b1">Tecnica "Divide-et-impera"</h2>
-<div class="outline-text-2" id="text-orgfa561b1">
+<div id="outline-container-org45eff38" class="outline-2">
+<h2 id="org45eff38">Tecnica "Divide-et-impera"</h2>
+<div class="outline-text-2" id="text-org45eff38">
 <p>
 Dividi il problema in pezzettini. Se il frammento è abbastanza piccolo, risolvilo, altrimenti dividi il frammento in pezzetti ancora più piccoli, finchè il problema non sia abbastanza piccolo da poter essere risolto. Infine, combina le soluzioni trovate.
 Quanto tempo impiegherei? Immaginiamo che la soluzione basilare abbia tempo costante. Allora impiego 1 nel caso base.Invece la somma dei tempi dei sottoframmenti, che crea un'equazione di ricorrenza, più il tempo per la ricombinazione.
@@ -81,13 +81,13 @@ Se mi fido che la parte di ordinamento della metà venga effettuata in modo prop
 </p>
 </div>
 </div>
-<div id="outline-container-orgad9cca4" class="outline-2">
-<h2 id="orgad9cca4">Casi in cui Divide-et-Impera migliora le prestazioni</h2>
-<div class="outline-text-2" id="text-orgad9cca4">
+<div id="outline-container-orgfefa681" class="outline-2">
+<h2 id="orgfefa681">Casi in cui Divide-et-Impera migliora le prestazioni</h2>
+<div class="outline-text-2" id="text-orgfefa681">
 </div>
-<div id="outline-container-org0169d54" class="outline-3">
-<h3 id="org0169d54">Calcolo del minimo</h3>
-<div class="outline-text-3" id="text-org0169d54">
+<div id="outline-container-orgdd19eec" class="outline-3">
+<h3 id="orgdd19eec">Calcolo del minimo</h3>
+<div class="outline-text-3" id="text-orgdd19eec">
 <p>
 Prendere un algoritmo per trovare il minimo ed il massimo. Quello immediato presume che entrambi corrispondano con il primo, poi scandisce l'intero array aggiornando le due variabili volta per volta.
 Il numero di confronti è \(2n-2\), perchè vengono esaminati tutti gli elementi tranne uno per entrambe le variabili.
@@ -95,7 +95,7 @@ Come si può applicare la tecnica divide-et-impera?
 Prendiamo il caso base, ovvero che nel caso l'elemento sia unico, il minimo ed il massimo corrispondono a quello. Aggiungiamo anche il caso in cui gli elementi siano due
 Scandisco porzioni degli array autonomamente, e definisco poi un modo per unire le soluzioni. Chiaramente, per mettere insieme mi basta notare che il minimo finale è il minimo fra i minimi, lo stesso per il massimo.
 </p>
-<pre class="example" id="org88d8efc">
+<pre class="example" id="org046ab06">
 FUNZIONE minMax(array A, indice i, indice f) -&gt; (elemento, elemento)
 IF f-i = 1 THEN RETURN (A[i], A[i])
 ELSE IF f-i = 2 THEN
@@ -116,9 +116,9 @@ ALGORITMO minMax(Array A[0...n-1]) -&gt; (elemento, elemento)
 RETURN minMax(A, 0, n)
 </pre>
 </div>
-<div id="outline-container-org8e4b339" class="outline-4">
-<h4 id="org8e4b339">Analisi numero confronti</h4>
-<div class="outline-text-4" id="text-org8e4b339">
+<div id="outline-container-orgb4cb767" class="outline-4">
+<h4 id="orgb4cb767">Analisi numero confronti</h4>
+<div class="outline-text-4" id="text-orgb4cb767">
 <p>
 Notare che analizzo soltanto i confronti tra chiavi e non quelli per le condizioni, presumendo costino di meno.
 \(0\) se \(n=1\), \(1\) se \(n=2\), mentre \(C(\lfloor \frac{n}{2} \rfloor) + C(\lceil \frac{n}{2} \rceil) + 2\) negli altri casi, dove le due \(C\) rappresentano l'equazione di ricorrenza per i casi ricorsivi e \(2\) sono i confronti per unire le soluzioni.
@@ -130,18 +130,18 @@ Se <code>n</code> non è una potenza di \(2\), la prima parte sarebbe grande alm
 </div>
 </div>
 </div>
-<div id="outline-container-org8b03387" class="outline-3">
-<h3 id="org8b03387">Somma di matrici \(n\times n\)</h3>
-<div class="outline-text-3" id="text-org8b03387">
+<div id="outline-container-org372a7d4" class="outline-3">
+<h3 id="org372a7d4">Somma di matrici \(n\times n\)</h3>
+<div class="outline-text-3" id="text-org372a7d4">
 <p>
 Ho in input due matrici, voglio calcolare una terza matrice che contenga in ogni posizione la somma degli elementi nella stessa posizione delle altre due matrici.
 Mi chiedo quante operazioni elementari vengono effettuate. Sicuramente, per ogni elemento devo effettuare una somma in totale, quindi in totale \(n^{2}\) somme. Facile trovare un lower-bound
 </p>
 </div>
 </div>
-<div id="outline-container-org2b0e5d4" class="outline-3">
-<h3 id="org2b0e5d4">Prodotto di matrici \(n\times n\)</h3>
-<div class="outline-text-3" id="text-org2b0e5d4">
+<div id="outline-container-org21c7604" class="outline-3">
+<h3 id="org21c7604">Prodotto di matrici \(n\times n\)</h3>
+<div class="outline-text-3" id="text-org21c7604">
 <p>
 In questo caso, la definizione è che si sommano tutti i prodotti degli elementi di ogni riga per quelli di ogni colonna.
 Quindi per ogni elemento fra gli \(n\) di ognuna delle \(n\) colonne, quindi \(n^{2}\) volte in totale, effettuo gli \(n\) prodotti con gli elementi della stessa riga e poi effettuo le \(n-1\) somme.
@@ -151,22 +151,22 @@ Nonostante ciò, non è stato trovato alcun algoritmo che raggiunga tale lower b
 La prima soluzione a ridurre il lower-bound, lo ha portato sul \(\Theta^{2.81}\)
 </p>
 </div>
-<div id="outline-container-org80143be" class="outline-4">
-<h4 id="org80143be">Ottimizzazione</h4>
-<div class="outline-text-4" id="text-org80143be">
+<div id="outline-container-orgc75f3e4" class="outline-4">
+<h4 id="orgc75f3e4">Ottimizzazione</h4>
+<div class="outline-text-4" id="text-orgc75f3e4">
 </div>
-<div id="outline-container-orgf1cf3f4" class="outline-5">
-<h5 id="orgf1cf3f4">Divide-et-impera "immediato"</h5>
-<div class="outline-text-5" id="text-orgf1cf3f4">
+<div id="outline-container-orgf03bbd3" class="outline-5">
+<h5 id="orgf03bbd3">Divide-et-impera "immediato"</h5>
+<div class="outline-text-5" id="text-orgf03bbd3">
 <p>
 Facciamo uso della tecniva divide-et-impera in un modo "immediato", ovvero notando che la moltiplicazione fra due matrici è la moltiplicazione fra quattro matrici il cui lato è la metà. Una volta raggiunto il caso base, ovvero due matrici di dimensione uno, il caso è banalmente la moltiplicazione fra i due numeri all'interno.
 Il tempo necessario per quest'algoritmo è uno nel caso banale, mentre nel caso ricorsivo, noto che bisogna effettuare 8 prodotti, quindi \(8T(n)\) e 4 somme, ovvero \(4\cdot (\frac{n}{2})^{2} = n^{2}\). Andando a risolvere la somma fra queste due quantità, ottengo che l'ordine di grandezza di questo algoritmo è \(n^{3}\).
 </p>
 </div>
 </div>
-<div id="outline-container-org19eaaea" class="outline-5">
-<h5 id="org19eaaea">Algoritmo di Strassen</h5>
-<div class="outline-text-5" id="text-org19eaaea">
+<div id="outline-container-org34e66d0" class="outline-5">
+<h5 id="org34e66d0">Algoritmo di Strassen</h5>
+<div class="outline-text-5" id="text-org34e66d0">
 <p>
 L'idea è la stessa della precedente, ovvero dividendo le due matrici, ma poi associandole in modo diverso.
 In particolare, avrò che in totale vengono effettuati sette prodotti e 24 somme.
@@ -179,7 +179,7 @@ Calcolando il totale attraverso il teorema fondamentale, esce fuori \(\Theta(2.8
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-01-22 Wed 20:15</p>
+<p class="date">Created: 2025-01-28 Tue 17:23</p>
 </div>
 </body>
 </html>

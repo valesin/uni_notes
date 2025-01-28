@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+<head>
+<!-- 2025-01-28 Tue 17:24 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cammini minimi</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
+<script>
+    window.MathJax = {
+      tex: {
+        ams: { multlineWidth: '85%' },
+        {packages: {'[+]': ['mathtools']}},
+        tags: 'ams',
+        tagSide: 'right',
+        tagIndent: '.8em'
+      },
+      chtml: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      svg: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      output: {
+        font: 'mathjax-modern',
+        displayOverflow: 'scale'
+      },
+      loader: {
+        load: ['[tex]/mathtools']
+      },
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Cammini minimi</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org51bf9a6">Cammini minimi</a>
+<ul>
+<li><a href="#orgbe6901e">Floyd-Warshall</a></li>
+<li><a href="#orgad82614">Bellman-Ford</a>
+<ul>
+<li><a href="#orgebcc9c7">In Marshall</a></li>
+</ul>
+</li>
+<li><a href="#org3ba376b">Dijkstra</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgb1e994d">Come ricavare i cammini minimi</a>
+<ul>
+<li><a href="#orgc841e77">Differenze con albero ricoprente minimo</a></li>
+</ul>
+</li>
+<li><a href="#org666d56c">Cosa succede se un peso è negativo?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org51bf9a6" class="outline-2">
+<h2 id="org51bf9a6">Cammini minimi</h2>
+<div class="outline-text-2" id="text-org51bf9a6">
+<p>
+Definiamo il cammino minimo un cammino il cui peso è minore o uguale di ogni altro cammino.
+Le proprietà dei cammini minimi sono le seguenti:
+</p>
+<ul class="org-ul">
+<li>se tutti i pesi sono positivi, allora ogni cammino minimo è semplice.</li>
+<li>se ci sono pesi negativi ma non cicli di peso negativo allora dato un cammino da x a y, esiste sempre un cammino minimo da x a y che è di peso positivo.</li>
+</ul>
+
+<p>
+I problemi risolvibili sui cammini minimi sono i seguenti:
+</p>
+<ul class="org-ul">
+<li>trovare i cammini minimi fra un vertice \(s\) e gli altri vertici</li>
+<li>trovare i cammini minimi fra ogni coppia di vertici</li>
+</ul>
+
+<p>
+Per trovare il cammino minimo fra una specifica coppia di vertici, bisogna utilizzare tali metodi.
+</p>
+</div>
+<div id="outline-container-orgbe6901e" class="outline-3">
+<h3 id="orgbe6901e">Floyd-Warshall</h3>
+<div class="outline-text-3" id="text-orgbe6901e">
+<p>
+Questo algoritmo costruisce una tabella delle distanze fra ogni vertice.
+</p>
+
+<p>
+È un esempio di <b>programmazione dinamica</b>.
+</p>
+
+<p>
+Il criterio utilizzato è considerare ad ogni passo \(k > 0\) soltanto un sottoinsieme dei vertici, in particolare i primi \(k\).
+</p>
+
+<p>
+Quando \(k=0\), la tabella contiene il peso dei vertici collegati da un solo arco quando questo esista, \(0\) per le coppie di vertici uguali e \(\infty\) quando i vertici non sono ancora connessi.
+</p>
+
+<p>
+Ad ogni incremento, conosco la situazione corrente e in base all'aggiunta del nuovo vertice posso aggiornare i cammini.
+</p>
+
+<pre class="example" id="org66c655f">
+ALGORITMO FloydWarshall(Grafo pesato G) -&gt; Matrice distanze
+    Sia D una matrice n \times n, con V = {v_1, v_2, ..., v_n}
+
+    # Nel caso di k=0, calcola la lunghezza di un cammino che li congiunge con 0 vertici intermedi, ovvero i cammini di un solo arco. Se non esiste, allora infinito.
+    FOR i&lt;-1 TO n DO
+        FOR j&lt;-i TO n DO
+            IF i=j THEN D[i,j] &lt;- 0
+            ELSE IF (v_i, v_j)\in E THEN D[i,j] &lt;- \omega(i,j)
+            ELSE D[i,j] = \infty
+            
+    # Per ogni coppia di vertici, calcola la lunghezza di un cammino che li congiunge 
+    FOR k=1 to n DO
+        FOR i&lt;-1 TO n DO
+            FOR j&lt;-i TO n DO
+                IF D[i,k] + D[k,j] &lt; D[i,j] THEN
+                    D[i,j] &lt;- D[i,k] + D[k,j]
+</pre>
+
+
+<p>
+Per ricostruire il cammino minimo, viene aggiunta una matrice ausiliaria in cui ogni entrata \(P[i,j]\) indica il penultimo nodo dell cammino da \(i\) a \(j\).
+</p>
+
+<p>
+Quindi al momento dell'aggiornamento, se viene scoperto che il percorso passante per \(k\) è più breve, allora il penultimo nodo di quel percorso viene sovrascritto a quello precedente
+</p>
+
+<p>
+Data questa matrice, ricostruire il cammino fra due vertici richiede di ritracciare il percorso al contrario, saltando di precedente in precedente fino ad arrivare al vertice di partenza.
+</p>
+
+<pre class="example" id="org2adf220">
+FUNZIONE calcolaCammino(Matrice P, v_i, v_j \in V) -&gt; sequenza di vertici
+    j_0 &lt;- j
+    h &lt;- 0
+    WHILE j_h != i DO
+        h &lt;- h + 1
+        j_h &lt;- P[i,j_{h-1}]
+    RETURN (Vj_h, Vj_h-1,..., Vj_0)
+</pre>
+</div>
+</div>
+<div id="outline-container-orgad82614" class="outline-3">
+<h3 id="orgad82614">Bellman-Ford</h3>
+<div class="outline-text-3" id="text-orgad82614">
+<p>
+Questo algoritmo richiede in input un vettore \(s\) e restituisce un vettore che contiene la distanza fra \(s\) e tutti gli altri vertici.
+</p>
+
+<p>
+Inizialmente il vettore è \(0\) per il vertice iniziale e \(\infty\) per ogni altro.
+</p>
+
+<p>
+Ad ogni passo itero attraverso ogni arco \((u,v)\) e se la somma della distanza fino a \(u\) e l'arco in questione è minore della distanza precedentemente salvata verso \(v\), la inserisco nel vettore.
+</p>
+
+<p>
+Mi servono \(n-1\) passi, in quanto nel caso peggiore, il cammino minimo fra i due vertici \(s\) e \(x\) passa attraverso <b>tutti</b> i vertici.
+</p>
+
+<p>
+In questo caso, ogni iterazione potrebbe aggiungere soltanto un arco del cammino (a seconda dell'ordine in cui vengono scansionati), che richiederebbe quindi \(n-1\) passi per essere completato.
+</p>
+
+<p>
+In alcuni casi, potrebbero essere sufficienti meno iterazioni per arrivare al vettore delle distanze finale.
+</p>
+
+<p>
+Notare che il numero di step necessari perchè il vettore delle distanze sia corretto dipende dall'ordine in cui vengono analizzati gli archi.
+</p>
+
+<p>
+Si consideri il semplice caso \(A--1--B--1--C--1--D\).
+</p>
+
+<p>
+Se gli archi vengono considerati da sinistra verso destra nell'ordine in cui appaiono, basta un iterazione esterna, perchè le informazioni nuove vengono utilizzate subito.
+</p>
+
+<p>
+Se invece si andasse al contrario, servirebbero esattamente \(n-1\) iterazioni perchè la distanza \(A-D\) sia corretta.
+</p>
+
+<p>
+Comunque, non si può stabilire se il vettore sia corretto prima di aver completato tutte le iterazioni e quindi bisogna iterare sempre \(n-1\) volte.
+</p>
+<pre class="example" id="org97ec292">
+ALGORITMO BellmanFord(Grafo pesato G, vertice s) -&gt; vettore distanze
+    Sia d[v] un vettore con indici in V
+    D[s] &lt;- 0
+    FOREACH v in V\{s} DO D[v] &lt;- \infty
+    FOR k&lt;-1 TO n-1 DO
+        FOREACH (u,v) in E do
+            IF D[u] + omega(u,v) &lt; D[v] THEN
+                D[v] &lt;- D[u] + omega(u,v)
+    RETURN D
+</pre>
+</div>
+<div id="outline-container-orgebcc9c7" class="outline-4">
+<h4 id="orgebcc9c7">In Marshall</h4>
+<div class="outline-text-4" id="text-orgebcc9c7">
+<p>
+Prendevamo i e j e provavamo a passare per k. Mettevo insieme due cammini, da i a k e da k a j e mi chiedevo se fosse meglio.
+Adesso prendiamo un cammino già esistente ed un solo arco, ad ogni passo e viene fatto per tutti i vertici e tutti gli archi.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org3ba376b" class="outline-3">
+<h3 id="org3ba376b">Dijkstra</h3>
+<div class="outline-text-3" id="text-org3ba376b">
+<p>
+L'algoritmo di Dijkstra, per il calcolo delle distanze da un vertice \(s\) a ogni altro, opera in modo greedy.
+</p>
+
+<p>
+Durante l'esecuzione sono mantenuti:
+</p>
+<ul class="org-ul">
+<li>un vettore \(D\), aggiornato dinamicamente così che alla fine conterrà tutte le lunghezze dei cammini minimi da \(s\) al rispettivo nodo;</li>
+<li>un insieme \(C\) contenente i vertici di cui non è ancora stata trovata la distanza minima.</li>
+</ul>
+
+<p>
+Ad ogni passo, scegliamo il vertice \(u\in C\) che minimizza il valore di \(D[u]\) e aggiorniamo il vettore delle distanze in base ad esso.
+</p>
+
+<p>
+Si può dimostrare che il vertice \(u\) scelto in questo modo abbia in \(D[u]\), al momento della scelta, la lunghezza minima da \(s\) e quindi tale valore non sarà più aggiornato.
+</p>
+
+<p>
+Dopodichè perfeziono il vettore delle distanze con gli archi uscenti dal vertice appena aggiunto, utilizzando le nuove informazioni per diminuire dove possibile.
+</p>
+
+<p>
+La miglior rappresentazione per l'algoritmo è attraverso una lista di incidenza o adiacenza, altrimenti l'iterazione attraverso gli archi uscenti da \(u\) prevede di scansionare ogni arco del grafo.
+</p>
+<pre class="example" id="org89817eb">
+ALGORITMO Dijkstra (grafo pesato G = (V, E, \omega), vertice s) -&gt; vettore distanze
+    Sia D un vettore con indici in V
+    D[s] &lt;- 0
+    FOREACH v\in V\setminus {s} do D[v] &lt;- \infty
+    C &lt;- V
+    WHILE C!=\emptyset DO
+        u &lt;- elemento con D[u] minima
+        C &lt;- C\setminus {u}
+        FOREACH (u,v)\in E DO
+            IF D[u] + \omega(u,v) &lt; D[v] THEN
+                D[v] &lt;- D[u] + \omega(u,v)
+    RETURN D
+</pre>
+<p>
+La differenza con bellman ford è che il for each interno era su tutti gli archi del grafo, ma in questo è su tutti gli archi che escono da U.
+</p>
+
+<p>
+Il problema di quest'implementazione iniziale è che la ricerca del minimo richieda di scansionare tutti i vertici, rendendo il tempo di esecuzione quadratico.
+</p>
+
+<p>
+L'efficienza può essere migliorata utilizzando una coda con priorità in cui il coefficiente di ogni vertice \(v\) è uguale al valore di \(D[v]\).
+</p>
+
+<pre class="example" id="orgddddc21">
+ALGORITMO Dijkstra (grafo pesato G = (V, E, \omega), vertice s) -&gt; vettore distanze
+    Sia D un vettore con indici in V
+    Sia C una coda con priorità
+    D[s] &lt;- 0
+    FOREACH v \in V\setminus {s} DO D[v] &lt;- \infty
+    FOREACH v \in V DO C.insert(v, D[v])
+    WHILE C != \emptyset DO
+        u &lt;- C.deleteMin()
+        FOREACH (u,v) \in E DO
+            IF D[u] + \omega(u,v) &lt; D[v] THEN
+                D[v] &lt;- D[u] + \omega(u,v)
+                C.changeKey(v, D[v])
+    RETURN D
+</pre>
+
+<p>
+L'inizializzazione di \(D\) avviene in tempo <b>lineare</b>.
+</p>
+
+<p>
+Lo stesso vale per la costruzione della coda con priorità, considerando che tolto \(s\) con chiave \(0\) in prima posizione, tutti gli altri elementi possono essere aggiunti in coda in qualunque posizione.
+</p>
+
+<p>
+L'operazione di <code>deleteMin</code> (\(O(\log n)\)), viene eseguita ad ogni iterazione del <code>WHILE</code> esterno, quindi \(n\) volte, col costo complessivo di \(O(n\log n)\).
+</p>
+
+<p>
+Il <code>FOREACH</code> interno viene eseguito al più per ogni arco, quindi \(m\) volte. Dunque, la <code>changeKey</code> (\(O(\log n)\)) ha un costo complessivo di \(O(m\log n)\).
+</p>
+
+<p>
+Arriviamo a \(O(n\log n) + O(m\log n)\) e fra i due prevale \(O(m\log n)\) perchè in un grafo connesso, gli archi sono almeno dell'ordine dei vertici.
+</p>
+
+<p>
+Utilizzando lo heap di Fibonacci, si può ridurre il tempo a \(O(m+n\log n)\), con un miglioramento tanto maggiore quanto maggiore è il numero di archi del grafo in questione.
+</p>
+</div>
+<div id="outline-container-orgb1e994d" class="outline-5">
+<h5 id="orgb1e994d">Come ricavare i cammini minimi</h5>
+<div class="outline-text-5" id="text-orgb1e994d">
+<p>
+Il cambiamento è semplicemente che ogni volta che stabilisco che la strada più breve verso v passa per u, salvo che il predecessore di v è u. Alla fine mi basta risalire da un qualunque vertice a quello di partenza.
+Risalendo, mi esce fuori un albero che è l'albero dei cammini minimi, ovvero contiene tutti i vertici del grafo con le minori distanze dal vertice.
+</p>
+</div>
+<div id="outline-container-orgc841e77" class="outline-6">
+<h6 id="orgc841e77">Differenze con albero ricoprente minimo</h6>
+<div class="outline-text-6" id="text-orgc841e77">
+<p>
+Il problema dell'albero ricoprente minimo riguarda soltanto i grafi non orientati.
+La questione è che nell'albero ricoprente minimo io voglio minimizzare i problemi degli archi in generale.
+Nel problema di dijkstra, io voglio minimizzare i singoli cammini.
+Problemi tipici da esame:
+</p>
+<ul class="org-ul">
+<li>Immaginiamo che il grafo rappresenti una mappa stradale e sotto alcune strade bisogna collocare la fibra ottica, e bisogna raggiungere i vari vertici. Siccome la fibra ottica costa tanto, bisogna minimizzare in totale la lunghezza della fibra. Voglio coprire ogni vertice e voglio farlo con la quantità minore di fibra. ALBERO RICOPRENTE MINIMO</li>
+<li>Posta pneumatica: un sistema di tubi in cui si mette un messaggio. Serve un tubo apposta che colleghi ogni singola sorgente con un destinatario. Immaginiamo di avere una centrale. Lì bisogna minimizzare la lunghezza del singolo tubo che collega la centrale con ogni stazione. CAMMINI MINIMI.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org666d56c" class="outline-5">
+<h5 id="org666d56c">Cosa succede se un peso è negativo?</h5>
+<div class="outline-text-5" id="text-org666d56c">
+<p>
+Non lavora correttamente per pesi negativi. Perchè se avessi pesi negativi, dovrei mettere in discussione le scelte, ma questo non è possibile con la strategia greedy.
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2025-01-28 Tue 17:24</p>
+</div>
+</body>
+</html>

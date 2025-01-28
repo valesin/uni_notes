@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+<head>
+<!-- 2025-01-28 Tue 17:24 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Union-Find</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
+<script>
+    window.MathJax = {
+      tex: {
+        ams: { multlineWidth: '85%' },
+        {packages: {'[+]': ['mathtools']}},
+        tags: 'ams',
+        tagSide: 'right',
+        tagIndent: '.8em'
+      },
+      chtml: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      svg: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      output: {
+        font: 'mathjax-modern',
+        displayOverflow: 'scale'
+      },
+      loader: {
+        load: ['[tex]/mathtools']
+      },
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Union-Find</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org6f8c32c">Union-Find</a>
+<ul>
+<li><a href="#orgb267a6f">QuickFind</a>
+<ul>
+<li><a href="#org7deec7b">QuickFind con bilanciamento sulle Union</a></li>
+</ul>
+</li>
+<li><a href="#orgd0bb1db">QuickUnion</a>
+<ul>
+<li><a href="#org2a8eacb">QuickUnion con bilanciamento sulle Union</a></li>
+<li><a href="#org02d0887">QuickUnion con compressione del cammino</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6f8c32c" class="outline-2">
+<h2 id="org6f8c32c">Union-Find</h2>
+<div class="outline-text-2" id="text-org6f8c32c">
+<p>
+Questa struttura viene utilizzata per rappresentare il concetto di insieme e la sua unione.
+Le 3 funzioni fornite sono le seguenti:
+</p>
+<ul class="org-ul">
+<li><code>makeSet(elem x)</code>, che crea un nuovo insieme contenente il solo elemento <code>x</code> e opera sempre in <b>tempo costante</b>;</li>
+<li><code>union(name a, name b)</code>, che unisce i due insiemi denominati <code>a</code> e <code>b</code> assegnando <code>a</code> come nome dell'unione</li>
+<li><code>find(elem x) -&gt; name</code>, che restituisce il nome dell'insieme che contiene l'elemento <code>x</code>.</li>
+</ul>
+
+<p>
+In generale, ogni insieme viene rappresentato mediante un albero.
+</p>
+
+<p>
+Esistono varie implementazioni di tali funzioni, con dei tempi asintotici di esecuzione differenti.
+</p>
+</div>
+<div id="outline-container-orgb267a6f" class="outline-3">
+<h3 id="orgb267a6f">QuickFind</h3>
+<div class="outline-text-3" id="text-orgb267a6f">
+<p>
+In questa implementazione, tutti gli alberi hanno altezza \(1\).
+</p>
+
+<p>
+La radice contiene il nome dell'insieme e i suoi figli sono tutti gli elementi in esso contenuti, incluso quello che da il nome alla radice.
+</p>
+
+<p>
+Quindi, la creazione di un insieme per <code>x</code> prevede di creare sia la radice che il suo unico elemento, entrambi con nome <code>x</code>.
+</p>
+
+<p>
+Di conseguenza, dato un elemento, basta risalire il puntatore verso il padre per trovare il nome, in tempo costante.
+</p>
+
+<p>
+Per unire due insiemi è invece necessario cambiare i puntatori di ogni elemento di <code>b</code> e collegarli ad <code>a</code>, con un numero di operazioni uguali a \(n-1\) nel caso peggiore in cui tutti gli elementi si trovino nell'insieme <code>b</code>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>makeSet</code></td>
+<td class="org-left">\(1\)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>union</code></td>
+<td class="org-left">\(n\)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>find</code></td>
+<td class="org-left">\(1\)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="outline-container-org7deec7b" class="outline-4">
+<h4 id="org7deec7b">QuickFind con bilanciamento sulle Union</h4>
+<div class="outline-text-4" id="text-org7deec7b">
+<p>
+Quando viene effettuata una <code>union</code>, non è necessario copiare il contenuto di <code>b</code> in <code>a</code>.
+</p>
+
+<p>
+Per migliorare le prestazioni, si introduce un controllo sulla cardinalità dei due insiemi e vengono spostati i puntatori dell'insieme con cardinalità minore.
+</p>
+
+<p>
+Nel caso in cui si sposti da <code>a</code> verso <code>b</code>, viene aggiornato il nome della radice da <code>b</code> ad <code>a</code>.
+</p>
+
+<p>
+Si può dimostrare (DFI, 9.2.1) che il tempo ammortizzato su una serie di operazioni con almeno \(\Theta(n)\) <code>union</code> è \(O(\log n)\).
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd0bb1db" class="outline-3">
+<h3 id="orgd0bb1db">QuickUnion</h3>
+<div class="outline-text-3" id="text-orgd0bb1db">
+<p>
+In questa implementazione, non c'è alcuna restrizione riguardo l'altezza degli alberi.
+</p>
+
+<p>
+L'elemento caratterizzante è contenuto nella radice e non è più duplicato.
+</p>
+
+<p>
+La creazione di un insieme viene effettuata creando un albero con sola radice contenente l'elemento.
+</p>
+
+<p>
+L'unione diventa di facile realizzazione, in quanto è sufficiente spostare il puntatore di <code>b</code> ad <code>a</code>, in tempo <b>costante</b>. Così, l'intero albero <code>b</code> diventerà un sottoalbero di <code>a</code>.
+</p>
+
+<p>
+Trovare un elemento, invece, richiede di risalire l'albero fino alla radice, con un tempo lineare all'altezza dell'albero, che può essere \(n\) nel caso peggiore.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>makeSet</code></td>
+<td class="org-left">\(1\)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>union</code></td>
+<td class="org-left">\(1\)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>find</code></td>
+<td class="org-left">\(n\)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="outline-container-org2a8eacb" class="outline-4">
+<h4 id="org2a8eacb">QuickUnion con bilanciamento sulle Union</h4>
+<div class="outline-text-4" id="text-org2a8eacb">
+<p>
+Viene introdotta una euristica detta "<i>Union by rank (altezza)</i>", in base alla quale si sceglie di rendere figlio dell'altro l'albero con altezza minore.
+</p>
+
+<p>
+L'informazione relativa all'altezza dev'essere mantenuta per ogni nodo, con occupazione di memoria \(O(n)\).
+</p>
+
+<p>
+Si può dimostrare che l'operazione <code>find</code> su alberi bilanciati in altezza abbia tempo \(O(\log n)\).
+</p>
+</div>
+</div>
+<div id="outline-container-org02d0887" class="outline-4">
+<h4 id="org02d0887">QuickUnion con compressione del cammino</h4>
+<div class="outline-text-4" id="text-org02d0887">
+<p>
+Quando effettuo una <code>find</code>, posso effettuare un'ulteriore ottimizzazione spostando i puntatori dei nodi che incontro lungo il cammino.
+</p>
+
+<p>
+In questo modo, aggiungendo un numero costante di operazioni per ogni nodo, quindi un numero logaritmico considerando l'intera operazione, riesco a ridurre l'altezza dell'albero, con dei risparmi <b>ammortizzati</b> sull'intera sequenza.
+</p>
+
+<p>
+Si dimostra che una sequenza di \(n\) <code>makeSet</code> seguita da \(O(n)\) <code>union</code> e <code>find</code>, risulta in \(O(n\log^* n)\).
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2025-01-28 Tue 17:24</p>
+</div>
+</body>
+</html>

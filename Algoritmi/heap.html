@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+<head>
+<!-- 2025-01-28 Tue 17:24 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Heap</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Heap</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org9d41229">Heap e code con priorità</a>
+<ul>
+<li><a href="#orgadee99f">Operazioni</a>
+<ul>
+<li><a href="#org95ae117">Trova e cancella chiave massima</a></li>
+<li><a href="#org032ec30">Inserimento</a></li>
+<li><a href="#org7bcd3a8">Cancellazione</a></li>
+<li><a href="#org5bb1893">Modifica della chiave</a></li>
+</ul>
+</li>
+<li><a href="#orgf5d34f0">Implementazione</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org9d41229" class="outline-2">
+<h2 id="org9d41229">Heap e code con priorità</h2>
+<div class="outline-text-2" id="text-org9d41229">
+<p>
+Sulle code con priorità, ad esempio i <i>Max-Heap</i> dello <code>HeapSort</code>, sono definite varie operazioni.
+</p>
+</div>
+<div id="outline-container-orgadee99f" class="outline-3">
+<h3 id="orgadee99f">Operazioni</h3>
+<div class="outline-text-3" id="text-orgadee99f">
+</div>
+<div id="outline-container-org95ae117" class="outline-4">
+<h4 id="org95ae117">Trova e cancella chiave massima</h4>
+<div class="outline-text-4" id="text-org95ae117">
+<p>
+Trovare l'elemento di chiave massima avviene in tempo costante.
+</p>
+
+<p>
+La cancellazione, invece, richiede di copiare il contenuto di una foglia nella radice e poi risistemare dall'alto, mediante la procedura <code>risistema</code>, che scambia l'elemento alla radice con il figlio maggiore fino ad arrivare alla sua posizione definitiva.
+</p>
+
+<p>
+La procedura <code>risistema</code> richiede un tempo lineare all'altezza e quindi logaritmico rispetto al numero di nodi.
+</p>
+</div>
+</div>
+<div id="outline-container-org032ec30" class="outline-4">
+<h4 id="org032ec30">Inserimento</h4>
+<div class="outline-text-4" id="text-org032ec30">
+<p>
+L'inserimento consiste nell'aggiungere una foglia e poi utilizzare una procedura <code>risistemaDalBasso</code> che scambia l'elemento inserito con il padre fintantochè questo sia maggiore.
+</p>
+
+<p>
+Il caso peggiore è logaritmico.
+</p>
+</div>
+</div>
+<div id="outline-container-org7bcd3a8" class="outline-4">
+<h4 id="org7bcd3a8">Cancellazione</h4>
+<div class="outline-text-4" id="text-org7bcd3a8">
+<p>
+La cancellazione avviene sostituendo l'elemento da cancellare con l'ultima foglia.
+</p>
+
+<p>
+Se l'ultima foglia è minore dell'elemento cancellato, allora la sua posizione corretta potrebbe essere inferiore e quindi va chiamata <code>risistema</code> a partire da là.
+</p>
+
+<p>
+Se invece è maggiore, va chiamata <code>risistemaDalBasso</code>.
+</p>
+
+<p>
+Il caso peggiore è logaritmico.
+</p>
+</div>
+</div>
+<div id="outline-container-org5bb1893" class="outline-4">
+<h4 id="org5bb1893">Modifica della chiave</h4>
+<div class="outline-text-4" id="text-org5bb1893">
+<p>
+La modifica di una chiave segue le stesse regole della cancellazione, che infatti potrebbe essere vista come un cambio della chiave dell'elemento cancellato al valore dell'ultima foglia.
+</p>
+
+<p>
+Se la nuova chiave è minore, si chiama <code>risistema</code> per la discesa, altrimento <code>risistemaDalBasso</code>.
+</p>
+
+<p>
+Il tempo è comunque logaritmico.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf5d34f0" class="outline-3">
+<h3 id="orgf5d34f0">Implementazione</h3>
+<div class="outline-text-3" id="text-orgf5d34f0">
+<p>
+Come si è visto, tutte le operazioni dello heap avvengono in tempo <b>logaritmico</b>.
+</p>
+
+<p>
+Notare che nel caso della <code>changeKey</code> e <code>delete</code>, il tempo è logaritmico soltanto nel caso in cui si conosca la posizione nello heap dell'elemento in questione.
+</p>
+
+<p>
+Per salvare la posizione, si potrebbe tenere un array aggiuntivo in cui ogni intero contiene l'indice in cui l'elemento corrispondente è salvato nell'array dello heap.
+</p>
+
+<p>
+La dimensione di questo array dev'essere grande quanto lo heap, magari con dello spazio aggiuntivo per nuovi inserimenti.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2025-01-28 Tue 17:24</p>
+</div>
+</body>
+</html>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-01-22 Wed 20:15 -->
+<!-- 2025-01-28 Tue 17:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Reti</title>
@@ -46,39 +46,40 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org20558b1">Introduzione</a>
+<li><a href="#orgb7d4616">Introduzione</a>
 <ul>
-<li><a href="#org40b6ea6">Affidabilità</a></li>
-<li><a href="#org77abfc5">Concetto di protocollo</a></li>
-<li><a href="#org8007712">Parametri e statistiche</a>
+<li><a href="#orgf2aca2f">Affidabilità</a></li>
+<li><a href="#org6554cf2">Concetto di protocollo</a></li>
+<li><a href="#org127dc95">Parametri e statistiche</a>
 <ul>
-<li><a href="#org86aa359">Round trip time</a></li>
-<li><a href="#org002431f">Utilizzo di un canale</a></li>
-<li><a href="#org8af35df">Altro</a></li>
+<li><a href="#orgf952444">Round trip time</a></li>
+<li><a href="#orge81b999">Utilizzo di un canale</a></li>
+<li><a href="#org3bf67f9">Altro</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgb8c6a53">Livelli gerarchici</a>
+<li><a href="#orgc7aa10d">Livelli gerarchici</a>
 <ul>
-<li><a href="#org1062d1e">Primo livello (<b>Physical</b>)</a></li>
-<li><a href="#orgb94a7f9">Secondo livello (<b>Data Link</b>)</a></li>
-<li><a href="#orgdab380c">Terzo livello (<b>Network</b>)</a></li>
-<li><a href="#orgb4f445e">Quarto livello (<b>Transport</b>)</a></li>
-<li><a href="#orge47229b">Quinto/Settimo livello (<b>Application</b>)</a></li>
+<li><a href="#orga28b20e">Primo livello (<b>Physical</b>)</a></li>
+<li><a href="#org8244dc0">Secondo livello (<b>Data Link</b>)</a></li>
+<li><a href="#orgadf1efb">Terzo livello (<b>Network</b>)</a></li>
+<li><a href="#org9021310">Quarto livello (<b>Transport</b>)</a></li>
+<li><a href="#org14f6840">Quinto/Settimo livello (<b>Application</b>)</a></li>
 </ul>
 </li>
-<li><a href="#orgdfb7ce3">Formule</a>
+<li><a href="#org5e50ad4">Formule</a>
 <ul>
-<li><a href="#org75345e7">Round trip time</a></li>
+<li><a href="#orgc46612c">Round trip time</a></li>
 </ul>
 </li>
+<li><a href="#org9062529">Esame lab</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org20558b1" class="outline-2">
-<h2 id="org20558b1">Introduzione</h2>
-<div class="outline-text-2" id="text-org20558b1">
+<div id="outline-container-orgb7d4616" class="outline-2">
+<h2 id="orgb7d4616">Introduzione</h2>
+<div class="outline-text-2" id="text-orgb7d4616">
 <p>
 Una <b>rete</b> è un sistema che permette a degli <b>host</b>, computer dove risiedono le app finali, di connettersi da remoto, attraverso nodi intermedi e link.
 </p>
@@ -91,9 +92,9 @@ I dati che viaggiano nel sistema sono denominati <b>pacchetti</b>, con una dimen
 Ogni pacchetto è composto da un <b>payload</b>, ovvero il contenuto originale che il mittente intende comunicare, e uno <b>header</b>, che contiene le informazioni necessarie al sistema di rete e agli host per processare correttamente il contenuto.
 </p>
 </div>
-<div id="outline-container-org40b6ea6" class="outline-3">
-<h3 id="org40b6ea6"><a href="affidabilita.html#ID-3898f6e3-9c94-41fc-bdef-7690d5031ccd">Affidabilità</a></h3>
-<div class="outline-text-3" id="text-org40b6ea6">
+<div id="outline-container-orgf2aca2f" class="outline-3">
+<h3 id="orgf2aca2f"><a href="affidabilita.html#ID-3898f6e3-9c94-41fc-bdef-7690d5031ccd">Affidabilità</a></h3>
+<div class="outline-text-3" id="text-orgf2aca2f">
 <p>
 Definiamo rete <b>affidabile</b> quella che garantisca tre condizioni:
 </p>
@@ -102,15 +103,11 @@ Definiamo rete <b>affidabile</b> quella che garantisca tre condizioni:
 <li>Ordine</li>
 <li>Non duplicazione</li>
 </ul>
-
-<p>
-Viene garantita attraverso il controllo errori, ecc.
-</p>
 </div>
 </div>
-<div id="outline-container-org77abfc5" class="outline-3">
-<h3 id="org77abfc5">Concetto di protocollo</h3>
-<div class="outline-text-3" id="text-org77abfc5">
+<div id="outline-container-org6554cf2" class="outline-3">
+<h3 id="org6554cf2">Concetto di protocollo</h3>
+<div class="outline-text-3" id="text-org6554cf2">
 <p>
 L'utilizzo di algoritmi per garantire la corretta ed affidabile comunicazione fra host comporta la necessità di <b>sincronizzare</b> tutte le macchine coinvolte.
 </p>
@@ -128,13 +125,13 @@ I protocolli sono standard e vengono stabiliti e descritti da organismi internaz
 </p>
 </div>
 </div>
-<div id="outline-container-org8007712" class="outline-3">
-<h3 id="org8007712">Parametri e statistiche</h3>
-<div class="outline-text-3" id="text-org8007712">
+<div id="outline-container-org127dc95" class="outline-3">
+<h3 id="org127dc95">Parametri e statistiche</h3>
+<div class="outline-text-3" id="text-org127dc95">
 </div>
-<div id="outline-container-org86aa359" class="outline-4">
-<h4 id="org86aa359">Round trip time</h4>
-<div class="outline-text-4" id="text-org86aa359">
+<div id="outline-container-orgf952444" class="outline-4">
+<h4 id="orgf952444">Round trip time</h4>
+<div class="outline-text-4" id="text-orgf952444">
 <p>
 In una comunicazione in <b>ARQ</b> <i>(Automatic Repeat Request)</i>, il <b>round trip time</b> è il tempo necessario perchè un frame venga spedito dalla sorgente alla destinazione ed un <code>ACK</code> venga restituito dalla destinazione per confermare l'avvenuta ricezione.
 </p>
@@ -169,9 +166,9 @@ Allora, il tempo totale di una comunicazione è \[t_{x} + 2t_{p}\].
 </p>
 </div>
 </div>
-<div id="outline-container-org002431f" class="outline-4">
-<h4 id="org002431f">Utilizzo di un canale</h4>
-<div class="outline-text-4" id="text-org002431f">
+<div id="outline-container-orge81b999" class="outline-4">
+<h4 id="orge81b999">Utilizzo di un canale</h4>
+<div class="outline-text-4" id="text-orge81b999">
 <p>
 L'utilizzo di un canale è il rapporto del tempo impiegato per immettere un frame sul canale sul tempo che il frame impiega per arrivare a destinazione ed essere confermato mediante <code>ACK</code>.
 </p>
@@ -181,9 +178,9 @@ La formula, dunque, è \[U = \frac{t_{x}}{t_{x} + 2t_{p}}\].
 </p>
 </div>
 </div>
-<div id="outline-container-org8af35df" class="outline-4">
-<h4 id="org8af35df">Altro</h4>
-<div class="outline-text-4" id="text-org8af35df">
+<div id="outline-container-org3bf67f9" class="outline-4">
+<h4 id="org3bf67f9">Altro</h4>
+<div class="outline-text-4" id="text-org3bf67f9">
 <p>
 L'<b>error rate</b>, che è caratteristica di un cavo ed è \(10^{-9}\) per la fibra, \(10^{-5}\) per il doppino telefonico e ancora più alta per le reti radio.
 </p>
@@ -195,9 +192,9 @@ Lo <b>jitter</b>, cioè la variazione nel ritardo fra coppie, è importante nel 
 </div>
 </div>
 </div>
-<div id="outline-container-orgb8c6a53" class="outline-2">
-<h2 id="orgb8c6a53">Livelli gerarchici</h2>
-<div class="outline-text-2" id="text-orgb8c6a53">
+<div id="outline-container-orgc7aa10d" class="outline-2">
+<h2 id="orgc7aa10d">Livelli gerarchici</h2>
+<div class="outline-text-2" id="text-orgc7aa10d">
 <p>
 Le componenti della rete sono organizzate all'interno di una struttura, in modo da assolvere a tutte le funzioni necessarie per la corretta comunicazione. Fra queste funzioni ci sono ad esempio l'instradamento e la garanzia di affidabilità.
 </p>
@@ -226,17 +223,17 @@ Da un punto di vista logico, il collegamento fra ogni livello può essere rappre
 Questa struttura introduce un overhead nelle prestazioni. L'unico modo per ridurre il suo impatto è quello di ottimizzare la dimensione degli header.
 </p>
 </div>
-<div id="outline-container-org1062d1e" class="outline-3">
-<h3 id="org1062d1e">Primo livello (<b>Physical</b>)</h3>
-<div class="outline-text-3" id="text-org1062d1e">
+<div id="outline-container-orga28b20e" class="outline-3">
+<h3 id="orga28b20e">Primo livello (<b>Physical</b>)</h3>
+<div class="outline-text-3" id="text-orga28b20e">
 <p>
 Questo livello si occupa di gestire la trasmissione attraverso una porta I/O, inserendo i bit nel cavo ed estraendoli con un clock definito.
 </p>
 </div>
 </div>
-<div id="outline-container-orgb94a7f9" class="outline-3">
-<h3 id="orgb94a7f9"><a href="data_link.html#ID-cd7a9248-fb2c-4007-a983-1cdd443f9560">Secondo livello (<b>Data Link</b>)</a></h3>
-<div class="outline-text-3" id="text-orgb94a7f9">
+<div id="outline-container-org8244dc0" class="outline-3">
+<h3 id="org8244dc0"><a href="data_link.html#ID-cd7a9248-fb2c-4007-a983-1cdd443f9560">Secondo livello (<b>Data Link</b>)</a></h3>
+<div class="outline-text-3" id="text-org8244dc0">
 <p>
 Questo livello fornisce un formato logico alle informazioni che viaggiano sul cavo fra coppie di host.
 </p>
@@ -258,9 +255,9 @@ Si preferisce utilizzare una versione non affidabile, chiamata <b>best-effort</b
 </p>
 </div>
 </div>
-<div id="outline-container-orgdab380c" class="outline-3">
-<h3 id="orgdab380c">Terzo livello (<b>Network</b>)</h3>
-<div class="outline-text-3" id="text-orgdab380c">
+<div id="outline-container-orgadf1efb" class="outline-3">
+<h3 id="orgadf1efb"><a href="terzo.html#ID-5cf15a68-c0c4-40c9-8889-e9d4150881d1">Terzo livello (<b>Network</b>)</a></h3>
+<div class="outline-text-3" id="text-orgadf1efb">
 <p>
 Il terzo livello implementa l'<b>instradamento</b>, per abilitare comunicazioni su distanze lunghe e variabili, non direttamente collegate.
 </p>
@@ -283,9 +280,9 @@ Questo è l'ultimo livello presente in ogni elemento della rete, ovvero host e r
 </p>
 </div>
 </div>
-<div id="outline-container-orgb4f445e" class="outline-3">
-<h3 id="orgb4f445e">Quarto livello (<b>Transport</b>)</h3>
-<div class="outline-text-3" id="text-orgb4f445e">
+<div id="outline-container-org9021310" class="outline-3">
+<h3 id="org9021310">Quarto livello (<b>Transport</b>)</h3>
+<div class="outline-text-3" id="text-org9021310">
 <p>
 Il quarto livello mette in comunicazione due macchine direttamente fra loro (sfruttando i livelli inferiori) e per questo si parla di livello <b>end-to-end.</b>
 </p>
@@ -295,9 +292,9 @@ L'ordinamento dei pacchetti, classificato come uno dei parametri necessari per l
 </p>
 </div>
 </div>
-<div id="outline-container-orge47229b" class="outline-3">
-<h3 id="orge47229b">Quinto/Settimo livello (<b>Application</b>)</h3>
-<div class="outline-text-3" id="text-orge47229b">
+<div id="outline-container-org14f6840" class="outline-3">
+<h3 id="org14f6840">Quinto/Settimo livello (<b>Application</b>)</h3>
+<div class="outline-text-3" id="text-org14f6840">
 <p>
 Il settimo livello della gerarchia OSI-RM è quello in cui la rete interagisce direttamente con il processo di sistema.
 </p>
@@ -315,17 +312,47 @@ uniforme i dati su macchine che potrebbero utilizzare formati diversi. L'importa
 </div>
 </div>
 </div>
-<div id="outline-container-orgdfb7ce3" class="outline-2">
-<h2 id="orgdfb7ce3">Formule</h2>
-<div class="outline-text-2" id="text-orgdfb7ce3">
+<div id="outline-container-org5e50ad4" class="outline-2">
+<h2 id="org5e50ad4">Formule</h2>
+<div class="outline-text-2" id="text-org5e50ad4">
 </div>
-<div id="outline-container-org75345e7" class="outline-3">
-<h3 id="org75345e7"><a href="#org86aa359">Round trip time</a></h3>
+<div id="outline-container-orgc46612c" class="outline-3">
+<h3 id="orgc46612c"><a href="#orgf952444">Round trip time</a></h3>
+</div>
+</div>
+<div id="outline-container-org9062529" class="outline-2">
+<h2 id="org9062529">Esame lab</h2>
+<div class="outline-text-2" id="text-org9062529">
+<p>
+La parte di packet-tracer sono i conti.
+</p>
+
+<ul class="org-ul">
+<li>Facciamo i conti di packet tracer, 20 minuti</li>
+<li>Li restituiamo</li>
+<li>La parte di packet tracer è fatta costruendo la rete secondo le specifiche</li>
+<li>La parte di java socket si fa a quiz a risposta multipla.
+<ul class="org-ul">
+<li>Server, connection-oriented, timeout</li>
+<li>Tutto fino ai server concorrenti con timeout</li>
+<li>Quali sono le fasi da realizzare per creare un canale (bind, connect, etc)
+<ul class="org-ul">
+<li>Un pezzo di codice, dov'è l'errore</li>
+<li>Qual è la prossima linea di codice che serve per fare una certa cosa?</li>
+</ul></li>
+</ul></li>
+</ul>
+
+
+<p>
+8 quiz su packet tracer, 6 quiz su java socket e poi packet tracer
+30% conti, 40% conti, 30% java socket
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-01-22 Wed 20:15</p>
+<p class="date">Created: 2025-01-28 Tue 17:24</p>
 </div>
 </body>
 </html>
