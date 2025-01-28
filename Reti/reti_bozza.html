@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-01-28 Tue 17:24 -->
+<!-- 2025-01-28 Tue 20:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Retibozza</title>
@@ -69,81 +69,7 @@
 <li><a href="#org98d5d71">Per riassumere i primi 2 livelli, sono entrambi composti da due sottolivelli.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
 <li><a href="#orgd570d63">Le LAN occupano spazi geografici molto limitati. E' necessario collegare LAN, anche lontane, così che siano tutte raggiungibili. Per farlo, vengono collegate ad uno strato superiore, che sarebbe l'ISP, fino ad arrivare ad un terzo strato che è quello intercontinentale.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
 <li><a href="#org90fd521">Nel livello 3 dobbiamo gestire l'indirizzamento e l'instradamento.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org56b2f6c">Riguardo l'indirizzamento IP, abbiamo visto metodi per garantire l'unicità dell'indirizzo. Abbiamo visto il subnetting, che va di pari passo con il metodo CLASS based. Subnetting non nasce con l'obiettivo di superare il limite delle classi, ma è trucco organizzativo per inserire un nuovo livello gerarchico per gestire le reti in modo che riflettano di più la struttura.</a>
-<ul>
-<li><a href="#org0702974">Gli altri metodi, CIDR e NAT, sono usati per superare il problema della frammentazione interna degli IP e aumentare la longevità di IPv4.</a>
-<ul>
-<li><a href="#org501a0d9">Prima o poi, gli indirizzi a 32 bit di v4 finiranno, e saremmo costretti a utilizzare i 128 bit del IPv6.</a></li>
-<li><a href="#org7c5b9dd">CIDR sta per Classless Inter Domain Routing e invece di dividere in classi, lo fa in blocchi autonomi e indipendenti, geografici (europeo, nord-americano, asiatico, ecc.).</a>
-<ul>
-<li><a href="#orgdb17df6">Per esempio, in Europa gli indirizzi vanno da 194.0.0.0 a 194.255.255.255 e lo stesso per 195. Quindi abbiamo 3 sequenze da 8 bit, quindi ognuna da 256 indirizzi, con un totale di 16,777,216. Questo numero è per ogni sequenza iniziale di bit, quindi, moltiplicata per 2, ci porta ad un totale di 33,554,432 indirizzi per l'europa.</a></li>
-<li><a href="#orgfa8d7f9">Il vantaggio è che ogni operatore può scegliere un numero di subnet o host che preferisce.</a>
-<ul>
-<li><a href="#org9e00a1f">Fra paginazione e segmentazione, il vantaggio è che la seconda fa perdere frammentazione interna, ma può creare quella esterna.</a>
-<ul>
-<li><a href="#org5067e50">Infatti, nel momento in cui ogni spazio è occupato e uno degli spazi viene deallocato, bisogna trovare qualcuno che abbia bisogno di un numero massimo uguale a quello lasciato, altrimenti non trova posto e quello spazio rimane inallocato.</a></li>
-</ul>
-</li>
-<li><a href="#orga82b0ed">Supponiamo che un organizzazione di Milano richieda 2048 indirizzi e gli viene assegnato l'indirizzo 194.24.0.___, fino a quello 194.24.7.___. L'ultima parte è interna e quindi non serve indicarla.</a>
-<ul>
-<li><a href="#orgc004d07">All'organizzazione viene assegnato l'indirizzo base, ovvero i primi 3 byte. Bisogna però dare al router un altro strumento di filtro, per evitare che vada ad utilizzare indirizzi fuori da questo slot.</a></li>
-</ul>
-</li>
-<li><a href="#org1fb6a04">Una di roma chiede 2046 indirizzi, servono quindi 16 pagine da 256 indirizzi, allora 4 bit saranno cancellati</a></li>
-<li><a href="#orgd8c0b08">Ogni router deve quindi far girare tutte le maschere che conosce in AND con l'indirizzo ricevuto, finchè non trova la base dello spazio di indirizzi che è stato assegnato.</a></li>
-<li><a href="#orgd686050">Questa soluzione allunga la vita a IPV4, ma non risolve completamente il problema. Fra l'altro, il numero massimo di IP è 30 milioni, molto minore della popolazione europea.</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orged1f920">Il NAT estende ulteriormente la vita di IPv4.</a>
-<ul>
-<li><a href="#orgf1f3b4d">Ogni rete privata ha un NAT, che è un router, che fa da "firewall" fra il mondo di indirizzamento pubblico e quello di indirizzamento privato.</a></li>
-<li><a href="#orge29e61d">Vengono riservati gli ip che iniziano con 10, 172 e 192 alle reti private.</a></li>
-<li><a href="#orgecd4885">Ogni organizzazione viene raggiunta da un IP unico a livello globale, che poi smisterà il pacchetto agli IP, univoci solo a livello di organizzazione, degli host singoli.</a></li>
-<li><a href="#orgd55ab85">Ovviamente, è necessario che i pacchetti salvino sia l'IP globale che quello locale.</a></li>
-<li><a href="#orgf9a8c08">Bisogna gestire il caso delle requeste da parte degli host locali: questi ultimi sanno dove passare per raggiungere il server, ovvero attraverso il NAT. Il server, invece, riceve una request soltanto dal NAT e risponderà ad esso, ma non ha informazione dell'host locale originario.</a>
-<ul>
-<li><a href="#org596ec86">Abbiamo bisogno di qualcosa di nuovo per salvare questa informazione, in modo che il NAT riesca ad associare i pacchetti in arrivo con gli specifici host.</a></li>
-<li><a href="#org865d72c">Un metodo per risolvere questo problema è attraverso il concetto di porta: il TCP è un identificatore numerico che vale solo nel sistema operativo, che associa all'interno della macchina il processo alla specifica entità TCP.</a>
-<ul>
-<li><a href="#org2e5c7fa">Il numero della porta è restituito all'apertura di una socket, come per i file descriptor al momento della open o write in un SO.</a></li>
-<li><a href="#org30e7799">I server web di tutto il mondo parlano sulla porta 80, well-known-port.</a></li>
-<li><a href="#org050b2a1">I server client hanno, invece, un numero di porta effimero assegnato mediante chiamata a primitiva socket e consistente durante la vita della socket.</a></li>
-<li><a href="#org2003e6f">Immaginiamo ora che la host machine dietro NAT usi la porta 1500 ed il server la porta 80. Allora, ogni pacchetto conterrà, oltre ai 3 ip coinvolti (host, NAT, server), anche la porta sorgente e quella destinazione, così che la comunicazione avverrà tra le due porte in questione e il NAT avrà modo di associare il pacchetto in arrivo all'host originario.</a></li>
-<li><a href="#org90b6651">A questo punto, la gerarchia ben definita secondo cui ogni livello pensa solo a sè stesso, crolla.</a>
-<ul>
-<li><a href="#orgb4184b6">Infatti, IP porta in giro lo header di TCP, che sta a livello 4 e quindi dovrebbe essere completamente ignorato a livello 3.</a></li>
-<li><a href="#org1105612">Invece, il router NAT a livello 3, per compiere le sue tipiche funzioni di instradamento nell'inviare il pacchetto alla sua macchina host, deve andare a leggere lo header TCP, in particolare la porta che quello ha assegnato all'host. Lo stesso vale per le comunicazioni in uscita.</a></li>
-<li><a href="#orge5bb181">Insomma, lo svolgimento del livello 3 quando è coinvolto un NAT, è basato su risultati creati a livello 4.</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgd4cb6d8">Questa soluzione porta ad un problema successivo: cosa accade se a due processi differenti, viene assegnato lo stesso numero di porta dalle primitive socket?</a></li>
-<li><a href="#org4f177c6">L'unico modo diventa quello di rendere le porte univoche, ed il NAT lo fa utilizzando una numerazione propria e diversa per ogni processo.</a>
-<ul>
-<li><a href="#org776a043">Il NAT, quindi, accede allo header di livello 4 non soltanto per leggere, ma anche per sostituire la porta locale con quella NAT.</a></li>
-<li><a href="#orge3b592f">Ovviamente, modifica anche l'IP.</a></li>
-<li><a href="#orgfff9fd0">Di conseguenza, le reply arriveranno all'IP del NAT e alla specifica porta NAT, che quest'ultimo trasformerà nella porta host corretta.</a></li>
-<li><a href="#orgbd4e093">A cosa serve quindi tenere la porta originale? BHO</a></li>
-</ul>
-</li>
-<li><a href="#org9a96da5">Il NAT offre grandi garanzie in termini di sicurezza, perchè le macchine dietro di lui sono assolutamente invisibili ed inaccessibili dall'esterno, infatti fa anche da firewall.</a></li>
-<li><a href="#orgcce8df4">L'ultima questione da risolvere è quella di un server dietro NAT, dato che nessuno conosce la porta che mi porta ad esso.</a>
-<ul>
-<li><a href="#orge29a4dd">Un modo banale è quello di assegnargli un IP pubblico, ma perdendo i vantaggi dovuti all'utilizzo del NAT.</a></li>
-<li><a href="#org555b7a2">Un secondo modo è quello di aprire la porta specifica del server. In questo modo, tutte le richieste verso quella porta vengono routate al server in questione.</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a href="#org56b2f6c">Riguardo l'indirizzamento IP, abbiamo visto metodi per garantire l'unicità dell'indirizzo. Abbiamo visto il subnetting, che va di pari passo con il metodo CLASS based. Subnetting non nasce con l'obiettivo di superare il limite delle classi, ma è trucco organizzativo per inserire un nuovo livello gerarchico per gestire le reti in modo che riflettano di più la struttura.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
 <li><a href="#org660452f">Sebbene l'indirizzamento sia parte del livello 3 a livello globale, ogni livello possiede il proprio indirizzo per comunicare con altre macchine.</a>
 <ul>
 <li><a href="#org204fbd7">A livello 2, in una rete CSMA-CD l'indirizzo è il MAC</a></li>
@@ -1167,145 +1093,7 @@
 <h2 id="org90fd521">Nel livello 3 dobbiamo gestire l'indirizzamento e l'instradamento.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
 </div>
 <div id="outline-container-org56b2f6c" class="outline-2">
-<h2 id="org56b2f6c">Riguardo l'indirizzamento IP, abbiamo visto metodi per garantire l'unicità dell'indirizzo. Abbiamo visto il subnetting, che va di pari passo con il metodo CLASS based. Subnetting non nasce con l'obiettivo di superare il limite delle classi, ma è trucco organizzativo per inserire un nuovo livello gerarchico per gestire le reti in modo che riflettano di più la struttura.</h2>
-<div class="outline-text-2" id="text-org56b2f6c">
-</div>
-<div id="outline-container-org0702974" class="outline-3">
-<h3 id="org0702974">Gli altri metodi, CIDR e NAT, sono usati per superare il problema della frammentazione interna degli IP e aumentare la longevità di IPv4.</h3>
-<div class="outline-text-3" id="text-org0702974">
-</div>
-<div id="outline-container-org501a0d9" class="outline-4">
-<h4 id="org501a0d9">Prima o poi, gli indirizzi a 32 bit di v4 finiranno, e saremmo costretti a utilizzare i 128 bit del IPv6.</h4>
-</div>
-<div id="outline-container-org7c5b9dd" class="outline-4">
-<h4 id="org7c5b9dd">CIDR sta per Classless Inter Domain Routing e invece di dividere in classi, lo fa in blocchi autonomi e indipendenti, geografici (europeo, nord-americano, asiatico, ecc.).</h4>
-<div class="outline-text-4" id="text-org7c5b9dd">
-</div>
-<div id="outline-container-orgdb17df6" class="outline-5">
-<h5 id="orgdb17df6">Per esempio, in Europa gli indirizzi vanno da 194.0.0.0 a 194.255.255.255 e lo stesso per 195. Quindi abbiamo 3 sequenze da 8 bit, quindi ognuna da 256 indirizzi, con un totale di 16,777,216. Questo numero è per ogni sequenza iniziale di bit, quindi, moltiplicata per 2, ci porta ad un totale di 33,554,432 indirizzi per l'europa.</h5>
-</div>
-<div id="outline-container-orgfa8d7f9" class="outline-5">
-<h5 id="orgfa8d7f9">Il vantaggio è che ogni operatore può scegliere un numero di subnet o host che preferisce.</h5>
-<div class="outline-text-5" id="text-orgfa8d7f9">
-</div>
-<div id="outline-container-org9e00a1f" class="outline-6">
-<h6 id="org9e00a1f">Fra paginazione e segmentazione, il vantaggio è che la seconda fa perdere frammentazione interna, ma può creare quella esterna.</h6>
-<div class="outline-text-6" id="text-org9e00a1f">
-</div>
-<div id="outline-container-org5067e50" class="outline-7">
-<h7 id="org5067e50">Infatti, nel momento in cui ogni spazio è occupato e uno degli spazi viene deallocato, bisogna trovare qualcuno che abbia bisogno di un numero massimo uguale a quello lasciato, altrimenti non trova posto e quello spazio rimane inallocato.</h7>
-</div>
-</div>
-<div id="outline-container-orga82b0ed" class="outline-6">
-<h6 id="orga82b0ed">Supponiamo che un organizzazione di Milano richieda 2048 indirizzi e gli viene assegnato l'indirizzo 194.24.0.___, fino a quello 194.24.7.___. L'ultima parte è interna e quindi non serve indicarla.</h6>
-<div class="outline-text-6" id="text-orga82b0ed">
-</div>
-<div id="outline-container-orgc004d07" class="outline-7">
-<h7 id="orgc004d07">All'organizzazione viene assegnato l'indirizzo base, ovvero i primi 3 byte. Bisogna però dare al router un altro strumento di filtro, per evitare che vada ad utilizzare indirizzi fuori da questo slot.</h7>
-</div>
-</div>
-<div id="outline-container-org1fb6a04" class="outline-6">
-<h6 id="org1fb6a04">Una di roma chiede 2046 indirizzi, servono quindi 16 pagine da 256 indirizzi, allora 4 bit saranno cancellati</h6>
-</div>
-<div id="outline-container-orgd8c0b08" class="outline-6">
-<h6 id="orgd8c0b08">Ogni router deve quindi far girare tutte le maschere che conosce in AND con l'indirizzo ricevuto, finchè non trova la base dello spazio di indirizzi che è stato assegnato.</h6>
-</div>
-<div id="outline-container-orgd686050" class="outline-6">
-<h6 id="orgd686050">Questa soluzione allunga la vita a IPV4, ma non risolve completamente il problema. Fra l'altro, il numero massimo di IP è 30 milioni, molto minore della popolazione europea.</h6>
-</div>
-</div>
-</div>
-<div id="outline-container-orged1f920" class="outline-4">
-<h4 id="orged1f920">Il NAT estende ulteriormente la vita di IPv4.</h4>
-<div class="outline-text-4" id="text-orged1f920">
-</div>
-<div id="outline-container-orgf1f3b4d" class="outline-5">
-<h5 id="orgf1f3b4d">Ogni rete privata ha un NAT, che è un router, che fa da "firewall" fra il mondo di indirizzamento pubblico e quello di indirizzamento privato.</h5>
-</div>
-<div id="outline-container-orge29e61d" class="outline-5">
-<h5 id="orge29e61d">Vengono riservati gli ip che iniziano con 10, 172 e 192 alle reti private.</h5>
-</div>
-<div id="outline-container-orgecd4885" class="outline-5">
-<h5 id="orgecd4885">Ogni organizzazione viene raggiunta da un IP unico a livello globale, che poi smisterà il pacchetto agli IP, univoci solo a livello di organizzazione, degli host singoli.</h5>
-</div>
-<div id="outline-container-orgd55ab85" class="outline-5">
-<h5 id="orgd55ab85">Ovviamente, è necessario che i pacchetti salvino sia l'IP globale che quello locale.</h5>
-</div>
-<div id="outline-container-orgf9a8c08" class="outline-5">
-<h5 id="orgf9a8c08">Bisogna gestire il caso delle requeste da parte degli host locali: questi ultimi sanno dove passare per raggiungere il server, ovvero attraverso il NAT. Il server, invece, riceve una request soltanto dal NAT e risponderà ad esso, ma non ha informazione dell'host locale originario.</h5>
-<div class="outline-text-5" id="text-orgf9a8c08">
-</div>
-<div id="outline-container-org596ec86" class="outline-6">
-<h6 id="org596ec86">Abbiamo bisogno di qualcosa di nuovo per salvare questa informazione, in modo che il NAT riesca ad associare i pacchetti in arrivo con gli specifici host.</h6>
-</div>
-<div id="outline-container-org865d72c" class="outline-6">
-<h6 id="org865d72c">Un metodo per risolvere questo problema è attraverso il concetto di porta: il TCP è un identificatore numerico che vale solo nel sistema operativo, che associa all'interno della macchina il processo alla specifica entità TCP.</h6>
-<div class="outline-text-6" id="text-org865d72c">
-</div>
-<div id="outline-container-org2e5c7fa" class="outline-7">
-<h7 id="org2e5c7fa">Il numero della porta è restituito all'apertura di una socket, come per i file descriptor al momento della open o write in un SO.</h7>
-</div>
-<div id="outline-container-org30e7799" class="outline-7">
-<h7 id="org30e7799">I server web di tutto il mondo parlano sulla porta 80, well-known-port.</h7>
-</div>
-<div id="outline-container-org050b2a1" class="outline-7">
-<h7 id="org050b2a1">I server client hanno, invece, un numero di porta effimero assegnato mediante chiamata a primitiva socket e consistente durante la vita della socket.</h7>
-</div>
-<div id="outline-container-org2003e6f" class="outline-7">
-<h7 id="org2003e6f">Immaginiamo ora che la host machine dietro NAT usi la porta 1500 ed il server la porta 80. Allora, ogni pacchetto conterrà, oltre ai 3 ip coinvolti (host, NAT, server), anche la porta sorgente e quella destinazione, così che la comunicazione avverrà tra le due porte in questione e il NAT avrà modo di associare il pacchetto in arrivo all'host originario.</h7>
-</div>
-<div id="outline-container-org90b6651" class="outline-7">
-<h7 id="org90b6651">A questo punto, la gerarchia ben definita secondo cui ogni livello pensa solo a sè stesso, crolla.</h7>
-<div class="outline-text-7" id="text-org90b6651">
-</div>
-<div id="outline-container-orgb4184b6" class="outline-8">
-<h8 id="orgb4184b6">Infatti, IP porta in giro lo header di TCP, che sta a livello 4 e quindi dovrebbe essere completamente ignorato a livello 3.</h8>
-</div>
-<div id="outline-container-org1105612" class="outline-8">
-<h8 id="org1105612">Invece, il router NAT a livello 3, per compiere le sue tipiche funzioni di instradamento nell'inviare il pacchetto alla sua macchina host, deve andare a leggere lo header TCP, in particolare la porta che quello ha assegnato all'host. Lo stesso vale per le comunicazioni in uscita.</h8>
-</div>
-<div id="outline-container-orge5bb181" class="outline-8">
-<h8 id="orge5bb181">Insomma, lo svolgimento del livello 3 quando è coinvolto un NAT, è basato su risultati creati a livello 4.</h8>
-</div>
-</div>
-</div>
-<div id="outline-container-orgd4cb6d8" class="outline-6">
-<h6 id="orgd4cb6d8">Questa soluzione porta ad un problema successivo: cosa accade se a due processi differenti, viene assegnato lo stesso numero di porta dalle primitive socket?</h6>
-</div>
-<div id="outline-container-org4f177c6" class="outline-6">
-<h6 id="org4f177c6">L'unico modo diventa quello di rendere le porte univoche, ed il NAT lo fa utilizzando una numerazione propria e diversa per ogni processo.</h6>
-<div class="outline-text-6" id="text-org4f177c6">
-</div>
-<div id="outline-container-org776a043" class="outline-7">
-<h7 id="org776a043">Il NAT, quindi, accede allo header di livello 4 non soltanto per leggere, ma anche per sostituire la porta locale con quella NAT.</h7>
-</div>
-<div id="outline-container-orge3b592f" class="outline-7">
-<h7 id="orge3b592f">Ovviamente, modifica anche l'IP.</h7>
-</div>
-<div id="outline-container-orgfff9fd0" class="outline-7">
-<h7 id="orgfff9fd0">Di conseguenza, le reply arriveranno all'IP del NAT e alla specifica porta NAT, che quest'ultimo trasformerà nella porta host corretta.</h7>
-</div>
-<div id="outline-container-orgbd4e093" class="outline-7">
-<h7 id="orgbd4e093">A cosa serve quindi tenere la porta originale? BHO</h7>
-</div>
-</div>
-<div id="outline-container-org9a96da5" class="outline-6">
-<h6 id="org9a96da5">Il NAT offre grandi garanzie in termini di sicurezza, perchè le macchine dietro di lui sono assolutamente invisibili ed inaccessibili dall'esterno, infatti fa anche da firewall.</h6>
-</div>
-<div id="outline-container-orgcce8df4" class="outline-6">
-<h6 id="orgcce8df4">L'ultima questione da risolvere è quella di un server dietro NAT, dato che nessuno conosce la porta che mi porta ad esso.</h6>
-<div class="outline-text-6" id="text-orgcce8df4">
-</div>
-<div id="outline-container-orge29a4dd" class="outline-7">
-<h7 id="orge29a4dd">Un modo banale è quello di assegnargli un IP pubblico, ma perdendo i vantaggi dovuti all'utilizzo del NAT.</h7>
-</div>
-<div id="outline-container-org555b7a2" class="outline-7">
-<h7 id="org555b7a2">Un secondo modo è quello di aprire la porta specifica del server. In questo modo, tutte le richieste verso quella porta vengono routate al server in questione.</h7>
-</div>
-</div>
-</div>
-</div>
-</div>
+<h2 id="org56b2f6c">Riguardo l'indirizzamento IP, abbiamo visto metodi per garantire l'unicità dell'indirizzo. Abbiamo visto il subnetting, che va di pari passo con il metodo CLASS based. Subnetting non nasce con l'obiettivo di superare il limite delle classi, ma è trucco organizzativo per inserire un nuovo livello gerarchico per gestire le reti in modo che riflettano di più la struttura.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
 </div>
 <div id="outline-container-org660452f" class="outline-2">
 <h2 id="org660452f">Sebbene l'indirizzamento sia parte del livello 3 a livello globale, ogni livello possiede il proprio indirizzo per comunicare con altre macchine.</h2>
@@ -1811,7 +1599,7 @@ SPIEGAZIONE DEL PERCHÈ UN NODO ACCETTA UN VALORE PIÙ ALTO
 <div id="outline-container-org7924e7a" class="outline-8">
 <h8 id="org7924e7a">In particolare, lo split horizon non aiuta nel caso in cui ci siano più di due router coinvolti. Infatti, in questo caso, il nodo appena adiacente a quello su cui è avvenuto il guasto non direbbe a questùltimo di conoscere la strada, ma la direbbe ad un nodo ancora successivo e collegato al primo, su cui è avvenuto il guasto. il terzo nodo della catena avviserebbe il primo di conoscere una strada, la quale sebbene non passi per il link diretto con il nodo che ha un link guasto, passa per un ciclo che eventualmente arriverà a quel nodo. La conseguenza è la stessa.</h8>
 <div class="outline-text-8" id="text-org7924e7a">
-<pre class="example" id="orgcc5b841">
+<pre class="example" id="orgc731e4e">
 Consider three routers A, B, and C in a loop
 If the link between A and destination D fails
 Router A marks D as unreachable (16)
@@ -2547,7 +2335,7 @@ lesgoski
 <div id="outline-container-orgcc32eac" class="outline-3">
 <h3 id="orgcc32eac">C'è un timer che garantisce che se l'ACK viene perso, o impiega troppo tempo ad arrivare, venga mandato un messaggio con RESET a 1 che annulla l'handshake, che va rieffettuato</h3>
 <div class="outline-text-3" id="text-orgcc32eac">
-<pre class="example" id="org68d48e9">
+<pre class="example" id="org19204cc">
 Let me explain why starting sequence numbers in the Transport layer are random:
 
     Security: Random initial sequence numbers help prevent TCP sequence prediction attacks. If sequence numbers were predictable, attackers could potentially hijack TCP connections by guessing the next sequence number.
@@ -2680,7 +2468,7 @@ This randomization is a crucial security measure in modern TCP implementations a
 <div id="outline-container-org4fc03d8" class="outline-4">
 <h4 id="org4fc03d8">Il motivo per cui viene fatta la eco è che il sender prende input a tastiera ma non mostra direttamente a schermo, perchè non è sicuro che dall'altra parte sia correttamente ricevuto. Solo quando si è sicuri che dall'altra parte sia stato ricevuto, viene stampato a tastiera</h4>
 <div class="outline-text-4" id="text-org4fc03d8">
-<pre class="example" id="orge2767a8">
+<pre class="example" id="org736ac7b">
 Let me explain why TCP echoes bytes with the PUSH flag:
 
     Data Acknowledgment vs Echo:
@@ -2735,7 +2523,7 @@ The echo mechanism complements ACKs rather than duplicating them - ACKs confirm 
 <div id="outline-container-orgcf08a4e" class="outline-4">
 <h4 id="orgcf08a4e">In questo caso, quando la eco viene aggiunta nel buffer di invio della ricezione, viene inserita nello stesso frame di Ack. Così ri risparmia un messaggio TCP.</h4>
 <div class="outline-text-4" id="text-orgcf08a4e">
-<pre class="example" id="orgd61cf3c">
+<pre class="example" id="orgf62fd38">
 Let me explain a common TCP optimization technique from computer networking. This technique is called "Delayed Acknowledgment" or "Delayed ACK."
 
 The Delayed ACK technique involves:
@@ -2784,7 +2572,7 @@ However, Delayed ACK is not used in all cases - for example, every second full-s
 <div id="outline-container-org14d9f72" class="outline-7">
 <h7 id="org14d9f72"><span class="todo TODO">TODO</span> Capire se viene effettuata la echo dei byte in blocco e se viene fatta byte per byte o cumulativa.</h7>
 <div class="outline-text-7" id="text-org14d9f72">
-<pre class="example" id="orgfa5ee69">
+<pre class="example" id="orgdd49d0b">
 No, when using Nagle's algorithm, the block of bytes in the second segment is not echoed, and the ACK does not contain an echo of the whole block. Here's why:
 
     First byte behavior:
@@ -2813,7 +2601,7 @@ This behavior helps optimize network performance by:
     Providing reliable delivery confirmation through ACKs
 </pre>
 
-<pre class="example" id="orgef4c25b">
+<pre class="example" id="org699fd11">
 The echo of the first byte in Nagle's algorithm serves these specific purposes:
 
     Connection Validation:
@@ -3248,7 +3036,7 @@ Il prof non sa esattamente quali sono i valori di alfa e beta, comunque basta in
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-01-28 Tue 17:24</p>
+<p class="date">Created: 2025-01-28 Tue 20:16</p>
 </div>
 </body>
 </html>

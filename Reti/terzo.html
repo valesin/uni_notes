@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-01-28 Tue 17:24 -->
+<!-- 2025-01-28 Tue 20:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Network layer</title>
@@ -60,6 +60,16 @@
 </ul>
 </li>
 <li><a href="#org914c5c4">CIDR (classless)</a></li>
+<li><a href="#org92f444d">NAT</a>
+<ul>
+<li><a href="#orgafe9973">L'ultima questione da risolvere è quella di un server dietro NAT, dato che nessuno conosce la porta che mi porta ad esso.</a>
+<ul>
+<li><a href="#orga222771">Un modo banale è quello di assegnargli un IP pubblico, ma perdendo i vantaggi dovuti all'utilizzo del NAT.</a></li>
+<li><a href="#org650b61c">Un secondo modo è quello di aprire la porta specifica del server. In questo modo, tutte le richieste verso quella porta vengono routate al server in questione.</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -299,12 +309,76 @@ CONTROLLARE CASI DI COLLISIONE PER RETE MINORE, ES 6.4
 </p>
 </div>
 </div>
+<div id="outline-container-org92f444d" class="outline-5">
+<h5 id="org92f444d">NAT</h5>
+<div class="outline-text-5" id="text-org92f444d">
+<p>
+Per introdurre un rimedio temporaneo alla carenza di indirizzi IP, viene introdotto questo nuovo sistema.
+</p>
+
+<p>
+Il <b>Network Address Translation</b> è un metodo per mappare uno spazio di indirizzi IP in un altro.
+</p>
+
+<p>
+In particolare, ad ogni rete di un organizzazione viene associato <b>un solo IP</b>, con un gateway d'accesso che cattura tutte le richieste in entrata e le smista agli host.
+</p>
+
+<p>
+Gli host degli IP validi <b>soltanto all'interno</b> della rete e sono i seguenti:
+</p>
+<ul class="org-ul">
+<li>\(10.0.0.0/8\)</li>
+<li>\(172.16.0.0/12\)</li>
+<li>\(192.168.0.0/16\)</li>
+</ul>
+
+<p>
+Gli host spediscono i pacchetti in modo standard. Il gateway, attraverso cui devono necessariamente passare, <b>traduce</b> gli header sia IP che TCP così che nel pacchetto appaia il gateway stesso come origine e stessa destinazione.
+</p>
+
+<p>
+Inoltre, il gateway <b>salva</b> l'associazione <b>IP-PortaTCP di Origine/IP-PortaTCP di destinazione</b> all'interno della <b>tabella NAT</b>.
+</p>
+
+<p>
+La porta TCP del gateway è generata in modo da essere <b>univoca</b> per ogni processo.
+</p>
+
+<p>
+Quando il server risponde, egli indirizza il pacchetto al gateway, che controlla a quale host interno fosse associata la coppia IP-Tcp del server e vi instraderà il pacchetto ricevuto.
+</p>
+
+<p>
+Questa organizzazione fa crollare la separazione gerarchica, in quanto i gateway d'accesso devono modificare non solo lo header di terzo livello, ma anche di quarto.
+</p>
+
+<p>
+Il NAT offre garanzie in termini di sicurezza, facendo anche da firewall.
+</p>
+
+<p>
+VEDERE COSA FARE QUANDO UN SERVER é DIETRO NAT
+</p>
+</div>
+<div id="outline-container-orgafe9973" class="outline-6">
+<h6 id="orgafe9973">L'ultima questione da risolvere è quella di un server dietro NAT, dato che nessuno conosce la porta che mi porta ad esso.</h6>
+<div class="outline-text-6" id="text-orgafe9973">
+</div>
+<div id="outline-container-orga222771" class="outline-7">
+<h7 id="orga222771">Un modo banale è quello di assegnargli un IP pubblico, ma perdendo i vantaggi dovuti all'utilizzo del NAT.</h7>
+</div>
+<div id="outline-container-org650b61c" class="outline-7">
+<h7 id="org650b61c">Un secondo modo è quello di aprire la porta specifica del server. In questo modo, tutte le richieste verso quella porta vengono routate al server in questione.</h7>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-01-28 Tue 17:24</p>
+<p class="date">Created: 2025-01-28 Tue 20:16</p>
 </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-01-28 Tue 17:23 -->
+<!-- 2025-01-28 Tue 18:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Grafi</title>
@@ -72,12 +72,6 @@
 </li>
 <li><a href="#orgda6b96f">Alberi ricoprenti minimi</a></li>
 <li><a href="#org0c981e7">Cammini minimi</a></li>
-<li><a href="#org99c1733">Panoramica sui grafi</a>
-<ul>
-<li><a href="#org866301a">Cammino minimo tra ogni coppia di vertici:</a></li>
-<li><a href="#orgf76f852">Cammini minimi da un vertice ad ogni altro</a></li>
-</ul>
-</li>
 </ul>
 </div>
 </div>
@@ -365,7 +359,7 @@ Nel caso in cui sia una matrice di incidenza, devo scorrere tutti gli \(m\) arch
 Questo è l'esempio di una visita in ampiezza di un grafo non orientato connesso a partire da un vertice <code>s</code> e costruzione di un albero ricoprente ottenuto selezionando gli archi secondo l’ordine della visita.
 </p>
 
-<pre class="example" id="org178ccb9">
+<pre class="example" id="orga9edafc">
 ALGORITMO visitaInAmpiezza(grafo G=(V,E), vertice s) -&gt; albero
 C &lt;- coda vuota
 T &lt;- ({s}, [])
@@ -583,63 +577,6 @@ Se gli archi sono pesati, allora può essere utile trovare l'<b>albero ricoprent
 <div id="outline-container-org0c981e7" class="outline-2">
 <h2 id="org0c981e7"><a href="cammini.html#ID-08e5a302-8395-4019-b38b-be53577d56cf">Cammini minimi</a></h2>
 </div>
-<div id="outline-container-org99c1733" class="outline-2">
-<h2 id="org99c1733">Panoramica sui grafi</h2>
-<div class="outline-text-2" id="text-org99c1733">
-</div>
-<div id="outline-container-org866301a" class="outline-3">
-<h3 id="org866301a">Cammino minimo tra ogni coppia di vertici:</h3>
-<div class="outline-text-3" id="text-org866301a">
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">Floyd-Marshall</td>
-<td class="org-left">\(\Theta(n^3)\)</td>
-<td class="org-left">no cicli negativi</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div id="outline-container-orgf76f852" class="outline-3">
-<h3 id="orgf76f852">Cammini minimi da un vertice ad ogni altro</h3>
-<div class="outline-text-3" id="text-orgf76f852">
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">Dijkstra</td>
-<td class="org-left">\(O(m\log n)\)</td>
-<td class="org-left">no pesi negativi</td>
-</tr>
-
-<tr>
-<td class="org-left">Bellman Ford</td>
-<td class="org-left">\(O(m\cdot n)\)</td>
-<td class="org-left">no cicli negativi</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
 <div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
 <div id="text-footnotes">
@@ -652,7 +589,7 @@ Ne consegue che in un grafo non orientato, l'adiacenza è simmetrica, ma nel cas
 </div>
 </div></div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-01-28 Tue 17:23</p>
+<p class="date">Created: 2025-01-28 Tue 18:39</p>
 </div>
 </body>
 </html>
