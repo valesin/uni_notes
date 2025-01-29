@@ -3,12 +3,41 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-01-28 Tue 17:24 -->
+<!-- 2025-01-29 Wed 16:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Heap</title>
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
+<script>
+    window.MathJax = {
+      tex: {
+        ams: { multlineWidth: '85%' },
+        {packages: {'[+]': ['mathtools']}},
+        tags: 'ams',
+        tagSide: 'right',
+        tagIndent: '.8em'
+      },
+      chtml: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      svg: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      output: {
+        font: 'mathjax-modern',
+        displayOverflow: 'scale'
+      },
+      loader: {
+        load: ['[tex]/mathtools']
+      },
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <div id="content" class="content">
@@ -28,6 +57,7 @@
 </ul>
 </li>
 <li><a href="#orgf5d34f0">Implementazione</a></li>
+<li><a href="#org7bd7f9b">Panoramica per <b>min-heap</b></a></li>
 </ul>
 </li>
 </ul>
@@ -129,10 +159,69 @@ La dimensione di questo array dev'essere grande quanto lo heap, magari con dello
 </p>
 </div>
 </div>
+<div id="outline-container-org7bd7f9b" class="outline-3">
+<h3 id="org7bd7f9b">Panoramica per <b>min-heap</b></h3>
+<div class="outline-text-3" id="text-org7bd7f9b">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">DHeap</td>
+<td class="org-left">Fibonacci</td>
+</tr>
+
+<tr>
+<td class="org-left">findMin</td>
+<td class="org-left">\(O(1)\)</td>
+<td class="org-left">\(O(1)\)</td>
+</tr>
+
+<tr>
+<td class="org-left">insert</td>
+<td class="org-left">\(O(\log_d n)\)</td>
+<td class="org-left">\(O(1)\)</td>
+</tr>
+
+<tr>
+<td class="org-left">delete</td>
+<td class="org-left">\(O(d\log_d n)\)</td>
+<td class="org-left">\(O(\log n)\)</td>
+</tr>
+
+<tr>
+<td class="org-left">deleteMin</td>
+<td class="org-left">\(O(d\log_d n)\)</td>
+<td class="org-left">\(O(\log n)\)</td>
+</tr>
+
+<tr>
+<td class="org-left">increaseKey</td>
+<td class="org-left">\(O(d\log_d n)\)</td>
+<td class="org-left">\(O(\log n)\)</td>
+</tr>
+
+<tr>
+<td class="org-left">decreaseKey</td>
+<td class="org-left">\(O(\log_d n)\)</td>
+<td class="org-left">\(O(1)\)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-01-28 Tue 17:24</p>
+<p class="date">Created: 2025-01-29 Wed 16:11</p>
 </div>
 </body>
 </html>
