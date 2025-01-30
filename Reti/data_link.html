@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-01-28 Tue 20:16 -->
+<!-- 2025-01-30 Thu 16:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Data Link</title>
@@ -166,7 +166,7 @@ L'implementazione del bit stuffing viene effettuata al livello logico dal protoc
 <h3 id="orgd25a02a">ARQ</h3>
 <div class="outline-text-3" id="text-orgd25a02a">
 <p>
-Per garantire l' a livello 2, si utilizza uno schema di controllo chiamato <b>Automatic Repeat Request</b>, il cui scopo è quello di riconoscere e rispedire i frame corrotti o persi in trasmissione.
+Per garantire l'<a href="affidabilita.html#ID-3898f6e3-9c94-41fc-bdef-7690d5031ccd">affidabilità</a> a livello 2, si utilizza uno schema di controllo chiamato <b>Automatic Repeat Request</b>, il cui scopo è quello di riconoscere e rispedire i frame corrotti o persi in trasmissione.
 </p>
 
 <p>
@@ -202,7 +202,7 @@ La macchina sorgente può avere un solo frame in attesa di <code>ACK</code>.
 </p>
 
 <p>
-Dopo un certo tempo \(T\), chiamato , durante il quale un <code>ACK</code> non è stato ricevuto, la sorgente assume che la comunicazione non sia andata a buon fine e la ripete.
+Dopo un certo tempo \(T\), chiamato <a href="reti.html#ID-a362a05d-2b1c-4a02-b76c-ff3726a289cc">round trip time delay</a>, durante il quale un <code>ACK</code> non è stato ricevuto, la sorgente assume che la comunicazione non sia andata a buon fine e la ripete.
 </p>
 
 <p>
@@ -238,7 +238,7 @@ Una strategia più efficiente è quella di mandare serie di frame lunghe \(K\) s
 </p>
 
 <p>
-Questa strategia aumenta molto l'efficienza, soprattutto nei casi in cui l' è basso.
+Questa strategia aumenta molto l'efficienza, soprattutto nei casi in cui l'<a href="reti.html#ID-b122a89c-84ab-4f3a-add1-4c59f57348de">utilizzo del canale</a> è basso.
 </p>
 
 <p>
@@ -293,6 +293,10 @@ Il <b>massimo numero di sequenza</b> è <b>almeno</b> \(2K\).
 </p>
 
 <p>
+Infatti, il receiver potrebbe possedere già dei frame di una data finestra nel proprio buffer e bisogna discriminare i nuovi.
+</p>
+
+<p>
 L'ambiguità avverebbe nel momento in cui <b>tutti</b> i frame di una finestra fossero ricevuti, ma il loro <code>ACK</code> smarrito.
 </p>
 
@@ -307,11 +311,7 @@ Il sender invierà frame nel range \([N,N+K-1]\), mentre il receiver aspetterà 
 <p>
 Se il numero massimo di sequenza \(x = 2K - d\) per un qualunque \(d>0\), otterrei che \(N\mod x = N+(2K - d)\mod x\), quindi ad esempio se il numero massimo di sequenza fosse minore soltanto di \(d=1\), allora il numero di sequenza del primo pacchetto inviato dal sender colliderebbe con quello dell'ultimo pacchetto atteso dal receiver, che lo salverebbe, ignorando che sia una ritrasmissione.
 </p>
-
-<p>
-Il problema fra il primo pacchetto da mandare e l'ultimo da ricevere nel caso di \(x=2K - 1\), e tornando indietro quando si diminuiscono i numeri di sequenza.
-</p>
-<pre class="example" id="orga15aef7">
+<pre class="example" id="orga4ef02b">
 In the ARQ of the data link, if using a Selective Repeat protocol, if the third of 5 frames does not get received from the receiver and we are using a cumulative ACK, what is the ACK that gets sent to the sender?
 
 Let me help explain how Selective Repeat ARQ handles this scenario.
@@ -711,14 +711,6 @@ Viene quindi utilizzato un <b>preambolo</b> composto da \(7\) byte in totale, co
 </p>
 
 <p>
-Questo preambolo viene ricevuto dai circuiti riceventi come un'onda periodica, con la <b>stessa frequenza</b> del clock di trasmissione, ma <b>shiftata di mezzo periodo</b> in avanti.
-</p>
-
-<p>
-Le stazioni che vi si sincronizzano, saranno quindi in grado di leggere correttamente le transizioni a metà periodo. La <b>metà</b> è scelta perchè è quella meno sottoposta a distorsioni.
-</p>
-
-<p>
 Dopo il preambolo, viene emesso lo <b>Start Frame Delimiter</b> (SFD) così costituito: \(10101011\). Dopo la <b>doppia transizione</b> finale, inizia la trasmissione vera e propria.
 </p>
 </div>
@@ -891,7 +883,7 @@ Inoltre, nel campo lunghezza è riportato \(8100Hex\) che essendo maggiore di \(
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-01-28 Tue 20:16</p>
+<p class="date">Created: 2025-01-30 Thu 16:48</p>
 </div>
 </body>
 </html>

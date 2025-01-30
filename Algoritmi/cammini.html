@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-01-28 Tue 18:39 -->
+<!-- 2025-01-30 Thu 16:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Cammini minimi</title>
@@ -68,7 +68,6 @@
 </li>
 </ul>
 </li>
-<li><a href="#org1970a7f">Panoramica</a></li>
 </ul>
 </li>
 </ul>
@@ -121,7 +120,7 @@ Quando \(k=0\), la tabella contiene il peso dei vertici collegati da un solo arc
 Ad ogni incremento, conosco la situazione corrente e in base all'aggiunta del nuovo vertice posso aggiornare i cammini.
 </p>
 
-<pre class="example" id="org28940c7">
+<pre class="example" id="orgb4fe24a">
 ALGORITMO FloydWarshall(Grafo pesato G) -&gt; Matrice distanze
     Sia D una matrice n \times n, con V = {v_1, v_2, ..., v_n}
 
@@ -153,7 +152,7 @@ Quindi al momento dell'aggiornamento, se viene scoperto che il percorso passante
 Data questa matrice, ricostruire il cammino fra due vertici richiede di ritracciare il percorso al contrario, saltando di precedente in precedente fino ad arrivare al vertice di partenza.
 </p>
 
-<pre class="example" id="org06f3f6b">
+<pre class="example" id="org295cbdd">
 FUNZIONE calcolaCammino(Matrice P, v_i, v_j \in V) -&gt; sequenza di vertici
     j_0 &lt;- j
     h &lt;- 0
@@ -210,7 +209,7 @@ Se invece si andasse al contrario, servirebbero esattamente \(n-1\) iterazioni p
 <p>
 Comunque, non si può stabilire se il vettore sia corretto prima di aver completato tutte le iterazioni e quindi bisogna iterare sempre \(n-1\) volte.
 </p>
-<pre class="example" id="org89717d6">
+<pre class="example" id="orgac70c72">
 ALGORITMO BellmanFord(Grafo pesato G, vertice s) -&gt; vettore distanze
     Sia d[v] un vettore con indici in V
     D[s] &lt;- 0
@@ -262,7 +261,7 @@ Dopodichè perfeziono il vettore delle distanze con gli archi uscenti dal vertic
 <p>
 La miglior rappresentazione per l'algoritmo è attraverso una lista di incidenza o adiacenza, altrimenti l'iterazione attraverso gli archi uscenti da \(u\) prevede di scansionare ogni arco del grafo.
 </p>
-<pre class="example" id="org59c5752">
+<pre class="example" id="orgab1fb96">
 ALGORITMO Dijkstra (grafo pesato G = (V, E, \omega), vertice s) -&gt; vettore distanze
     Sia D un vettore con indici in V
     D[s] &lt;- 0
@@ -288,7 +287,7 @@ Il problema di quest'implementazione iniziale è che la ricerca del minimo richi
 L'efficienza può essere migliorata utilizzando una coda con priorità in cui il coefficiente di ogni vertice \(v\) è uguale al valore di \(D[v]\).
 </p>
 
-<pre class="example" id="orgb397d69">
+<pre class="example" id="org4f41679">
 ALGORITMO Dijkstra (grafo pesato G = (V, E, \omega), vertice s) -&gt; vettore distanze
     Sia D un vettore con indici in V
     Sia C una coda con priorità
@@ -361,63 +360,10 @@ Non lavora correttamente per pesi negativi. Perchè se avessi pesi negativi, dov
 </div>
 </div>
 </div>
-<div id="outline-container-org1970a7f" class="outline-3">
-<h3 id="org1970a7f">Panoramica</h3>
-<div class="outline-text-3" id="text-org1970a7f">
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">Algoritmo</td>
-<td class="org-left">Vertici</td>
-<td class="org-left">Tempo</td>
-<td class="org-left">Spazio</td>
-<td class="org-left">Restrizioni</td>
-</tr>
-
-<tr>
-<td class="org-left">Floyd-Marshall</td>
-<td class="org-left">ogni coppia</td>
-<td class="org-left">\(\Theta(n^3)\)</td>
-<td class="org-left">\(\Theta(n^2)\)</td>
-<td class="org-left">no cicli negativi</td>
-</tr>
-
-<tr>
-<td class="org-left">Bellman Ford</td>
-<td class="org-left">uno solo</td>
-<td class="org-left">\(O(m\cdot n)\)</td>
-<td class="org-left">\(\Theta(n)\)</td>
-<td class="org-left">no cicli negativi</td>
-</tr>
-
-<tr>
-<td class="org-left">Dijkstra</td>
-<td class="org-left">uno solo</td>
-<td class="org-left">\(O(m\log n)\) o \(O(m + n\log n)\)</td>
-<td class="org-left">\(\Theta(n)\)</td>
-<td class="org-left">no pesi negativi</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-01-28 Tue 18:39</p>
+<p class="date">Created: 2025-01-30 Thu 16:48</p>
 </div>
 </body>
 </html>

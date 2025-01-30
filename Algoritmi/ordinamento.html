@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-01-28 Tue 17:24 -->
+<!-- 2025-01-30 Thu 20:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ordinamento</title>
@@ -48,10 +48,9 @@
 <ul>
 <li><a href="#orga150461">Algoritmi di ordinamento</a>
 <ul>
-<li><a href="#org76489f2"><span class="todo TODO">TODO</span> Inserire casi migliori e peggiori per ogni algoritmo</a></li>
 <li><a href="#orga640ac1">Introduzione</a>
 <ul>
-<li><a href="#org07b57ad">Stabilità</a></li>
+<li><a href="#org5c794f7">Stabilità</a></li>
 <li><a href="#org37ecfb9">Complessità</a>
 <ul>
 <li><a href="#org2ab1e4c">Spazio</a></li>
@@ -64,22 +63,22 @@
 <ul>
 <li><a href="#org20d352d">SelectionSort</a>
 <ul>
-<li><a href="#orgad7afbb">Analisi</a></li>
+<li><a href="#org4c7921f">Analisi</a></li>
 </ul>
 </li>
 <li><a href="#org93d5026">InsertionSort</a>
 <ul>
 <li><a href="#org22ceab1">Alternativa</a></li>
-<li><a href="#org6649f77">Analisi</a></li>
+<li><a href="#org0b1abd9">Analisi</a></li>
 </ul>
 </li>
 <li><a href="#org2b865bd">BubbleSort</a>
 <ul>
 <li><a href="#org7b51759">Miglioramento</a></li>
-<li><a href="#orgf0701a9">Analisi</a>
+<li><a href="#orgfdd54ff">Analisi</a>
 <ul>
-<li><a href="#org86c278c">Caso peggiore</a></li>
-<li><a href="#orgf8b338a">Caso migliore</a></li>
+<li><a href="#org6483981">Caso peggiore</a></li>
+<li><a href="#org3ec884f">Caso migliore</a></li>
 </ul>
 </li>
 </ul>
@@ -92,12 +91,12 @@
 <ul>
 <li><a href="#orga6f2e33">Merge</a>
 <ul>
-<li><a href="#org057a673">Analisi</a></li>
+<li><a href="#org17188d1">Analisi</a></li>
 </ul>
 </li>
 <li><a href="#org5f705da">Sort</a>
 <ul>
-<li><a href="#org6f4c290">Analisi tempo</a>
+<li><a href="#org9870202">Analisi tempo</a>
 <ul>
 <li><a href="#orgbd76a56">Nota</a></li>
 </ul>
@@ -105,10 +104,10 @@
 <li><a href="#org9767bd8">Analizi spazio</a></li>
 <li><a href="#org775cb4e">Implementazione quasi in loco</a>
 <ul>
-<li><a href="#org6242eec">Analisi spazio</a></li>
+<li><a href="#orgc776f92">Analisi spazio</a></li>
 </ul>
 </li>
-<li><a href="#org61932dd">Stabilità</a></li>
+<li><a href="#org20f4abf">Stabilità</a></li>
 </ul>
 </li>
 <li><a href="#orgf587c16"><span class="todo TODO">TODO</span> Analisi spazio e implementazione in loco</a></li>
@@ -120,15 +119,15 @@
 <ul>
 <li><a href="#orgcbe6a38">Partizionamento</a></li>
 <li><a href="#orga48ed84">Unione</a></li>
-<li><a href="#org27ea330">Analisi tempo</a>
+<li><a href="#org75f5d7a">Analisi tempo</a>
 <ul>
-<li><a href="#orgaae1ec1">Caso peggiore</a></li>
-<li><a href="#org352fe2f">Caso migliore</a></li>
+<li><a href="#orgfdd92eb">Caso peggiore</a></li>
+<li><a href="#org43998b5">Caso migliore</a></li>
 <li><a href="#org2c7a1f2">Caso medio</a></li>
 <li><a href="#orgc86f16c">Osservazioni</a></li>
 </ul>
 </li>
-<li><a href="#orga07823e">Analisi spazio</a></li>
+<li><a href="#orgde86c2c">Analisi spazio</a></li>
 <li><a href="#org4476cc3">Ottimizzazioni</a>
 <ul>
 <li><a href="#orga370a17">Spiegazione più breve</a></li>
@@ -151,7 +150,17 @@
 </li>
 </ul>
 </li>
-<li><a href="#orgb53add7"><span class="todo TODO">TODO</span> Algoritmi senza confronti</a></li>
+<li><a href="#orgb53add7">Algoritmi senza confronti</a>
+<ul>
+<li><a href="#org9976713">BucketSort</a>
+<ul>
+<li><a href="#orgd43741e">Differenza con integersort</a></li>
+</ul>
+</li>
+<li><a href="#org8996a9c">RadixSort</a></li>
+<li><a href="#org4d1ab0e">Riassunto</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#org0304706">Limite inferiore ai metodi basati sui confronti&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ATTACH">ATTACH</span></span></a></li>
@@ -162,9 +171,6 @@
 <div id="outline-container-orga150461" class="outline-2">
 <h2 id="orga150461">Algoritmi di ordinamento</h2>
 <div class="outline-text-2" id="text-orga150461">
-</div>
-<div id="outline-container-org76489f2" class="outline-3">
-<h3 id="org76489f2"><span class="todo TODO">TODO</span> Inserire casi migliori e peggiori per ogni algoritmo</h3>
 </div>
 <div id="outline-container-orga640ac1" class="outline-3">
 <h3 id="orga640ac1">Introduzione</h3>
@@ -181,9 +187,9 @@ Si ordinano array di strutture complesse, in cui uno dei campi viene scelto come
 Durante il corso, si utilizzeranno degli array di interi, per semplificare il ragionamento, che viene poi facilmente espanso al caso generale.
 </p>
 </div>
-<div id="outline-container-org07b57ad" class="outline-4">
-<h4 id="org07b57ad">Stabilità</h4>
-<div class="outline-text-4" id="text-org07b57ad">
+<div id="outline-container-org5c794f7" class="outline-4">
+<h4 id="org5c794f7">Stabilità</h4>
+<div class="outline-text-4" id="text-org5c794f7">
 <p>
 Un algoritmo si dice <b>stabile</b> quando, dati due record con la medesima chiave, l'ordine in cui essi si trovano nell'array ordinato è lo stesso in cui si trovavano in quello iniziale.
 </p>
@@ -226,7 +232,7 @@ Il bubblesort invece, scambia a coppie e si ferma quando non c'è più modo di s
 <div id="outline-container-org20d352d" class="outline-4">
 <h4 id="org20d352d">SelectionSort</h4>
 <div class="outline-text-4" id="text-org20d352d">
-<pre class="example" id="org4882ee6">
+<pre class="example" id="org18deb5b">
 ALGORITMO selectionSort (Array A[0..N-1])
     FOR k &lt;- 0 to n-2 DO
         m &lt;- k                            //posizione del minimo
@@ -316,9 +322,9 @@ L'ultimo elemento non viene controllato, perchè si trova automaticamente nella 
 Un esempio è l'array \([10_{1},\;10_{2},\;5] \rightarrow [5,\;10_{2}\;10_{1}]\).
 </p>
 </div>
-<div id="outline-container-orgad7afbb" class="outline-5">
-<h5 id="orgad7afbb">Analisi</h5>
-<div class="outline-text-5" id="text-orgad7afbb">
+<div id="outline-container-org4c7921f" class="outline-5">
+<h5 id="org4c7921f">Analisi</h5>
+<div class="outline-text-5" id="text-org4c7921f">
 <p>
 Per la stima del tempo, notare che alla \(k\) -esima iterazione, sono stati effettuati \(n-k-1\) confronti.
 </p>
@@ -336,7 +342,7 @@ Lo spazio è costante perchè si opera <b>in loco</b>.
 <div id="outline-container-org93d5026" class="outline-4">
 <h4 id="org93d5026">InsertionSort</h4>
 <div class="outline-text-4" id="text-org93d5026">
-<pre class="example" id="org9eee814">
+<pre class="example" id="org27f1386">
 ALGORITMO insertionSort(Array A[0..N-1])
     FOR k -&gt; 1 TO N-1 DO
         x &lt;- A[k]                       // copia l'elemento da inserire
@@ -429,9 +435,9 @@ La versione tradizionale ottimizza questo aspetto effettuando una sola lettura, 
 </p>
 </div>
 </div>
-<div id="outline-container-org6649f77" class="outline-5">
-<h5 id="org6649f77">Analisi</h5>
-<div class="outline-text-5" id="text-org6649f77">
+<div id="outline-container-org0b1abd9" class="outline-5">
+<h5 id="org0b1abd9">Analisi</h5>
+<div class="outline-text-5" id="text-org0b1abd9">
 <p>
 \(sum_{k=1}^{k} i\), che per la formula di gauss è \(\frac{(n-1)(n)}{2}\).
 </p>
@@ -445,7 +451,7 @@ La versione tradizionale ottimizza questo aspetto effettuando una sola lettura, 
 <div id="outline-container-org2b865bd" class="outline-4">
 <h4 id="org2b865bd">BubbleSort</h4>
 <div class="outline-text-4" id="text-org2b865bd">
-<pre class="example" id="orgcd07592">
+<pre class="example" id="orgb98853a">
 ALGORITMO bubbleSort(Array A[0..n-1)
 k &lt;- 1                            //contatore della scansione
 scambiato &lt;- false
@@ -525,7 +531,7 @@ Inoltre, alla $n-1$-esima iterazione, gli ultimi \(n-1\) elementi sono ordinati 
 <div id="outline-container-org7b51759" class="outline-5">
 <h5 id="org7b51759">Miglioramento</h5>
 <div class="outline-text-5" id="text-org7b51759">
-<pre class="example" id="org02c7cc9">
+<pre class="example" id="org2f95110">
 ALGORITMO bubbleSort(Array A[0..n-1])
     primoInOrdine &lt;- n
     DO
@@ -552,22 +558,22 @@ In particolare, se l'ultimo scambio è stato fra l'elemento in posizione \(j-1\)
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf0701a9" class="outline-5">
-<h5 id="orgf0701a9">Analisi</h5>
-<div class="outline-text-5" id="text-orgf0701a9">
+<div id="outline-container-orgfdd54ff" class="outline-5">
+<h5 id="orgfdd54ff">Analisi</h5>
+<div class="outline-text-5" id="text-orgfdd54ff">
 </div>
-<div id="outline-container-org86c278c" class="outline-6">
-<h6 id="org86c278c">Caso peggiore</h6>
-<div class="outline-text-6" id="text-org86c278c">
+<div id="outline-container-org6483981" class="outline-6">
+<h6 id="org6483981">Caso peggiore</h6>
+<div class="outline-text-6" id="text-org6483981">
 <p>
 Con un minimo alla fine dell'array, nella versione non migliorata da Knuth, ogni iterazione \(k\) del ciclo esterno dà luogo a \(n-k\) confronti. Dato che \(k\) va da \(1\) a \(n-1\), si ottiene
 \[ \sum_{k=1}^{n-1} n-k \; =\; \sum_{k=1}^{n-1} n - \sum_{k=1}^{n-1} k \; = \; n(n-1) - \frac{n(n-1)}{2} \; = \; \frac{n(n-1)}{2} \; = \; O(n^{2})\].
 </p>
 </div>
 </div>
-<div id="outline-container-orgf8b338a" class="outline-6">
-<h6 id="orgf8b338a">Caso migliore</h6>
-<div class="outline-text-6" id="text-orgf8b338a">
+<div id="outline-container-org3ec884f" class="outline-6">
+<h6 id="org3ec884f">Caso migliore</h6>
+<div class="outline-text-6" id="text-org3ec884f">
 <p>
 Array già ordinato, \(n-1\) confronti
 </p>
@@ -608,9 +614,9 @@ Svuotato uno degli array, gli elementi dell'altro sono maggiori di ogni altro el
 Questa tecnica è usata anche per fondere memorie esterne.
 </p>
 </div>
-<div id="outline-container-org057a673" class="outline-6">
-<h6 id="org057a673">Analisi</h6>
-<div class="outline-text-6" id="text-org057a673">
+<div id="outline-container-org17188d1" class="outline-6">
+<h6 id="org17188d1">Analisi</h6>
+<div class="outline-text-6" id="text-org17188d1">
 <p>
 Il caso peggiore avviene quando all'iterazione \(n+m-2\) la lunghezza di entrambi gli array è \(1\).
 Questo accade quando entrambi gli ultimi elementi sono più grandi di ogni altro elemento dell'altro array, escluso l'ultimo.
@@ -636,7 +642,7 @@ Il numero di confronti in tali casi è \(n-1\), perchè ogni elemento verrà con
 <div id="outline-container-org5f705da" class="outline-5">
 <h5 id="org5f705da">Sort</h5>
 <div class="outline-text-5" id="text-org5f705da">
-<pre class="example" id="org4a4f5ca">
+<pre class="example" id="org39bf567">
 ALGORITMO mergeSort(Array A[0..n-1])
     IF n&gt;1 THEN
         m = n/2
@@ -650,9 +656,9 @@ ALGORITMO mergeSort(Array A[0..n-1])
 L'ordinamento di un array consiste nel dividere l'array da ordinare in due sottoarray di dimensione \(\lceil \frac{n}{2}\rceil\) e \(\lfloor \frac{n}{2}\rfloor\), ordinarli mediante chiamata ricorsiva e poi unirli con l'algoritmo <code>merge</code>.
 </p>
 </div>
-<div id="outline-container-org6f4c290" class="outline-6">
-<h6 id="org6f4c290">Analisi tempo</h6>
-<div class="outline-text-6" id="text-org6f4c290">
+<div id="outline-container-org9870202" class="outline-6">
+<h6 id="org9870202">Analisi tempo</h6>
+<div class="outline-text-6" id="text-org9870202">
 <p>
 Ogni chiamata ricorsiva dell'algoritmo viene eseguita su un input che è la metà di quello originario.
 </p>
@@ -818,7 +824,7 @@ Per \(n\) potenza di \(2\), si ottiene \(H(n)=1+\log_{2} n\). In generale, \(H(n
 <div id="outline-container-org775cb4e" class="outline-6">
 <h6 id="org775cb4e">Implementazione quasi in loco</h6>
 <div class="outline-text-6" id="text-org775cb4e">
-<pre class="example" id="org4a47c62">
+<pre class="example" id="org4f79c53">
 ALGORITMO mergeSort(array A[0...n-1])
     Sia X[0...n-1] un array
     mergeSort(A,0,n,X)
@@ -869,9 +875,9 @@ Notare che l'array di supporto per il <code>merge</code> viene dichiarato in pre
 L'analisi del tempo è assolutamente la stessa.
 </p>
 </div>
-<div id="outline-container-org6242eec" class="outline-7">
-<h7 id="org6242eec">Analisi spazio</h7>
-<div class="outline-text-7" id="text-org6242eec">
+<div id="outline-container-orgc776f92" class="outline-7">
+<h7 id="orgc776f92">Analisi spazio</h7>
+<div class="outline-text-7" id="text-orgc776f92">
 <p>
 Adesso utilizzo un array dimensionato su quello iniziale, quindi \(\Theta(n)\).
 L'altezza dello stack di ricorsione è la stessa di prima, ma la dimensione dei record è costante. L'occupazione di memoria è quindi \(\Theta(\log n)\). Fra i due prevale \(\Theta(n)\).
@@ -879,9 +885,9 @@ L'altezza dello stack di ricorsione è la stessa di prima, ma la dimensione dei 
 </div>
 </div>
 </div>
-<div id="outline-container-org61932dd" class="outline-6">
-<h6 id="org61932dd">Stabilità</h6>
-<div class="outline-text-6" id="text-org61932dd">
+<div id="outline-container-org20f4abf" class="outline-6">
+<h6 id="org20f4abf">Stabilità</h6>
+<div class="outline-text-6" id="text-org20f4abf">
 <p>
 Nel <code>merge</code> mi capita di confrontare elementi uguali. Eppure, viene usato il \(\leq\), quindi nel caso in cui l'elemento del primo array sia uguale, viene scelto quello. Quindi è <b>stabile</b>. Nel caso in cui togliessi l'uguale e usassi il semplice \(<\), perderebbe la stabilità.
 </p>
@@ -904,7 +910,7 @@ Non è necessario che i sotto-vettori siano
 Dato che dopo il passo generico, il perno è ordinato, basta ordinare le due partizioni, utilizzando la stessa procedura, fin quando la lunghezza dell'array diventa \(1\).
 </p>
 
-<pre class="example" id="org5aa035f">
+<pre class="example" id="org68c8978">
 ALGORITMO quickSort(Array A)
 IF lunghezza A&gt;1 THEN
     scegli un elemento x di A
@@ -918,7 +924,7 @@ IF lunghezza A&gt;1 THEN
 <div id="outline-container-orgcbe6a38" class="outline-6">
 <h6 id="orgcbe6a38">Partizionamento</h6>
 <div class="outline-text-6" id="text-orgcbe6a38">
-<pre class="example" id="orgc48ce00">
+<pre class="example" id="org7a12829">
 ALGORITMO partiziona(Array A, indice i, indice f) -&gt; indice
 perno &lt;- A[i]
 dx &lt;- f
@@ -1014,7 +1020,7 @@ Quando, però, all'inizio della scansione di <code>sx</code>, <code>dx</code> si
 <div id="outline-container-orga48ed84" class="outline-6">
 <h6 id="orga48ed84">Unione</h6>
 <div class="outline-text-6" id="text-orga48ed84">
-<pre class="example" id="org63b89c5">
+<pre class="example" id="org634f33a">
 PROCEDURA quickSort_inner(Array A, indice i, indice f)
 IF f-i&gt;1 THEN
     m &lt;- partiziona(A,i,f)
@@ -1026,9 +1032,9 @@ quickSort_inner(A,0,n)
 </pre>
 </div>
 </div>
-<div id="outline-container-org27ea330" class="outline-6">
-<h6 id="org27ea330">Analisi tempo</h6>
-<div class="outline-text-6" id="text-org27ea330">
+<div id="outline-container-org75f5d7a" class="outline-6">
+<h6 id="org75f5d7a">Analisi tempo</h6>
+<div class="outline-text-6" id="text-org75f5d7a">
 <p>
 Negli algoritmi analizzati in precedenza, si conosceva esattamente la dimensione dell'input delle chiamate ricorsive.
 In questo caso, invece, essa dipende dalla scelta del perno.
@@ -1041,9 +1047,9 @@ C_{\text{part}}(n) + C(k)  + C(n-k-1)&\text{altrimenti}
 \]
 </p>
 </div>
-<div id="outline-container-orgaae1ec1" class="outline-7">
-<h7 id="orgaae1ec1">Caso peggiore</h7>
-<div class="outline-text-7" id="text-orgaae1ec1">
+<div id="outline-container-orgfdd92eb" class="outline-7">
+<h7 id="orgfdd92eb">Caso peggiore</h7>
+<div class="outline-text-7" id="text-orgfdd92eb">
 <p>
 Il caso peggiore è quello in cui la <b>somma</b> fra i due termini <b>massimizza il risultato</b>.
 </p>
@@ -1064,9 +1070,9 @@ Un numero abbastanza preciso è \(\approx \frac{n^{2}}{2}\).
 </p>
 </div>
 </div>
-<div id="outline-container-org352fe2f" class="outline-7">
-<h7 id="org352fe2f">Caso migliore</h7>
-<div class="outline-text-7" id="text-org352fe2f">
+<div id="outline-container-org43998b5" class="outline-7">
+<h7 id="org43998b5">Caso migliore</h7>
+<div class="outline-text-7" id="text-org43998b5">
 <p>
 Voglio trovare la coppia che minimizza la somma \(C_{w}(k)+C_{w}(n-k-1)\).
 Si dimostra che il minimo si ottenga con \(k = \frac{n}{2}\) per \(n\) pari, o l'arrotondamento di quella cifra per \(n\) dispari.
@@ -1103,9 +1109,9 @@ Non è stabile, esiste una versione che lo renda stabile ma aumentando la costan
 </div>
 </div>
 </div>
-<div id="outline-container-orga07823e" class="outline-6">
-<h6 id="orga07823e">Analisi spazio</h6>
-<div class="outline-text-6" id="text-orga07823e">
+<div id="outline-container-orgde86c2c" class="outline-6">
+<h6 id="orgde86c2c">Analisi spazio</h6>
+<div class="outline-text-6" id="text-orgde86c2c">
 <p>
 Nel caso di una suddivisione bilanciata, ottengo un'altezza \(\approx \log_{2} n\), simile al MergeSort. Infatti, uno dei lati conterrà la metà dell'input, che a sua volta chiamerà metà dell'input, e così via.
 Nel caso di una suddivisione sbilanciata, apro una chiamata ricorsiva per ogni elemento, quindi avrò un'altezza lineare.
@@ -1121,7 +1127,7 @@ In questo caso mi libero di una delle parti in cui lo stack di attivazione cresc
 Dato che posso invertire l'ordine delle chiamate ricorsive, posso fare la stessa cosa al contrario, ovvero ricorrere sulla parte destra.
 Ognuna ha un caso critico. Posso scrivere una procedura che scelga quale delle due usare secondo un criterio.
 </p>
-<pre class="example" id="org3cf4a49">
+<pre class="example" id="orgde3c177">
 PROCEDURA quickSort(Array A, indice i, indice f)
 WHILE f-i&gt;1 DO
     m &lt;- partiziona(A,i,f)
@@ -1202,7 +1208,7 @@ Il <b>massimo di uno heap</b> può essere prelevato e dev'essere sostituito in m
 Per fare ciò, viene sostituito con l'ultima foglia, che viene poi fatta discendere fino ad occupare un posto adeguato.
 </p>
 
-<pre class="example" id="orgde9cf6d">
+<pre class="example" id="org9096cba">
 PROCEDURA risistema(heap H)
     v &lt;- H
     x &lt;- v.chiave
@@ -1248,7 +1254,7 @@ Di conseguenza, il numero di confronti è \(2h\) o \(2(h-1)\), quindi \(\Theta(h
 È possibile creare uno heap in modo ricorsivo o iterativo. Fra i due approcci, scegliamo quello iterativo, perchè occupa spazio costante e non logaritmico nel caso peggiore.
 </p>
 
-<pre class="example" id="org3130772">
+<pre class="example" id="org5c6ec4a">
 PROCEDURA creaHeap (albero binario T)
     h &lt;- altezza di T
     FOR p &lt;- h DOWNTO 0 DO
@@ -1275,7 +1281,191 @@ Dato che l'altezza è logaritmica, la procedura di costruzione dello heap è <b>
 </div>
 </div>
 <div id="outline-container-orgb53add7" class="outline-3">
-<h3 id="orgb53add7"><span class="todo TODO">TODO</span> Algoritmi senza confronti</h3>
+<h3 id="orgb53add7">Algoritmi senza confronti</h3>
+<div class="outline-text-3" id="text-orgb53add7">
+</div>
+<div id="outline-container-org9976713" class="outline-4">
+<h4 id="org9976713">BucketSort</h4>
+<div class="outline-text-4" id="text-org9976713">
+<p>
+Si usa per ordinare \(n\) <b>interi</b> nell'intervallo \([0,b-1]\).
+</p>
+
+<p>
+L'idea è di avere un array di supporto che contiene delle code di elementi da ordinare.
+</p>
+
+<p>
+Ogni elemento con chiave \(k\) si trova in posizione \(k\) dell'array.
+</p>
+
+<p>
+Il numero di bucket in questa implementazione è \(b\), ovvero il masssimo nell'intervallo in cui si trovano i numeri da ordinare.
+</p>
+<pre class="example" id="orgaa42988">
+ALGORITMO bucketSort(Array A[0..n-1], intero b)
+    Sia Y[0..b-1] un array
+
+    ;; Inizializza buckets Theta(b)
+    FOR i &lt;- 0 TO b-1 DO
+        Y[i] &lt;- coda vuota
+
+    ;; Riempi buckets Theta(n)
+    FOR i &lt;- 0 TO n-1 DO
+        x &lt;- A[i].chiave
+        Y[x].enqueue(A[i]))
+
+    j &lt;- 0
+    FOR i &lt;- 0 TO b-1 DO
+        WHILE NOT Y[i].isEmpty() DO
+            A[j] &lt;- Y[i].dequeue()
+            j &lt;- j+1
+</pre>
+
+<p>
+L'<b>analisi</b> è di \(O(n+b)\) in quanto la costruzione dei buckets costa \(O(b)\), mentre il riempimento e lo svuotamento $O(n).
+</p>
+
+
+<p>
+Si potrebbe rendere più generale ammettendo altri intervalli che non partano da \(0\).
+Ad esempio, sia \([a,b]\) l'intervallo, allora vi sono \(b-a\) buckets e la posizione dell'elemento con chiave \(k\) è \(k-a\).
+</p>
+</div>
+<div id="outline-container-orgd43741e" class="outline-5">
+<h5 id="orgd43741e">Differenza con integersort</h5>
+<div class="outline-text-5" id="text-orgd43741e">
+<p>
+In integerSort per \(n\) numeri fino a \(k\) mi basta usare un array di supporto grande \(k\). Non posso usarlo nei casi in cui all'intero sia associata una chiave.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org8996a9c" class="outline-4">
+<h4 id="org8996a9c">RadixSort</h4>
+<div class="outline-text-4" id="text-org8996a9c">
+<p>
+Estende il <code>bucketSort</code> ammettendo che il numero di bucket sia <b>minore</b> del massimo intero da ordinare.
+</p>
+
+<p>
+In particolare, il numero di bucket sarà la rappresentazione in base \(b\) della $t$-esima cifra.
+</p>
+
+<p>
+Per recuperare la $t$-esima cifra bisogna controllare che la <b>divisione intera</b> fra \(k\) e \(b^t\) sia diversa da 0.
+</p>
+<pre class="example" id="org47a8b02">
+ALGORITMO bucketSort(Array A[0..n-1], interi b, t)
+    Sia Y[0..b-1] un array
+
+    ;; Inizializza buckets Theta(b)
+    FOR i &lt;- 0 TO b-1 DO
+        Y[i] &lt;- coda vuota
+
+    ;; Riempi buckets Theta(n)
+    FOR i &lt;- 0 TO n-1 DO
+        c &lt;- t-esima cifra nella rappresentazione...
+        ... in base t della chiave di A[i]
+        Y[c].enqueue(A[i]))
+
+    j &lt;- 0
+    FOR i &lt;- 0 TO b-1 DO
+        WHILE NOT Y[i].isEmpty() DO
+            A[j] &lt;- Y[i].dequeue()
+            j &lt;- j+1
+
+ALGORITMO radixSort(array A[0..n-1])
+    t &lt;- 0
+    WHILE esiste chiave k in A la cui t-esima cifra != 0 DO
+    bucketSort(A,b,t)
+    t &lt;- t + 1
+</pre>
+
+<p>
+Conviene usare una rappresentazione in base \(b\) con \(b = 2^i\) per qualche \(b\). In questo caso, il recupero della cifra in posizione \(t\) del numero \(x\) si ottiene attraverso \(t\) shift a destra di \(i\) posizioni e poi uno AND logico fra il numero ottenuto e \(2^i - 1\).
+\[ (x>>ti) AND (2^i-1) \]
+</p>
+
+<p>
+L'<b>analisi</b> è la seguente: per ogni cifra del numero massimo da ordinare \(m\), viene eseguito un <code>bucketSort</code> di complessità \(O(n + b)\).
+</p>
+
+<p>
+Il numero di cifre di \(m\) in base \(b\) è \(log_b m\), quindi si ottiene \(log_b m \cdot O(n+b)\).
+</p>
+
+<p>
+Se la base \(b\) è fissata, si ottiene \(O(n \log m)\). Di conseguenza ci sono due casi delicati:
+</p>
+<ul class="org-ul">
+<li>\(k < n\), ottengo \(O(n\log k)\), mentre <code>bucketSort</code> normale ne richiede \(O(n)\)</li>
+<li>\(k > n\), ottengo \(O(n \log n)\), simile o peggiore degli algoritmi basati su confronti.</li>
+</ul>
+
+<p>
+Questo accade perchè non sfrutto il vantaggio che offre il <code>bucketSort</code> nell'ordinare \(n\) numeri in tempo lineare usando \(n\) buckets.
+</p>
+
+<p>
+Invece, uso soltanto \(10\) buckets in ogni chiamata, con un tempo che <b>rimane lineare</b> (dato che devo ogni volta inserire e rimuovere gli \(n\) elementi dai buckets), ma lo faccio per \(log_{10} m\) volte.
+</p>
+
+<p>
+Se, dall'altro lato, scegliessi \(b\) troppo grande, questo peserebbe più di \(n\) nel <code>bucketSort</code>, ovvero \(O(n+b)\) diventerebbe \(O(b)\).
+</p>
+
+<p>
+Quindi conviene scegliere \(b = \Theta(n)\), in modo da minimizzare il numero di chiamate al <b>bucketSort</b> senza inficiare la loro efficienza.
+</p>
+
+<p>
+In particolare, effettuo \(log_b k = O(log_n k) = O(\frac{\log_{k}}{\log_{n}})\) di chiamate al bucketSort che ci impiega \(O(n+b)=O(n)\), con un totale di \(O(n\cdot \frac{\log_{k}}{\log_{n}})\). Considerando il caso di \(k<n\), in cui effettuo una sola iterazione, ottengo
+\[O(n(1+ \frac{\log_{k}}{\log_{n}}))\]
+</p>
+</div>
+</div>
+<div id="outline-container-org4d1ab0e" class="outline-4">
+<h4 id="org4d1ab0e">Riassunto</h4>
+<div class="outline-text-4" id="text-org4d1ab0e">
+<p>
+Il <code>bucketSort</code> opera in tempo lineare al numero di elementi o la dimensione dell'intervallo. Quando l'intervallo è troppo grande rispetto al numero di elementi, spende tempo istanziando delle entrate nell'array di supporto che non userà e quel tempo prevale rispetto al reale ordinamento.
+</p>
+
+<p>
+Per ottimizzare quel caso, introduco il <code>radixSort</code>. Esso mi permette di ridurre la dimensione dei buckets del <code>bucketSort</code> ad un numero arbitrario \(b< n\), così che la chiamata impieghi tempo lineare ad \(n\). In compenso, però, devo farlo più volte per ogni array, ovvero \(\log_b k\), dove \(k\) è la dimensione dell'intervallo che parte da \(0\) in cui si trovano gli elementi (può essere visto come l'elemento massimo).
+Il <code>bucketSort</code> standard è una versione particolare del <code>radixSort</code> dove \(b=k\).
+</p>
+
+<p>
+Quindi si tratta di bilanciare \(O(n+k)\) e \(O(\log_b k (b+n))\).
+</p>
+
+<p>
+Quando \(b=10\) non ottengo nessun vantaggio dal <code>radixSort</code>, perchè un \(b\) costante non fornisce nessun vantaggio asintotico. Faccio una chiamata al <code>bucketSort</code> di tempo <b>lineare</b> per <b>ogni cifra</b>, ma una <b>sola</b> chiamata di <code>bucketSort</code> standard sull'intero array sarebbe comunque <b>lineare</b>, quindi mi risparmierebbe il fattore moltiplicativo logaritmico rispetto a \(k\).
+</p>
+
+<p>
+Per ottenere un vantaggio bisogna ridurre al minimo il numero \(\log_{b} k\) di chiamate ricorsive, massimizzando \(b\) senza inficiare il tempo di esecuzione della chiamata a <code>bucketSort</code>.
+</p>
+
+<p>
+Dato che la chiamata a <code>bucketSort</code> impiega \(O(n+b)\), un \(b>n\) aumenterebbe il tempo di esecuzione. Scegliamo quindi \(b=\Theta(n)\).
+</p>
+
+<p>
+In questo modo ottengo un tempo sull'ordine di \(n\log_n k\) e quindi l'aumento dovuto all'aumento dell'intervallo \(k\) pesa meno di quanto farebbe nel <code>bucketSort</code> dove peserebbe linearmente.
+</p>
+
+<p>
+Quindi <code>radixSort</code> con \(b=\Theta(n)\) è sempre meglio di \(b=10\) o quantità piccola.
+</p>
+
+<p>
+I casi in cui <b>non conviene</b> usarlo sono quelli in cui \(k>>n\), perchè a un certo punto in \(n\log_n k\), aumentando \(k\) si arriva a superare \(n\log n\). Si può provare risolvendo l'equazione \(n(\frac{\log k}{\log n})>n\log n\) in \(k\) (che non so risolvere).
+</p>
+</div>
+</div>
 </div>
 </div>
 <div id="outline-container-org0304706" class="outline-2">
@@ -1350,7 +1540,7 @@ Per alcune domande, questo albero risulta essere abbastanza bilanciato, mentre i
 </div>
 </div></div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-01-28 Tue 17:24</p>
+<p class="date">Created: 2025-01-30 Thu 20:23</p>
 </div>
 </body>
 </html>

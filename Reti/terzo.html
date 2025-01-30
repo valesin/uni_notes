@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-01-28 Tue 20:16 -->
+<!-- 2025-01-30 Thu 20:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Network layer</title>
@@ -54,6 +54,8 @@
 <li><a href="#org261abbd">Frammentazione e ricombinazione</a></li>
 <li><a href="#orgaa161a2">Indirizzamento</a>
 <ul>
+<li><a href="#orgae5e196">Strategie</a>
+<ul>
 <li><a href="#orge9918b5">Class based</a>
 <ul>
 <li><a href="#org3233242">Sottoreti</a></li>
@@ -72,6 +74,13 @@
 </li>
 </ul>
 </li>
+<li><a href="#org067d74a">ARP</a></li>
+<li><a href="#org61b2de2">DHCP</a></li>
+<li><a href="#org7d1c841">ICMP</a></li>
+</ul>
+</li>
+<li><a href="#orgb9654c2">Instradamento</a></li>
+<li><a href="#orgdb37daa">Distance vector</a></li>
 </ul>
 </li>
 </ul>
@@ -161,9 +170,13 @@ I <b>gateway</b> e i <b>router</b> posseggono una <b>netid</b> diversa per ogni 
 Sono state utilizzate 5 diverse strategie per l'assegnamento degli indirizzi.
 </p>
 </div>
-<div id="outline-container-orge9918b5" class="outline-5">
-<h5 id="orge9918b5">Class based</h5>
-<div class="outline-text-5" id="text-orge9918b5">
+<div id="outline-container-orgae5e196" class="outline-5">
+<h5 id="orgae5e196">Strategie</h5>
+<div class="outline-text-5" id="text-orgae5e196">
+</div>
+<div id="outline-container-orge9918b5" class="outline-6">
+<h6 id="orge9918b5">Class based</h6>
+<div class="outline-text-6" id="text-orge9918b5">
 <p>
 Vi sono 3 classi per l'unicast, ovvero comunicazioni punto-punto, 1 per il multicast e una riservata.
 </p>
@@ -248,9 +261,9 @@ Quando un router capisce che la netid non è la propria, non passa alla lettura 
 Questo sistema soffre di <b>frammentazione interna</b>. Molti hostid sotto un certo netid sono <b>inutilizzati</b>.
 </p>
 </div>
-<div id="outline-container-org3233242" class="outline-6">
-<h6 id="org3233242">Sottoreti</h6>
-<div class="outline-text-6" id="text-org3233242">
+<div id="outline-container-org3233242" class="outline-7">
+<h7 id="org3233242">Sottoreti</h7>
+<div class="outline-text-7" id="text-org3233242">
 <p>
 Secondo il sistema originario, ad ogni router dovrebbe essere associato un netid e dovrebbe partecipare all'instradamento in Internet, rendendolo meno efficiente.
 </p>
@@ -277,9 +290,9 @@ In questo modo, recupera l'indirizzo del router d'accesso per la specifica subne
 </div>
 </div>
 </div>
-<div id="outline-container-org914c5c4" class="outline-5">
-<h5 id="org914c5c4">CIDR (classless)</h5>
-<div class="outline-text-5" id="text-org914c5c4">
+<div id="outline-container-org914c5c4" class="outline-6">
+<h6 id="org914c5c4">CIDR (classless)</h6>
+<div class="outline-text-6" id="text-org914c5c4">
 <p>
 Questo sistema è simile al sistema delle subnets.
 </p>
@@ -309,9 +322,9 @@ CONTROLLARE CASI DI COLLISIONE PER RETE MINORE, ES 6.4
 </p>
 </div>
 </div>
-<div id="outline-container-org92f444d" class="outline-5">
-<h5 id="org92f444d">NAT</h5>
-<div class="outline-text-5" id="text-org92f444d">
+<div id="outline-container-org92f444d" class="outline-6">
+<h6 id="org92f444d">NAT</h6>
+<div class="outline-text-6" id="text-org92f444d">
 <p>
 Per introdurre un rimedio temporaneo alla carenza di indirizzi IP, viene introdotto questo nuovo sistema.
 </p>
@@ -361,24 +374,218 @@ Il NAT offre garanzie in termini di sicurezza, facendo anche da firewall.
 VEDERE COSA FARE QUANDO UN SERVER é DIETRO NAT
 </p>
 </div>
-<div id="outline-container-orgafe9973" class="outline-6">
-<h6 id="orgafe9973">L'ultima questione da risolvere è quella di un server dietro NAT, dato che nessuno conosce la porta che mi porta ad esso.</h6>
-<div class="outline-text-6" id="text-orgafe9973">
+<div id="outline-container-orgafe9973" class="outline-7">
+<h7 id="orgafe9973">L'ultima questione da risolvere è quella di un server dietro NAT, dato che nessuno conosce la porta che mi porta ad esso.</h7>
+<div class="outline-text-7" id="text-orgafe9973">
 </div>
-<div id="outline-container-orga222771" class="outline-7">
-<h7 id="orga222771">Un modo banale è quello di assegnargli un IP pubblico, ma perdendo i vantaggi dovuti all'utilizzo del NAT.</h7>
+<div id="outline-container-orga222771" class="outline-8">
+<h8 id="orga222771">Un modo banale è quello di assegnargli un IP pubblico, ma perdendo i vantaggi dovuti all'utilizzo del NAT.</h8>
 </div>
-<div id="outline-container-org650b61c" class="outline-7">
-<h7 id="org650b61c">Un secondo modo è quello di aprire la porta specifica del server. In questo modo, tutte le richieste verso quella porta vengono routate al server in questione.</h7>
+<div id="outline-container-org650b61c" class="outline-8">
+<h8 id="org650b61c">Un secondo modo è quello di aprire la porta specifica del server. In questo modo, tutte le richieste verso quella porta vengono routate al server in questione.</h8>
 </div>
 </div>
+</div>
+</div>
+<div id="outline-container-org067d74a" class="outline-5">
+<h5 id="org067d74a">ARP</h5>
+<div class="outline-text-5" id="text-org067d74a">
+<p>
+ARP viene usato per <b>mappare</b> i MAC negli IP.
+</p>
+
+<p>
+Quando due host A e B sono nella <b>stessa rete</b> e A vuole inviare un pacchetto a B, A non conosce il MAC di B. Quindi fa una <b>ARPRequest</b> in broadcast con l'IP di destinazione. Lo host che riconosce tale IP come proprio risponde con una <b>ARPReply</b> contenente il proprio MAC, che verrà fornito al livello IP della macchina sorgente.
+</p>
+
+<p>
+Quando i due host sono in <b>reti differenti</b> il processo è questo: la <b>ARPRequest</b> dell'host arriva al <b>gateway</b>, che riconosce il netid come esterno. Quindi, risponde con il <b>proprio MAC</b>, in modo che lo host comunichi direttamente con lui. Poi, il gateway gestisce autonomamente l'invio del pacchetto con uno dei protocolli di instradamento dell'inter-rete globale. Questo servizio si chiama <b>Proxy ARP</b>.
+</p>
+
+<p>
+Ogni dispositivo tiene una <b>ARPCache</b> in cui salva i record <b>IP-Mac</b> per evitare richieste successive. Il tempo di scadenza per queste entrate è sull'ordine dei 10 minuti o anche meno, 30 secondi per i linux recenti.
+</p>
+
+<p>
+C'è un introduzione del livello 3 nel 2, ma meno invasiva del NAT nel 4. 
+</p>
+</div>
+</div>
+<div id="outline-container-org61b2de2" class="outline-5">
+<h5 id="org61b2de2">DHCP</h5>
+<div class="outline-text-5" id="text-org61b2de2">
+<p>
+In una rete locale dietro un gateway che fa da NAT, ad ogni host è assegnato un IP interno, che il NAT nasconde all'esterno, catturando tutti i pacchetti in entrata.
+</p>
+
+<p>
+Serve un modo per <b>assegnare</b> gli indirizzi IP. L'assegnamento <b>statico</b> è <b>sconveniente</b> in quanto dispendioso in termini di tempo.
+</p>
+
+<p>
+Il <b>DHCP</b> è un protocollo <b>server-client</b> utilizzato per fornire un IP interno <b>temporaneo</b> (anche <i>in affitto</i>) ad un host che lo richieda.
+</p>
+
+<p>
+Il funzionamento è in <b>4 fasi</b>, per ammettere la presenza di <b>molteplici server</b>.
+</p>
+<ul class="org-ul">
+<li><b>DHCP discover</b>: al boot di uno host, chiamato <b>client DHCP</b>, esso invia un pacchetto <b>in broadcast</b>, con il proprio MAC come MAC source e \(0.0.0.0\) come source IP.
+Il messaggio contiene anche un <b>transaction ID</b> che verrà usato dal server per riferirsi alla specifica richiesta.</li>
+<li><b>DHCP offer</b>: il server riceve il messaggio e risponde con un IP proposto per il client, la mask (così che il client capisca qual è la rete interna) e il TTL.
+<b>Prima</b> della offer, il server DHCP fa un <b>ping</b> all'IP proposto, per confermare che non ci sia risposta e quindi non sia già usato.</li>
+<li><b>DHCP request</b>: per confermare l'offerta di <b>un solo server</b>, viene emesso un nuovo pacchetto con stesse sorgente e destinazione della discover (tutti 0 e tutti 1), che contiene anche un campo <b>scelta</b>, con l'ID del server DHCP scelto.</li>
+<li><b>DHCP ACK</b>: il server scelto risponde con un pacchetto <b>unicast</b> chiudendo e confermando la transazione.</li>
+</ul>
+
+<p>
+Notare che <b>tutte le risposte</b> del server sono <b>in broadcast IP</b>, ma <b>unicast MAC</b>. Quindi vengono trasportate a tutti gli host della rete, ma vengono <b>scartate da tutti</b> eccetto che dal client interessato.
+</p>
+
+<p>
+Oltre al <b>ping ICMP</b>, un altro metodo per capire se un IP sia usato è usare una <b>ARPRequest</b>.
+</p>
+
+<p>
+Esistono dei meccanismi di ricovero per gestire i pacchetti persi, ad esempio c'è un timer eseguito al massimo \(K\) volte prima di annullare la richiesta e ricominciare da capo.
+</p>
+</div>
+</div>
+<div id="outline-container-org7d1c841" class="outline-5">
+<h5 id="org7d1c841">ICMP</h5>
+<div class="outline-text-5" id="text-org7d1c841">
+<p>
+Viene utilizzato per il ping e varie statistiche sulla rete, usa uno Header IP ed un checksum, oltre che il tipo di richiesta.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb9654c2" class="outline-4">
+<h4 id="orgb9654c2">Instradamento</h4>
+<div class="outline-text-4" id="text-orgb9654c2">
+<p>
+La rete è un grafo parzialmente connesso e un compito del livello 3 è quello di instradare i pacchetti verso la giusta destinazione sfruttando la comunicazione fra host per avere una visione più ampia.
+</p>
+
+<p>
+Infatti, mentre sul datalink abbiamo <b>bridge</b> e <b>switch</b> che sfruttano delle tabelle per associare i link ai MAC address, al livello 3 i <b>router</b> devono compiere delle scelte all'oscuro della topologia della rete oltre una distanza immediata.
+</p>
+
+<p>
+I <b>router</b> eseguono un processo di <b>routing</b> che sfrutta dei pacchetti di controllo che scambia con altri router della rete e sfrutta per imparare la topologia in modo da fornire un instradamento efficiente. I router operano in modo <b>autonomo</b>, introducendo una differenza netta fra i dati utente e quelli di controllo.
+</p>
+
+<p>
+Esistono <b>3 tecniche di instradamento</b>:
+</p>
+<ul class="org-ul">
+<li>Distance Vector (RIP), <b>vecchio</b> e residuale;</li>
+<li>Open Shortest Path First (OSPF), molto <b>diffuso</b>;</li>
+<li>Border Gateway Protocol, evoluzione del RIP, usato nelle <b>reti intercontinentali</b>.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgdb37daa" class="outline-4">
+<h4 id="orgdb37daa">Distance vector</h4>
+<div class="outline-text-4" id="text-orgdb37daa">
+<p>
+Ogni nodo contiene delle <b>tabelle di adiacenza</b> in cui sono riportati i router/gateway che riesce a raggiungere, i corrispondenti link e il costo, che può essere il bitrate, il numero di hop o altre metriche.
+</p>
+
+<p>
+Da queste tabelle vengono costruite le <b>tabelle di instradamento</b>, che associano una netid al router e il costo necessari per raggiungerla.
+</p>
+
+<p>
+Inizialmente le tabelle di instradamento contengono soltanto i link presenti in tabella di adiacenza.
+</p>
+
+<p>
+Queste tabelle vengono poi <b>scambiate</b> fra i router di una rete, sommando ad ogni entrata il peso del link del router a cui si invia la tabella.
+</p>
+
+<p>
+Quindi, ad esempio, se \(A\) raggiunge la rete \(1\) con peso \(10\) attraverso \(X\) e il router \(B\) con peso \(7\) direttamente, egli invierà a \(B\) una tabella contenente un'entrata <b>Rete-Router-Peso</b> contenente \(1-17-X\). Se \(17\) è minore del peso necessario a \(B\) per raggiungere la rete \(1\), \(B\) aggiorna la sua tabella con questa informazione.
+</p>
+
+<p>
+In questo modo, il tempo necessario per conoscere tutta la rete è <b>lineare</b> rispetto al suo <b>diametro</b> \(d\), in quanto dopo \(d\) passi i router più lontani hanno ricevuto le tabelle l'uno dell'altro.
+</p>
+
+<p>
+Per velocizzare lo scambio di informazioni in situazioni particolari, come l'arrivo di un nuovo router nella rete, viene utilizzato il <b>trigger update</b>, attraverso il quale viene richiesto uno <b>scambio</b> di tabelle <b>immediato</b>.
+</p>
+
+<p>
+Il problema di questa soluzione è il <b>count-to-infinity</b>, che si verifica quando un link uscente da un router \(B\) verso una destinazione \(X\) viene disconnesso o si guasta e il router cambia la sua distanza su tale link ad infinito.
+</p>
+
+<p>
+Prima che l'informazione aggiornata arrivi ad un altro router \(A\), quest'ultimo contiene ancora il cammino attraverso \(B\).
+</p>
+
+<p>
+Se in questo lasso di tempo \(A\) a comunica la propria tabella a \(B\) questa conterrà il vecchio percorso verso \(X\).
+</p>
+
+<p>
+\(B\) ignora che quel cammino include sè stesso ed il link perso e aggiorna la distanza verso la destinazione \(X\) come la somma della propria vecchia distanza e la distanza da \(A\), pensando che \(A\) riesca a portarlo verso la destinazione desiderata.
+</p>
+
+<p>
+Quindi, il peso del link nelle tabelle di \(B\) passa da
+\(\omega(X) \quad\rightarrow\quad +\infty\quad \rightarrow\quad \omega(X)+{\omega(B, A)}\)
+</p>
+
+<p>
+All'update successivo, \(B\) trasmetterà il proprio valore scorretto ad \(A\), che sommerà a sua volta \(\omega(B,A)\).
+</p>
+
+<p>
+I due nodi continueranno a scambiarsi valori scorretti, incrementandoli di volta in volta del peso del cammino fra essi, instaurando il <b>bouncing effect</b>.
+</p>
+
+<p>
+Una soluzione è quella dello <b>split horizon</b> che consiste nello scrivere \(\infty\) come costo per raggiungere una destinazione \(y\) se il prossimo hop verso tale destinazione \(y\) è il link su cui viaggia la stessa tabella.
+</p>
+
+<p>
+In questo modo, rifacendomi all'esempio precedente, la tabella che \(B\) riceve da \(A\) contiene \(\infty\) per la destinazione \(X\) e quindi \(B\) non aggiornerà la propria tabella. A un certo punto manderà il proprio update aggiornato e anche \(A\) sarà informato del guasto.
+</p>
+
+<p>
+Questa soluzione <b>non è finale</b>, in quanto viene risolto soltanto il caso di nodi contigui, ma il problema si ripresenta nel caso di un <b>numero superiore</b> di nodi coinvolti.
+</p>
+
+<p>
+Infatti se introduciamo un terzo nodo \(C\) che sia connesso sia ad \(A\) che a \(B\), allora questo nodo recherà come prossimo hop verso \(X\) il nodo \(A\).
+</p>
+
+<p>
+Quindi \(C\) non si farà problemi a comunicare a \(B\) il cammino passante attraverso \(A\), \(B\) e il link guasto, e così il problema risorge.
+</p>
+
+<p>
+Il <b>count-to-infinity</b> e lo <b>split-horizon</b> avvengono a causa dell'<b>asincronicità</b> delle comunicazioni e del fatto che si conosca solo il <b>primo hop</b> del cammino. L'unico modo per risolvere definitivamente il problema sarebbe di salvare nelle tabelle <b>l'intero cammino</b>, soluzione impossibile perchè la dimensione di ogni entrata delle tabelle sarebbe lineare al <b>diametro della rete</b>.
+</p>
+
+<p>
+Le tre tecniche usate per <b>migliorare l'efficienza</b> di questa tenica sono:
+</p>
+<ul class="org-ul">
+<li>Triggered update</li>
+<li>Split horizon</li>
+<li>Ogni tempo \(T\) si flushano le tabelle, annullando qualunque situazione problematica</li>
+<li>Impostare un valore basso, ad esempio \(16\), come infinito, in modo da troncare subito il <b>count-to-infinity</b></li>
+<li>Storm di update, che prevede un update di tutti i nodi coinvolti in un guasto, in modo da informare gli altri nodi al più presto. La storm causa una congestione, che viene mitigata introducendo un ritardo random, che però aumenta la probabilità di count-to-infinity.</li>
+</ul>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-01-28 Tue 20:16</p>
+<p class="date">Created: 2025-01-30 Thu 20:23</p>
 </div>
 </body>
 </html>
