@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-01-28 Tue 17:24 -->
+<!-- 2025-02-02 Sun 11:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Union-Find</title>
@@ -46,17 +46,17 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org6f8c32c">Union-Find</a>
+<li><a href="#orga16c6c2">Union-Find</a>
 <ul>
-<li><a href="#orgb267a6f">QuickFind</a>
+<li><a href="#org779ddf1">QuickFind</a>
 <ul>
-<li><a href="#org7deec7b">QuickFind con bilanciamento sulle Union</a></li>
+<li><a href="#org754f79b">QuickFind con bilanciamento sulle Union</a></li>
 </ul>
 </li>
-<li><a href="#orgd0bb1db">QuickUnion</a>
+<li><a href="#org7e7a05c">QuickUnion</a>
 <ul>
-<li><a href="#org2a8eacb">QuickUnion con bilanciamento sulle Union</a></li>
-<li><a href="#org02d0887">QuickUnion con compressione del cammino</a></li>
+<li><a href="#org8e6fed4">QuickUnion con bilanciamento sulle Union</a></li>
+<li><a href="#orgc064c33">QuickUnion con compressione del cammino</a></li>
 </ul>
 </li>
 </ul>
@@ -64,9 +64,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org6f8c32c" class="outline-2">
-<h2 id="org6f8c32c">Union-Find</h2>
-<div class="outline-text-2" id="text-org6f8c32c">
+<div id="outline-container-orga16c6c2" class="outline-2">
+<h2 id="orga16c6c2">Union-Find</h2>
+<div class="outline-text-2" id="text-orga16c6c2">
 <p>
 Questa struttura viene utilizzata per rappresentare il concetto di insieme e la sua unione.
 Le 3 funzioni fornite sono le seguenti:
@@ -85,9 +85,9 @@ In generale, ogni insieme viene rappresentato mediante un albero.
 Esistono varie implementazioni di tali funzioni, con dei tempi asintotici di esecuzione differenti.
 </p>
 </div>
-<div id="outline-container-orgb267a6f" class="outline-3">
-<h3 id="orgb267a6f">QuickFind</h3>
-<div class="outline-text-3" id="text-orgb267a6f">
+<div id="outline-container-org779ddf1" class="outline-3">
+<h3 id="org779ddf1">QuickFind</h3>
+<div class="outline-text-3" id="text-org779ddf1">
 <p>
 In questa implementazione, tutti gli alberi hanno altezza \(1\).
 </p>
@@ -134,9 +134,9 @@ Per unire due insiemi è invece necessario cambiare i puntatori di ogni elemento
 </tbody>
 </table>
 </div>
-<div id="outline-container-org7deec7b" class="outline-4">
-<h4 id="org7deec7b">QuickFind con bilanciamento sulle Union</h4>
-<div class="outline-text-4" id="text-org7deec7b">
+<div id="outline-container-org754f79b" class="outline-4">
+<h4 id="org754f79b">QuickFind con bilanciamento sulle Union</h4>
+<div class="outline-text-4" id="text-org754f79b">
 <p>
 Quando viene effettuata una <code>union</code>, non è necessario copiare il contenuto di <code>b</code> in <code>a</code>.
 </p>
@@ -155,9 +155,9 @@ Si può dimostrare (DFI, 9.2.1) che il tempo ammortizzato su una serie di operaz
 </div>
 </div>
 </div>
-<div id="outline-container-orgd0bb1db" class="outline-3">
-<h3 id="orgd0bb1db">QuickUnion</h3>
-<div class="outline-text-3" id="text-orgd0bb1db">
+<div id="outline-container-org7e7a05c" class="outline-3">
+<h3 id="org7e7a05c">QuickUnion</h3>
+<div class="outline-text-3" id="text-org7e7a05c">
 <p>
 In questa implementazione, non c'è alcuna restrizione riguardo l'altezza degli alberi.
 </p>
@@ -204,9 +204,9 @@ Trovare un elemento, invece, richiede di risalire l'albero fino alla radice, con
 </tbody>
 </table>
 </div>
-<div id="outline-container-org2a8eacb" class="outline-4">
-<h4 id="org2a8eacb">QuickUnion con bilanciamento sulle Union</h4>
-<div class="outline-text-4" id="text-org2a8eacb">
+<div id="outline-container-org8e6fed4" class="outline-4">
+<h4 id="org8e6fed4">QuickUnion con bilanciamento sulle Union</h4>
+<div class="outline-text-4" id="text-org8e6fed4">
 <p>
 Viene introdotta una euristica detta "<i>Union by rank (altezza)</i>", in base alla quale si sceglie di rendere figlio dell'altro l'albero con altezza minore.
 </p>
@@ -220,9 +220,9 @@ Si può dimostrare che l'operazione <code>find</code> su alberi bilanciati in al
 </p>
 </div>
 </div>
-<div id="outline-container-org02d0887" class="outline-4">
-<h4 id="org02d0887">QuickUnion con compressione del cammino</h4>
-<div class="outline-text-4" id="text-org02d0887">
+<div id="outline-container-orgc064c33" class="outline-4">
+<h4 id="orgc064c33">QuickUnion con compressione del cammino</h4>
+<div class="outline-text-4" id="text-orgc064c33">
 <p>
 Quando effettuo una <code>find</code>, posso effettuare un'ulteriore ottimizzazione spostando i puntatori dei nodi che incontro lungo il cammino.
 </p>
@@ -240,7 +240,7 @@ Si dimostra che una sequenza di \(n\) <code>makeSet</code> seguita da \(O(n)\) <
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-01-28 Tue 17:24</p>
+<p class="date">Created: 2025-02-02 Sun 11:41</p>
 </div>
 </body>
 </html>

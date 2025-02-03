@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-01-30 Thu 16:48 -->
+<!-- 2025-02-02 Sun 11:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Data Link</title>
@@ -46,77 +46,77 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org5897066">Data link</a>
+<li><a href="#orgc7ac880">Data link</a>
 <ul>
-<li><a href="#org1117aea">Bit stuffing</a></li>
-<li><a href="#orgd25a02a">ARQ</a>
+<li><a href="#org191bafd">Bit stuffing</a></li>
+<li><a href="#org344a3f0">ARQ</a>
 <ul>
-<li><a href="#orgda17e63">Idle RQ</a></li>
-<li><a href="#orga9faae8">Continuous RQ (Protocolli a finestra)</a>
+<li><a href="#org49bf395">Idle RQ</a></li>
+<li><a href="#orgcad4edd">Continuous RQ (Protocolli a finestra)</a>
 <ul>
-<li><a href="#orgd9f1ac7">Selective repeat</a></li>
-<li><a href="#org60a7803">Go-Back-N</a></li>
+<li><a href="#org4281b74">Selective repeat</a></li>
+<li><a href="#org0b6d1ab">Go-Back-N</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org4692f9a">Ethernet</a>
+<li><a href="#orgf8053ef">Ethernet</a>
 <ul>
-<li><a href="#org31e3b83">Politiche di accesso a canale condiviso (MAC layer)</a>
+<li><a href="#orgec95dbb">Politiche di accesso a canale condiviso (MAC layer)</a>
 <ul>
-<li><a href="#org9d78571">Token</a></li>
-<li><a href="#org938696c">CSMA-CD</a>
+<li><a href="#org483a91d">Token</a></li>
+<li><a href="#orgd30a724">CSMA-CD</a>
 <ul>
-<li><a href="#org1df4d0b">Carrier Sense</a></li>
-<li><a href="#orge6bc766">Collision Detection</a>
+<li><a href="#org6c5dd1f">Carrier Sense</a></li>
+<li><a href="#orgd234200">Collision Detection</a>
 <ul>
-<li><a href="#org885fae6">Binary Exponential Backoff</a></li>
-<li><a href="#org07f7626">Slot time</a></li>
-<li><a href="#org81ee76d">Dimensioni limite del frame</a></li>
+<li><a href="#orgc91d42e">Binary Exponential Backoff</a></li>
+<li><a href="#orgaf8faea">Slot time</a></li>
+<li><a href="#org21067ae">Dimensioni limite del frame</a></li>
 </ul>
 </li>
-<li><a href="#org779500a">ALOHA</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgf94825d">Codifica Manchester</a>
-<ul>
-<li><a href="#org96e9008">Inizio trasmissione</a></li>
-</ul>
-</li>
-<li><a href="#org1622fc2">Utilizzo</a></li>
-<li><a href="#org1840b6c">Dispositivi</a>
-<ul>
-<li><a href="#orgf630fb0">Hub</a></li>
-<li><a href="#org8e8801b">Bridge</a></li>
-<li><a href="#org62d5a8c">Switch</a></li>
-</ul>
-</li>
-<li><a href="#orgf1335d1">100Mbit</a>
-<ul>
-<li><a href="#org5fb2eab">Codifica 8B6T</a></li>
+<li><a href="#org3e842b6">ALOHA</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orga2dd021">Logical Link Control</a></li>
-<li><a href="#org705bdc2">VLAN</a></li>
+<li><a href="#orgc04b937">Codifica Manchester</a>
+<ul>
+<li><a href="#org5d207bd">Inizio trasmissione</a></li>
+</ul>
+</li>
+<li><a href="#org3cad2cb">Utilizzo</a></li>
+<li><a href="#org7d75ca3">Dispositivi</a>
+<ul>
+<li><a href="#org93b353c">Hub</a></li>
+<li><a href="#orgd015298">Bridge</a></li>
+<li><a href="#orge1da555">Switch</a></li>
+</ul>
+</li>
+<li><a href="#org86d0be4">100Mbit</a>
+<ul>
+<li><a href="#org3d15230">Codifica 8B6T</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgb2812af">Logical Link Control</a></li>
+<li><a href="#org6bd445f">VLAN</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org5897066" class="outline-2">
-<h2 id="org5897066">Data link</h2>
-<div class="outline-text-2" id="text-org5897066">
+<div id="outline-container-orgc7ac880" class="outline-2">
+<h2 id="orgc7ac880">Data link</h2>
+<div class="outline-text-2" id="text-orgc7ac880">
 <p>
 Il livello 2 si occupa di preparare i bit che il livello 1 introduce fisicamente nel cavo.
 </p>
 </div>
-<div id="outline-container-org1117aea" class="outline-3">
-<h3 id="org1117aea">Bit stuffing</h3>
-<div class="outline-text-3" id="text-org1117aea">
+<div id="outline-container-org191bafd" class="outline-3">
+<h3 id="org191bafd">Bit stuffing</h3>
+<div class="outline-text-3" id="text-org191bafd">
 <p>
 Dal cavo viene emessa una tensione variabile in Volt, attraverso cui vengono codificati i dati, rappresentati mediante dei bit.
 </p>
@@ -162,9 +162,9 @@ L'implementazione del bit stuffing viene effettuata al livello logico dal protoc
 </p>
 </div>
 </div>
-<div id="outline-container-orgd25a02a" class="outline-3">
-<h3 id="orgd25a02a">ARQ</h3>
-<div class="outline-text-3" id="text-orgd25a02a">
+<div id="outline-container-org344a3f0" class="outline-3">
+<h3 id="org344a3f0">ARQ</h3>
+<div class="outline-text-3" id="text-org344a3f0">
 <p>
 Per garantire l'<a href="affidabilita.html#ID-3898f6e3-9c94-41fc-bdef-7690d5031ccd">affidabilità</a> a livello 2, si utilizza uno schema di controllo chiamato <b>Automatic Repeat Request</b>, il cui scopo è quello di riconoscere e rispedire i frame corrotti o persi in trasmissione.
 </p>
@@ -190,9 +190,9 @@ Inoltre, entrambe le macchine utilizzano delle variabili, chiamate rispettivamen
 La politica per l'<code>ACK</code> che a cui si fa riferimento nel corso è quella <b>cumulativa</b>: un <code>ACK</code> di livello \(N\) indica che tutti i frame di livello minore o uguale ad \(N\) sono stati ricevuti.
 </p>
 </div>
-<div id="outline-container-orgda17e63" class="outline-4">
-<h4 id="orgda17e63">Idle RQ</h4>
-<div class="outline-text-4" id="text-orgda17e63">
+<div id="outline-container-org49bf395" class="outline-4">
+<h4 id="org49bf395">Idle RQ</h4>
+<div class="outline-text-4" id="text-org49bf395">
 <p>
 Il sistema più semplice di ARQ è chiamato <i>Idle</i>.
 </p>
@@ -226,9 +226,9 @@ Il receiver è costretto, quindi, a scartare il pacchetto duplicato e reinviare 
 </p>
 </div>
 </div>
-<div id="outline-container-orga9faae8" class="outline-4">
-<h4 id="orga9faae8">Continuous RQ (Protocolli a finestra)</h4>
-<div class="outline-text-4" id="text-orga9faae8">
+<div id="outline-container-orgcad4edd" class="outline-4">
+<h4 id="orgcad4edd">Continuous RQ (Protocolli a finestra)</h4>
+<div class="outline-text-4" id="text-orgcad4edd">
 <p>
 Il sistema di Idle è inefficiente, in quanto durante il tempo di propagazione verso e dal ricevitore, la sorgente è ferma.
 </p>
@@ -261,9 +261,9 @@ Allo stesso tempo, tali numeri devono essere sempre ricondotti ad un unico frame
 Esistono due policy per i protocolli a finestra, <b>Selective Repeat</b> e <b>Go-Back N</b>.
 </p>
 </div>
-<div id="outline-container-orgd9f1ac7" class="outline-5">
-<h5 id="orgd9f1ac7">Selective repeat</h5>
-<div class="outline-text-5" id="text-orgd9f1ac7">
+<div id="outline-container-org4281b74" class="outline-5">
+<h5 id="org4281b74">Selective repeat</h5>
+<div class="outline-text-5" id="text-org4281b74">
 <p>
 Il sender invia tutti i frame della sequenza e, quando scopre che uno dei frame è andato perso e quindi è stato inviato un <code>ACK</code> vecchio per la seconda volta, entra in modalità ritrasmissione e lo reinvia.
 </p>
@@ -311,7 +311,7 @@ Il sender invierà frame nel range \([N,N+K-1]\), mentre il receiver aspetterà 
 <p>
 Se il numero massimo di sequenza \(x = 2K - d\) per un qualunque \(d>0\), otterrei che \(N\mod x = N+(2K - d)\mod x\), quindi ad esempio se il numero massimo di sequenza fosse minore soltanto di \(d=1\), allora il numero di sequenza del primo pacchetto inviato dal sender colliderebbe con quello dell'ultimo pacchetto atteso dal receiver, che lo salverebbe, ignorando che sia una ritrasmissione.
 </p>
-<pre class="example" id="orga4ef02b">
+<pre class="example" id="orge5ff872">
 In the ARQ of the data link, if using a Selective Repeat protocol, if the third of 5 frames does not get received from the receiver and we are using a cumulative ACK, what is the ACK that gets sent to the sender?
 
 Let me help explain how Selective Repeat ARQ handles this scenario.
@@ -454,9 +454,9 @@ This is much more efficient than Go-Back-N, where all frames after the lost one 
 </pre>
 </div>
 </div>
-<div id="outline-container-org60a7803" class="outline-5">
-<h5 id="org60a7803">Go-Back-N</h5>
-<div class="outline-text-5" id="text-org60a7803">
+<div id="outline-container-org0b6d1ab" class="outline-5">
+<h5 id="org0b6d1ab">Go-Back-N</h5>
+<div class="outline-text-5" id="text-org0b6d1ab">
 <p>
 Il sender spedisce \(K\) frame consecutivi e alla fine valuta, in base agli <code>ACK</code> ricevuti, se spedire la finestra da \(K\) successiva, o ritrasmettere l'intera finestra attuale.
 </p>
@@ -492,9 +492,9 @@ Se \(x<K\) l'ambiguità sarebbe ancora precedente.
 </div>
 </div>
 </div>
-<div id="outline-container-org4692f9a" class="outline-3">
-<h3 id="org4692f9a">Ethernet</h3>
-<div class="outline-text-3" id="text-org4692f9a">
+<div id="outline-container-orgf8053ef" class="outline-3">
+<h3 id="orgf8053ef">Ethernet</h3>
+<div class="outline-text-3" id="text-orgf8053ef">
 <p>
 In una LAN Ethernet, i dispositivi possono essere collegati <b>in serie</b> o <b>a stella</b>, utilizzando uno <b>hub</b> come <i>centro stella passivo</i>.
 </p>
@@ -511,13 +511,13 @@ In entrambi i casi, il canale è <b>condiviso</b> da tutti i dispositivi e si tr
 Bisogna garantire la mutua esclusività nella trasmissione.
 </p>
 </div>
-<div id="outline-container-org31e3b83" class="outline-4">
-<h4 id="org31e3b83">Politiche di accesso a canale condiviso (MAC layer)</h4>
-<div class="outline-text-4" id="text-org31e3b83">
+<div id="outline-container-orgec95dbb" class="outline-4">
+<h4 id="orgec95dbb">Politiche di accesso a canale condiviso (MAC layer)</h4>
+<div class="outline-text-4" id="text-orgec95dbb">
 </div>
-<div id="outline-container-org9d78571" class="outline-5">
-<h5 id="org9d78571">Token</h5>
-<div class="outline-text-5" id="text-org9d78571">
+<div id="outline-container-org483a91d" class="outline-5">
+<h5 id="org483a91d">Token</h5>
+<div class="outline-text-5" id="text-org483a91d">
 <p>
 Si utilizza un token unico e condiviso dalle stazioni e si autorizza la trasmissione solo per la trasmissione che lo possiede.
 </p>
@@ -531,9 +531,9 @@ Perciò, questa politica è poco utilizzata.
 </p>
 </div>
 </div>
-<div id="outline-container-org938696c" class="outline-5">
-<h5 id="org938696c">CSMA-CD</h5>
-<div class="outline-text-5" id="text-org938696c">
+<div id="outline-container-orgd30a724" class="outline-5">
+<h5 id="orgd30a724">CSMA-CD</h5>
+<div class="outline-text-5" id="text-orgd30a724">
 <p>
 Ethernet utilizza una soluzione <b>non-deterministica</b>, chiamata <b>Carrier Sense Multiple Access with Collision Detection</b>.
 </p>
@@ -546,9 +546,9 @@ Il livello di efficienza è elevato, in particolare entro un certo range di staz
 Nonostante ciò, CSMA-CD non è più tanto utilizzato a causa della diffusione di tecniche di comunicazione <i>full-duplex</i>, che eliminano il problema delle collisioni.
 </p>
 </div>
-<div id="outline-container-org1df4d0b" class="outline-6">
-<h6 id="org1df4d0b">Carrier Sense</h6>
-<div class="outline-text-6" id="text-org1df4d0b">
+<div id="outline-container-org6c5dd1f" class="outline-6">
+<h6 id="org6c5dd1f">Carrier Sense</h6>
+<div class="outline-text-6" id="text-org6c5dd1f">
 <p>
 In CSMA-CD, ogni stazione fa <b>carrier sense</b> analizzando il traffico in viaggio sul canale condiviso e trasmettendo soltanto nel caso in cui il <b>canale sia libero</b>.
 </p>
@@ -566,9 +566,9 @@ La scelta di trasmettere <b>appena</b> il canale è libero è chiamata <b>1-Pers
 </p>
 </div>
 </div>
-<div id="outline-container-orge6bc766" class="outline-6">
-<h6 id="orge6bc766">Collision Detection</h6>
-<div class="outline-text-6" id="text-orge6bc766">
+<div id="outline-container-orgd234200" class="outline-6">
+<h6 id="orgd234200">Collision Detection</h6>
+<div class="outline-text-6" id="text-orgd234200">
 <p>
 CSMA-CD sfrutta il fatto che in una rete broadcast una rete riceva anche i bit da essa generati.
 </p>
@@ -589,9 +589,9 @@ In tal caso, la trasmissione viene bloccata e viene emesso un <b>jam signal</b>.
 A questo punto, viene introdotto un ritardo prima del prossimo Carrier Sense ed eventuale trasmissione.
 </p>
 </div>
-<div id="outline-container-org885fae6" class="outline-7">
-<h7 id="org885fae6">Binary Exponential Backoff</h7>
-<div class="outline-text-7" id="text-org885fae6">
+<div id="outline-container-orgc91d42e" class="outline-7">
+<h7 id="orgc91d42e">Binary Exponential Backoff</h7>
+<div class="outline-text-7" id="text-orgc91d42e">
 <p>
 L'intervallo entro cui può variare questo ritardo è chiamato <b>Binary Exponential Backoff</b> ed è calcolato in base al numero \(i\) di collisioni avvenute come \([0, 2^i-1]\), ovvero raddoppiando il range ad ogni fallita trasmissione.
 </p>
@@ -605,9 +605,9 @@ Questo valore va moltiplicato all'unita di tempo secondo lo standard.
 </p>
 </div>
 </div>
-<div id="outline-container-org07f7626" class="outline-7">
-<h7 id="org07f7626">Slot time</h7>
-<div class="outline-text-7" id="text-org07f7626">
+<div id="outline-container-orgaf8faea" class="outline-7">
+<h7 id="orgaf8faea">Slot time</h7>
+<div class="outline-text-7" id="text-orgaf8faea">
 <p>
 L'<b>unita temporale (<i>slot time</i>) del CSMA-CD</b> definita nello standard 802.3 è  \(51.2 ms\), che a \(10Mbps\) corrisponde a \(10^7 \fr{b}{\cdot 512 * 10^{-7} = 512 bit\), ovvero \(64 byte\).
 </p>
@@ -633,9 +633,9 @@ Inoltre, <b>trascorso uno slot time dall'inizio della comunicazione</b> si <b>es
 </p>
 </div>
 </div>
-<div id="outline-container-org81ee76d" class="outline-7">
-<h7 id="org81ee76d">Dimensioni limite del frame</h7>
-<div class="outline-text-7" id="text-org81ee76d">
+<div id="outline-container-org21067ae" class="outline-7">
+<h7 id="org21067ae">Dimensioni limite del frame</h7>
+<div class="outline-text-7" id="text-org21067ae">
 <p>
 La dimensione massima del frame è per specifica \(1500bytes\), sebbene non esista un limite tecnico.
 </p>
@@ -658,9 +658,9 @@ Se essa conclude la comunicazione a quel punto, potrebbe sfuggirle una collision
 </div>
 </div>
 </div>
-<div id="outline-container-org779500a" class="outline-6">
-<h6 id="org779500a">ALOHA</h6>
-<div class="outline-text-6" id="text-org779500a">
+<div id="outline-container-org3e842b6" class="outline-6">
+<h6 id="org3e842b6">ALOHA</h6>
+<div class="outline-text-6" id="text-org3e842b6">
 <p>
 ALOHA è una soluzione precedente a CSMA-CD in cui non viene effettuato il carrier sense, ma in caso di collisione viene introdotto un ritardo casuale prima della trasmissione successiva.
 </p>
@@ -672,9 +672,9 @@ Questa soluzione era vincente, ma con un efficienza minima, vicino al 18%.
 </div>
 </div>
 </div>
-<div id="outline-container-orgf94825d" class="outline-4">
-<h4 id="orgf94825d">Codifica Manchester</h4>
-<div class="outline-text-4" id="text-orgf94825d">
+<div id="outline-container-orgc04b937" class="outline-4">
+<h4 id="orgc04b937">Codifica Manchester</h4>
+<div class="outline-text-4" id="text-orgc04b937">
 <p>
 Per garantire che il segnale in entrata al ricevitore sia non <b>distorto</b> a causa variazioni di tensione e soprattutto per mantenere i clock delle molteplici stazioni in comunicazione, viene utilizzata la <b>codifica Manchester</b>.
 </p>
@@ -695,9 +695,9 @@ Il vantaggio è che il clock stesso è insito nella codifica, evitando situazion
 Per questo motivo, è detto <b>self-clocking</b>.
 </p>
 </div>
-<div id="outline-container-org96e9008" class="outline-5">
-<h5 id="org96e9008">Inizio trasmissione</h5>
-<div class="outline-text-5" id="text-org96e9008">
+<div id="outline-container-org5d207bd" class="outline-5">
+<h5 id="org5d207bd">Inizio trasmissione</h5>
+<div class="outline-text-5" id="text-org5d207bd">
 <p>
 Il sistema descritto dalla specifica 802.3 è <b>IDLE pre-trasmissione</b>, quindi il ricevitore <b>non conosce</b> il clock di trasmissione <b>prima dell'inizio</b> di quest'ultima.
 </p>
@@ -716,9 +716,9 @@ Dopo il preambolo, viene emesso lo <b>Start Frame Delimiter</b> (SFD) così cost
 </div>
 </div>
 </div>
-<div id="outline-container-org1622fc2" class="outline-4">
-<h4 id="org1622fc2">Utilizzo</h4>
-<div class="outline-text-4" id="text-org1622fc2">
+<div id="outline-container-org3cad2cb" class="outline-4">
+<h4 id="org3cad2cb">Utilizzo</h4>
+<div class="outline-text-4" id="text-org3cad2cb">
 <p>
 Nel calcolare l'utilizzo (non solo di Ethernet) utilizziamo la formula \(\frac{t_x}{t_x+2t_p}\), dove \(t_x = \frac{\text{Frame}}{\text{Banda}}\) e \(t_p = \frac{\text{Lunghezza cavo}}{\text{Coefficiente}}\).
 </p>
@@ -741,13 +741,13 @@ Per ovviare a questo problema, vengono utilizzati i dispositivi di data link, in
 </p>
 </div>
 </div>
-<div id="outline-container-org1840b6c" class="outline-4">
-<h4 id="org1840b6c">Dispositivi</h4>
-<div class="outline-text-4" id="text-org1840b6c">
+<div id="outline-container-org7d75ca3" class="outline-4">
+<h4 id="org7d75ca3">Dispositivi</h4>
+<div class="outline-text-4" id="text-org7d75ca3">
 </div>
-<div id="outline-container-orgf630fb0" class="outline-5">
-<h5 id="orgf630fb0">Hub</h5>
-<div class="outline-text-5" id="text-orgf630fb0">
+<div id="outline-container-org93b353c" class="outline-5">
+<h5 id="org93b353c">Hub</h5>
+<div class="outline-text-5" id="text-org93b353c">
 <p>
 Gli hub sono dispositivi <b>passivi</b> che <b>ritrasmettono</b> il segnale in entrata verso <b>molteplici</b> altre stazioni.
 </p>
@@ -761,9 +761,9 @@ Fanno parte del <b>Physical Layer</b>.
 </p>
 </div>
 </div>
-<div id="outline-container-org8e8801b" class="outline-5">
-<h5 id="org8e8801b">Bridge</h5>
-<div class="outline-text-5" id="text-org8e8801b">
+<div id="outline-container-orgd015298" class="outline-5">
+<h5 id="orgd015298">Bridge</h5>
+<div class="outline-text-5" id="text-orgd015298">
 <p>
 A differenza degli hub, i bridge <b>non sono</b> passivi, ovvero non operano soltanto a livello fisico, ma possiedono un apparato con un <b>buffer</b> in grado di trasmettere secondo certi criteri.
 </p>
@@ -797,22 +797,22 @@ Se l'entrata corrispondente ad una specifica porta non è presente nella tabella
 </p>
 </div>
 </div>
-<div id="outline-container-org62d5a8c" class="outline-5">
-<h5 id="org62d5a8c">Switch</h5>
-<div class="outline-text-5" id="text-org62d5a8c">
+<div id="outline-container-orge1da555" class="outline-5">
+<h5 id="orge1da555">Switch</h5>
+<div class="outline-text-5" id="text-orge1da555">
 <p>
 Gli switch sono dispositivi <b>attivi</b> come i bridge, con la differenza che non utilizzano CSMA-CD ma dei cavi <b>full-duplex</b> in una comunicazione <b>punto-punto</b>.
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgf1335d1" class="outline-4">
-<h4 id="orgf1335d1">100Mbit</h4>
-<div class="outline-text-4" id="text-orgf1335d1">
+<div id="outline-container-org86d0be4" class="outline-4">
+<h4 id="org86d0be4">100Mbit</h4>
+<div class="outline-text-4" id="text-org86d0be4">
 </div>
-<div id="outline-container-org5fb2eab" class="outline-5">
-<h5 id="org5fb2eab">Codifica 8B6T</h5>
-<div class="outline-text-5" id="text-org5fb2eab">
+<div id="outline-container-org3d15230" class="outline-5">
+<h5 id="org3d15230">Codifica 8B6T</h5>
+<div class="outline-text-5" id="text-org3d15230">
 <p>
 Per aumentare le prestazioni di Ethernet, vengono utilizzati <b>4 cavi</b>, di cui 3 trasportano i bit ed uno viene utilizzato per il <b>Carrier Sense</b> e la <b>Collision Detection</b>
 </p>
@@ -824,9 +824,9 @@ Per raggiungere i \(1000\) Mbit, si usa una codifica che mappa \(8\) bit binari 
 </div>
 </div>
 </div>
-<div id="outline-container-orga2dd021" class="outline-3">
-<h3 id="orga2dd021">Logical Link Control</h3>
-<div class="outline-text-3" id="text-orga2dd021">
+<div id="outline-container-orgb2812af" class="outline-3">
+<h3 id="orgb2812af">Logical Link Control</h3>
+<div class="outline-text-3" id="text-orgb2812af">
 <p>
 Il <b>MAC layer</b> (Medium Access Control), attraverso lo specifico protocollo CSMA-CD, gestisce l'accesso al canale.
 </p>
@@ -844,9 +844,9 @@ Il collegamento instaurato può essere sia <b>best-effort</b> che <b>affidabile<
 </p>
 </div>
 </div>
-<div id="outline-container-org705bdc2" class="outline-3">
-<h3 id="org705bdc2">VLAN</h3>
-<div class="outline-text-3" id="text-org705bdc2">
+<div id="outline-container-org6bd445f" class="outline-3">
+<h3 id="org6bd445f">VLAN</h3>
+<div class="outline-text-3" id="text-org6bd445f">
 <p>
 Nello standard <b>IEEE802.1Q</b> vengono definite le VLAN.
 </p>
@@ -883,7 +883,7 @@ Inoltre, nel campo lunghezza è riportato \(8100Hex\) che essendo maggiore di \(
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-01-30 Thu 16:48</p>
+<p class="date">Created: 2025-02-02 Sun 11:41</p>
 </div>
 </body>
 </html>

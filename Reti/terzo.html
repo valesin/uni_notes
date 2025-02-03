@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-01-30 Thu 20:23 -->
+<!-- 2025-02-02 Sun 11:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Network layer</title>
@@ -46,41 +46,45 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org94a2c4e">Network layer</a>
+<li><a href="#orgda6c471">Network layer</a>
 <ul>
-<li><a href="#org94292b8">IPv4</a>
+<li><a href="#orga3b14ff">IPv4</a>
 <ul>
-<li><a href="#orga983849">Formato pacchetto</a></li>
-<li><a href="#org261abbd">Frammentazione e ricombinazione</a></li>
-<li><a href="#orgaa161a2">Indirizzamento</a>
+<li><a href="#org76205cf">Formato pacchetto</a></li>
+<li><a href="#orgc0af650">Frammentazione e ricombinazione</a></li>
+<li><a href="#org198a037">Indirizzamento</a>
 <ul>
-<li><a href="#orgae5e196">Strategie</a>
+<li><a href="#org2fa5bf3">Strategie</a>
 <ul>
-<li><a href="#orge9918b5">Class based</a>
+<li><a href="#org0de285e">Class based</a>
 <ul>
-<li><a href="#org3233242">Sottoreti</a></li>
+<li><a href="#org15e2a0a">Sottoreti</a></li>
 </ul>
 </li>
-<li><a href="#org914c5c4">CIDR (classless)</a></li>
-<li><a href="#org92f444d">NAT</a>
+<li><a href="#orge7c614a">CIDR (classless)</a></li>
+<li><a href="#orgbbf757b">NAT</a>
 <ul>
-<li><a href="#orgafe9973">L'ultima questione da risolvere è quella di un server dietro NAT, dato che nessuno conosce la porta che mi porta ad esso.</a>
+<li><a href="#orgdc0515c">L'ultima questione da risolvere è quella di un server dietro NAT, dato che nessuno conosce la porta che mi porta ad esso.</a>
 <ul>
-<li><a href="#orga222771">Un modo banale è quello di assegnargli un IP pubblico, ma perdendo i vantaggi dovuti all'utilizzo del NAT.</a></li>
-<li><a href="#org650b61c">Un secondo modo è quello di aprire la porta specifica del server. In questo modo, tutte le richieste verso quella porta vengono routate al server in questione.</a></li>
+<li><a href="#orgb0c3d08">Un modo banale è quello di assegnargli un IP pubblico, ma perdendo i vantaggi dovuti all'utilizzo del NAT.</a></li>
+<li><a href="#orga1a9434">Un secondo modo è quello di aprire la porta specifica del server. In questo modo, tutte le richieste verso quella porta vengono routate al server in questione.</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org067d74a">ARP</a></li>
-<li><a href="#org61b2de2">DHCP</a></li>
-<li><a href="#org7d1c841">ICMP</a></li>
+<li><a href="#orgddae489">ARP</a></li>
+<li><a href="#orge10a3d0">DHCP</a></li>
+<li><a href="#org88cb6ac">ICMP</a></li>
 </ul>
 </li>
-<li><a href="#orgb9654c2">Instradamento</a></li>
-<li><a href="#orgdb37daa">Distance vector</a></li>
+<li><a href="#org0b0ba4a">Instradamento</a>
+<ul>
+<li><a href="#org8727224">Distance vector</a></li>
+<li><a href="#orge8164af">OSPF</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -88,9 +92,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org94a2c4e" class="outline-2">
-<h2 id="org94a2c4e">Network layer</h2>
-<div class="outline-text-2" id="text-org94a2c4e">
+<div id="outline-container-orgda6c471" class="outline-2">
+<h2 id="orgda6c471">Network layer</h2>
+<div class="outline-text-2" id="text-orgda6c471">
 <p>
 Questo livello si occupa di <b>indirizzamento</b> e <b>instradamento</b> fra LAN situate in luoghi diversi.
 </p>
@@ -99,13 +103,13 @@ Questo livello si occupa di <b>indirizzamento</b> e <b>instradamento</b> fra LAN
 A questo livello vi sono varie entità, fra cui <b>IP</b> e il suo sottomodulo <b>OSPF</b> per il routing, e <b>ARP</b> per <b>risolvere</b> l'IP globale nel MAC del datalink.
 </p>
 </div>
-<div id="outline-container-org94292b8" class="outline-3">
-<h3 id="org94292b8">IPv4</h3>
-<div class="outline-text-3" id="text-org94292b8">
+<div id="outline-container-orga3b14ff" class="outline-3">
+<h3 id="orga3b14ff">IPv4</h3>
+<div class="outline-text-3" id="text-orga3b14ff">
 </div>
-<div id="outline-container-orga983849" class="outline-4">
-<h4 id="orga983849">Formato pacchetto</h4>
-<div class="outline-text-4" id="text-orga983849">
+<div id="outline-container-org76205cf" class="outline-4">
+<h4 id="org76205cf">Formato pacchetto</h4>
+<div class="outline-text-4" id="text-org76205cf">
 <p>
 L'intestazione di un pacchetto IPv4 è di 5 parole da 32 bit, più un numero variabile di parole opzionali, fino ad un totale di 15 parole in tutto.
 </p>
@@ -131,9 +135,9 @@ Alla quarta e quinta parola ci sono source e destination address, di 32 bit.
 </p>
 </div>
 </div>
-<div id="outline-container-org261abbd" class="outline-4">
-<h4 id="org261abbd">Frammentazione e ricombinazione</h4>
-<div class="outline-text-4" id="text-org261abbd">
+<div id="outline-container-orgc0af650" class="outline-4">
+<h4 id="orgc0af650">Frammentazione e ricombinazione</h4>
+<div class="outline-text-4" id="text-orgc0af650">
 <p>
 Quando un datagram IP deve viaggiare attraverso una rete la cui <b>MTU (Maximum Transfer Unit)</b> sia minore della dimensione del pacchetto, i router IP devono frammentarlo.
 </p>
@@ -155,9 +159,9 @@ La frammentazione eccessiva aumenta le probabilità che uno dei frammenti venga 
 </p>
 </div>
 </div>
-<div id="outline-container-orgaa161a2" class="outline-4">
-<h4 id="orgaa161a2">Indirizzamento</h4>
-<div class="outline-text-4" id="text-orgaa161a2">
+<div id="outline-container-org198a037" class="outline-4">
+<h4 id="org198a037">Indirizzamento</h4>
+<div class="outline-text-4" id="text-org198a037">
 <p>
 Gli indirizzi IP sono composti da un <b>netid</b>, che identifica una rete, e uno <b>hostid</b>, che identifica uno specifico host.
 </p>
@@ -170,13 +174,13 @@ I <b>gateway</b> e i <b>router</b> posseggono una <b>netid</b> diversa per ogni 
 Sono state utilizzate 5 diverse strategie per l'assegnamento degli indirizzi.
 </p>
 </div>
-<div id="outline-container-orgae5e196" class="outline-5">
-<h5 id="orgae5e196">Strategie</h5>
-<div class="outline-text-5" id="text-orgae5e196">
+<div id="outline-container-org2fa5bf3" class="outline-5">
+<h5 id="org2fa5bf3">Strategie</h5>
+<div class="outline-text-5" id="text-org2fa5bf3">
 </div>
-<div id="outline-container-orge9918b5" class="outline-6">
-<h6 id="orge9918b5">Class based</h6>
-<div class="outline-text-6" id="text-orge9918b5">
+<div id="outline-container-org0de285e" class="outline-6">
+<h6 id="org0de285e">Class based</h6>
+<div class="outline-text-6" id="text-org0de285e">
 <p>
 Vi sono 3 classi per l'unicast, ovvero comunicazioni punto-punto, 1 per il multicast e una riservata.
 </p>
@@ -261,9 +265,9 @@ Quando un router capisce che la netid non è la propria, non passa alla lettura 
 Questo sistema soffre di <b>frammentazione interna</b>. Molti hostid sotto un certo netid sono <b>inutilizzati</b>.
 </p>
 </div>
-<div id="outline-container-org3233242" class="outline-7">
-<h7 id="org3233242">Sottoreti</h7>
-<div class="outline-text-7" id="text-org3233242">
+<div id="outline-container-org15e2a0a" class="outline-7">
+<h7 id="org15e2a0a">Sottoreti</h7>
+<div class="outline-text-7" id="text-org15e2a0a">
 <p>
 Secondo il sistema originario, ad ogni router dovrebbe essere associato un netid e dovrebbe partecipare all'instradamento in Internet, rendendolo meno efficiente.
 </p>
@@ -290,9 +294,9 @@ In questo modo, recupera l'indirizzo del router d'accesso per la specifica subne
 </div>
 </div>
 </div>
-<div id="outline-container-org914c5c4" class="outline-6">
-<h6 id="org914c5c4">CIDR (classless)</h6>
-<div class="outline-text-6" id="text-org914c5c4">
+<div id="outline-container-orge7c614a" class="outline-6">
+<h6 id="orge7c614a">CIDR (classless)</h6>
+<div class="outline-text-6" id="text-orge7c614a">
 <p>
 Questo sistema è simile al sistema delle subnets.
 </p>
@@ -322,9 +326,9 @@ CONTROLLARE CASI DI COLLISIONE PER RETE MINORE, ES 6.4
 </p>
 </div>
 </div>
-<div id="outline-container-org92f444d" class="outline-6">
-<h6 id="org92f444d">NAT</h6>
-<div class="outline-text-6" id="text-org92f444d">
+<div id="outline-container-orgbbf757b" class="outline-6">
+<h6 id="orgbbf757b">NAT</h6>
+<div class="outline-text-6" id="text-orgbbf757b">
 <p>
 Per introdurre un rimedio temporaneo alla carenza di indirizzi IP, viene introdotto questo nuovo sistema.
 </p>
@@ -374,22 +378,22 @@ Il NAT offre garanzie in termini di sicurezza, facendo anche da firewall.
 VEDERE COSA FARE QUANDO UN SERVER é DIETRO NAT
 </p>
 </div>
-<div id="outline-container-orgafe9973" class="outline-7">
-<h7 id="orgafe9973">L'ultima questione da risolvere è quella di un server dietro NAT, dato che nessuno conosce la porta che mi porta ad esso.</h7>
-<div class="outline-text-7" id="text-orgafe9973">
+<div id="outline-container-orgdc0515c" class="outline-7">
+<h7 id="orgdc0515c">L'ultima questione da risolvere è quella di un server dietro NAT, dato che nessuno conosce la porta che mi porta ad esso.</h7>
+<div class="outline-text-7" id="text-orgdc0515c">
 </div>
-<div id="outline-container-orga222771" class="outline-8">
-<h8 id="orga222771">Un modo banale è quello di assegnargli un IP pubblico, ma perdendo i vantaggi dovuti all'utilizzo del NAT.</h8>
+<div id="outline-container-orgb0c3d08" class="outline-8">
+<h8 id="orgb0c3d08">Un modo banale è quello di assegnargli un IP pubblico, ma perdendo i vantaggi dovuti all'utilizzo del NAT.</h8>
 </div>
-<div id="outline-container-org650b61c" class="outline-8">
-<h8 id="org650b61c">Un secondo modo è quello di aprire la porta specifica del server. In questo modo, tutte le richieste verso quella porta vengono routate al server in questione.</h8>
-</div>
-</div>
+<div id="outline-container-orga1a9434" class="outline-8">
+<h8 id="orga1a9434">Un secondo modo è quello di aprire la porta specifica del server. In questo modo, tutte le richieste verso quella porta vengono routate al server in questione.</h8>
 </div>
 </div>
-<div id="outline-container-org067d74a" class="outline-5">
-<h5 id="org067d74a">ARP</h5>
-<div class="outline-text-5" id="text-org067d74a">
+</div>
+</div>
+<div id="outline-container-orgddae489" class="outline-5">
+<h5 id="orgddae489">ARP</h5>
+<div class="outline-text-5" id="text-orgddae489">
 <p>
 ARP viene usato per <b>mappare</b> i MAC negli IP.
 </p>
@@ -411,9 +415,9 @@ C'è un introduzione del livello 3 nel 2, ma meno invasiva del NAT nel 4.
 </p>
 </div>
 </div>
-<div id="outline-container-org61b2de2" class="outline-5">
-<h5 id="org61b2de2">DHCP</h5>
-<div class="outline-text-5" id="text-org61b2de2">
+<div id="outline-container-orge10a3d0" class="outline-5">
+<h5 id="orge10a3d0">DHCP</h5>
+<div class="outline-text-5" id="text-orge10a3d0">
 <p>
 In una rete locale dietro un gateway che fa da NAT, ad ogni host è assegnato un IP interno, che il NAT nasconde all'esterno, catturando tutti i pacchetti in entrata.
 </p>
@@ -451,18 +455,18 @@ Esistono dei meccanismi di ricovero per gestire i pacchetti persi, ad esempio c'
 </p>
 </div>
 </div>
-<div id="outline-container-org7d1c841" class="outline-5">
-<h5 id="org7d1c841">ICMP</h5>
-<div class="outline-text-5" id="text-org7d1c841">
+<div id="outline-container-org88cb6ac" class="outline-5">
+<h5 id="org88cb6ac">ICMP</h5>
+<div class="outline-text-5" id="text-org88cb6ac">
 <p>
 Viene utilizzato per il ping e varie statistiche sulla rete, usa uno Header IP ed un checksum, oltre che il tipo di richiesta.
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgb9654c2" class="outline-4">
-<h4 id="orgb9654c2">Instradamento</h4>
-<div class="outline-text-4" id="text-orgb9654c2">
+<div id="outline-container-org0b0ba4a" class="outline-4">
+<h4 id="org0b0ba4a">Instradamento</h4>
+<div class="outline-text-4" id="text-org0b0ba4a">
 <p>
 La rete è un grafo parzialmente connesso e un compito del livello 3 è quello di instradare i pacchetti verso la giusta destinazione sfruttando la comunicazione fra host per avere una visione più ampia.
 </p>
@@ -484,10 +488,9 @@ Esistono <b>3 tecniche di instradamento</b>:
 <li>Border Gateway Protocol, evoluzione del RIP, usato nelle <b>reti intercontinentali</b>.</li>
 </ul>
 </div>
-</div>
-<div id="outline-container-orgdb37daa" class="outline-4">
-<h4 id="orgdb37daa">Distance vector</h4>
-<div class="outline-text-4" id="text-orgdb37daa">
+<div id="outline-container-org8727224" class="outline-5">
+<h5 id="org8727224">Distance vector</h5>
+<div class="outline-text-5" id="text-org8727224">
 <p>
 Ogni nodo contiene delle <b>tabelle di adiacenza</b> in cui sono riportati i router/gateway che riesce a raggiungere, i corrispondenti link e il costo, che può essere il bitrate, il numero di hop o altre metriche.
 </p>
@@ -570,22 +573,79 @@ Il <b>count-to-infinity</b> e lo <b>split-horizon</b> avvengono a causa dell'<b>
 </p>
 
 <p>
-Le tre tecniche usate per <b>migliorare l'efficienza</b> di questa tenica sono:
+Per riassumere, le tecniche usate per <b>migliorare l'efficienza</b> di questa tenica sono:
 </p>
 <ul class="org-ul">
 <li>Triggered update</li>
 <li>Split horizon</li>
 <li>Ogni tempo \(T\) si flushano le tabelle, annullando qualunque situazione problematica</li>
 <li>Impostare un valore basso, ad esempio \(16\), come infinito, in modo da troncare subito il <b>count-to-infinity</b></li>
-<li>Storm di update, che prevede un update di tutti i nodi coinvolti in un guasto, in modo da informare gli altri nodi al più presto. La storm causa una congestione, che viene mitigata introducendo un ritardo random, che però aumenta la probabilità di count-to-infinity.</li>
 </ul>
+</div>
+</div>
+<div id="outline-container-orge8164af" class="outline-5">
+<h5 id="orge8164af">OSPF</h5>
+<div class="outline-text-5" id="text-orge8164af">
+<p>
+<b>Open Shortest Path First</b> è un protocollo basato sul <b>link state</b>. Ovvero, a scadenze regolari ogni router trasmette un <b>messaggio link state</b> contenente le propria identità e le sue adiacenze su tutti i link, in un processo chiamato <b>flooding</b>. Una volta che tutti i link state hanno raggiunto tutti i router, ognuno di essi possiede un'immagine della <b>topologia attiva della rete</b>.
+</p>
+
+<p>
+Dopo aver rappresentato l'intera topologia, ogni router applica <b>Dijkstra</b> per calcolare i cammini minimi.
+</p>
+
+<p>
+L'instradamento necessita quindi di 3 tabelle:
+</p>
+<ul class="org-ul">
+<li>tabelle <b>Link State</b>, che associano una netid al router a cui sono collegate;</li>
+<li>tabelle di <b>instradamento</b>, che contengono il costo e il prossimo hop per raggiungere ogni router;</li>
+<li>tabelle di <b>adiacenza</b>, che associano ad ogni router adiacente la linea attraverso cui sono collegati.</li>
+</ul>
+
+<p>
+All'arrivo di un pacchetto, quindi, un router controlla la netid e scopre il router d'arrivo, controlla il cammino minimo verso il router d'arrivo e scopre il prossimo hop, infine controlla il prossimo hop e scopre il link da seguire.
+</p>
+
+<p>
+Il protocollo OSPF è <b>multipath</b>, ovvero riesce a salvare i casi in cui i cammini abbiano lo stesso peso. Grazie a ciò riesce a fare <b>load-balancing</b> e diminuire la congestione sulle singole linee.
+</p>
+
+<p>
+Per diminuire la congestione causata dal flooding, ad ogni link state scambiato vengono associati un <b>numero di sequenza</b> ed un <b>TTL</b>. Il primo serve per evitare di ritrasmettere un link state appena arrivato se era stato già ritrasmesso. Il secondo serve per evitare che i link state continuino a girare nella rete indefinitamente.
+</p>
+
+<p>
+Inoltre, può essere scelto un <b>designated router</b> nella backbone del sistema autonomo per essere l'unico a scambiare le informazioni di instradamento e raccoglierle. Questo riduce la congestione generale, ma aumenta quella verso tale router. Inoltre, in caso di guasto dello stesso, sarebbe danneggiata l'intera dorsale.
+</p>
+
+<p>
+Un affinamento della tecnica del designated router è quella del <b>Software Designated Router</b>, in cui tale router si trova su cloud e vi si comunica attraverso il protocollo <b>Open Flow</b>, che cerca di risolvere anche problemi di sicurezza.
+</p>
+
+<p>
+Questo è possibile in quanto c'è totale separazione fra il piano dati e quello di controllo.
+</p>
+
+<p>
+OSPF gira di solito all'interno della backbone del <b>sistema autonomo</b> (AREA 0), in quei router attraverso cui passa il traffico intra-area.
+</p>
+
+<p>
+Le reti all'interno della singola area del sistema autonomo sono chiamate <b>stub</b> e i router all'interno contengono l'associazione netid-nodo a cui sono collegati verso la dorsale del sistema autonomo.
+</p>
+
+<p>
+Al confine del sistema autonomo, vi sono dei <b>border-router</b> attraverso cui passa anche il traffico <b>ext ra-area</b> e che di solito usano <b>BGP</b>.
+</p>
+</div>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-01-30 Thu 20:23</p>
+<p class="date">Created: 2025-02-02 Sun 11:41</p>
 </div>
 </body>
 </html>

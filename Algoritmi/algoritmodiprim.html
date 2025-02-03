@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-01-28 Tue 17:24 -->
+<!-- 2025-02-02 Sun 11:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Algoritmo di Prim</title>
@@ -46,21 +46,21 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgf70b0cf">Algoritmo di Prim</a>
+<li><a href="#orgcdd5912">Algoritmo di Prim</a>
 <ul>
 <li>
 <ul>
-<li><a href="#org38d5c3d">Idea generale</a></li>
-<li><a href="#orgc3d3eb9">Implementazione</a>
+<li><a href="#orgd13a41f">Idea generale</a></li>
+<li><a href="#orgff7d8af">Implementazione</a>
 <ul>
-<li><a href="#orgd160512">Mediante vettori delle distanze e dei vicini</a>
+<li><a href="#orgbe2ff3f">Mediante vettori delle distanze e dei vicini</a>
 <ul>
-<li><a href="#org65abc49">Analisi</a></li>
+<li><a href="#orgcac6b6f">Analisi</a></li>
 </ul>
 </li>
-<li><a href="#org339c380">Mediante <b>coda con priorità</b></a>
+<li><a href="#org5cafc8e">Mediante <b>coda con priorità</b></a>
 <ul>
-<li><a href="#org8d474b0">Analisi</a></li>
+<li><a href="#orga891240">Analisi</a></li>
 </ul>
 </li>
 </ul>
@@ -72,13 +72,13 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf70b0cf" class="outline-2">
-<h2 id="orgf70b0cf">Algoritmo di Prim</h2>
-<div class="outline-text-2" id="text-orgf70b0cf">
+<div id="outline-container-orgcdd5912" class="outline-2">
+<h2 id="orgcdd5912">Algoritmo di Prim</h2>
+<div class="outline-text-2" id="text-orgcdd5912">
 </div>
-<div id="outline-container-org38d5c3d" class="outline-4">
-<h4 id="org38d5c3d">Idea generale</h4>
-<div class="outline-text-4" id="text-org38d5c3d">
+<div id="outline-container-orgd13a41f" class="outline-4">
+<h4 id="orgd13a41f">Idea generale</h4>
+<div class="outline-text-4" id="text-orgd13a41f">
 <p>
 Nel passo generico, l'insieme dei vertici del grafo originario è diviso in due sottoinsiemi: i vertici che fanno parte di \(T\) e sono quindi già connessi a tutti gli altri vertici in \(T\), e quelli che non ne fanno ancora parte.
 </p>
@@ -99,7 +99,7 @@ L'arco selezionato e il nuovo vertice che permette di raggiungere vengono aggiun
 Si ripete il passo generico fino all'inserimento in \(T\) di tutti i vertici del grafo originario.
 </p>
 
-<pre class="example" id="org1f86c19">
+<pre class="example" id="org0c944f7">
 ALGORITMO Prim (grafo connesso non orientato G=(V,E,omega)) -&gt; albero
     T &lt;- (V_t &lt;- {s}, E_t &lt;- (/))
     WHILE T ha meno di n vertici DO
@@ -110,9 +110,9 @@ ALGORITMO Prim (grafo connesso non orientato G=(V,E,omega)) -&gt; albero
 </pre>
 </div>
 </div>
-<div id="outline-container-orgc3d3eb9" class="outline-4">
-<h4 id="orgc3d3eb9">Implementazione</h4>
-<div class="outline-text-4" id="text-orgc3d3eb9">
+<div id="outline-container-orgff7d8af" class="outline-4">
+<h4 id="orgff7d8af">Implementazione</h4>
+<div class="outline-text-4" id="text-orgff7d8af">
 <p>
 :ID:       dbe54f3f-f439-47e7-a916-799ca54bdf7c
 </p>
@@ -128,9 +128,9 @@ Un metodo immediato per scegliere il vertice minimo sarebbe iterare attraverso t
 Questo metodo prevederebbe di scansionare gli archi più di una volta. Vengono quindi introdotti dei miglioramenti per aumentare l'efficienza.
 </p>
 </div>
-<div id="outline-container-orgd160512" class="outline-5">
-<h5 id="orgd160512">Mediante vettori delle distanze e dei vicini</h5>
-<div class="outline-text-5" id="text-orgd160512">
+<div id="outline-container-orgbe2ff3f" class="outline-5">
+<h5 id="orgbe2ff3f">Mediante vettori delle distanze e dei vicini</h5>
+<div class="outline-text-5" id="text-orgbe2ff3f">
 <p>
 Occupando dello spazio aggiuntivo costante, salviamo le seguenti informazioni per ogni vertice \(v\):
 </p>
@@ -155,7 +155,7 @@ Una volta scelto il vertice da raggiungere, questo viene aggiunto alla soluzione
 L'aggiornamento delle strutture avviene dopo l'inserimento di un arco ed un vertice nella soluzione. In particolare, quando un nuovo vertice viene aggiunto, si controllano tutti i <b>nuovi</b> archi di frontiera ad esso incidenti e se uno di essi porta ad un vertice esterno con un costo minore di quello correntemente presente in <code>d[v]</code>, quest'ultimo viene aggiornato, e <code>vicino[d]</code> viene aggiornato con il vertice in questione.
 </p>
 
-<pre class="example" id="org4ce3a1f">
+<pre class="example" id="orga713888">
 ALGORITMO Prim (grafo connesso non orientato G=(V,E, omega))
 Siano d e vicino vettori con indici in V
 FOREACH v \in V DO
@@ -229,18 +229,18 @@ Da finire
 </pre>
 </div>
 </div>
-<div id="outline-container-org65abc49" class="outline-6">
-<h6 id="org65abc49">Analisi</h6>
-<div class="outline-text-6" id="text-org65abc49">
+<div id="outline-container-orgcac6b6f" class="outline-6">
+<h6 id="orgcac6b6f">Analisi</h6>
+<div class="outline-text-6" id="text-orgcac6b6f">
 <p>
 Con questa implementazione, supponendo il criterio di costo uniforme e che il controllo dell'inclusione di un vertice nell'albero della soluzione avvenga in tempo costante, si ottiene tempo \(\Theta(n^{2})\)
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org339c380" class="outline-5">
-<h5 id="org339c380">Mediante <b>coda con priorità</b></h5>
-<div class="outline-text-5" id="text-org339c380">
+<div id="outline-container-org5cafc8e" class="outline-5">
+<h5 id="org5cafc8e">Mediante <b>coda con priorità</b></h5>
+<div class="outline-text-5" id="text-org5cafc8e">
 <p>
 L'operazione che ha il maggiore impatto sull'implementazione precedente è la scansione del vettore delle distanze per trovare il vertice fuori frontiera raggiungibile con costo minimo.
 </p>
@@ -263,7 +263,7 @@ Le differenze con l'implementazione precedente sono:
 </ul>
 
 
-<pre class="example" id="org7b58686">
+<pre class="example" id="org06f1e9e">
 ALGORITMO Prim(grafo connesso non orientato G(V,E, omega))
 
     Sia C una coda con priorità
@@ -297,9 +297,9 @@ ALGORITMO Prim(grafo connesso non orientato G(V,E, omega))
     WHILE C \noteq \emptyset    
 </pre>
 </div>
-<div id="outline-container-org8d474b0" class="outline-6">
-<h6 id="org8d474b0">Analisi</h6>
-<div class="outline-text-6" id="text-org8d474b0">
+<div id="outline-container-orga891240" class="outline-6">
+<h6 id="orga891240">Analisi</h6>
+<div class="outline-text-6" id="text-orga891240">
 <p>
 Il <b>riempimento della coda</b> consiste in \(n\) <code>insert</code>, che complessivamente pesano \(O(n)\) (vedi HeapSort o Code con priorità, il punto è che la costruzione a heap avviene iterativamente partendo dall'ultima foglia e chiamando un risistema, che pesa O(log n) per ogni sottoalbero e con una sommatoria risolta sulla dispensa si arriva a tempo lineare).
 </p>
@@ -324,7 +324,7 @@ Il numero di operazioni effettuate è quindi \(O(n) + O(n\log n) + O(m\log n)\).
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-01-28 Tue 17:24</p>
+<p class="date">Created: 2025-02-02 Sun 11:41</p>
 </div>
 </body>
 </html>

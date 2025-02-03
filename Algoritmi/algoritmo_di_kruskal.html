@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-01-28 Tue 17:24 -->
+<!-- 2025-02-02 Sun 11:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Algoritmo di Kruskal</title>
@@ -46,13 +46,13 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org7de3073">Kruskal</a>
+<li><a href="#org57f5ba3">Kruskal</a>
 <ul>
-<li><a href="#orgce2437e">Idea generale</a></li>
-<li><a href="#org739a6ba">Implementazione</a>
+<li><a href="#orgba76540">Idea generale</a></li>
+<li><a href="#org5b922d9">Implementazione</a>
 <ul>
-<li><a href="#orga6ead45">Analisi</a></li>
-<li><a href="#org103336d"><span class="todo TODO">TODO</span> Calcolare analisi con RadixSort e compressione di cammino</a></li>
+<li><a href="#orgbfab0b7">Analisi</a></li>
+<li><a href="#org0b523ca"><span class="todo TODO">TODO</span> Calcolare analisi con RadixSort e compressione di cammino</a></li>
 </ul>
 </li>
 </ul>
@@ -60,13 +60,13 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org7de3073" class="outline-2">
-<h2 id="org7de3073">Kruskal</h2>
-<div class="outline-text-2" id="text-org7de3073">
+<div id="outline-container-org57f5ba3" class="outline-2">
+<h2 id="org57f5ba3">Kruskal</h2>
+<div class="outline-text-2" id="text-org57f5ba3">
 </div>
-<div id="outline-container-orgce2437e" class="outline-3">
-<h3 id="orgce2437e">Idea generale</h3>
-<div class="outline-text-3" id="text-orgce2437e">
+<div id="outline-container-orgba76540" class="outline-3">
+<h3 id="orgba76540">Idea generale</h3>
+<div class="outline-text-3" id="text-orgba76540">
 <p>
 Nell'algoritmo di Kruskal si sfrutta il concetto di <b>connessione</b>, creando una foresta di alberi <i>parzialmente ricoprenti</i> incrementalmente aggiornati e uniti fra loro, che eventualmente si uniranno in un unico albero ricoprente minimo.
 </p>
@@ -83,7 +83,7 @@ Viene scandita la <b>lista di archi</b> ed ogni arco che collega due vertici <b>
 Per garantire la condizione di <b>ottimalità</b>, gli archi vengono scanditi in ordine crescente di peso. In questo modo, gli \(n-1\) archi aggiunti costituiscono la configurazione con peso complessivo minimo.
 </p>
 
-<pre class="example" id="org17d733d">
+<pre class="example" id="org741ce93">
 ALGORITMO Kruskal(grafo connesso non orientato G=(V,E, omega)) -&gt; albero
     ordina l'insieme E in base ai pesi in modo non decrescente
     T = (V, insieme vuoto di archi)
@@ -111,9 +111,9 @@ Non posso fare altro che ragionare sull'intero cammino. Un nuovo arco che arriva
 </p>
 </div>
 </div>
-<div id="outline-container-org739a6ba" class="outline-3">
-<h3 id="org739a6ba">Implementazione</h3>
-<div class="outline-text-3" id="text-org739a6ba">
+<div id="outline-container-org5b922d9" class="outline-3">
+<h3 id="org5b922d9">Implementazione</h3>
+<div class="outline-text-3" id="text-org5b922d9">
 <p>
 Per implementare l'idea generale appena esposta, è necessario utilizzare una struttura che, correttamente aggiornata, ci permetta di stabilire facilmente se due vertici siano già connessi.
 </p>
@@ -126,7 +126,7 @@ In questo modo, durante l'esecuzione dell'algoritmo si avrà una foresta d'alber
 Verrà utilizzata la struttura <b>Union-Find</b>. La connessione di due vertici fra loro avviene attraverso la <i>union</i>, mentre la verifica di connessione fra due vertici viene effettuata confrontando il risultato della <i>find</i> di entrambi.
 </p>
 
-<pre class="example" id="orgf096a61">
+<pre class="example" id="orgbdf7c03">
 ALGORITMO Kruskal(grafo connesso non orientato G=(V,E, omega)) -&gt; albero
     ordina l'insieme E in base ai pesi in modo non decrescente
     T &lt;- (V, (/))
@@ -141,9 +141,9 @@ ALGORITMO Kruskal(grafo connesso non orientato G=(V,E, omega)) -&gt; albero
     RETURN T
 </pre>
 </div>
-<div id="outline-container-orga6ead45" class="outline-4">
-<h4 id="orga6ead45">Analisi</h4>
-<div class="outline-text-4" id="text-orga6ead45">
+<div id="outline-container-orgbfab0b7" class="outline-4">
+<h4 id="orgbfab0b7">Analisi</h4>
+<div class="outline-text-4" id="text-orgbfab0b7">
 <p>
 Siano \(n\) il numero di vertici e \(m\) il numero di archi.
 </p>
@@ -182,14 +182,14 @@ perchè \(O(m\log n^{2}) = O(2m\log n) = O(m\log n)\)
 </p>
 </div>
 </div>
-<div id="outline-container-org103336d" class="outline-4">
-<h4 id="org103336d"><span class="todo TODO">TODO</span> Calcolare analisi con RadixSort e compressione di cammino</h4>
+<div id="outline-container-org0b523ca" class="outline-4">
+<h4 id="org0b523ca"><span class="todo TODO">TODO</span> Calcolare analisi con RadixSort e compressione di cammino</h4>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-01-28 Tue 17:24</p>
+<p class="date">Created: 2025-02-02 Sun 11:41</p>
 </div>
 </body>
 </html>

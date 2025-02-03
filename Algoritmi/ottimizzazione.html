@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-01-28 Tue 17:23 -->
+<!-- 2025-02-02 Sun 11:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ottimizzazione</title>
@@ -46,23 +46,23 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org039951f">Problemi di ottimizzazione</a>
+<li><a href="#orgeb8c77b">Problemi di ottimizzazione</a>
 <ul>
-<li><a href="#orgc1b29cf">Formalizzazione</a></li>
-<li><a href="#orgaac5a05">Spiegazione</a></li>
-<li><a href="#org59ab295">Zaino monodimensionale</a></li>
+<li><a href="#org93971f3">Formalizzazione</a></li>
+<li><a href="#orgcd14571">Spiegazione</a></li>
+<li><a href="#org3752973">Zaino monodimensionale</a></li>
 </ul>
 </li>
-<li><a href="#orgdc1fdcc">Tecnica greedy</a>
+<li><a href="#orgef97a14">Tecnica greedy</a>
 <ul>
-<li><a href="#orgefc507a">Applicazione al problema dello zaino</a></li>
+<li><a href="#org7c484d4">Applicazione al problema dello zaino</a></li>
 </ul>
 </li>
-<li><a href="#orgedf9e8b">Alberi e tecnica greedy</a>
+<li><a href="#orgba2055e">Alberi e tecnica greedy</a>
 <ul>
-<li><a href="#org0b48bc2">Alberi ricoprenti minimi</a>
+<li><a href="#orgacc42a7">Alberi ricoprenti minimi</a>
 <ul>
-<li><a href="#orge8002f4">Algoritmo di Kruskal</a></li>
+<li><a href="#org64b9d5b">Algoritmo di Kruskal</a></li>
 </ul>
 </li>
 </ul>
@@ -70,32 +70,32 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org039951f" class="outline-2">
-<h2 id="org039951f">Problemi di ottimizzazione</h2>
-<div class="outline-text-2" id="text-org039951f">
+<div id="outline-container-orgeb8c77b" class="outline-2">
+<h2 id="orgeb8c77b">Problemi di ottimizzazione</h2>
+<div class="outline-text-2" id="text-orgeb8c77b">
 <p>
 Un esempio è la colorazione di grafi con il numero minimo di colori. Per i grafi planari, ovvero quelli che possono essere disegnati senza che le linee si intereschino, è stato dimostrato che quel numero sia 4.
 </p>
 </div>
-<div id="outline-container-orgc1b29cf" class="outline-3">
-<h3 id="orgc1b29cf">Formalizzazione</h3>
-<div class="outline-text-3" id="text-orgc1b29cf">
+<div id="outline-container-org93971f3" class="outline-3">
+<h3 id="org93971f3">Formalizzazione</h3>
+<div class="outline-text-3" id="text-org93971f3">
 <p>
 to fill
 </p>
 </div>
 </div>
-<div id="outline-container-orgaac5a05" class="outline-3">
-<h3 id="orgaac5a05">Spiegazione</h3>
-<div class="outline-text-3" id="text-orgaac5a05">
+<div id="outline-container-orgcd14571" class="outline-3">
+<h3 id="orgcd14571">Spiegazione</h3>
+<div class="outline-text-3" id="text-orgcd14571">
 <p>
 Fra tutte le soluzioni ammissibili, voglio trovare la soluzione ottima rispetto al criterio che mi è stato dato.
 </p>
 </div>
 </div>
-<div id="outline-container-org59ab295" class="outline-3">
-<h3 id="org59ab295">Zaino monodimensionale</h3>
-<div class="outline-text-3" id="text-org59ab295">
+<div id="outline-container-org3752973" class="outline-3">
+<h3 id="org3752973">Zaino monodimensionale</h3>
+<div class="outline-text-3" id="text-org3752973">
 <p>
 Istanza: ho uno zaino di altezza \(h\) e \(k\) contenitori \(c_{1},...c_{k}\).
 Problema: scegliere quali contenitori collocare nello zaino in modo da riempirlo il più possibile.
@@ -105,17 +105,17 @@ La soluzione ottima è anch'essa un sottoinsieme tale che la somma delle altezze
 </div>
 </div>
 </div>
-<div id="outline-container-orgdc1fdcc" class="outline-2">
-<h2 id="orgdc1fdcc">Tecnica greedy</h2>
-<div class="outline-text-2" id="text-orgdc1fdcc">
+<div id="outline-container-orgef97a14" class="outline-2">
+<h2 id="orgef97a14">Tecnica greedy</h2>
+<div class="outline-text-2" id="text-orgef97a14">
 <p>
 Ho un problema di ottimizzazione e ad ogni step scelgo la soluzione ottima localmente, ignorando le altre.
 Quindi facciamo un processo di selezione di candidati finchè questi non finiscono. Scelgo un candidato se è ammissibile, altrimenti è scartato per sempre e la scelta è irrevocabile. Il problema è: questo sistema trova veramente la soluzione ottima?
 </p>
 </div>
-<div id="outline-container-orgefc507a" class="outline-3">
-<h3 id="orgefc507a">Applicazione al problema dello zaino</h3>
-<div class="outline-text-3" id="text-orgefc507a">
+<div id="outline-container-org7c484d4" class="outline-3">
+<h3 id="org7c484d4">Applicazione al problema dello zaino</h3>
+<div class="outline-text-3" id="text-org7c484d4">
 <p>
 Utilizzo la strategia greedy scegliendo sempre il contenitore più grande. Non funziona.
 Per trovare la soluzione ottima serve provare tutti i sottoinsiemi, che sono \(2^{k}\), rendendo l'algoritmo impraticabile.
@@ -124,17 +124,17 @@ La tecnica greedy si accontenta di trovare una soluzione ammissibile, con un tem
 </div>
 </div>
 </div>
-<div id="outline-container-orgedf9e8b" class="outline-2">
-<h2 id="orgedf9e8b">Alberi e tecnica greedy</h2>
-<div class="outline-text-2" id="text-orgedf9e8b">
+<div id="outline-container-orgba2055e" class="outline-2">
+<h2 id="orgba2055e">Alberi e tecnica greedy</h2>
+<div class="outline-text-2" id="text-orgba2055e">
 <p>
 Ricordiamo che un grafo è un albero se e solo se il numero di archi è il numero di vertici meno 1.
 Inoltre ricordiamo che se a un albero tolgo un arco, ottengo una foresta. Se vi aggiungo un albero, ottengo un ciclo e perdo l'albero.
 </p>
 </div>
-<div id="outline-container-org0b48bc2" class="outline-3">
-<h3 id="org0b48bc2">Alberi ricoprenti minimi</h3>
-<div class="outline-text-3" id="text-org0b48bc2">
+<div id="outline-container-orgacc42a7" class="outline-3">
+<h3 id="orgacc42a7">Alberi ricoprenti minimi</h3>
+<div class="outline-text-3" id="text-orgacc42a7">
 <p>
 Voglio trovare l'albero ricoprente con costo minimo su un grafo pesato.
 So che i vertici voglio averli tutti, mentre gli archi.
@@ -142,9 +142,9 @@ Ispeziono gli archi in ordine di peso. A ogni passo scelgo quello che pesa di me
 Questa tecnica si chiama Algoritmo di Kruskal.
 </p>
 </div>
-<div id="outline-container-orge8002f4" class="outline-4">
-<h4 id="orge8002f4">Algoritmo di Kruskal</h4>
-<div class="outline-text-4" id="text-orge8002f4">
+<div id="outline-container-org64b9d5b" class="outline-4">
+<h4 id="org64b9d5b">Algoritmo di Kruskal</h4>
+<div class="outline-text-4" id="text-org64b9d5b">
 <p>
 Quando analizzo due vertici,
 Utilizzo lo union find e abbiamo una foresta. Quando dobbiamo unire gli alberi, li 
@@ -155,7 +155,7 @@ Utilizzo lo union find e abbiamo una foresta. Quando dobbiamo unire gli alberi, 
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-01-28 Tue 17:23</p>
+<p class="date">Created: 2025-02-02 Sun 11:41</p>
 </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-01-30 Thu 16:48 -->
+<!-- 2025-02-02 Sun 11:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Heap</title>
@@ -46,37 +46,37 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org9d41229">Heap e code con priorità</a>
+<li><a href="#orgb27287b">Heap e code con priorità</a>
 <ul>
-<li><a href="#orgadee99f">Operazioni</a>
+<li><a href="#orgb5230fa">Operazioni</a>
 <ul>
-<li><a href="#org95ae117">Trova e cancella chiave massima</a></li>
-<li><a href="#org032ec30">Inserimento</a></li>
-<li><a href="#org7bcd3a8">Cancellazione</a></li>
-<li><a href="#org5bb1893">Modifica della chiave</a></li>
+<li><a href="#org3aea037">Trova e cancella chiave massima</a></li>
+<li><a href="#orgae31a57">Inserimento</a></li>
+<li><a href="#org907b5b8">Cancellazione</a></li>
+<li><a href="#org0abd26e">Modifica della chiave</a></li>
 </ul>
 </li>
-<li><a href="#orgf5d34f0">Implementazione</a></li>
-<li><a href="#org7bd7f9b">Panoramica per <b>min-heap</b></a></li>
+<li><a href="#org4eb9ba6">Implementazione</a></li>
+<li><a href="#orgc531b13">Panoramica per <b>min-heap</b></a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org9d41229" class="outline-2">
-<h2 id="org9d41229">Heap e code con priorità</h2>
-<div class="outline-text-2" id="text-org9d41229">
+<div id="outline-container-orgb27287b" class="outline-2">
+<h2 id="orgb27287b">Heap e code con priorità</h2>
+<div class="outline-text-2" id="text-orgb27287b">
 <p>
 Sulle code con priorità, ad esempio i <i>Max-Heap</i> dello <code>HeapSort</code>, sono definite varie operazioni.
 </p>
 </div>
-<div id="outline-container-orgadee99f" class="outline-3">
-<h3 id="orgadee99f">Operazioni</h3>
-<div class="outline-text-3" id="text-orgadee99f">
+<div id="outline-container-orgb5230fa" class="outline-3">
+<h3 id="orgb5230fa">Operazioni</h3>
+<div class="outline-text-3" id="text-orgb5230fa">
 </div>
-<div id="outline-container-org95ae117" class="outline-4">
-<h4 id="org95ae117">Trova e cancella chiave massima</h4>
-<div class="outline-text-4" id="text-org95ae117">
+<div id="outline-container-org3aea037" class="outline-4">
+<h4 id="org3aea037">Trova e cancella chiave massima</h4>
+<div class="outline-text-4" id="text-org3aea037">
 <p>
 Trovare l'elemento di chiave massima avviene in tempo costante.
 </p>
@@ -90,9 +90,9 @@ La procedura <code>risistema</code> richiede un tempo lineare all'altezza e quin
 </p>
 </div>
 </div>
-<div id="outline-container-org032ec30" class="outline-4">
-<h4 id="org032ec30">Inserimento</h4>
-<div class="outline-text-4" id="text-org032ec30">
+<div id="outline-container-orgae31a57" class="outline-4">
+<h4 id="orgae31a57">Inserimento</h4>
+<div class="outline-text-4" id="text-orgae31a57">
 <p>
 L'inserimento consiste nell'aggiungere una foglia e poi utilizzare una procedura <code>risistemaDalBasso</code> che scambia l'elemento inserito con il padre fintantochè questo sia maggiore.
 </p>
@@ -102,9 +102,9 @@ Il caso peggiore è logaritmico.
 </p>
 </div>
 </div>
-<div id="outline-container-org7bcd3a8" class="outline-4">
-<h4 id="org7bcd3a8">Cancellazione</h4>
-<div class="outline-text-4" id="text-org7bcd3a8">
+<div id="outline-container-org907b5b8" class="outline-4">
+<h4 id="org907b5b8">Cancellazione</h4>
+<div class="outline-text-4" id="text-org907b5b8">
 <p>
 La cancellazione avviene sostituendo l'elemento da cancellare con l'ultima foglia.
 </p>
@@ -122,9 +122,9 @@ Il caso peggiore è logaritmico.
 </p>
 </div>
 </div>
-<div id="outline-container-org5bb1893" class="outline-4">
-<h4 id="org5bb1893">Modifica della chiave</h4>
-<div class="outline-text-4" id="text-org5bb1893">
+<div id="outline-container-org0abd26e" class="outline-4">
+<h4 id="org0abd26e">Modifica della chiave</h4>
+<div class="outline-text-4" id="text-org0abd26e">
 <p>
 La modifica di una chiave segue le stesse regole della cancellazione, che infatti potrebbe essere vista come un cambio della chiave dell'elemento cancellato al valore dell'ultima foglia.
 </p>
@@ -139,9 +139,9 @@ Il tempo è comunque logaritmico.
 </div>
 </div>
 </div>
-<div id="outline-container-orgf5d34f0" class="outline-3">
-<h3 id="orgf5d34f0">Implementazione</h3>
-<div class="outline-text-3" id="text-orgf5d34f0">
+<div id="outline-container-org4eb9ba6" class="outline-3">
+<h3 id="org4eb9ba6">Implementazione</h3>
+<div class="outline-text-3" id="text-org4eb9ba6">
 <p>
 Come si è visto, tutte le operazioni dello heap avvengono in tempo <b>logaritmico</b>.
 </p>
@@ -159,9 +159,9 @@ La dimensione di questo array dev'essere grande quanto lo heap, magari con dello
 </p>
 </div>
 </div>
-<div id="outline-container-org7bd7f9b" class="outline-3">
-<h3 id="org7bd7f9b">Panoramica per <b>min-heap</b></h3>
-<div class="outline-text-3" id="text-org7bd7f9b">
+<div id="outline-container-orgc531b13" class="outline-3">
+<h3 id="orgc531b13">Panoramica per <b>min-heap</b></h3>
+<div class="outline-text-3" id="text-orgc531b13">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -221,7 +221,7 @@ La dimensione di questo array dev'essere grande quanto lo heap, magari con dello
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-01-30 Thu 16:48</p>
+<p class="date">Created: 2025-02-02 Sun 11:41</p>
 </div>
 </body>
 </html>
