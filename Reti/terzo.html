@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-02-02 Sun 11:41 -->
+<!-- 2025-02-04 Tue 18:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Network layer</title>
@@ -46,55 +46,66 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgda6c471">Network layer</a>
+<li><a href="#org94a2c4e">Network layer</a>
 <ul>
-<li><a href="#orga3b14ff">IPv4</a>
+<li><a href="#org94292b8">IPv4</a>
 <ul>
-<li><a href="#org76205cf">Formato pacchetto</a></li>
-<li><a href="#orgc0af650">Frammentazione e ricombinazione</a></li>
-<li><a href="#org198a037">Indirizzamento</a>
+<li><a href="#orga983849">Formato pacchetto</a></li>
+<li><a href="#org261abbd">Frammentazione e ricombinazione</a></li>
+<li><a href="#orgaa161a2">Indirizzamento</a>
 <ul>
-<li><a href="#org2fa5bf3">Strategie</a>
+<li><a href="#orgae5e196">Strategie</a>
 <ul>
-<li><a href="#org0de285e">Class based</a>
+<li><a href="#orge9918b5">Class based</a>
 <ul>
-<li><a href="#org15e2a0a">Sottoreti</a></li>
+<li><a href="#org3233242">Sottoreti</a></li>
 </ul>
 </li>
-<li><a href="#orge7c614a">CIDR (classless)</a></li>
-<li><a href="#orgbbf757b">NAT</a>
+<li><a href="#org914c5c4">CIDR (classless)</a></li>
+<li><a href="#org92f444d">NAT</a>
 <ul>
-<li><a href="#orgdc0515c">L'ultima questione da risolvere è quella di un server dietro NAT, dato che nessuno conosce la porta che mi porta ad esso.</a>
+<li><a href="#orgafe9973">L'ultima questione da risolvere è quella di un server dietro NAT, dato che nessuno conosce la porta che mi porta ad esso.</a>
 <ul>
-<li><a href="#orgb0c3d08">Un modo banale è quello di assegnargli un IP pubblico, ma perdendo i vantaggi dovuti all'utilizzo del NAT.</a></li>
-<li><a href="#orga1a9434">Un secondo modo è quello di aprire la porta specifica del server. In questo modo, tutte le richieste verso quella porta vengono routate al server in questione.</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgddae489">ARP</a></li>
-<li><a href="#orge10a3d0">DHCP</a></li>
-<li><a href="#org88cb6ac">ICMP</a></li>
-</ul>
-</li>
-<li><a href="#org0b0ba4a">Instradamento</a>
-<ul>
-<li><a href="#org8727224">Distance vector</a></li>
-<li><a href="#orge8164af">OSPF</a></li>
+<li><a href="#orga222771">Un modo banale è quello di assegnargli un IP pubblico, ma perdendo i vantaggi dovuti all'utilizzo del NAT.</a></li>
+<li><a href="#org650b61c">Un secondo modo è quello di aprire la porta specifica del server. In questo modo, tutte le richieste verso quella porta vengono routate al server in questione.</a></li>
 </ul>
 </li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a href="#org067d74a">ARP</a></li>
+<li><a href="#org61b2de2">DHCP</a></li>
+<li><a href="#org7d1c841">ICMP</a></li>
+</ul>
+</li>
+<li><a href="#orgb9654c2">Instradamento</a>
+<ul>
+<li><a href="#orgdb37daa">Distance vector</a></li>
+<li><a href="#org66910b8">OSPF</a></li>
+<li><a href="#org40f76ca">BGP</a></li>
+</ul>
+</li>
+<li><a href="#orgfc5ac3e">Tunneling</a></li>
+<li><a href="#orgd9ce28f">Supporto QoS</a>
+<ul>
+<li><a href="#orgfa72c9c">Token bucket filter</a></li>
+<li><a href="#org348983b">Weighted fair queueing</a></li>
+<li><a href="#org2035550">Random early detection</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orga33e31e"><span class="todo TODO">TODO</span> MPLS</a></li>
+<li><a href="#org6b3cb57"><span class="todo TODO">TODO</span> IPv6</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgda6c471" class="outline-2">
-<h2 id="orgda6c471">Network layer</h2>
-<div class="outline-text-2" id="text-orgda6c471">
+<div id="outline-container-org94a2c4e" class="outline-2">
+<h2 id="org94a2c4e">Network layer</h2>
+<div class="outline-text-2" id="text-org94a2c4e">
 <p>
 Questo livello si occupa di <b>indirizzamento</b> e <b>instradamento</b> fra LAN situate in luoghi diversi.
 </p>
@@ -103,13 +114,13 @@ Questo livello si occupa di <b>indirizzamento</b> e <b>instradamento</b> fra LAN
 A questo livello vi sono varie entità, fra cui <b>IP</b> e il suo sottomodulo <b>OSPF</b> per il routing, e <b>ARP</b> per <b>risolvere</b> l'IP globale nel MAC del datalink.
 </p>
 </div>
-<div id="outline-container-orga3b14ff" class="outline-3">
-<h3 id="orga3b14ff">IPv4</h3>
-<div class="outline-text-3" id="text-orga3b14ff">
+<div id="outline-container-org94292b8" class="outline-3">
+<h3 id="org94292b8">IPv4</h3>
+<div class="outline-text-3" id="text-org94292b8">
 </div>
-<div id="outline-container-org76205cf" class="outline-4">
-<h4 id="org76205cf">Formato pacchetto</h4>
-<div class="outline-text-4" id="text-org76205cf">
+<div id="outline-container-orga983849" class="outline-4">
+<h4 id="orga983849">Formato pacchetto</h4>
+<div class="outline-text-4" id="text-orga983849">
 <p>
 L'intestazione di un pacchetto IPv4 è di 5 parole da 32 bit, più un numero variabile di parole opzionali, fino ad un totale di 15 parole in tutto.
 </p>
@@ -135,9 +146,9 @@ Alla quarta e quinta parola ci sono source e destination address, di 32 bit.
 </p>
 </div>
 </div>
-<div id="outline-container-orgc0af650" class="outline-4">
-<h4 id="orgc0af650">Frammentazione e ricombinazione</h4>
-<div class="outline-text-4" id="text-orgc0af650">
+<div id="outline-container-org261abbd" class="outline-4">
+<h4 id="org261abbd">Frammentazione e ricombinazione</h4>
+<div class="outline-text-4" id="text-org261abbd">
 <p>
 Quando un datagram IP deve viaggiare attraverso una rete la cui <b>MTU (Maximum Transfer Unit)</b> sia minore della dimensione del pacchetto, i router IP devono frammentarlo.
 </p>
@@ -159,9 +170,9 @@ La frammentazione eccessiva aumenta le probabilità che uno dei frammenti venga 
 </p>
 </div>
 </div>
-<div id="outline-container-org198a037" class="outline-4">
-<h4 id="org198a037">Indirizzamento</h4>
-<div class="outline-text-4" id="text-org198a037">
+<div id="outline-container-orgaa161a2" class="outline-4">
+<h4 id="orgaa161a2">Indirizzamento</h4>
+<div class="outline-text-4" id="text-orgaa161a2">
 <p>
 Gli indirizzi IP sono composti da un <b>netid</b>, che identifica una rete, e uno <b>hostid</b>, che identifica uno specifico host.
 </p>
@@ -174,13 +185,13 @@ I <b>gateway</b> e i <b>router</b> posseggono una <b>netid</b> diversa per ogni 
 Sono state utilizzate 5 diverse strategie per l'assegnamento degli indirizzi.
 </p>
 </div>
-<div id="outline-container-org2fa5bf3" class="outline-5">
-<h5 id="org2fa5bf3">Strategie</h5>
-<div class="outline-text-5" id="text-org2fa5bf3">
+<div id="outline-container-orgae5e196" class="outline-5">
+<h5 id="orgae5e196">Strategie</h5>
+<div class="outline-text-5" id="text-orgae5e196">
 </div>
-<div id="outline-container-org0de285e" class="outline-6">
-<h6 id="org0de285e">Class based</h6>
-<div class="outline-text-6" id="text-org0de285e">
+<div id="outline-container-orge9918b5" class="outline-6">
+<h6 id="orge9918b5">Class based</h6>
+<div class="outline-text-6" id="text-orge9918b5">
 <p>
 Vi sono 3 classi per l'unicast, ovvero comunicazioni punto-punto, 1 per il multicast e una riservata.
 </p>
@@ -265,9 +276,9 @@ Quando un router capisce che la netid non è la propria, non passa alla lettura 
 Questo sistema soffre di <b>frammentazione interna</b>. Molti hostid sotto un certo netid sono <b>inutilizzati</b>.
 </p>
 </div>
-<div id="outline-container-org15e2a0a" class="outline-7">
-<h7 id="org15e2a0a">Sottoreti</h7>
-<div class="outline-text-7" id="text-org15e2a0a">
+<div id="outline-container-org3233242" class="outline-7">
+<h7 id="org3233242">Sottoreti</h7>
+<div class="outline-text-7" id="text-org3233242">
 <p>
 Secondo il sistema originario, ad ogni router dovrebbe essere associato un netid e dovrebbe partecipare all'instradamento in Internet, rendendolo meno efficiente.
 </p>
@@ -294,9 +305,9 @@ In questo modo, recupera l'indirizzo del router d'accesso per la specifica subne
 </div>
 </div>
 </div>
-<div id="outline-container-orge7c614a" class="outline-6">
-<h6 id="orge7c614a">CIDR (classless)</h6>
-<div class="outline-text-6" id="text-orge7c614a">
+<div id="outline-container-org914c5c4" class="outline-6">
+<h6 id="org914c5c4">CIDR (classless)</h6>
+<div class="outline-text-6" id="text-org914c5c4">
 <p>
 Questo sistema è simile al sistema delle subnets.
 </p>
@@ -326,9 +337,9 @@ CONTROLLARE CASI DI COLLISIONE PER RETE MINORE, ES 6.4
 </p>
 </div>
 </div>
-<div id="outline-container-orgbbf757b" class="outline-6">
-<h6 id="orgbbf757b">NAT</h6>
-<div class="outline-text-6" id="text-orgbbf757b">
+<div id="outline-container-org92f444d" class="outline-6">
+<h6 id="org92f444d">NAT</h6>
+<div class="outline-text-6" id="text-org92f444d">
 <p>
 Per introdurre un rimedio temporaneo alla carenza di indirizzi IP, viene introdotto questo nuovo sistema.
 </p>
@@ -378,22 +389,22 @@ Il NAT offre garanzie in termini di sicurezza, facendo anche da firewall.
 VEDERE COSA FARE QUANDO UN SERVER é DIETRO NAT
 </p>
 </div>
-<div id="outline-container-orgdc0515c" class="outline-7">
-<h7 id="orgdc0515c">L'ultima questione da risolvere è quella di un server dietro NAT, dato che nessuno conosce la porta che mi porta ad esso.</h7>
-<div class="outline-text-7" id="text-orgdc0515c">
+<div id="outline-container-orgafe9973" class="outline-7">
+<h7 id="orgafe9973">L'ultima questione da risolvere è quella di un server dietro NAT, dato che nessuno conosce la porta che mi porta ad esso.</h7>
+<div class="outline-text-7" id="text-orgafe9973">
 </div>
-<div id="outline-container-orgb0c3d08" class="outline-8">
-<h8 id="orgb0c3d08">Un modo banale è quello di assegnargli un IP pubblico, ma perdendo i vantaggi dovuti all'utilizzo del NAT.</h8>
+<div id="outline-container-orga222771" class="outline-8">
+<h8 id="orga222771">Un modo banale è quello di assegnargli un IP pubblico, ma perdendo i vantaggi dovuti all'utilizzo del NAT.</h8>
 </div>
-<div id="outline-container-orga1a9434" class="outline-8">
-<h8 id="orga1a9434">Un secondo modo è quello di aprire la porta specifica del server. In questo modo, tutte le richieste verso quella porta vengono routate al server in questione.</h8>
-</div>
-</div>
+<div id="outline-container-org650b61c" class="outline-8">
+<h8 id="org650b61c">Un secondo modo è quello di aprire la porta specifica del server. In questo modo, tutte le richieste verso quella porta vengono routate al server in questione.</h8>
 </div>
 </div>
-<div id="outline-container-orgddae489" class="outline-5">
-<h5 id="orgddae489">ARP</h5>
-<div class="outline-text-5" id="text-orgddae489">
+</div>
+</div>
+<div id="outline-container-org067d74a" class="outline-5">
+<h5 id="org067d74a">ARP</h5>
+<div class="outline-text-5" id="text-org067d74a">
 <p>
 ARP viene usato per <b>mappare</b> i MAC negli IP.
 </p>
@@ -415,9 +426,9 @@ C'è un introduzione del livello 3 nel 2, ma meno invasiva del NAT nel 4.
 </p>
 </div>
 </div>
-<div id="outline-container-orge10a3d0" class="outline-5">
-<h5 id="orge10a3d0">DHCP</h5>
-<div class="outline-text-5" id="text-orge10a3d0">
+<div id="outline-container-org61b2de2" class="outline-5">
+<h5 id="org61b2de2">DHCP</h5>
+<div class="outline-text-5" id="text-org61b2de2">
 <p>
 In una rete locale dietro un gateway che fa da NAT, ad ogni host è assegnato un IP interno, che il NAT nasconde all'esterno, catturando tutti i pacchetti in entrata.
 </p>
@@ -455,18 +466,18 @@ Esistono dei meccanismi di ricovero per gestire i pacchetti persi, ad esempio c'
 </p>
 </div>
 </div>
-<div id="outline-container-org88cb6ac" class="outline-5">
-<h5 id="org88cb6ac">ICMP</h5>
-<div class="outline-text-5" id="text-org88cb6ac">
+<div id="outline-container-org7d1c841" class="outline-5">
+<h5 id="org7d1c841">ICMP</h5>
+<div class="outline-text-5" id="text-org7d1c841">
 <p>
 Viene utilizzato per il ping e varie statistiche sulla rete, usa uno Header IP ed un checksum, oltre che il tipo di richiesta.
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org0b0ba4a" class="outline-4">
-<h4 id="org0b0ba4a">Instradamento</h4>
-<div class="outline-text-4" id="text-org0b0ba4a">
+<div id="outline-container-orgb9654c2" class="outline-4">
+<h4 id="orgb9654c2">Instradamento</h4>
+<div class="outline-text-4" id="text-orgb9654c2">
 <p>
 La rete è un grafo parzialmente connesso e un compito del livello 3 è quello di instradare i pacchetti verso la giusta destinazione sfruttando la comunicazione fra host per avere una visione più ampia.
 </p>
@@ -488,9 +499,9 @@ Esistono <b>3 tecniche di instradamento</b>:
 <li>Border Gateway Protocol, evoluzione del RIP, usato nelle <b>reti intercontinentali</b>.</li>
 </ul>
 </div>
-<div id="outline-container-org8727224" class="outline-5">
-<h5 id="org8727224">Distance vector</h5>
-<div class="outline-text-5" id="text-org8727224">
+<div id="outline-container-orgdb37daa" class="outline-5">
+<h5 id="orgdb37daa">Distance vector</h5>
+<div class="outline-text-5" id="text-orgdb37daa">
 <p>
 Ogni nodo contiene delle <b>tabelle di adiacenza</b> in cui sono riportati i router/gateway che riesce a raggiungere, i corrispondenti link e il costo, che può essere il bitrate, il numero di hop o altre metriche.
 </p>
@@ -561,7 +572,7 @@ Questa soluzione <b>non è finale</b>, in quanto viene risolto soltanto il caso 
 </p>
 
 <p>
-Infatti se introduciamo un terzo nodo \(C\) che sia connesso sia ad \(A\) che a \(B\), allora questo nodo recherà come prossimo hop verso \(X\) il nodo \(A\).
+Infatti se introduciamo un terzo nodo \(C\) che sia connesso sia ad \(A\) che a \(B\) e assumiamo il link fra \(B\) e \(C\) costi più della somma dei link fra \(C\) ed \(A\) ed \(A\) e \(B\), allora questo nodo recherà come prossimo hop verso \(X\) il nodo \(A\).
 </p>
 
 <p>
@@ -583,9 +594,9 @@ Per riassumere, le tecniche usate per <b>migliorare l'efficienza</b> di questa t
 </ul>
 </div>
 </div>
-<div id="outline-container-orge8164af" class="outline-5">
-<h5 id="orge8164af">OSPF</h5>
-<div class="outline-text-5" id="text-orge8164af">
+<div id="outline-container-org66910b8" class="outline-5">
+<h5 id="org66910b8">OSPF</h5>
+<div class="outline-text-5" id="text-org66910b8">
 <p>
 <b>Open Shortest Path First</b> è un protocollo basato sul <b>link state</b>. Ovvero, a scadenze regolari ogni router trasmette un <b>messaggio link state</b> contenente le propria identità e le sue adiacenze su tutti i link, in un processo chiamato <b>flooding</b>. Una volta che tutti i link state hanno raggiunto tutti i router, ognuno di essi possiede un'immagine della <b>topologia attiva della rete</b>.
 </p>
@@ -620,7 +631,7 @@ Inoltre, può essere scelto un <b>designated router</b> nella backbone del siste
 </p>
 
 <p>
-Un affinamento della tecnica del designated router è quella del <b>Software Designated Router</b>, in cui tale router si trova su cloud e vi si comunica attraverso il protocollo <b>Open Flow</b>, che cerca di risolvere anche problemi di sicurezza.
+Un affinamento della tecnica del designated router è quella del <b>Software Designated Router</b>, in cui tale router si trova su cloud e vi si comunica attraverso il protocollo <b>Open Flow</b>, che cerca di risolvere anche problemi di sicurezza. La tecnica è diventata <b>pervasiva</b> e anche la rete cellulare ne fa uso, con il 5G.
 </p>
 
 <p>
@@ -640,12 +651,196 @@ Al confine del sistema autonomo, vi sono dei <b>border-router</b> attraverso cui
 </p>
 </div>
 </div>
+<div id="outline-container-org40f76ca" class="outline-5">
+<h5 id="org40f76ca">BGP</h5>
+<div class="outline-text-5" id="text-org40f76ca">
+<p>
+Il protocollo BGP è utilizzato sulla <b>dorsale di internet</b>.
+</p>
+
+<p>
+Ha la particolarità di svolgere funzioni di livello 3, ma è implementato a livello applicazione, sfruttando delle sessioni TCP.
+</p>
+
+<p>
+Si basa sul <b>path vector</b>, ovvero ogni router mantiene l'intero percorso per raggiungere gli altri nodi, oltre che il costo.
+</p>
+
+<p>
+In questo modo, supera il problema del <b>count-to-infinity</b>. Infatti, ogni nodo è in grado di riconoscere che un cammino passa attraverso un link guasto e quindi scartarlo.
+</p>
 </div>
+</div>
+</div>
+<div id="outline-container-orgfc5ac3e" class="outline-4">
+<h4 id="orgfc5ac3e">Tunneling</h4>
+<div class="outline-text-4" id="text-orgfc5ac3e">
+<p>
+Può capitare che la comunicazione fra due macchine, collegate entrambe ad una rete IP, abbiano fra di loro una rete <b>non IP</b>.
+</p>
+
+<p>
+Per fare in modo che i pacchetti inviati dall'una arrivino all'altra, serve gestire il passaggio dei pacchetti IP, <b>intatti</b>, attraverso la rete intermedia.
+</p>
+
+<p>
+Si utilizzano due router, detti <b>router multiprotocollo</b>, che fanno da gateway agli estremi della rete.
+</p>
+
+<p>
+Si prende l'<b>intero datagramma</b> e lo si <b>incapsula</b> nel pacchetto non-IP. Al gateway dall'altro lato basterà recuperare il payload del pacchetto, che sarà un pacchetto IP ben formato, e instradarlo normalmente.
+</p>
+</div>
+</div>
+<div id="outline-container-orgd9ce28f" class="outline-4">
+<h4 id="orgd9ce28f">Supporto QoS</h4>
+<div class="outline-text-4" id="text-orgd9ce28f">
+<p>
+Un <b>router</b> è <b>congestionato</b> quando il tasso di arrivo dei pacchetti è maggiore di quello d'uscita.
+</p>
+
+<p>
+In questo caso, esso mantiene i pacchetti non ancora trasmessi in un buffer. Se il buffer è pieno, è necessario scartare qualche pacchetto.
+</p>
+
+<p>
+Una rete è <b>congestionata</b> quando, su un certo periodo, il <b>tasso aggregato</b> con cui i pacchetti entrano <b>nella</b> rete supera la capacità totale in termini di <b>larghezza di banda</b> e <b>capacità di buffer</b>.
+</p>
+
+<p>
+Ogni header IP contiene un campo <b>Type of Service</b>, nel quale è segnalato il tipo di servizio richiesto per quel pacchetto.
+</p>
+
+<p>
+In generale, si possono distinguere 3 classi di servizio:
+</p>
+<ul class="org-ul">
+<li><b>garantito</b>: flussi che richiedono dei parametri stringenti di delay, jitter e larghezza di banda, come <b>telefonia su internet</b> e ancora di più <b>teleconferenze</b>;</li>
+<li><b>carico controllato</b>: senza garanzie, ma con degli standard abbastanza alti, quindi contenuti real-time che però possono regolare la quantità di dati generati, come i <b>siti web</b>;</li>
+<li><b>best-effort</b>: nessuna requisito particolare, ad esempio <b>email</b>.</li>
+</ul>
+
+<p>
+Vengono introdotte <b>3 code di input distinte</b> in ogni router per inserirvi i pacchetti delle varie classi di servizio.
+</p>
+
+<p>
+Prima delle code c'è un <b>classifier</b> che gestisce lo smistamento dei pacchetti.
+</p>
+
+<p>
+Questa procedura si chiama <b>differenziazione del traffico</b>.
+</p>
+
+<p>
+Esistono due tipi di gestioni del QoS, IntServ (integrated services) e DiffServ (differentiated services).
+</p>
+
+<p>
+In IntServ la gestione del flusso avviene in base al singolo flusso: il router apre una connessione attraverso <b>RSVP</b> che rimane stabile per la durata del servizio richiesto. Richiede un overhead notevole per mantenere e fare lookup delle informazioni su ogni flusso attivo in ogni router della rete.
+</p>
+
+<p>
+In DiffServ i flussi vengono aggregati in base alla classe di servizio. Quindi, più flussi singoli che richiedono lo stesso servizio vengono taggati e accorpati in un solo flusso. In questo modo si riduce l'overhead.
+</p>
+</div>
+<div id="outline-container-orgfa72c9c" class="outline-5">
+<h5 id="orgfa72c9c">Token bucket filter</h5>
+<div class="outline-text-5" id="text-orgfa72c9c">
+<p>
+Per limitare l'abuso della banda riservata ad un particolare servizio da parte di una sola sorgente, viene introdotto un sistema <b>a gettoni</b>.
+</p>
+
+<p>
+Vengono periodicamente generati dei token che vengono piazzati in un secchio.
+</p>
+
+<p>
+Un pacchetto di un certo flusso può essere inserito nella coda del servizio richiesto <b>soltanto se</b> ci sono abbastanza gettoni nel secchio.
+</p>
+
+<p>
+Se il secchio è vuoto, il pacchetto viene relegato al servizio <b>best-effort</b>.
+</p>
+
+<p>
+Il controllo all'ingresso si chiama <b>traffic shaping</b> e fa parte delle politche di <b>call admission</b>
+</p>
+</div>
+</div>
+<div id="outline-container-org348983b" class="outline-5">
+<h5 id="org348983b">Weighted fair queueing</h5>
+<div class="outline-text-5" id="text-org348983b">
+<p>
+Ad ogni coda è assegnato un peso e il tempo di servizio di quella coda è funzione del rapporto del peso di tale coda sul totale dei pesi delle code.
+</p>
+
+<p>
+Si può dire che la trasmissione dei pacchetti in quella coda occupi tale proporzione del tempo totale della trasmissione del canale.
+</p>
+</div>
+</div>
+<div id="outline-container-org2035550" class="outline-5">
+<h5 id="org2035550">Random early detection</h5>
+<div class="outline-text-5" id="text-org2035550">
+<p>
+Bisogna gestire il criterio di <b>packet dropping</b>, in base al quale viene deciso di scartare pacchetti in caso di congestione.
+</p>
+
+<p>
+Quando un router scarta un pacchetto, il protocollo TCP nell'host di origine lo rileva e diminuisce il tasso di trasmissione dei nuovi pacchetti.
+</p>
+
+<p>
+Un problema nasce nel momento in cui un router va in <b>buffer overflow</b>: in tal caso, il TCP di ogni host che invia un pacchetto ne rileva la perdita e ridimensiona il tasso di trasmissione. Dopo un certo tempo, il router torna a gestire i pacchetti correttamente, comportando un nuovo aumento del tasso di trasmissione, nello stesso momento. Questo problema si chiama <b>TCP global synchronization</b>.
+</p>
+
+<p>
+Lo schema <b>RED</b> evita il problema utilizzando un approccio probabilistico.
+</p>
+
+<p>
+Sia definito l'utilizzo medio del canale come \(u=\alpha u_{old} + (1-\alpha)m\), con un \(\alpha\) che viene scelto per distribuire il peso in modo che favorisca il valore precedente o quello nuovo ed \(m\) che è la misura che viene scelta (ad esempio la lunghezza della coda in un certo momento).
+</p>
+
+<p>
+Valori bassi di \(a\) sono più lenienti con variazioni improvvise di \(m\) e rendono i picchi più smussati.
+</p>
+
+<p>
+Vengono definiti i livelli di threshold \(\text{MinTH}\) e \(\text{MaxTH}\).
+</p>
+
+<p>
+L'azione dello scheduler all'arrivo di un nuovo pacchetto seguirà quindi questa politica:
+</p>
+<ul class="org-ul">
+<li>\(U<\text{MinTH}\): il nuovo pacchetto è inserito in coda;</li>
+<li>\(U>\text{MaxTH}\): il nuovo pacchetto è scartato;</li>
+<li>\(\text{MinTH}<U<\text{MaxTH}\): il pacchetto viene inserito in coda, ma ne viene scartato un altro scelto a caso.</li>
+</ul>
+
+<p>
+In sostanza, viene creata una zona di "pericolo" e al suo interno, quanto più alto è l'utilizzo, quanto più alta la probabilità di eliminare un pacchetto scelto a caso.
+</p>
+
+<p>
+Questa tecnica comporta due vantaggi: uno è che non c'è più periodicità nella perdita dei pacchetti, evitando la sincronizzazione TCP, e l'altro è che l'eliminazione avvenga in modo più <i>fair</i>, perchè quanti più pacchetti di un host sono in coda, quanto più è probabile che vengano eliminati.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orga33e31e" class="outline-3">
+<h3 id="orga33e31e"><span class="todo TODO">TODO</span> MPLS</h3>
+</div>
+<div id="outline-container-org6b3cb57" class="outline-3">
+<h3 id="org6b3cb57"><span class="todo TODO">TODO</span> IPv6</h3>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-02-02 Sun 11:41</p>
+<p class="date">Created: 2025-02-04 Tue 18:31</p>
 </div>
 </body>
 </html>

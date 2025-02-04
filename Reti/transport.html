@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+<head>
+<!-- 2025-02-04 Tue 18:31 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Transport layer</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
+<script>
+    window.MathJax = {
+      tex: {
+        ams: { multlineWidth: '85%' },
+        {packages: {'[+]': ['mathtools']}},
+        tags: 'ams',
+        tagSide: 'right',
+        tagIndent: '.8em'
+      },
+      chtml: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      svg: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      output: {
+        font: 'mathjax-modern',
+        displayOverflow: 'scale'
+      },
+      loader: {
+        load: ['[tex]/mathtools']
+      },
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Transport layer</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orga0a4e3a">Transport layer</a>
+<ul>
+<li><a href="#org5e3bed0">Transmission Control Protocol</a>
+<ul>
+<li><a href="#org70ca7ab">Socket</a></li>
+<li><a href="#org6f04268">Header</a></li>
+<li><a href="#org40ef85c">Apertura della connessione</a>
+<ul>
+<li><a href="#org4a11789">SYN flood</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orga0a4e3a" class="outline-2">
+<h2 id="orga0a4e3a">Transport layer</h2>
+<div class="outline-text-2" id="text-orga0a4e3a">
+<p>
+Il transport layer è il primo livello <b>end-to-end</b>.
+</p>
+
+<p>
+I due protocolli diffusi a questo livello sono <b>TCP</b> e <b>UDP</b>.
+</p>
+</div>
+<div id="outline-container-org5e3bed0" class="outline-3">
+<h3 id="org5e3bed0">Transmission Control Protocol</h3>
+<div class="outline-text-3" id="text-org5e3bed0">
+<p>
+Il protocollo <b>TCP</b> ha fra i vari obiettivi quelli di:
+</p>
+<ul class="org-ul">
+<li>reimplementare l'<b>affidabilità</b> su un network best-effort quale IP;</li>
+<li>implementare il <b>controllo degli errori</b>;</li>
+<li>operare <b>controllo di flusso</b> (orizzontale), ovvero evitando l'overflow nel caso di differenze nel rate in e rate out in una connessione;</li>
+<li>operare un <b>controllo di congestione</b> (verticale), riconoscendo una rete congestionata e diminuendo il rate di immissione sulla stessa.</li>
+</ul>
+
+<p>
+TCP è basato sulla <b>connessione</b>. Prima che avvenga lo scambio di dati, i due host TCP stabiliscono una connessione logica fra essi, inizializzando i numeri di sequenza. La connessione è <b>bilaterale</b>.
+</p>
+
+<p>
+Inoltre, esso è basato sullo <b>stream di byte</b>.
+</p>
+
+<p>
+L'<b>indirizzamento</b> in TCP avviene utilizzando delle <b>porte</b>, che servono per identificare l'applicazione che sta usando una specifica connessione.
+</p>
+</div>
+<div id="outline-container-org70ca7ab" class="outline-4">
+<h4 id="org70ca7ab">Socket</h4>
+<div class="outline-text-4" id="text-org70ca7ab">
+<p>
+Il TCP utilizza delle <b>socket</b>, ovvero degli <b>endpoint</b> per scambiare dati sul network.
+</p>
+
+<p>
+Lo standard <i>de facto</i> è quello di <b>Berkeley Unix</b>.
+</p>
+
+<p>
+Il funzionamento prevede una chiamata alla primitiva <code>socket()</code> che genera <b>Access Point</b> lato client e lato server, insieme ai <b>sending</b> e <b>receiving buffer</b>, sui quali l'applicazione scrive o da cui legge.
+</p>
+
+<p>
+Il protocollo TCP, in base a specifici criteri, si occupa di svuotare il sending buffer e riempire il receiving, avvalendosi di un <b>ulteriore livello di buffer</b>, in modo da garantire l'ordine.
+</p>
+
+<p>
+Attraverso la chiamata <code>bind()</code>, con parametri un IP e una porta, si specifica l'indirizzo IP e la porta assegnati alla specifica socket.
+</p>
+
+<p>
+La <code>listen()</code> crea una coda di richieste per la specifica socket.
+</p>
+
+<p>
+A questo punto, il server è in attesa, mediante <code>accept()</code> e questa si chiama <b>apertura passiva</b>.
+</p>
+
+<p>
+Il client aprirà una socket con <code>socket()</code> e una <code>connect()</code> sull'IP e porte decise dalla <code>bind()</code> del server, rimanendo in attesa con <code>accept()</code>.
+</p>
+
+<p>
+A quel punto, il server fa una sequenza <code>fork()</code>, <code>socket()</code>, <code>bind()</code> per avere un nuovo access point e soddisfare le richieste del client. Ora la connessione è attiva e questa si chiama <b>apertura attiva</b>.
+</p>
+
+<p>
+Una serie di <code>send()</code> e <code>receive()</code> permette lo scambio di informazioni fino alla <code>receive(EOF)</code>, seguita da una <code>close()</code>.
+</p>
+
+<p>
+Una quintupla <b>[protocol, IPsrc, IPdst, portSrc, portDst]</b> descrive univocamente una comunicazione aperta con le chiamate di primitiva socket.
+</p>
+</div>
+</div>
+<div id="outline-container-org6f04268" class="outline-4">
+<h4 id="org6f04268">Header</h4>
+<div class="outline-text-4" id="text-org6f04268">
+<p>
+Lo header TCP è costituito da pagine larghe \(32\) bit.
+</p>
+
+<p>
+Le porte sorgente e destinazione occupano \(16\) bit ciascuna.
+</p>
+
+<p>
+Poi c'è il numero di sequenza da \(32\) bit.
+</p>
+
+<p>
+Il campo <code>ACK</code> da \(32\) bit indica il prossimo numero di sequenza che ci si aspetta.
+</p>
+
+<p>
+Il resto dei campi sono legati alle funzionalità fornite dal TCP.
+</p>
+</div>
+</div>
+<div id="outline-container-org40ef85c" class="outline-4">
+<h4 id="org40ef85c">Apertura della connessione</h4>
+<div class="outline-text-4" id="text-org40ef85c">
+<p>
+Il TCP opera una apertura in 3 fasi chiamata <b>three-way handshake</b>.
+</p>
+
+<p>
+Entrambe le macchine inizializzano un <b>numero di sequenza casuale</b> (nell'esempio \(x\) e \(y\)), per motivi di sicurezza.
+</p>
+
+<p>
+Le tre fasi sono le seguenti:
+</p>
+<ul class="org-ul">
+<li>il client chiede l'apertura mandando un segmento con i campi: <b>SYN</b> = 1, <b>Seq</b> = \(x\);</li>
+<li>se l'AP del server (ovvero IP/portaTCP) è in <code>listen()</code>, il server risponde con:  <b>SYN</b> = 1, <b>Seq</b> = y, <b>ACK</b> = 1, <b>Ack</b> = \(x+1\), dove <b>ACK</b> indica che il valore <b>Ack</b> è significativo. Se il server non è in <code>listen()</code>, risponde con <b>RST</b> = 1.</li>
+<li>il client conferma l'apertura con <b>ACK</b> = 1, <b>Ack</b> = \(y+1\).</li>
+</ul>
+
+<p>
+I campi non indicati nell'esempio sono irrilevanti.
+</p>
+
+<p>
+Esiste inoltre un timer <b>RTO</b> alla scadenza del quale si assume che qualche segmento sia stato perso e si ritenta l'apertura della connessione.
+</p>
+</div>
+<div id="outline-container-org4a11789" class="outline-5">
+<h5 id="org4a11789">SYN flood</h5>
+<div class="outline-text-5" id="text-org4a11789">
+<p>
+È possibile sfruttare il three-way handshake maliziosamente aprendo tante connessioni senza finalizzarle con il terzo handshake.
+</p>
+
+<p>
+Il server dovrà tenere in tabella le informazioni di tutte le richieste arrivate. Questo attacco si chiama <b>SYN flood</b>.
+</p>
+
+<p>
+Rispondendo con un <b>RST</b> = 1 come terzo segmento si evita di pesare computazionalmente al server, ma vengono analizzate le porte aperte. Questa procedura si chiama <b>port scanning</b>.
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2025-02-04 Tue 18:31</p>
+</div>
+</body>
+</html>
