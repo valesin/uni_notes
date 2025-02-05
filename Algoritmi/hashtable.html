@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+<head>
+<!-- 2025-02-05 Wed 18:21 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tabelle hash</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
+<script>
+    window.MathJax = {
+      tex: {
+        ams: { multlineWidth: '85%' },
+        {packages: {'[+]': ['mathtools']}},
+        tags: 'ams',
+        tagSide: 'right',
+        tagIndent: '.8em'
+      },
+      chtml: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      svg: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      output: {
+        font: 'mathjax-modern',
+        displayOverflow: 'scale'
+      },
+      loader: {
+        load: ['[tex]/mathtools']
+      },
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Tabelle hash</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org88d6312">Tabelle hash</a>
+<ul>
+<li><a href="#org0832d22">Collisioni</a>
+<ul>
+<li><a href="#org004a941">Liste di collisione</a></li>
+<li><a href="#org79bae01">Indirizzamento aperto</a>
+<ul>
+<li><a href="#orgd8a31d9">Scansione lineare</a></li>
+<li><a href="#orgb389c73">Scansione quadratica</a></li>
+<li><a href="#org005fcd7">Hashing doppio</a></li>
+</ul>
+</li>
+<li><a href="#org8d5a4a9">Re-hashing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org88d6312" class="outline-2">
+<h2 id="org88d6312">Tabelle hash</h2>
+<div class="outline-text-2" id="text-org88d6312">
+<p>
+Immaginiamo di dover salvare \(n\) chiavi <b>distinte</b> in un intervallo  \([0..m-1]\). Basterebbe usare un array indicizzato con indici in tale intervallo e inserire ogni chiave \(n\) all'indice corrispondente al suo valore.
+</p>
+
+<p>
+Questa soluzione è poco efficiente per quanto riguarda lo spazio nei casi in cui \(m>>n\).
+</p>
+
+<p>
+Il <b>fattore di carico</b> è il rapporto fra gli elementi presenti nell'array e la dimensione dello stesso.
+\[\alpha = n/m\]
+</p>
+
+<p>
+La tecnica dello <b>hashing</b> consiste nel modificare il valore della chiave attraverso una funzione \(h:U\to \{0,...,m-1\}\) che restituisca l'indice.
+</p>
+
+<p>
+Una funzione di hashing è detta <b>uniforme</b> se ogni cella ha la <b>stessa probabilità</b> di essere usata.
+</p>
+</div>
+<div id="outline-container-org0832d22" class="outline-3">
+<h3 id="org0832d22">Collisioni</h3>
+<div class="outline-text-3" id="text-org0832d22">
+<p>
+Una <b>collisione</b> avviene quando la funzione applicata a due chiavi separati restituisce lo stesso valore.
+</p>
+
+<p>
+In tal caso possono essere utilizzate due diverse tecniche, l'<b>indirizzamento aperto</b> e le <b>liste di collisione</b>.
+</p>
+</div>
+<div id="outline-container-org004a941" class="outline-4">
+<h4 id="org004a941">Liste di collisione</h4>
+<div class="outline-text-4" id="text-org004a941">
+<p>
+Ad ogni cella della tabella hash è associata una <b>lista di chiavi</b>, detta <i>di collisione</i>.
+</p>
+
+<p>
+Quando due chiavi collidono sulla stessa cella, verranno entrambe a trovarsi nella lista di collisione di tale cella.
+</p>
+
+<p>
+Quindi, per verificare l'esistenza di una chiave \(k\), va cercata scandendo l'intera lista di collisione all'indice \(h(k)\).
+</p>
+
+<p>
+La lunghezza media di tutte le tabelle di collisione è pari al fattore di carico \(\alpha =\frac{n}{m}\).
+</p>
+
+<p>
+Di conseguenza, se la funzione gode dell'<b>uniformità semplice</b>, la ricerca e la cancellazione avvengono in \(O(1+\frac{n}{m})\)
+</p>
+
+<p>
+Questo è un ottimo esempio di <b>bilanciamento spazio-tempo</b>, in quanto un aumento di \(m\) diminuisce il tempo ma aumenta lo spazio. Al contrario, quando \(m=1\) si collassa ad una lista intera con tempo di accesso ad un elemento arbitrario di \(O(n)\).
+</p>
+</div>
+</div>
+<div id="outline-container-org79bae01" class="outline-4">
+<h4 id="org79bae01">Indirizzamento aperto</h4>
+<div class="outline-text-4" id="text-org79bae01">
+<p>
+Con l'indirizzamento aperto, quando l'indice di una chiave è già occupato, se ne sceglie un altro nella stessa tabella secondo un criterio.
+</p>
+
+<p>
+La funzione di hashing prende due variabili e diventa \(c(k, i)\), dove \(i\) indica il numero di collisioni avvenute fino a quel momento.
+</p>
+
+<p>
+Un problema è quello dell'<b>agglomerazione</b>, in cui caselle adiacenti vengono occupate, aumentando la possibilità di generare collisioni all'aumentare della dimensione dell'agglomerato.
+</p>
+
+<p>
+Esistono 3 tipi di tecniche per gestire l'indirizzamento aperto: la <b>scansione lineare</b>, la <b>scansione quadratica</b> e lo <b>hashing doppio</b>.
+</p>
+</div>
+<div id="outline-container-orgd8a31d9" class="outline-5">
+<h5 id="orgd8a31d9">Scansione lineare</h5>
+<div class="outline-text-5" id="text-orgd8a31d9">
+<p>
+La sequenza di scansione è definita come segue:
+</p>
+
+<p>
+\[c(k,i) = (h(k) + i)\mod m\]
+</p>
+
+<p>
+In caso di collisione si sceglie la casella contigua.
+</p>
+
+<p>
+Questo metodo dà luogo alla <b>agglomerazione primaria</b>, ovvero si creano blocchi sempre più grandi di caselle tutte occupate.
+</p>
+</div>
+</div>
+<div id="outline-container-orgb389c73" class="outline-5">
+<h5 id="orgb389c73">Scansione quadratica</h5>
+<div class="outline-text-5" id="text-orgb389c73">
+<p>
+La sequenza di scansione è definita come segue:
+</p>
+
+
+<p>
+\[c(k,i) = \lfloor h(k) + c_{1}\cdot i + c_{2}\cdot i^{2}\rfloor\mod m\]
+</p>
+
+<p>
+Questo metodo dà luogo alla <b>agglomerazione secondaria</b>, in quanto una coppia di chiavi \(k_{1}, k_{2}\) con \(h(k_{1})= h(k_{2})\) danno luogo sempre alla stessa sequenza.
+</p>
+</div>
+</div>
+<div id="outline-container-org005fcd7" class="outline-5">
+<h5 id="org005fcd7">Hashing doppio</h5>
+<div class="outline-text-5" id="text-org005fcd7">
+<p>
+Per eliminare <i>virtualmente</i> il fenomeno dell'agglomerazione (supponendo che la funzione di hashing goda di <b>uniformità semplice</b>), si usa un <b>hashing doppio</b>, in modo che se due chiavi diverse hanno stesso hash secondo una funzione, non lo avranno per l'altra.
+</p>
+
+<p>
+\[c(k,i) = (h_{1}(k) + i\cdot h_{1}(k) )\mod m\]
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org8d5a4a9" class="outline-4">
+<h4 id="org8d5a4a9">Re-hashing</h4>
+<div class="outline-text-4" id="text-org8d5a4a9">
+<p>
+Si da il caso che il tempo di ricerca in caso di insuccesso sia $O(\frac{1}{1-\alpha}) = O(\frac{m}{m-n}) (dimostrazione da Knuth). Questo è il tempo che governa anche le operazioni di inserimento e cancellazione.
+</p>
+
+<p>
+Dato che la funzione tende all'infinito per \(\alpha \to 1\), devo tenere questo valore sotto controllo.
+</p>
+
+<p>
+Se fisso un \(\alpha_{max}\) e raddoppio la dimensione della tabella, si dimostra che il numero di spostamenti per re-hashing a fronte di \(N\) inserimenti è lineare ad \(N\).
+</p>
+
+<p>
+Di conseguenza, il numero di passi totale per ogni inserimento è \(\frac{O(N)}{N} = O(1)\).
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2025-02-05 Wed 18:21</p>
+</div>
+</body>
+</html>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-02-04 Tue 18:31 -->
+<!-- 2025-02-05 Wed 19:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Transport layer</title>
@@ -55,6 +55,17 @@
 <li><a href="#org40ef85c">Apertura della connessione</a>
 <ul>
 <li><a href="#org4a11789">SYN flood</a></li>
+</ul>
+</li>
+<li><a href="#org1e64419">Comunicazione</a>
+<ul>
+<li><a href="#org7d6a37f">Segmenti piccoli</a>
+<ul>
+<li><a href="#org4508143">Delayed ACK</a></li>
+<li><a href="#org506234f">Algoritmo di Nagle</a></li>
+</ul>
+</li>
+<li><a href="#orgc15da12">Ritrasmissione</a></li>
 </ul>
 </li>
 </ul>
@@ -168,6 +179,10 @@ Il campo <code>ACK</code> da \(32\) bit indica il prossimo numero di sequenza ch
 </p>
 
 <p>
+C'è poi il campo <b>Maximum Segment Size</b> il cui valore di default è \(536\), in modo da evitare che IP frammenti, introducendo overhead per gli header e aumentando il rischio di problemi nella trasmissione.
+</p>
+
+<p>
 Il resto dei campi sono legati alle funzionalità fornite dal TCP.
 </p>
 </div>
@@ -217,11 +232,134 @@ Rispondendo con un <b>RST</b> = 1 come terzo segmento si evita di pesare computa
 </div>
 </div>
 </div>
+<div id="outline-container-org1e64419" class="outline-4">
+<h4 id="org1e64419">Comunicazione</h4>
+<div class="outline-text-4" id="text-org1e64419">
+<p>
+Una volta aperta la connessione mediante il <b>three-way handshake</b>, può iniziare la trasmissione.
+</p>
+
+<p>
+Immaginiamo, per semplicità, che la Maximum Segment Size sia \(500\).
+</p>
+
+<p>
+Una comunicazione <b>senza errori</b> andrebbe così:
+</p>
+<ul class="org-ul">
+<li>il livello applicazione lato sender scrive 2000 byte nel <b>sending buffer</b> della socket in questione;</li>
+<li>i 2000 byte vengono inseriti nel <b>TCP sending buffer</b>, divisi in \(4\) segmenti da 500 byte;</li>
+<li>il TCP lato <b>client</b> manda uno dei segmenti con <b>SEQ</b> = X</li>
+<li>il TCP lato <b>server</b> riconosce che il byte che attendeva era proprio \(X\), mette il contenuto del segmento nel <b>TCP receiving buffer</b> e risponde con un segmento con header contenente <b>ACK</b> = 1 e <b>Ack</b> = \(X + 500\)</li>
+<li>il TCP lato <b>server</b> muove immediatamente il contenuto al <b>receiving buffer</b> esposto all'applicazione, perchè i nuovi byte sono in ordine.</li>
+</ul>
+
+<p>
+Si procede così fino alla fine della comunicazione.
+</p>
+</div>
+<div id="outline-container-org7d6a37f" class="outline-5">
+<h5 id="org7d6a37f">Segmenti piccoli</h5>
+<div class="outline-text-5" id="text-org7d6a37f">
+<p>
+Quando l'applicazione richiede uno scambio di dati atomici real-time, come <b>ssh</b> o <b>telnet</b> su server remoto, può farlo settando la flag <b>PUSH</b> a \(1\).
+</p>
+
+<p>
+In questo caso, la Maximum Segment Size viene ignorata e il singolo byte è trasmesso.
+</p>
+
+<p>
+Il server risponde con una <b>echo</b> del byte inviato, in modo che il client è sicuro che il byte sia stato recepito e l'applicazione può prenderlo dal receiving buffer.
+</p>
+
+<p>
+Sia il carattere originale che l'echo prevedono <code>ACK</code>.
+</p>
+
+<p>
+Di conseguenza, questa tecnica prevede un totale di <b>4 segmenti</b>, due di dati uguali e due di ack.
+</p>
+</div>
+<div id="outline-container-org4508143" class="outline-6">
+<h6 id="org4508143">Delayed ACK</h6>
+<div class="outline-text-6" id="text-org4508143">
+<p>
+Per limitare l'overhead causato dai 4 segmenti per byte nel caso del PSH=1, viene utilizzato il <b>delay acknowledgment</b>.
+</p>
+
+<p>
+Il server, alla ricezione del byte, non emette subito l'<code>ACK</code>, ma attende un certo tempo (default \(200ms\)), alla scadenza del quale invia l'intero contenuto del sending buffer, utilizzando questo segmento come <code>ACK</code>.
+</p>
+
+<p>
+Questa tecnica si chiama <b>piggybacking</b> e riduce il numero di segmenti scambiati.
+</p>
+
+<p>
+Anche la <b>echo</b> è contenuta in questo segmento <i>duplice</i>.
+</p>
+
+<p>
+La tecnica del delayed ACK è efficiente per la rete, ma non per la <b>user-experience</b>.
+</p>
+
+<p>
+Infatti, essa comporta un <b>ritardo costante minimo</b> per l'aggiornamento dell'applicazione lato client
+</p>
+</div>
+</div>
+<div id="outline-container-org506234f" class="outline-6">
+<h6 id="org506234f">Algoritmo di Nagle</h6>
+<div class="outline-text-6" id="text-org506234f">
+<p>
+Per ovviare alla scarsa user-experience del delayed ACK, viene utilizzata la tecnica dell'<b>algoritmo di Nagle</b>.
+</p>
+
+<p>
+Essa combina l'utilizzo di PSH e dei segmenti normali.
+</p>
+
+<p>
+Il primo byte della comunicazione è inviato da solo è con delayed ACK, mentre tutti i successivi sono impacchettati e mandati insieme.
+</p>
+
+<p>
+Quindi, il server risponde con una echo prima e un semplice <b>ack cumulativo</b> poi.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc15da12" class="outline-5">
+<h5 id="orgc15da12">Ritrasmissione</h5>
+<div class="outline-text-5" id="text-orgc15da12">
+<p>
+Utilizzando un <b>ACK cumulativo</b>, il campo <b>Ack</b> del ricevitore è sempre fermo all'indice del primo byte che ci si aspetta.
+</p>
+
+<p>
+Se un segmento viene perso, l'<code>ACK</code> rimarrà ancorato al primo byte di quel segmento.
+</p>
+
+<p>
+In questo caso, in TCP, il sender continua ad <b>inviare segmenti successivi</b>, fino alla scadenza dell'<b>RTO</b> (<i>retransmission timeout interval</i>), quando il segmento a cui l'<code>ACK</code> è fermo viene reinviato.
+</p>
+
+<p>
+Inoltre, viene usata una tecnica chiamata <b>fast retransmit</b>, che prevede che al <b>terzo ACK</b> fermo ad un certo numero di sequenza, si assume che il relativo segmento sia smarrito e viene reinviato, anche prima della scadenza dell'RTO.
+</p>
+
+<p>
+Il timer rimane necessario per alcuni casi, ad esempio negli <b>ultimi 2 segmenti</b>, dopo i quali non esistono 3 <code>ACK</code> che attivino la fast retransmit.
+</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-02-04 Tue 18:31</p>
+<p class="date">Created: 2025-02-05 Wed 19:31</p>
 </div>
 </body>
 </html>
