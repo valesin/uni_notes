@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-02-05 Wed 19:31 -->
+<!-- 2025-02-07 Fri 15:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Retibozza</title>
@@ -171,100 +171,7 @@
 </li>
 <li><a href="#orgcee69f3">Transport layer è il primo livello ad essere end-to-end, ovvero che comunica fra due macchine ed astrae ai livelli superiori la rete sottostante (la nasconde).&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
 <li><a href="#org8d7197d">Quindi siamo arrivati al SYN che uno manda per aprire la connessione, con un numero di sequenza generato in numero casuale. Il canale è bidirezionale e quindi avviene tutto nello stesso modo in entrambi gli host.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org3f50fe8">Negle ha un utilità quando vogliamo garantire un utilizzo efficiente della rete.</a>
-<ul>
-<li><a href="#orgc085dba">Lo si usa al posto di mandare ogni carattere da solo, con un overhead altissimo dovuto allo header IP e TCP.</a>
-<ul>
-<li><a href="#org9c0f8c9">Per mandare un byte, mi servono 4 messaggi.</a></li>
-<li><a href="#orgfe24cd3">Si usa il delay per diminuire i messaggi che vengono mandati, ma si paga troppo tempo per l'attesa del delay ogni volta, con piggy bagging in cui nei dati da comunicare si inserisce anche l'ack cumulativo</a></li>
-<li><a href="#org2b1eaca">Un compromesso e il nagle</a></li>
-</ul>
-</li>
-<li><a href="#orga18f056">Il Nagle viene in supporto quando abbiamo un quantitativo di dati dall'applicazione, ovvero nel SB (superiore) che è minore alla maximum segment size.</a>
-<ul>
-<li><a href="#orgb3be167">Nagle innanzitutto guarda il TCP Sending Buffer (quello inferiore). Se è vuoto vuol dire che non sto aspettando nessun ACK.</a>
-<ul>
-<li><a href="#org91bb292">In questo caso, invio direttamente il contenuto dell'SB, nonostante sia inferiore.</a></li>
-</ul>
-</li>
-<li><a href="#org9d2b855">Se invece ci sono altri segmenti nel buffer inferiore, lo accoda.</a></li>
-<li><a href="#orgb8c6e61">Uno dei lati negativi di Nagle è che sebbene utilizzi bene la rete, ovvero limitando l'overhead, (QUAL è L'ASPETTO NEGATIVO)?</a></li>
-</ul>
-</li>
-<li><a href="#orgd69112e">Un altro aspetto è che tcp è orientato allo stream e ragiona in base ai bit.</a>
-<ul>
-<li><a href="#org8b90cf5">Una sequenza di dati presente nel sending buffer non dev'essere multiplo della max segment size. Il TCP suddivide in blocchetti della dimensione corretta.</a>
-<ul>
-<li><a href="#org7bcad21">Se un ultimo blocchetto non raggiunge la max segment size, sta all'applicazione decidere se mandarlo subito o se aspettare nuovi dati, la cui prima parte verrà aggiunta all'ultimo segmento e mandata tutto insieme.</a></li>
-</ul>
-</li>
-<li><a href="#orga713985">Quindi si parla di segmento numero n come divisione logica, ma tutto è relativo al byte di inizio sequenza.</a></li>
-<li><a href="#org5551980">Il principio è che si occupa il meno possibile. L'eventuale padding è fatto ai livelli inferiori.</a></li>
-</ul>
-</li>
-<li><a href="#org42c0bb3">Quando TCP invia un pacchetto ad IP, quest'ultimo, conoscendo perfettamente la max transfer unit del suo livello 2, frammenta ulteriormente se necessario.</a>
-<ul>
-<li><a href="#org3cb370e">IP stesso riassemblerà poi la serie di pacchetti e la fornirà a tcp</a></li>
-<li><a href="#org18520ee">Se non ci riesce, a TCP non arriverà assolutamente nulla.</a>
-<ul>
-<li><a href="#orgb80414d">Inoltre, solo il primo pacchetto avrà lo header tcp.</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org391b8a0">Come abbiamo già visto, il round trip time è il tempo necessario perchè un segmento venga inviato ed ackAto.</a>
-<ul>
-<li><a href="#orgc18b325">Possiamo però anche inviare più segmenti nello stesso momento.</a></li>
-<li><a href="#org863348b">Ogni segmento fa partire un timer, che dev'essere dimensionato correttamente e quindi non può essere statico.</a></li>
-<li><a href="#org74b4664">Esiste uno standard che ci spiega come calcolarlo</a>
-<ul>
-<li><a href="#org6cd48c7">Diciamo che il round trip time in media impieghi 30 ms</a></li>
-<li><a href="#org5b2f1c1">La stima viene fatta considerandolo come un outlier della distribuzione.</a>
-<ul>
-<li><a href="#orgaaadd7f">Tipicamente si dice che un valore di +3sigma, quindi media più 4 deviazioni standard ci da una stima di un caso molto raro di outlier.</a></li>
-<li><a href="#org5fd2948">Quindi dobbiamo sapere la media e la deviazione standard in base ai dati del round trip time.</a>
-<ul>
-<li><a href="#org1d457dd">INSERIRE FORMULA</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org13990b6">Il controllo di flusso viene messo in atto quando il produttore produce molto più velocemente del ricevente.</a>
-<ul>
-<li><a href="#orge271806">Infatti, il buffer di ricezione andrebbe poi in overflow.</a>
-<ul>
-<li><a href="#org6c49477">Immaginiamo di avere una situazione in cui il sending buffer è di 3000 e il receiving 2000. (mss sempre 500 (ma standard 512)).</a>
-<ul>
-<li><a href="#orgcb9ff54">L'informazione della dimensione dell'altro è nota ad entrambi.</a></li>
-<li><a href="#org14b05a4">Una volta che il sender ha mandato 2000 bit (in 4 tranche perchè la finestra è di 500), il receiving manda non solo un ACK per controllo errori, ma anche un WIN=0, per il controllo di flusso, che indica che lo spazio è finito.</a></li>
-<li><a href="#org8af79f2">Quando avrà poi letto 1000 byte, manderà un ACK con lo stesso byte atteso del precedente, ma una window size di 1000.</a></li>
-</ul>
-</li>
-<li><a href="#org41f9561">Il problema è che se il secondo ack di riapertura viene perso, il sender rimarrebbe bloccato per sempre, ovvero si avrebbe un deadlock.</a>
-<ul>
-<li><a href="#orgc40fde9">Allo scadere di un Persist Timer nel receiver, viene mandato un segmento speciale vuoto, ovvero senza dati, a cui il receiver risponde con un reinvio dell'ack con nuova finestra.</a>
-<ul>
-<li><a href="#orga116e27">Se anche quel nuovo ack è perso, allo scadere di un nuovo timer la connessione sarebbe chiusa.</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgae545f3">Il problema della silly window syndrome accade quando il receiver riempie la propria window e continua a notificare la nuova disponibilità ma per una quantità di byte minima.</a>
-<ul>
-<li><a href="#orgfc8453e">La soluzione è l'algoritmo di Clark, in cui l'aggiornamento della windows dev'essere almeno grande come la MSS o come la metà del buffer.</a></li>
-</ul>
-</li>
-<li><a href="#org5af507a">La rete ignora completamente il controllo di flusso.</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a href="#org3f50fe8">Negle ha un utilità quando vogliamo garantire un utilizzo efficiente della rete.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
 <li><a href="#org149aae6"><span class="todo TODO">TODO</span> Riempire con ultime 2 lezioni di livello 4</a></li>
 <li><a href="#orgc668dca">Iniziamo il livello applicazione parlando del DNS, ovvero il Domain Name System.</a>
 <ul>
@@ -611,160 +518,7 @@
 <h2 id="org8d7197d">Quindi siamo arrivati al SYN che uno manda per aprire la connessione, con un numero di sequenza generato in numero casuale. Il canale è bidirezionale e quindi avviene tutto nello stesso modo in entrambi gli host.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
 </div>
 <div id="outline-container-org3f50fe8" class="outline-2">
-<h2 id="org3f50fe8">Negle ha un utilità quando vogliamo garantire un utilizzo efficiente della rete.</h2>
-<div class="outline-text-2" id="text-org3f50fe8">
-</div>
-<div id="outline-container-orgc085dba" class="outline-3">
-<h3 id="orgc085dba">Lo si usa al posto di mandare ogni carattere da solo, con un overhead altissimo dovuto allo header IP e TCP.</h3>
-<div class="outline-text-3" id="text-orgc085dba">
-</div>
-<div id="outline-container-org9c0f8c9" class="outline-4">
-<h4 id="org9c0f8c9">Per mandare un byte, mi servono 4 messaggi.</h4>
-</div>
-<div id="outline-container-orgfe24cd3" class="outline-4">
-<h4 id="orgfe24cd3">Si usa il delay per diminuire i messaggi che vengono mandati, ma si paga troppo tempo per l'attesa del delay ogni volta, con piggy bagging in cui nei dati da comunicare si inserisce anche l'ack cumulativo</h4>
-</div>
-<div id="outline-container-org2b1eaca" class="outline-4">
-<h4 id="org2b1eaca">Un compromesso e il nagle</h4>
-</div>
-</div>
-<div id="outline-container-orga18f056" class="outline-3">
-<h3 id="orga18f056">Il Nagle viene in supporto quando abbiamo un quantitativo di dati dall'applicazione, ovvero nel SB (superiore) che è minore alla maximum segment size.</h3>
-<div class="outline-text-3" id="text-orga18f056">
-</div>
-<div id="outline-container-orgb3be167" class="outline-4">
-<h4 id="orgb3be167">Nagle innanzitutto guarda il TCP Sending Buffer (quello inferiore). Se è vuoto vuol dire che non sto aspettando nessun ACK.</h4>
-<div class="outline-text-4" id="text-orgb3be167">
-</div>
-<div id="outline-container-org91bb292" class="outline-5">
-<h5 id="org91bb292">In questo caso, invio direttamente il contenuto dell'SB, nonostante sia inferiore.</h5>
-</div>
-</div>
-<div id="outline-container-org9d2b855" class="outline-4">
-<h4 id="org9d2b855">Se invece ci sono altri segmenti nel buffer inferiore, lo accoda.</h4>
-</div>
-<div id="outline-container-orgb8c6e61" class="outline-4">
-<h4 id="orgb8c6e61">Uno dei lati negativi di Nagle è che sebbene utilizzi bene la rete, ovvero limitando l'overhead, (QUAL è L'ASPETTO NEGATIVO)?</h4>
-</div>
-</div>
-<div id="outline-container-orgd69112e" class="outline-3">
-<h3 id="orgd69112e">Un altro aspetto è che tcp è orientato allo stream e ragiona in base ai bit.</h3>
-<div class="outline-text-3" id="text-orgd69112e">
-</div>
-<div id="outline-container-org8b90cf5" class="outline-4">
-<h4 id="org8b90cf5">Una sequenza di dati presente nel sending buffer non dev'essere multiplo della max segment size. Il TCP suddivide in blocchetti della dimensione corretta.</h4>
-<div class="outline-text-4" id="text-org8b90cf5">
-</div>
-<div id="outline-container-org7bcad21" class="outline-5">
-<h5 id="org7bcad21">Se un ultimo blocchetto non raggiunge la max segment size, sta all'applicazione decidere se mandarlo subito o se aspettare nuovi dati, la cui prima parte verrà aggiunta all'ultimo segmento e mandata tutto insieme.</h5>
-</div>
-</div>
-<div id="outline-container-orga713985" class="outline-4">
-<h4 id="orga713985">Quindi si parla di segmento numero n come divisione logica, ma tutto è relativo al byte di inizio sequenza.</h4>
-</div>
-<div id="outline-container-org5551980" class="outline-4">
-<h4 id="org5551980">Il principio è che si occupa il meno possibile. L'eventuale padding è fatto ai livelli inferiori.</h4>
-</div>
-</div>
-<div id="outline-container-org42c0bb3" class="outline-3">
-<h3 id="org42c0bb3">Quando TCP invia un pacchetto ad IP, quest'ultimo, conoscendo perfettamente la max transfer unit del suo livello 2, frammenta ulteriormente se necessario.</h3>
-<div class="outline-text-3" id="text-org42c0bb3">
-</div>
-<div id="outline-container-org3cb370e" class="outline-4">
-<h4 id="org3cb370e">IP stesso riassemblerà poi la serie di pacchetti e la fornirà a tcp</h4>
-</div>
-<div id="outline-container-org18520ee" class="outline-4">
-<h4 id="org18520ee">Se non ci riesce, a TCP non arriverà assolutamente nulla.</h4>
-<div class="outline-text-4" id="text-org18520ee">
-</div>
-<div id="outline-container-orgb80414d" class="outline-5">
-<h5 id="orgb80414d">Inoltre, solo il primo pacchetto avrà lo header tcp.</h5>
-</div>
-</div>
-</div>
-<div id="outline-container-org391b8a0" class="outline-3">
-<h3 id="org391b8a0">Come abbiamo già visto, il round trip time è il tempo necessario perchè un segmento venga inviato ed ackAto.</h3>
-<div class="outline-text-3" id="text-org391b8a0">
-</div>
-<div id="outline-container-orgc18b325" class="outline-4">
-<h4 id="orgc18b325">Possiamo però anche inviare più segmenti nello stesso momento.</h4>
-</div>
-<div id="outline-container-org863348b" class="outline-4">
-<h4 id="org863348b">Ogni segmento fa partire un timer, che dev'essere dimensionato correttamente e quindi non può essere statico.</h4>
-</div>
-<div id="outline-container-org74b4664" class="outline-4">
-<h4 id="org74b4664">Esiste uno standard che ci spiega come calcolarlo</h4>
-<div class="outline-text-4" id="text-org74b4664">
-</div>
-<div id="outline-container-org6cd48c7" class="outline-5">
-<h5 id="org6cd48c7">Diciamo che il round trip time in media impieghi 30 ms</h5>
-</div>
-<div id="outline-container-org5b2f1c1" class="outline-5">
-<h5 id="org5b2f1c1">La stima viene fatta considerandolo come un outlier della distribuzione.</h5>
-<div class="outline-text-5" id="text-org5b2f1c1">
-</div>
-<div id="outline-container-orgaaadd7f" class="outline-6">
-<h6 id="orgaaadd7f">Tipicamente si dice che un valore di +3sigma, quindi media più 4 deviazioni standard ci da una stima di un caso molto raro di outlier.</h6>
-</div>
-<div id="outline-container-org5fd2948" class="outline-6">
-<h6 id="org5fd2948">Quindi dobbiamo sapere la media e la deviazione standard in base ai dati del round trip time.</h6>
-<div class="outline-text-6" id="text-org5fd2948">
-</div>
-<div id="outline-container-org1d457dd" class="outline-7">
-<h7 id="org1d457dd">INSERIRE FORMULA</h7>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-org13990b6" class="outline-3">
-<h3 id="org13990b6">Il controllo di flusso viene messo in atto quando il produttore produce molto più velocemente del ricevente.</h3>
-<div class="outline-text-3" id="text-org13990b6">
-</div>
-<div id="outline-container-orge271806" class="outline-4">
-<h4 id="orge271806">Infatti, il buffer di ricezione andrebbe poi in overflow.</h4>
-<div class="outline-text-4" id="text-orge271806">
-</div>
-<div id="outline-container-org6c49477" class="outline-5">
-<h5 id="org6c49477">Immaginiamo di avere una situazione in cui il sending buffer è di 3000 e il receiving 2000. (mss sempre 500 (ma standard 512)).</h5>
-<div class="outline-text-5" id="text-org6c49477">
-</div>
-<div id="outline-container-orgcb9ff54" class="outline-6">
-<h6 id="orgcb9ff54">L'informazione della dimensione dell'altro è nota ad entrambi.</h6>
-</div>
-<div id="outline-container-org14b05a4" class="outline-6">
-<h6 id="org14b05a4">Una volta che il sender ha mandato 2000 bit (in 4 tranche perchè la finestra è di 500), il receiving manda non solo un ACK per controllo errori, ma anche un WIN=0, per il controllo di flusso, che indica che lo spazio è finito.</h6>
-</div>
-<div id="outline-container-org8af79f2" class="outline-6">
-<h6 id="org8af79f2">Quando avrà poi letto 1000 byte, manderà un ACK con lo stesso byte atteso del precedente, ma una window size di 1000.</h6>
-</div>
-</div>
-<div id="outline-container-org41f9561" class="outline-5">
-<h5 id="org41f9561">Il problema è che se il secondo ack di riapertura viene perso, il sender rimarrebbe bloccato per sempre, ovvero si avrebbe un deadlock.</h5>
-<div class="outline-text-5" id="text-org41f9561">
-</div>
-<div id="outline-container-orgc40fde9" class="outline-6">
-<h6 id="orgc40fde9">Allo scadere di un Persist Timer nel receiver, viene mandato un segmento speciale vuoto, ovvero senza dati, a cui il receiver risponde con un reinvio dell'ack con nuova finestra.</h6>
-<div class="outline-text-6" id="text-orgc40fde9">
-</div>
-<div id="outline-container-orga116e27" class="outline-7">
-<h7 id="orga116e27">Se anche quel nuovo ack è perso, allo scadere di un nuovo timer la connessione sarebbe chiusa.</h7>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-orgae545f3" class="outline-4">
-<h4 id="orgae545f3">Il problema della silly window syndrome accade quando il receiver riempie la propria window e continua a notificare la nuova disponibilità ma per una quantità di byte minima.</h4>
-<div class="outline-text-4" id="text-orgae545f3">
-</div>
-<div id="outline-container-orgfc8453e" class="outline-5">
-<h5 id="orgfc8453e">La soluzione è l'algoritmo di Clark, in cui l'aggiornamento della windows dev'essere almeno grande come la MSS o come la metà del buffer.</h5>
-</div>
-</div>
-<div id="outline-container-org5af507a" class="outline-4">
-<h4 id="org5af507a">La rete ignora completamente il controllo di flusso.</h4>
-</div>
-</div>
+<h2 id="org3f50fe8">Negle ha un utilità quando vogliamo garantire un utilizzo efficiente della rete.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
 </div>
 <div id="outline-container-org149aae6" class="outline-2">
 <h2 id="org149aae6"><span class="todo TODO">TODO</span> Riempire con ultime 2 lezioni di livello 4</h2>
@@ -914,7 +668,7 @@ Il prof non sa esattamente quali sono i valori di alfa e beta, comunque basta in
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-02-05 Wed 19:31</p>
+<p class="date">Created: 2025-02-07 Fri 15:45</p>
 </div>
 </body>
 </html>

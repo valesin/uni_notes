@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-02-05 Wed 19:31 -->
+<!-- 2025-02-07 Fri 15:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Transport layer</title>
@@ -65,7 +65,17 @@
 <li><a href="#org506234f">Algoritmo di Nagle</a></li>
 </ul>
 </li>
-<li><a href="#orgc15da12">Ritrasmissione</a></li>
+<li><a href="#orgc15da12">Ritrasmissione</a>
+<ul>
+<li><a href="#org6084d8b">Calcolo dell'RTO</a></li>
+</ul>
+</li>
+<li><a href="#org2567570">Controllo di flusso</a>
+<ul>
+<li><a href="#org212d61d">Silly window syndrome</a></li>
+<li><a href="#orgf84e958">Persist timer</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -321,7 +331,7 @@ Essa combina l'utilizzo di PSH e dei segmenti normali.
 </p>
 
 <p>
-Il primo byte della comunicazione è inviato da solo è con delayed ACK, mentre tutti i successivi sono impacchettati e mandati insieme.
+Il primo byte della comunicazione è inviato da solo, poi il sender si mette in attesa di ricevere l'ack/echo. A quel punto, viene trasmesso l'intero contenuto del sending buffer (o un segmento intero se la dimensione e maggiore o uguale alla Maximum Segment Size)
 </p>
 
 <p>
@@ -353,13 +363,136 @@ Inoltre, viene usata una tecnica chiamata <b>fast retransmit</b>, che prevede ch
 Il timer rimane necessario per alcuni casi, ad esempio negli <b>ultimi 2 segmenti</b>, dopo i quali non esistono 3 <code>ACK</code> che attivino la fast retransmit.
 </p>
 </div>
+<div id="outline-container-org6084d8b" class="outline-6">
+<h6 id="org6084d8b">Calcolo dell'RTO</h6>
+<div class="outline-text-6" id="text-org6084d8b">
+<p>
+La formula per il calcolo del RTO, come indicata nella <b>RFC6298</b> prevede di calcolare l'RTO sulla base dello <b>SRTT</b> (<i>smoothed round trip time</i>) e del <b>RTTVAR</b> (<i>round-trip time variation</i>) come segue:
+\[\text{RTO} = \text{SRTT} + 4\text{RTTVAR}\]
+</p>
+
+<p>
+I due valori nella formula dipendono dalla misurazione \(R\) del tempo effettivo fra l'invio del segmento e la ricezione dell'<code>ACK</code>.
+</p>
+
+<p>
+Quando la <b>prima misurazione</b> è effettuata, si assegnano \(\text{SRTT} = R\) e \(\text{RTTVAR} = \frac{R}{2}\), quindi \(\text{RTO} = 3R\).
+</p>
+
+<p>
+Dalla <b>seconda</b> misurazione <b>in poi</b>, i valori sono i seguenti:
+</p>
+\begin{*align}
+\text{SRTT} = \alpha \cdot \text{SRTT} + (1-\alpha) \cdot R \\
+\text{RTTVAR} = \beta\cdot \text{RTTVAR} + (1-\beta)\cdot |\text{SRTT}-R|
+\end{*align}
+
+<p>
+I valori consigliati nella <b>RFC6298</b> sono \(\alpha = \frac{7}{8}\) e \(\beta = \frac{3}{4}\)
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org2567570" class="outline-5">
+<h5 id="org2567570">Controllo di flusso</h5>
+<div class="outline-text-5" id="text-org2567570">
+<p>
+Quando il sender è più veloce ad inviare di quanto il receiver lo sia ad elaborare i dati, il buffer di ricezione si <b>satura</b> e tutti i segmenti successivi vengono <b>scartati</b>, causando un'<b>inefficienza</b>.
+</p>
+
+<p>
+Viene quindi introdotto il <b>controllo di flusso</b>, che garantisce che ci sia sempre spazio libero nel buffer per i nuovi dati in arrivo.
+</p>
+
+<p>
+A questo proposito vengono introdotte le due variabili \(W_s\) e \(W_r\), ovvero dimensione della finestra di invio e di ricezione.
+</p>
+
+<p>
+Queste variabili sono aggiornate nel singolo host TCP l'una in base al numero di byte liberi nel buffer dell'altro host e l'altra in base al proprio.
+</p>
+
+<p>
+Per ottenere il numero di byte liberi nell'altra macchina, si utilizza il campo <b>Win</b>, che comunica esattamente questa informazione.
+</p>
+
+<p>
+Quando il buffer del ricevente si satura, esso manda un segmento con <b>Ack</b> uguale al byte successivo all'ultimo correttamente ricevuto e <b>Win = 0</b>.
+</p>
+
+<p>
+Il sender, quindi, ferma la trasmissione.
+</p>
+
+<p>
+Quando il ricevitore legge \(x\) byte, manda un nuovo segmento con <b>stesso Ack</b> e <b>Win</b> = \(x\).
+</p>
+
+<p>
+Così il sender può riprendere l'invio fino ad una nuova saturazione.
+</p>
+</div>
+<div id="outline-container-org212d61d" class="outline-6">
+<h6 id="org212d61d">Silly window syndrome</h6>
+<div class="outline-text-6" id="text-org212d61d">
+<p>
+La tecnica utilizzata per il controllo di flusso, in cui uno host con buffer saturo comunica appena dello spazio è liberato, comporta un <b>problema</b>.
+</p>
+
+<p>
+Immaginiamo di avere una applicazione dal lato del ricevitore che legge <b>un byte alla volta</b>, e che il sender invii un <b>grande file</b> che occupi l'<b>intero buffer</b>.
+</p>
+
+<p>
+In questi casi, si verifica la <b>silly window syndrome</b>, che consiste in questo ciclo:
+</p>
+<ul class="org-ul">
+<li>il receiver si satura e invia un <code>ACK</code> con <b>Win = 0</b>;</li>
+<li>il receiver legge un byte, togliendolo dal buffer, poi invia un segmento con <b>Win = 1</b>;</li>
+<li>il sender allora invia un segmento contenente <b>un solo byte</b>;</li>
+<li>ricomincia da capo&#x2026;</li>
+</ul>
+
+<p>
+La soluzione è l'<b>algoritmo di Clark</b>, che <b>impedisce</b> agli host TCP di <b>annunciare</b> una finestra che sia più piccola sia della <b>metà del buffer</b> che della <b>Maximum Segment Size</b>.
+</p>
+</div>
+</div>
+<div id="outline-container-orgf84e958" class="outline-6">
+<h6 id="orgf84e958">Persist timer</h6>
+<div class="outline-text-6" id="text-orgf84e958">
+<p>
+Immaginiamo la situazione in cui il sender sia fermo perchè la finestra di invio \(W_s = 0\).
+</p>
+
+<p>
+Quando il receiver legge dei dati e libera spazio nel buffer, lo comunica mediante nel campo <b>Win</b> di un nuovo segmento.
+</p>
+
+<p>
+Se quel segmento venisse smarrito, il sender rimarrebbe bloccato con \(W_s = 0\), mentre il receiver rimarrebbe in attesa con \(W_r > 0\).
+</p>
+
+<p>
+Per risolvere lo stallo, viene introdotto un timer detto <b>persist timer</b>, alla scadenza del quale il sender manda un segmento contenente <b>un solo byte</b>, per controllare la situazione del receiver, il quale risponderà con un segmento con <b>Ack</b> uguale al byte successivo a quello inviato e <b>Win</b> uguale allo spazio libero.
+</p>
+
+<p>
+Se invece non fosse stato smarrito alcun segmento, ma il receiver fosse veramente saturo, risponderà con un nuovo segmento con <b>Win = 0</b>.
+</p>
+
+<p>
+La procedura si ripete ogni <b>60 secondi</b>, finchè il buffer di ricezione si liberi, o la connessione venga chiusa dopo un certo numero di tentativi.
+</p>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-02-05 Wed 19:31</p>
+<p class="date">Created: 2025-02-07 Fri 15:45</p>
 </div>
 </body>
 </html>

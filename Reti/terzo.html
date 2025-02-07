@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-02-04 Tue 18:31 -->
+<!-- 2025-02-07 Fri 15:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Network layer</title>
@@ -454,7 +454,7 @@ Il messaggio contiene anche un <b>transaction ID</b> che verrà usato dal server
 </ul>
 
 <p>
-Notare che <b>tutte le risposte</b> del server sono <b>in broadcast IP</b>, ma <b>unicast MAC</b>. Quindi vengono trasportate a tutti gli host della rete, ma vengono <b>scartate da tutti</b> eccetto che dal client interessato.
+Notare che le risposte del server possono essere <b>in unicast IP e MAC</b> o <b>broadcast IP e MAC</b>, a seconda del flag bit "BROADCAST" nello header.
 </p>
 
 <p>
@@ -840,7 +840,7 @@ Questa tecnica comporta due vantaggi: uno è che non c'è più periodicità nell
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-02-04 Tue 18:31</p>
+<p class="date">Created: 2025-02-07 Fri 15:45</p>
 </div>
 </body>
 </html>

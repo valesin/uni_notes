@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-02-04 Tue 18:31 -->
+<!-- 2025-02-07 Fri 15:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Reti</title>
@@ -65,8 +65,15 @@
 <li><a href="#org8244dc0">Secondo livello (<b>Data Link</b>)</a></li>
 <li><a href="#orgadf1efb">Terzo livello (<b>Network</b>)</a></li>
 <li><a href="#org75e6f65">Quarto livello (<b>Transport</b>)</a></li>
+<li><a href="#org2122a48">Quinto/Settimo livello (<b>Application</b>)</a></li>
 </ul>
 </li>
+<li><a href="#org27b4077">Formule</a>
+<ul>
+<li><a href="#org30820fc">Round trip time</a></li>
+</ul>
+</li>
+<li><a href="#orgfcb43f6">Esame lab</a></li>
 </ul>
 </div>
 </div>
@@ -277,13 +284,75 @@ Questo è l'ultimo livello presente in ogni elemento della rete, ovvero host e r
 <h3 id="org75e6f65"><a href="transport.html#ID-4588f4ac-5693-4d3f-b49d-7ff316cb09a5">Quarto livello (<b>Transport</b>)</a></h3>
 <div class="outline-text-3" id="text-org75e6f65">
 <p>
-Il quarto livello </p>
+Il quarto livello mette in comunicazione due macchine direttamente fra loro (sfruttando i livelli inferiori) e per questo si parla di livello <b>end-to-end.</b>
+</p>
+
+<p>
+L'ordinamento dei pacchetti, classificato come uno dei parametri necessari per l'affidabilità, avviene qui.
+</p>
 </div>
+</div>
+<div id="outline-container-org2122a48" class="outline-3">
+<h3 id="org2122a48">Quinto/Settimo livello (<b>Application</b>)</h3>
+<div class="outline-text-3" id="text-org2122a48">
+<p>
+Il settimo livello della gerarchia OSI-RM è quello in cui la rete interagisce direttamente con il processo di sistema.
+</p>
+
+<p>
+Nel modello TCP/IP di Internet, questo livello comprende, oltre al livello 7, anche i livelli 5, 6 dell'OSI-RM, ovvero:
+</p>
+
+<ul class="org-ul">
+<li><b>Session layer</b>, che smista i dati ai singoli processi che utilizzano la rete, assegnando delle sessioni separate ad ogni processo. In Internet questo ruolo è svolto dalle <b>socket</b>, specifiche interfacce implementate a livello di sistema, che creano un associazione fra processo sorgente e destinatario.</li>
+
+<li><b>Presentation layer</b>, che si occupa di presentare in modo
+uniforme i dati su macchine che potrebbero utilizzare formati diversi. L'importanza di questo livello è diminuita notevolmente a causa dell'introduzione di Unicode.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org27b4077" class="outline-2">
+<h2 id="org27b4077">Formule</h2>
+<div class="outline-text-2" id="text-org27b4077">
+</div>
+<div id="outline-container-org30820fc" class="outline-3">
+<h3 id="org30820fc"><a href="#orgf952444">Round trip time</a></h3>
+</div>
+</div>
+<div id="outline-container-orgfcb43f6" class="outline-2">
+<h2 id="orgfcb43f6">Esame lab</h2>
+<div class="outline-text-2" id="text-orgfcb43f6">
+<p>
+La parte di packet-tracer sono i conti.
+</p>
+
+<ul class="org-ul">
+<li>Facciamo i conti di packet tracer, 20 minuti</li>
+<li>Li restituiamo</li>
+<li>La parte di packet tracer è fatta costruendo la rete secondo le specifiche</li>
+<li>La parte di java socket si fa a quiz a risposta multipla.
+<ul class="org-ul">
+<li>Server, connection-oriented, timeout</li>
+<li>Tutto fino ai server concorrenti con timeout</li>
+<li>Quali sono le fasi da realizzare per creare un canale (bind, connect, etc)
+<ul class="org-ul">
+<li>Un pezzo di codice, dov'è l'errore</li>
+<li>Qual è la prossima linea di codice che serve per fare una certa cosa?</li>
+</ul></li>
+</ul></li>
+</ul>
+
+
+<p>
+8 quiz su packet tracer, 6 quiz su java socket e poi packet tracer
+30% conti, 40% conti, 30% java socket
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-02-04 Tue 18:31</p>
+<p class="date">Created: 2025-02-07 Fri 15:46</p>
 </div>
 </body>
 </html>
