@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+<head>
+<!-- 2025-02-12 Wed 18:49 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Application layer</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Application layer</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org8a18f22">Domain Name System</a>
+<ul>
+<li><a href="#org145aa17">Risoluzione</a></li>
+</ul>
+</li>
+<li><a href="#org164cd46">Posta elettronica</a>
+<ul>
+<li><a href="#org911f7d1">Struttura messaggi</a></li>
+<li><a href="#orgfaf2f80">MIME</a>
+<ul>
+<li><a href="#orgf935160">Encoding BASE64</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org476c2fb">HTTP</a></li>
+</ul>
+</div>
+</div>
+<p>
++exclude<sub>tags</sub>: anki noexport
+</p>
+<div id="outline-container-org8a18f22" class="outline-2">
+<h2 id="org8a18f22">Domain Name System</h2>
+<div class="outline-text-2" id="text-org8a18f22">
+<p>
+Il DNS è un sistema che associa un nome, detto <b>dominio</b>, a un certo indirizzo IP.
+</p>
+
+<p>
+Oltre a rendere più facile l'accesso alle persone, esso <b>disaccoppia</b> il nome dall'indirizzo ip, permettendo, ad esempio, di cambiare l'indirizzo ip di un server in modo <b>trasparente</b> agli utenti, o di effettuare <b>load balancing</b> dirottando su server diversi.
+</p>
+
+<p>
+Il sistema è gerarchico e parte dalla radice, senza etichetta.
+</p>
+
+<p>
+Il dominio <b>completo</b> è detto <b>FQDN (Fully Qualified Domain Name)</b> e contiene un punto alla fine, che indica la radice, e dalle macchine è tradotto eliminando i punti e prefiggendo la lunghezza dell'etichetta all'inizio di ogni livello, ad esempio <i>2DI5UNIMI2IT0</i>.
+</p>
+
+<p>
+Un server DNS mantiene in <b>cache</b> dei <b>record di risorsa</b> a cui si accede mediante delle <b>query</b>, che contengono uno <b>header</b>, il FQDN, il tipo di query (A-IPv3, AAAA-IPv6, MX-mail, CNAME-canonical name o alias del sito).
+</p>
+
+<p>
+La <b>risposta</b> contiene gli stessi dati, incluso lo header, più le informazioni ottenute dalla query in fondo.
+</p>
+
+<p>
+Le zone sono ordinate gerarchicamente e per ogni zona esistono server <b>primari</b> e <b>secondari</b> (memoria volatile). I primi contengono la cache almeno per l'intera zona. Quando viene richiesto un dominio al di fuori, essi controllano se hanno l'indirizzo in cache, altrimenti effettuano la risoluzione attraverso il server della zona superiore. Ogni entrata di cache ha un TTL (di solito 2 giorni) dopo il quale essa viene cancellata.
+</p>
+</div>
+<div id="outline-container-org145aa17" class="outline-3">
+<h3 id="org145aa17">Risoluzione</h3>
+<div class="outline-text-3" id="text-org145aa17">
+<p>
+All'interno di ogni macchina vi è un programma detto <b>resolver</b>. Quando un client richiede un indirizzo, passa attraverso il resolver che conosce, per <b>configurazione</b>, l'indirizzo del <b>Local DNS</b>, con cui comunica utilizzando UDP.
+</p>
+
+<p>
+Esistono due tipi di risoluzione, quella <b>iterativa</b> e quella <b>ricorsiva</b>.
+</p>
+
+<p>
+Quella <b>ricorsiva</b> prevede che il resolver mandi una query al local dns e quest'ultimo mandi l'indirizzo IP finale. Non è scalabile, quindi viene usato un approccio <b>iterativo</b> dal local DNS, ma <b>ricorsivo</b> fra il resolver e il local dns.
+</p>
+
+<p>
+Il local dns gestisce in modo iterativo mandando l'intero dominio al root, che risponde con l'ip del name server di primo livello. Si procede così per tanti livelli quanti sono i livelli coinvolti.
+</p>
+
+<p>
+Anche questo approccio prevede uno overhead da parte del local dns, che però salva tutti gli ip dei name server intermedi, in modo che la prossima volta che arriva una richiesta che passa attraverso quel dominio, la richiesta è fatta direttamente ad esso.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org164cd46" class="outline-2">
+<h2 id="org164cd46">Posta elettronica</h2>
+<div class="outline-text-2" id="text-org164cd46">
+<p>
+La struttura per lo scambio di messaggi di posta elettronica prevede un <b>client</b> e un <b>server</b> per ogni estremità della comunicazione.
+</p>
+
+<p>
+Ogni client comunica con il suo server utilizzando un <b>Mail User Agent (MUA)</b>, che mantiene il <b>message store locale</b>, ovvero cassetta per la posta in arrivo (IN) e una per quella in uscita (OUT), permettendo all'utente di <b>creare</b> e <b>inviare</b> messaggi e <b>riceverli</b> e <b>leggerli</b>.
+</p>
+
+<p>
+Il MUA client comunica attraverso la rete con il MUA <b>server</b>, che contiene a sua volta i <b>message store</b>, con code di messaggi da inviare verso il proprio client o verso un altro server. I messaggi da smistare sono passati al <b>Mail Transfer Agent (MTA)</b>.
+</p>
+
+<p>
+La comunicazione <b>client-server</b>, ovvero fra MUA, avviene secondo il protocollo <b>POP3</b> o <b>IMAP</b>.
+</p>
+
+<p>
+La comunicazione <b>server-server</b>, ovvero fra MTA, avviene secondo il protocollo <b>Simple Mail Transfer Protocol (SMTP)</b>
+</p>
+</div>
+<div id="outline-container-org911f7d1" class="outline-3">
+<h3 id="org911f7d1">Struttura messaggi</h3>
+<div class="outline-text-3" id="text-org911f7d1">
+<p>
+I messaggi inviati dal MUA sono composti dal corpo, ovvero il testo del messaggio, e un'intestazione.
+</p>
+
+<p>
+L'<b>intestazione</b> contiene una serie di rige <b>ASCII</b> nel formato: <i>nome-campo:valore</i>, con una riga vuota che separa lo header dal messaggio.
+</p>
+
+<p>
+Inoltre, per essa si usa il formato <b>NVT</b> (Network virtual terminal), una modifica dello US Ascii (7bit) con l'aggiunta di uno 0 nel MSD e la combinazione CarriageReturn, LineFeed come end-of-line.
+</p>
+
+<p>
+Il messaggio è poi inserito dall'MTA in una <b>busta</b>, che contiene l'indirizzo del mittente e del destinatario nel solito formato nome@dominio, dove dominio è il nome DNS del server di posta elettronica.
+</p>
+</div>
+</div>
+<div id="outline-container-orgfaf2f80" class="outline-3">
+<h3 id="orgfaf2f80">MIME</h3>
+<div class="outline-text-3" id="text-orgfaf2f80">
+<p>
+Con una RFC successiva alla 822 che lanciò le mail, viene aggiunto il supporto per diversi tipi di dato.
+</p>
+
+<p>
+Vengono aggiunti dei campi aggiuntivi allo header, fra cui
+<b>MIME<sub>Version</sub></b>, 0 se non è utilizzato e <b>Content-type</b> (text-plain, text-richtext, video MPEG, image JPEG o GIF ecc.), che sancisce il tipo di dato.
+</p>
+
+<p>
+Inoltre c-è il campo <b>Content-Transfer-Encoding</b>, che indica l'encoding utilizzato.
+</p>
+</div>
+<div id="outline-container-orgf935160" class="outline-4">
+<h4 id="orgf935160">Encoding BASE64</h4>
+<div class="outline-text-4" id="text-orgf935160">
+<p>
+Il motivo per cui viene utilizzato l'encoding NVT è che permette di disambuigare il messaggio e i segnali di controllo mediante l'aggiunta del bit 0 al MSD.
+</p>
+
+<p>
+Quando viene utilizzato il protocollo MIME, potrebbe capitare che un bit in posizione dell'MSD di un certo byte nello stream di un dato sia 1.
+</p>
+
+<p>
+Il BASE64 funziona in questo modo:
+</p>
+<ul class="org-ul">
+<li>ogni dato viene diviso in stringhe di <b>3byte (24 bit)</b>, facendo padding di "=" se non si arriva a 24.</li>
+<li>ognuna di queste stringhe viene divisa in <b>4 stringhe da 6 bit</b></li>
+<li>ognuna  delle stringhe da 6 bit viene trasformata in un carattere ASCII.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org476c2fb" class="outline-2">
+<h2 id="org476c2fb">HTTP</h2>
+<div class="outline-text-2" id="text-org476c2fb">
+<p>
+HTTP è il protocollo standard a livello applicazione per ottenere una pagina web ed i suoi elementi.
+</p>
+
+<p>
+Questo protocollo è di fatto un <b>file transfer mascherato</b>, in quanto è un semplice protocollo di <b>richiesta-risposta</b>: il browser del client invia un messaggio e il server risponde.
+</p>
+
+<p>
+Ogni server web è in ascolto sulla <b>porta 80</b> del TCP per richieste SYN da browser web. Prima della <b>versione 1.1</b>, dopo ogni richiesta soddisfatta, il server chiudeva la connessione TCP, secondo una politica <b>non persistente</b>. Adesso è invece possibile mantenere una connessione aperta per l'intera durata della sessione.
+</p>
+
+<p>
+La sequenza di azioni compiute nell'accesso di un sito è la seguente:
+</p>
+<ul class="org-ul">
+<li>viene determinato l'url</li>
+<li>viene passato il DNS al resolver</li>
+<li>il resolver gestisce la risoluzione e restituisce l'IP</li>
+<li>il browser si connette sulla <b>well-known-port 80</b> dell'ip del server</li>
+<li>viene effettuato un GET del contenuto desiderato</li>
+<li>il server risponde</li>
+<li>se la sessione è terminata, viene rilasciata la connessione TCP</li>
+<li>a questo punto, i contenuti sono mostrati sul web client.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2025-02-12 Wed 18:49</p>
+</div>
+</body>
+</html>

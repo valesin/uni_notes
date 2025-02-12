@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+<head>
+<!-- 2025-02-12 Wed 18:49 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Teoria della complessità</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
+<script>
+    window.MathJax = {
+      tex: {
+        ams: { multlineWidth: '85%' },
+        {packages: {'[+]': ['mathtools']}},
+        tags: 'ams',
+        tagSide: 'right',
+        tagIndent: '.8em'
+      },
+      chtml: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      svg: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      output: {
+        font: 'mathjax-modern',
+        displayOverflow: 'scale'
+      },
+      loader: {
+        load: ['[tex]/mathtools']
+      },
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Teoria della complessità</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org99d1cd7">Problemi</a></li>
+<li><a href="#org3e6052c">Classi di complessità</a></li>
+<li><a href="#org768720b">Non deterministici</a>
+<ul>
+<li><a href="#org87e4889">Tipi di problema (clique, partiziona)</a></li>
+<li><a href="#org6c00b16">Classe NP</a>
+<ul>
+<li><a href="#org2b7993d">Relazione pspace npspace</a></li>
+<li><a href="#orgea1afe2">riducibilità</a></li>
+<li><a href="#orgedf0134">teorema di cook</a></li>
+<li><a href="#orgcfc70e5">np hard e completo</a></li>
+</ul>
+</li>
+<li><a href="#orga3fe5c0">Fin qui 32 ma 33 anche</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org99d1cd7" class="outline-2">
+<h2 id="org99d1cd7">Problemi</h2>
+<div class="outline-text-2" id="text-org99d1cd7">
+<p>
+Un problema è definito come
+</p>
+
+<p>
+\[i \subseteq I \times S\]
+Ovvero come l'insieme delle combinazioni <b>Input</b>, <b>Soluzioni</b> tali per cui
+\[(x,s)\in\Pi \iff s \text{ è una soluzione di }\Pi \text{ su input } x\].
+</p>
+
+<p>
+Esistono <b>tre tipologie</b> di problema:
+</p>
+<ul class="org-ul">
+<li><b>Ricerca</b>:: data un'istanza \(I\), trovare la soluzione \(s\in S\) tale per cui \((x,s)\in \Pi\);</li>
+<li><b>Ottimizzazione</b>:: data un'istanza, trovare la soluzione che soddisfi un criterio di ottimalità (ad es. minimo o massimo);</li>
+<li><b>Decisione</b>:: dato un problema in cui \(S=\{0,1\}\), trovare se data l'istanza \(x\in I\), \(\Pi(x) = 1\) o \(0\).</li>
+</ul>
+
+<p>
+Ogni problema di <b>ottimizzazione</b> può essere espresso in forma <b>decisionale</b>, considerando un intero \(k\) che limiti la dimensione della soluzione.
+</p>
+
+<p>
+Il problema decisionale così costruito è un lower-bound per quello di ottimizzazione, in quanto risolvere il secondo fornisce una soluzione anche al primo semplicemente confrontando la lunghezza della soluzione ottima trovata con l'intero \(k\).
+</p>
+</div>
+</div>
+<div id="outline-container-org3e6052c" class="outline-2">
+<h2 id="org3e6052c">Classi di complessità</h2>
+<div class="outline-text-2" id="text-org3e6052c">
+<p>
+Data una funzione \(f(n)\), le classi \(\text{TIME}(f(n))\) e \(\text{SPACE}(f(n))\) sono gli insiemi dei problemi risolvibili con un consumo di risorse \(f(n)\).
+</p>
+
+<p>
+Definiamo le seguenti classi per gli algoritimi <b>deterministici</b>:
+</p>
+<ul class="org-ul">
+<li>\(\text{P} = \bigcup_{c=0}^{\infty} \text{TIME}(n^c)\):: problemi risolvibili in tempo <b>polinomiale</b> (compreso logaritmico, dato che ogni logaritmo è controllato da un polinomio);</li>
+<li>$\text{PSPACE} = \bigcup<sub>c=0</sub><sup>&infin;</sup> \text{SPACE}(n<sup>c</sup>):: problemi risolvibili con spazio polinomiale;</li>
+<li>$\text{EXPTIME} = \bigcup<sub>c=0</sub><sup>&infin;</sup> \text{TIME}(2<sup>n<sup>c</sup></sup>):: problemi risolvibili in tempo esponenziale.</li>
+</ul>
+
+<p>
+Dato che ogni istruzione macchina visita al max \(k\) celle di memoria, lo spazio che può utilizzare in tempo \(t\) è \(kt\). Quindi vale che
+\[P\subseteq PSPACE\]
+</p>
+
+<p>
+Inoltre, dato un programma con \(p\) istruzioni, con disponibili \(s\) celle a \(k\) bit, esistono al più \(p \cdot 2^{sk}\) configurazioni di memoria per ogni istruzione, dopodichè si è in un loop infinito. Quindi ogni programma in \(\text{PSPACE}\) che termina richiede tempo al massimo esponenziale. Quindi
+\[\text{PSPACE}\subseteq \text{EXPTIME}\]
+</p>
+
+<p>
+Otteniamo la catena \[P\subseteq PSPACE \subseteq \text{EXPTIME}\], ma dato che \[\text{P}\neq \text{EXPTIME}\], almeno una delle due inclusioni è impropria.
+</p>
+</div>
+</div>
+<div id="outline-container-org768720b" class="outline-2">
+<h2 id="org768720b">Non deterministici</h2>
+<div class="outline-text-2" id="text-org768720b">
+</div>
+<div id="outline-container-org87e4889" class="outline-3">
+<h3 id="org87e4889">Tipi di problema (clique, partiziona)</h3>
+</div>
+<div id="outline-container-org6c00b16" class="outline-3">
+<h3 id="org6c00b16">Classe NP</h3>
+<div class="outline-text-3" id="text-org6c00b16">
+</div>
+<div id="outline-container-org2b7993d" class="outline-4">
+<h4 id="org2b7993d">Relazione pspace npspace</h4>
+</div>
+<div id="outline-container-orgea1afe2" class="outline-4">
+<h4 id="orgea1afe2">riducibilità</h4>
+</div>
+<div id="outline-container-orgedf0134" class="outline-4">
+<h4 id="orgedf0134">teorema di cook</h4>
+</div>
+<div id="outline-container-orgcfc70e5" class="outline-4">
+<h4 id="orgcfc70e5">np hard e completo</h4>
+</div>
+</div>
+<div id="outline-container-orga3fe5c0" class="outline-3">
+<h3 id="orga3fe5c0">Fin qui 32 ma 33 anche</h3>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2025-02-12 Wed 18:49</p>
+</div>
+</body>
+</html>

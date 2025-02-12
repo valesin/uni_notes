@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-02-07 Fri 15:47 -->
+<!-- 2025-02-12 Wed 18:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Tabelle hash</title>
@@ -46,17 +46,17 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org0832d22">Collisioni</a>
+<li><a href="#orgbd6960b">Collisioni</a>
 <ul>
-<li><a href="#org004a941">Liste di collisione</a></li>
-<li><a href="#org79bae01">Indirizzamento aperto</a>
+<li><a href="#org1d2f958">Liste di collisione</a></li>
+<li><a href="#org704140e">Indirizzamento aperto</a>
 <ul>
-<li><a href="#orgd8a31d9">Scansione lineare</a></li>
-<li><a href="#orgb389c73">Scansione quadratica</a></li>
-<li><a href="#org005fcd7">Hashing doppio</a></li>
+<li><a href="#orgcc0a9f9">Scansione lineare</a></li>
+<li><a href="#orgf647e27">Scansione quadratica</a></li>
+<li><a href="#org502d8aa">Hashing doppio</a></li>
 </ul>
 </li>
-<li><a href="#org8d5a4a9">Re-hashing</a></li>
+<li><a href="#org2fda8ae">Re-hashing</a></li>
 </ul>
 </li>
 </ul>
@@ -82,9 +82,9 @@ La tecnica dello <b>hashing</b> consiste nel modificare il valore della chiave a
 <p>
 Una funzione di hashing è detta <b>uniforme</b> se ogni cella ha la <b>stessa probabilità</b> di essere usata.
 </p>
-<div id="outline-container-org0832d22" class="outline-2">
-<h2 id="org0832d22">Collisioni</h2>
-<div class="outline-text-2" id="text-org0832d22">
+<div id="outline-container-orgbd6960b" class="outline-2">
+<h2 id="orgbd6960b">Collisioni</h2>
+<div class="outline-text-2" id="text-orgbd6960b">
 <p>
 Una <b>collisione</b> avviene quando la funzione applicata a due chiavi separati restituisce lo stesso valore.
 </p>
@@ -93,9 +93,9 @@ Una <b>collisione</b> avviene quando la funzione applicata a due chiavi separati
 In tal caso possono essere utilizzate due diverse tecniche, l'<b>indirizzamento aperto</b> e le <b>liste di collisione</b>.
 </p>
 </div>
-<div id="outline-container-org004a941" class="outline-3">
-<h3 id="org004a941">Liste di collisione</h3>
-<div class="outline-text-3" id="text-org004a941">
+<div id="outline-container-org1d2f958" class="outline-3">
+<h3 id="org1d2f958">Liste di collisione</h3>
+<div class="outline-text-3" id="text-org1d2f958">
 <p>
 Ad ogni cella della tabella hash è associata una <b>lista di chiavi</b>, detta <i>di collisione</i>.
 </p>
@@ -121,9 +121,9 @@ Questo è un ottimo esempio di <b>bilanciamento spazio-tempo</b>, in quanto un a
 </p>
 </div>
 </div>
-<div id="outline-container-org79bae01" class="outline-3">
-<h3 id="org79bae01">Indirizzamento aperto</h3>
-<div class="outline-text-3" id="text-org79bae01">
+<div id="outline-container-org704140e" class="outline-3">
+<h3 id="org704140e">Indirizzamento aperto</h3>
+<div class="outline-text-3" id="text-org704140e">
 <p>
 Con l'indirizzamento aperto, quando l'indice di una chiave è già occupato, se ne sceglie un altro nella stessa tabella secondo un criterio.
 </p>
@@ -140,9 +140,9 @@ Un problema è quello dell'<b>agglomerazione</b>, in cui caselle adiacenti vengo
 Esistono 3 tipi di tecniche per gestire l'indirizzamento aperto: la <b>scansione lineare</b>, la <b>scansione quadratica</b> e lo <b>hashing doppio</b>.
 </p>
 </div>
-<div id="outline-container-orgd8a31d9" class="outline-4">
-<h4 id="orgd8a31d9">Scansione lineare</h4>
-<div class="outline-text-4" id="text-orgd8a31d9">
+<div id="outline-container-orgcc0a9f9" class="outline-4">
+<h4 id="orgcc0a9f9">Scansione lineare</h4>
+<div class="outline-text-4" id="text-orgcc0a9f9">
 <p>
 La sequenza di scansione è definita come segue:
 </p>
@@ -160,9 +160,9 @@ Questo metodo dà luogo alla <b>agglomerazione primaria</b>, ovvero si creano bl
 </p>
 </div>
 </div>
-<div id="outline-container-orgb389c73" class="outline-4">
-<h4 id="orgb389c73">Scansione quadratica</h4>
-<div class="outline-text-4" id="text-orgb389c73">
+<div id="outline-container-orgf647e27" class="outline-4">
+<h4 id="orgf647e27">Scansione quadratica</h4>
+<div class="outline-text-4" id="text-orgf647e27">
 <p>
 La sequenza di scansione è definita come segue:
 </p>
@@ -177,9 +177,9 @@ Questo metodo dà luogo alla <b>agglomerazione secondaria</b>, in quanto una cop
 </p>
 </div>
 </div>
-<div id="outline-container-org005fcd7" class="outline-4">
-<h4 id="org005fcd7">Hashing doppio</h4>
-<div class="outline-text-4" id="text-org005fcd7">
+<div id="outline-container-org502d8aa" class="outline-4">
+<h4 id="org502d8aa">Hashing doppio</h4>
+<div class="outline-text-4" id="text-org502d8aa">
 <p>
 Per eliminare <i>virtualmente</i> il fenomeno dell'agglomerazione (supponendo che la funzione di hashing goda di <b>uniformità semplice</b>), si usa un <b>hashing doppio</b>, in modo che se due chiavi diverse hanno stesso hash secondo una funzione, non lo avranno per l'altra.
 </p>
@@ -190,9 +190,9 @@ Per eliminare <i>virtualmente</i> il fenomeno dell'agglomerazione (supponendo ch
 </div>
 </div>
 </div>
-<div id="outline-container-org8d5a4a9" class="outline-3">
-<h3 id="org8d5a4a9">Re-hashing</h3>
-<div class="outline-text-3" id="text-org8d5a4a9">
+<div id="outline-container-org2fda8ae" class="outline-3">
+<h3 id="org2fda8ae">Re-hashing</h3>
+<div class="outline-text-3" id="text-org2fda8ae">
 <p>
 Si da il caso che il tempo di ricerca in caso di insuccesso sia \(O(\frac{1}{1-\alpha}) = O(\frac{m}{m-n})\) (dimostrazione da Knuth). Questo è il tempo che governa anche le operazioni di inserimento e cancellazione.
 </p>
@@ -213,7 +213,7 @@ Di conseguenza, il numero di passi totale per ogni inserimento è \(\frac{O(N)}{
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-02-07 Fri 15:47</p>
+<p class="date">Created: 2025-02-12 Wed 18:49</p>
 </div>
 </body>
 </html>
