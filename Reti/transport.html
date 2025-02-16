@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-02-12 Wed 18:49 -->
+<!-- 2025-02-15 Sat 18:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Transport layer</title>
@@ -95,6 +95,11 @@
 </ul>
 </div>
 </div>
+<p>
+s
+ss
+</p>
+
 <p>
 Il transport layer è il primo livello <b>end-to-end</b>.
 </p>
@@ -387,11 +392,11 @@ Quando la <b>prima misurazione</b> è effettuata, si assegnano \(\text{SRTT} = R
 
 <p>
 Dalla <b>seconda</b> misurazione <b>in poi</b>, i valori sono i seguenti:
+\[
+\text{SRTT} = \alpha \cdot \text{SRTT} + (1-\alpha) \cdot R\]
+\[\text{RTTVAR} = \beta\cdot \text{RTTVAR} + (1-\beta)\cdot |\text{SRTT}-R|
+\]
 </p>
-\begin{*align}
-\text{SRTT} = \alpha \cdot \text{SRTT} + (1-\alpha) \cdot R \\
-\text{RTTVAR} = \beta\cdot \text{RTTVAR} + (1-\beta)\cdot |\text{SRTT}-R|
-\end{*align}
 
 <p>
 I valori consigliati nella <b>RFC6298</b> sono \(\alpha = \frac{7}{8}\) e \(\beta = \frac{3}{4}\)
@@ -714,7 +719,7 @@ Anche in UDP la MSS è legata alla minima MTU delle reti che vengono attraversat
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-02-12 Wed 18:49</p>
+<p class="date">Created: 2025-02-15 Sat 18:55</p>
 </div>
 </body>
 </html>
