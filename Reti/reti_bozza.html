@@ -3,41 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-02-07 Fri 15:45 -->
+<!-- 2025-04-05 Sat 19:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Retibozza</title>
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
-<script>
-    window.MathJax = {
-      tex: {
-        ams: { multlineWidth: '85%' },
-        {packages: {'[+]': ['mathtools']}},
-        tags: 'ams',
-        tagSide: 'right',
-        tagIndent: '.8em'
-      },
-      chtml: {
-        scale: 1.0,
-        displayAlign: 'center',
-        displayIndent: '0em'
-      },
-      svg: {
-        scale: 1.0,
-        displayAlign: 'center',
-        displayIndent: '0em'
-      },
-      output: {
-        font: 'mathjax-modern',
-        displayOverflow: 'scale'
-      },
-      loader: {
-        load: ['[tex]/mathtools']
-      },
-    };
-    </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <div id="content" class="content">
@@ -47,35 +18,6 @@
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
 <li><a href="#org08bb564">References</a></li>
-<li><a href="#org29180fd">Host computer dove risiedono le app finali e un sistema di rete composto da un insieme di nodi e link.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org2228452">Gli unici dati che viaggiano nel sistema sono denominati pacchetti, di dimensione massima fissa. Semplifica l'architettura dei nodi di switch, cioè i router, che svolgono funzionalità di instradamento. In questo modo ogni router si occupa soltanto di ricevere e smistare i pacchetti su link stabiliti in base a metriche di instradamento.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#orgd6cc51b">Una divisione funzionale delle varie parti è: il sistema di reti, attraverso ip, decide il percorso migliore in base a quel momento specifico (le condizioni variano nel tempo), concetto chiamato instradamento.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org5df9786">Pacchetti con stesso mittente e destinatario non necessariamente percorrono lo stesso cammino. Non solo la comunicazione non è affidabile, ma anche ogni pacchetto è completamente indipendente dagli altri, sebbene siano tutti risultato dello stesso processo di frammentazione da parte dell'host. Servirà poi un modo per reassemblarli a destinazione.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#orgaf438d0">Ogni pacchetto è indipendente, ma in qualche modo verrà ricostruito, quindi c'è qualche legame logico fra il singolo frammento e l'unità generale. Finchè i pacchetti sono nel sistema di rete, questo collegamento è perso.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org950ccae">A questo punto abbiamo definito dei concetti come affidabilità e valori tempo di trasmissione, tempo di propagazione, round-trip tie, error-rate su un canale, gitter, che tornano.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org3605f48">Abbiamo identificato le componenti architetturali di una rete, con link fra router e host, entrambi con software e funzioni utili alla comunicazione, IP lato router e TCP lato host&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org763e335">Adesso analizzeremo le altre componenti della rete, e come sono organizzate all'interno della struttura, le varie funzioni di rete.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#orge526da8">Per la struttura gerarchica a 5 (7) livelli, i collegamenti fra le due macchine sorgente e destinazione sono allo stesso livello. Non sono ammesse cross-layer communication.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org84cbc5f">Finora abbiamo capito come, su un canale che collega il nodo a al nodo b, inviare frame in modo affidabile (rimando alle 3 condizioni)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org36124a3">A volte la topologia di rete è un grafo parzialmente connesso e in particolare in cui i punti sono collegati fra loro in una <b>maglia</b>, ed è per questo chiamata anche punto-a-punto, ma spesso non è così.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#orgb0469e7">Di solito, alla salita del fronte d'onda, legge il valore in volt, e se è 5 il bit è 1, altrimenti 0&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#orgbc3728a">Per stabilire l'utilizzo (efficienza) del mio MAC layer, che presiede la connessione Ethernet, bisogna introdurre al tempo di propagazione, nella formula originale, ovvero tx su tx + 2tp, il contention time medio, ovvero il tempo perso in carrier sense, nel discardare trasmissioni corrotte e nei ritardi. (Bisogna sommare l'inverso (perchè?), e quindi 1/A)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org1eb8280">Per aumentare le prestazioni di Ethernet, potrei scalare il tasso di trasmissione di un ordine di grandezza. Il problema è che il rame non va oltre 25Mbps.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#orgd77b681">Nell'architettura Ethernet, il primo apparato utilizzato è il repeating hub, passivo, in cui tutte le stazioni contendono per il canale di trasmissione. Gli hub sono collegati da un bridging hub, attivo, che attraverso il principio di Store-and-Forward, separa i domini di collisione dei vari hub. Un bridge ha tante porte ethernet quanti sono i domini collegati. Inoltre, contiene una tabella aggiornata ogni volta che riceve una comunicazione (bridge trasparente). Quando la comunicazione è destinata a una stazione non salvata in tabella, fa flading.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#orge6c8b46">A livello superiore, c'è uno switch, che funziona come un hub, ma con una memoria ed una cpu, per memorizzare e switchare in modo intelligente. Le connessioni da e per lo switch NON richiedono Carrier Sense, perchè sono punto-punto, in quanto già univocate dal bridge. Il cavo utilizzato è un duplex e può essere anche in fibra. Le porte sono comunque compliant con IEEE nel formato della porta.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org2af6a5a">Nel CSMA-CD, l'efficienza è \(\frac{1}{1+\frac{2BL}{CF}e}\), quindi se aumento la Bandwidth, devo necessariamente ridurre la lunghezza e aumentare la dimensione del frame.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#orgd2c93e7">Notiamo che nel Data-Link, a questo punto, non ci sono più collegamenti punto-punto, ma un MAC layer, che controlla l'accesso a un canale condiviso.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org71205b8">Una VLAN viene utilizzata per introdurre una nuova divisione virtuale fra stazioni. Un motivo per cui viene utilizzata è per aumentare la sicurezza.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org98d5d71">Per riassumere i primi 2 livelli, sono entrambi composti da due sottolivelli.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#orgd570d63">Le LAN occupano spazi geografici molto limitati. E' necessario collegare LAN, anche lontane, così che siano tutte raggiungibili. Per farlo, vengono collegate ad uno strato superiore, che sarebbe l'ISP, fino ad arrivare ad un terzo strato che è quello intercontinentale.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org90fd521">Nel livello 3 dobbiamo gestire l'indirizzamento e l'instradamento.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org56b2f6c">Riguardo l'indirizzamento IP, abbiamo visto metodi per garantire l'unicità dell'indirizzo. Abbiamo visto il subnetting, che va di pari passo con il metodo CLASS based. Subnetting non nasce con l'obiettivo di superare il limite delle classi, ma è trucco organizzativo per inserire un nuovo livello gerarchico per gestire le reti in modo che riflettano di più la struttura.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org660452f">Sebbene l'indirizzamento sia parte del livello 3 a livello globale, ogni livello possiede il proprio indirizzo per comunicare con altre macchine.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org8527999">Introduciamo il DHCP&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org41d4771">L'ICMP utilizzato per il ping e per capire delle statistiche sulla rete, fa uso di uno Header IP ed utilizza un Checksum, oltre che il tipo di richiesta (ce ne sono varie).&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org41ad2dc">Un importante compito del livello 3 è quello di instradare i pacchetti verso la giusta destinazione. Il grafo della rete è parzialmente connesso e serve un livello superiore a quello del data link che abbia una visione più ampia e riesca a smistare i pacchetti in un modo intelligente ed efficiente&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org728728f">Ci rifacciamo alla stessa struttura riguardante il routing, con un router che contiene un forwarder con porte IO di ingresso ed uscita e che opera su una tabella di routing, facendo un lookup e stabilendo la corretta porta di output. Chi scrive sulla tabella è il router, che ha i propri pacchetti di controllo e opera come un processo totalmente asincrono ed indipendente.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org186bd41">Supponiamo di avere due macchina che ha uno strato applicativo, seguito da TCP, IP ecc&#x2026;, attaccata ad una rete IP.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
 <li><a href="#org51c9001">Al livello 3 c'è un processo chiamato router, autonomo rispetto al forwarder. Questa separazione ci facilita la costruzione e l'implementazione dell'instradamento e la sua messa in cloud.</a>
 <ul>
 <li><a href="#orgb93c5a2">Il forwarder è un punto delicato per l'efficienza, perchè fa numerose operazioni, facendo lookup di source e address dello header ip per instradare correttamente il pacchetto.</a></li>
@@ -104,7 +46,6 @@
 </li>
 </ul>
 </li>
-<li><a href="#org63c9577">Il traffico realtime, come la telefonia su internet o la conferenza su internet, è associato ad una jitter sensitivity ed aldelay associato ad un singolo pacchetto.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
 <li><a href="#org6c58e92">IPV6 è uguale ma con molte meno opzioni</a>
 <ul>
 <li><a href="#orgacbf0d2">Inoltre il time to live si chiama hop count</a></li>
@@ -169,87 +110,7 @@
 </li>
 </ul>
 </li>
-<li><a href="#orgcee69f3">Transport layer è il primo livello ad essere end-to-end, ovvero che comunica fra due macchine ed astrae ai livelli superiori la rete sottostante (la nasconde).&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org8d7197d">Quindi siamo arrivati al SYN che uno manda per aprire la connessione, con un numero di sequenza generato in numero casuale. Il canale è bidirezionale e quindi avviene tutto nello stesso modo in entrambi gli host.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org3f50fe8">Negle ha un utilità quando vogliamo garantire un utilizzo efficiente della rete.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
-<li><a href="#org149aae6"><span class="todo TODO">TODO</span> Riempire con ultime 2 lezioni di livello 4</a></li>
-<li><a href="#orgc668dca">Iniziamo il livello applicazione parlando del DNS, ovvero il Domain Name System.</a>
-<ul>
-<li><a href="#orge0cbd2e">E' un sistema che permette di rendere più semplice raggiungere un host</a>
-<ul>
-<li><a href="#orgee697e9">Normalmente si usa un IP per raggiungere un host, ma è praticamente impossibile ricordare un IP.</a></li>
-</ul>
-</li>
-<li><a href="#orgaebad13">Funziona associando un nome (dominio) all'ip di uno specifico host.</a>
-<ul>
-<li><a href="#orgb0cf427">Permette anche di recuperare altre informazioni</a></li>
-</ul>
-</li>
-<li><a href="#org3ffa469">L'idea è quella di disaccoppiare il modo in cui un essere umano raggiunga un certo servizio.</a>
-<ul>
-<li><a href="#org5b11c5c">Ad esempio il servizio potrebbe cambiare indirizzo ip in modo trasparente agli utenti.</a>
-<ul>
-<li><a href="#org2eb4f2f">Questo è utilizzato anche per il load balancing, così che il traffico venga diviso su diversi server.</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org2fd1e69">Il fully qualified domain name (FQDN) contiene un punto alla fine che indica il root domain</a></li>
-<li><a href="#org25b72aa">Il modo in cui avviene la risoluzione del FQDN fra due macchine, ovvero fra un host che richiede e il server che risponde, è sostituendo ad ogni punto il numero di caratteri che seguono quel punto prima di quello successivo, esempio 2DI5UNIMI2IT0.</a></li>
-<li><a href="#org8389264">Una query DNS contiene uno header, il FQDN specifico, il tipo di query(A, AAAA, Mx), la classe (che indica la rete su cui si vuole risolvere, che di fatto è sempre internet)</a>
-<ul>
-<li><a href="#org5db6117">Il tipo può essere2 A per IPv4, AAAA per IPv6, MX per posta, CNAME (canonical name) che è un altro nome per lo stesso sito</a></li>
-</ul>
-</li>
-<li><a href="#org2f520a9">La risposta ricopia i dati e inserisce l'indirizzo nell'ultimo campo.</a></li>
-<li><a href="#org450da38">Un record DNS in cache può essere associato ad uno specifico TTL, dopo il quale il record scade e la prossima richiesta effettuata da qualunque client dovrà essere risoluta di nuovo</a>
-<ul>
-<li><a href="#org9c5a8cd"><span class="todo TODO">TODO</span> Capire funzionamento in caso di record scaduto</a></li>
-</ul>
-</li>
-<li><a href="#org9637bb1">Il resolving DNS avviene con un client che chiede la risoluzione di uno specifico FQDN al resolver all'interno della stessa macchina.</a>
-<ul>
-<li><a href="#org55190f4">Il resolver usa UDP perchè non gli serve instaurare la connessione e parla con il Local DNS, che viene impostato in fase di configurazione.</a></li>
-</ul>
-</li>
-<li><a href="#org54b497e">A livello globale ci sono dei root DNS servers che contengono soltanto i domini di primo livello, con gli IP corrispondenti dei NameServer.</a>
-<ul>
-<li><a href="#orgef596cf">Usiamo questi se non sappiamo come raggiungere il dominio di primo livello, che di solito però conosciamo già perchè rimane in cache</a></li>
-<li><a href="#orgc970664">Sul libro sono indicati due approcci, uno iterativo e uno ricorsivo, ma gli esempi sono tutti iterativi.</a>
-<ul>
-<li><a href="#org87cd323">L'approccio ricorsivo funziona con il resolver che manda una query al local dns e quest'ultimo risponde con l'indirizzo già pronto.</a>
-<ul>
-<li><a href="#org7e6346f">Non è implementata nei server per questioni di scalabilità.</a></li>
-<li><a href="#org6cafc50">Il problema è che sebbene sia molto comoda per il client, il resolver dovrebbe mantenere tantissime informazioni di stato in attesa dei passi successivi.</a></li>
-</ul>
-</li>
-<li><a href="#org7d95c94">L'approccio iterativo si applica dal local dns in poi, mentre fra resolver e local dns rimane ricorsivo, ovvero il local dns mantiene lo stato della richiesta fino all'invio della risposta al resolver.</a>
-<ul>
-<li><a href="#orga98ba2c">Il client continua a ricevere una risposta valida già pronta.</a></li>
-<li><a href="#org2193f4c">Il local DNS, però, gestisce in modo iterativo.</a>
-<ul>
-<li><a href="#orgb8200e7">Manda l'intero dominio al root, che conosce però solo l'IP di primo livello e risponde con un informazione parziale, ovvero con l'indirizzo del NS di primo livello.</a></li>
-<li><a href="#org6a7d73d">Una volta conosciuto quello di primo livello, si chiede al corrispondente NameServer di risolvere la parte rimanente del dominio.</a>
-<ul>
-<li><a href="#org9328b07">Questo risponde con l'indirizzo del DNS Server del secondo livello.</a></li>
-</ul>
-</li>
-<li><a href="#org83f3c26">Se il dominio era composto da tre livelli, il DNS server di secondo livello risponde con l'IP specifico</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org0f75bf7">Anche l'approccio iterativo richidede un overhead per il primo step, che viene attenuato dall'utilizzo della cache.</a>
-<ul>
-<li><a href="#orgdf551e4">In questo modo, la prossima volta che verrà richiesto un dominio di terzo livello appartenente allo stesso secondo livello, la richiesta verrà effettuata direttamente al Name Server di secondo livello.</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a href="#org149aae6"><span class="done DONE">DONE</span> Riempire con ultime 2 lezioni di livello 4</a></li>
 <li><a href="#orgddb2ba4">Ultima lezione</a></li>
 </ul>
 </div>
@@ -262,94 +123,6 @@
 <a href="https://intronetworks.cs.luc.edu/1/html/index.html">Exercises from Chicago University</a>
 </p>
 </div>
-</div>
-<div id="outline-container-org29180fd" class="outline-2">
-<h2 id="org29180fd">Host computer dove risiedono le app finali e un sistema di rete composto da un insieme di nodi e link.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org2228452" class="outline-2">
-<h2 id="org2228452">Gli unici dati che viaggiano nel sistema sono denominati pacchetti, di dimensione massima fissa. Semplifica l'architettura dei nodi di switch, cioè i router, che svolgono funzionalità di instradamento. In questo modo ogni router si occupa soltanto di ricevere e smistare i pacchetti su link stabiliti in base a metriche di instradamento.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-orgd6cc51b" class="outline-2">
-<h2 id="orgd6cc51b">Una divisione funzionale delle varie parti è: il sistema di reti, attraverso ip, decide il percorso migliore in base a quel momento specifico (le condizioni variano nel tempo), concetto chiamato instradamento.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org5df9786" class="outline-2">
-<h2 id="org5df9786">Pacchetti con stesso mittente e destinatario non necessariamente percorrono lo stesso cammino. Non solo la comunicazione non è affidabile, ma anche ogni pacchetto è completamente indipendente dagli altri, sebbene siano tutti risultato dello stesso processo di frammentazione da parte dell'host. Servirà poi un modo per reassemblarli a destinazione.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-orgaf438d0" class="outline-2">
-<h2 id="orgaf438d0">Ogni pacchetto è indipendente, ma in qualche modo verrà ricostruito, quindi c'è qualche legame logico fra il singolo frammento e l'unità generale. Finchè i pacchetti sono nel sistema di rete, questo collegamento è perso.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org950ccae" class="outline-2">
-<h2 id="org950ccae">A questo punto abbiamo definito dei concetti come affidabilità e valori tempo di trasmissione, tempo di propagazione, round-trip tie, error-rate su un canale, gitter, che tornano.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org3605f48" class="outline-2">
-<h2 id="org3605f48">Abbiamo identificato le componenti architetturali di una rete, con link fra router e host, entrambi con software e funzioni utili alla comunicazione, IP lato router e TCP lato host&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-
-<div id="outline-container-org763e335" class="outline-2">
-<h2 id="org763e335">Adesso analizzeremo le altre componenti della rete, e come sono organizzate all'interno della struttura, le varie funzioni di rete.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-orge526da8" class="outline-2">
-<h2 id="orge526da8">Per la struttura gerarchica a 5 (7) livelli, i collegamenti fra le due macchine sorgente e destinazione sono allo stesso livello. Non sono ammesse cross-layer communication.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org84cbc5f" class="outline-2">
-<h2 id="org84cbc5f">Finora abbiamo capito come, su un canale che collega il nodo a al nodo b, inviare frame in modo affidabile (rimando alle 3 condizioni)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org36124a3" class="outline-2">
-<h2 id="org36124a3">A volte la topologia di rete è un grafo parzialmente connesso e in particolare in cui i punti sono collegati fra loro in una <b>maglia</b>, ed è per questo chiamata anche punto-a-punto, ma spesso non è così.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-orgb0469e7" class="outline-2">
-<h2 id="orgb0469e7">Di solito, alla salita del fronte d'onda, legge il valore in volt, e se è 5 il bit è 1, altrimenti 0&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-orgbc3728a" class="outline-2">
-<h2 id="orgbc3728a">Per stabilire l'utilizzo (efficienza) del mio MAC layer, che presiede la connessione Ethernet, bisogna introdurre al tempo di propagazione, nella formula originale, ovvero tx su tx + 2tp, il contention time medio, ovvero il tempo perso in carrier sense, nel discardare trasmissioni corrotte e nei ritardi. (Bisogna sommare l'inverso (perchè?), e quindi 1/A)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org1eb8280" class="outline-2">
-<h2 id="org1eb8280">Per aumentare le prestazioni di Ethernet, potrei scalare il tasso di trasmissione di un ordine di grandezza. Il problema è che il rame non va oltre 25Mbps.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-orgd77b681" class="outline-2">
-<h2 id="orgd77b681">Nell'architettura Ethernet, il primo apparato utilizzato è il repeating hub, passivo, in cui tutte le stazioni contendono per il canale di trasmissione. Gli hub sono collegati da un bridging hub, attivo, che attraverso il principio di Store-and-Forward, separa i domini di collisione dei vari hub. Un bridge ha tante porte ethernet quanti sono i domini collegati. Inoltre, contiene una tabella aggiornata ogni volta che riceve una comunicazione (bridge trasparente). Quando la comunicazione è destinata a una stazione non salvata in tabella, fa flading.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-orge6c8b46" class="outline-2">
-<h2 id="orge6c8b46">A livello superiore, c'è uno switch, che funziona come un hub, ma con una memoria ed una cpu, per memorizzare e switchare in modo intelligente. Le connessioni da e per lo switch NON richiedono Carrier Sense, perchè sono punto-punto, in quanto già univocate dal bridge. Il cavo utilizzato è un duplex e può essere anche in fibra. Le porte sono comunque compliant con IEEE nel formato della porta.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org2af6a5a" class="outline-2">
-<h2 id="org2af6a5a">Nel CSMA-CD, l'efficienza è \(\frac{1}{1+\frac{2BL}{CF}e}\), quindi se aumento la Bandwidth, devo necessariamente ridurre la lunghezza e aumentare la dimensione del frame.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-orgd2c93e7" class="outline-2">
-<h2 id="orgd2c93e7">Notiamo che nel Data-Link, a questo punto, non ci sono più collegamenti punto-punto, ma un MAC layer, che controlla l'accesso a un canale condiviso.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org71205b8" class="outline-2">
-<h2 id="org71205b8">Una VLAN viene utilizzata per introdurre una nuova divisione virtuale fra stazioni. Un motivo per cui viene utilizzata è per aumentare la sicurezza.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org98d5d71" class="outline-2">
-<h2 id="org98d5d71">Per riassumere i primi 2 livelli, sono entrambi composti da due sottolivelli.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-orgd570d63" class="outline-2">
-<h2 id="orgd570d63">Le LAN occupano spazi geografici molto limitati. E' necessario collegare LAN, anche lontane, così che siano tutte raggiungibili. Per farlo, vengono collegate ad uno strato superiore, che sarebbe l'ISP, fino ad arrivare ad un terzo strato che è quello intercontinentale.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org90fd521" class="outline-2">
-<h2 id="org90fd521">Nel livello 3 dobbiamo gestire l'indirizzamento e l'instradamento.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org56b2f6c" class="outline-2">
-<h2 id="org56b2f6c">Riguardo l'indirizzamento IP, abbiamo visto metodi per garantire l'unicità dell'indirizzo. Abbiamo visto il subnetting, che va di pari passo con il metodo CLASS based. Subnetting non nasce con l'obiettivo di superare il limite delle classi, ma è trucco organizzativo per inserire un nuovo livello gerarchico per gestire le reti in modo che riflettano di più la struttura.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org660452f" class="outline-2">
-<h2 id="org660452f">Sebbene l'indirizzamento sia parte del livello 3 a livello globale, ogni livello possiede il proprio indirizzo per comunicare con altre macchine.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org8527999" class="outline-2">
-<h2 id="org8527999">Introduciamo il DHCP&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org41d4771" class="outline-2">
-<h2 id="org41d4771">L'ICMP utilizzato per il ping e per capire delle statistiche sulla rete, fa uso di uno Header IP ed utilizza un Checksum, oltre che il tipo di richiesta (ce ne sono varie).&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org41ad2dc" class="outline-2">
-<h2 id="org41ad2dc">Un importante compito del livello 3 è quello di instradare i pacchetti verso la giusta destinazione. Il grafo della rete è parzialmente connesso e serve un livello superiore a quello del data link che abbia una visione più ampia e riesca a smistare i pacchetti in un modo intelligente ed efficiente&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org728728f" class="outline-2">
-<h2 id="org728728f">Ci rifacciamo alla stessa struttura riguardante il routing, con un router che contiene un forwarder con porte IO di ingresso ed uscita e che opera su una tabella di routing, facendo un lookup e stabilendo la corretta porta di output. Chi scrive sulla tabella è il router, che ha i propri pacchetti di controllo e opera come un processo totalmente asincrono ed indipendente.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org186bd41" class="outline-2">
-<h2 id="org186bd41">Supponiamo di avere due macchina che ha uno strato applicativo, seguito da TCP, IP ecc&#x2026;, attaccata ad una rete IP.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
 </div>
 <div id="outline-container-org51c9001" class="outline-2">
 <h2 id="org51c9001">Al livello 3 c'è un processo chiamato router, autonomo rispetto al forwarder. Questa separazione ci facilita la costruzione e l'implementazione dell'instradamento e la sua messa in cloud.</h2>
@@ -399,9 +172,6 @@
 </div>
 </div>
 </div>
-</div>
-<div id="outline-container-org63c9577" class="outline-2">
-<h2 id="org63c9577">Il traffico realtime, come la telefonia su internet o la conferenza su internet, è associato ad una jitter sensitivity ed aldelay associato ad un singolo pacchetto.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
 </div>
 <div id="outline-container-org6c58e92" class="outline-2">
 <h2 id="org6c58e92">IPV6 è uguale ma con molte meno opzioni</h2>
@@ -511,143 +281,8 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orgcee69f3" class="outline-2">
-<h2 id="orgcee69f3">Transport layer è il primo livello ad essere end-to-end, ovvero che comunica fra due macchine ed astrae ai livelli superiori la rete sottostante (la nasconde).&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org8d7197d" class="outline-2">
-<h2 id="org8d7197d">Quindi siamo arrivati al SYN che uno manda per aprire la connessione, con un numero di sequenza generato in numero casuale. Il canale è bidirezionale e quindi avviene tutto nello stesso modo in entrambi gli host.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
-<div id="outline-container-org3f50fe8" class="outline-2">
-<h2 id="org3f50fe8">Negle ha un utilità quando vogliamo garantire un utilizzo efficiente della rete.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
-</div>
 <div id="outline-container-org149aae6" class="outline-2">
-<h2 id="org149aae6"><span class="todo TODO">TODO</span> Riempire con ultime 2 lezioni di livello 4</h2>
-</div>
-<div id="outline-container-orgc668dca" class="outline-2">
-<h2 id="orgc668dca">Iniziamo il livello applicazione parlando del DNS, ovvero il Domain Name System.</h2>
-<div class="outline-text-2" id="text-orgc668dca">
-</div>
-<div id="outline-container-orge0cbd2e" class="outline-3">
-<h3 id="orge0cbd2e">E' un sistema che permette di rendere più semplice raggiungere un host</h3>
-<div class="outline-text-3" id="text-orge0cbd2e">
-</div>
-<div id="outline-container-orgee697e9" class="outline-4">
-<h4 id="orgee697e9">Normalmente si usa un IP per raggiungere un host, ma è praticamente impossibile ricordare un IP.</h4>
-</div>
-</div>
-<div id="outline-container-orgaebad13" class="outline-3">
-<h3 id="orgaebad13">Funziona associando un nome (dominio) all'ip di uno specifico host.</h3>
-<div class="outline-text-3" id="text-orgaebad13">
-</div>
-<div id="outline-container-orgb0cf427" class="outline-4">
-<h4 id="orgb0cf427">Permette anche di recuperare altre informazioni</h4>
-</div>
-</div>
-<div id="outline-container-org3ffa469" class="outline-3">
-<h3 id="org3ffa469">L'idea è quella di disaccoppiare il modo in cui un essere umano raggiunga un certo servizio.</h3>
-<div class="outline-text-3" id="text-org3ffa469">
-</div>
-<div id="outline-container-org5b11c5c" class="outline-4">
-<h4 id="org5b11c5c">Ad esempio il servizio potrebbe cambiare indirizzo ip in modo trasparente agli utenti.</h4>
-<div class="outline-text-4" id="text-org5b11c5c">
-</div>
-<div id="outline-container-org2eb4f2f" class="outline-5">
-<h5 id="org2eb4f2f">Questo è utilizzato anche per il load balancing, così che il traffico venga diviso su diversi server.</h5>
-</div>
-</div>
-</div>
-<div id="outline-container-org2fd1e69" class="outline-3">
-<h3 id="org2fd1e69">Il fully qualified domain name (FQDN) contiene un punto alla fine che indica il root domain</h3>
-</div>
-<div id="outline-container-org25b72aa" class="outline-3">
-<h3 id="org25b72aa">Il modo in cui avviene la risoluzione del FQDN fra due macchine, ovvero fra un host che richiede e il server che risponde, è sostituendo ad ogni punto il numero di caratteri che seguono quel punto prima di quello successivo, esempio 2DI5UNIMI2IT0.</h3>
-</div>
-<div id="outline-container-org8389264" class="outline-3">
-<h3 id="org8389264">Una query DNS contiene uno header, il FQDN specifico, il tipo di query(A, AAAA, Mx), la classe (che indica la rete su cui si vuole risolvere, che di fatto è sempre internet)</h3>
-<div class="outline-text-3" id="text-org8389264">
-</div>
-<div id="outline-container-org5db6117" class="outline-4">
-<h4 id="org5db6117">Il tipo può essere2 A per IPv4, AAAA per IPv6, MX per posta, CNAME (canonical name) che è un altro nome per lo stesso sito</h4>
-</div>
-</div>
-<div id="outline-container-org2f520a9" class="outline-3">
-<h3 id="org2f520a9">La risposta ricopia i dati e inserisce l'indirizzo nell'ultimo campo.</h3>
-</div>
-<div id="outline-container-org450da38" class="outline-3">
-<h3 id="org450da38">Un record DNS in cache può essere associato ad uno specifico TTL, dopo il quale il record scade e la prossima richiesta effettuata da qualunque client dovrà essere risoluta di nuovo</h3>
-<div class="outline-text-3" id="text-org450da38">
-</div>
-<div id="outline-container-org9c5a8cd" class="outline-4">
-<h4 id="org9c5a8cd"><span class="todo TODO">TODO</span> Capire funzionamento in caso di record scaduto</h4>
-</div>
-</div>
-<div id="outline-container-org9637bb1" class="outline-3">
-<h3 id="org9637bb1">Il resolving DNS avviene con un client che chiede la risoluzione di uno specifico FQDN al resolver all'interno della stessa macchina.</h3>
-<div class="outline-text-3" id="text-org9637bb1">
-</div>
-<div id="outline-container-org55190f4" class="outline-4">
-<h4 id="org55190f4">Il resolver usa UDP perchè non gli serve instaurare la connessione e parla con il Local DNS, che viene impostato in fase di configurazione.</h4>
-</div>
-</div>
-<div id="outline-container-org54b497e" class="outline-3">
-<h3 id="org54b497e">A livello globale ci sono dei root DNS servers che contengono soltanto i domini di primo livello, con gli IP corrispondenti dei NameServer.</h3>
-<div class="outline-text-3" id="text-org54b497e">
-</div>
-<div id="outline-container-orgef596cf" class="outline-4">
-<h4 id="orgef596cf">Usiamo questi se non sappiamo come raggiungere il dominio di primo livello, che di solito però conosciamo già perchè rimane in cache</h4>
-</div>
-<div id="outline-container-orgc970664" class="outline-4">
-<h4 id="orgc970664">Sul libro sono indicati due approcci, uno iterativo e uno ricorsivo, ma gli esempi sono tutti iterativi.</h4>
-<div class="outline-text-4" id="text-orgc970664">
-</div>
-<div id="outline-container-org87cd323" class="outline-5">
-<h5 id="org87cd323">L'approccio ricorsivo funziona con il resolver che manda una query al local dns e quest'ultimo risponde con l'indirizzo già pronto.</h5>
-<div class="outline-text-5" id="text-org87cd323">
-</div>
-<div id="outline-container-org7e6346f" class="outline-6">
-<h6 id="org7e6346f">Non è implementata nei server per questioni di scalabilità.</h6>
-</div>
-<div id="outline-container-org6cafc50" class="outline-6">
-<h6 id="org6cafc50">Il problema è che sebbene sia molto comoda per il client, il resolver dovrebbe mantenere tantissime informazioni di stato in attesa dei passi successivi.</h6>
-</div>
-</div>
-<div id="outline-container-org7d95c94" class="outline-5">
-<h5 id="org7d95c94">L'approccio iterativo si applica dal local dns in poi, mentre fra resolver e local dns rimane ricorsivo, ovvero il local dns mantiene lo stato della richiesta fino all'invio della risposta al resolver.</h5>
-<div class="outline-text-5" id="text-org7d95c94">
-</div>
-<div id="outline-container-orga98ba2c" class="outline-6">
-<h6 id="orga98ba2c">Il client continua a ricevere una risposta valida già pronta.</h6>
-</div>
-<div id="outline-container-org2193f4c" class="outline-6">
-<h6 id="org2193f4c">Il local DNS, però, gestisce in modo iterativo.</h6>
-<div class="outline-text-6" id="text-org2193f4c">
-</div>
-<div id="outline-container-orgb8200e7" class="outline-7">
-<h7 id="orgb8200e7">Manda l'intero dominio al root, che conosce però solo l'IP di primo livello e risponde con un informazione parziale, ovvero con l'indirizzo del NS di primo livello.</h7>
-</div>
-<div id="outline-container-org6a7d73d" class="outline-7">
-<h7 id="org6a7d73d">Una volta conosciuto quello di primo livello, si chiede al corrispondente NameServer di risolvere la parte rimanente del dominio.</h7>
-<div class="outline-text-7" id="text-org6a7d73d">
-</div>
-<div id="outline-container-org9328b07" class="outline-8">
-<h8 id="org9328b07">Questo risponde con l'indirizzo del DNS Server del secondo livello.</h8>
-</div>
-</div>
-<div id="outline-container-org83f3c26" class="outline-7">
-<h7 id="org83f3c26">Se il dominio era composto da tre livelli, il DNS server di secondo livello risponde con l'IP specifico</h7>
-</div>
-</div>
-</div>
-<div id="outline-container-org0f75bf7" class="outline-5">
-<h5 id="org0f75bf7">Anche l'approccio iterativo richidede un overhead per il primo step, che viene attenuato dall'utilizzo della cache.</h5>
-<div class="outline-text-5" id="text-org0f75bf7">
-</div>
-<div id="outline-container-orgdf551e4" class="outline-6">
-<h6 id="orgdf551e4">In questo modo, la prossima volta che verrà richiesto un dominio di terzo livello appartenente allo stesso secondo livello, la richiesta verrà effettuata direttamente al Name Server di secondo livello.</h6>
-</div>
-</div>
-</div>
-</div>
+<h2 id="org149aae6"><span class="done DONE">DONE</span> Riempire con ultime 2 lezioni di livello 4</h2>
 </div>
 <div id="outline-container-orgddb2ba4" class="outline-2">
 <h2 id="orgddb2ba4">Ultima lezione</h2>
@@ -668,7 +303,7 @@ Il prof non sa esattamente quali sono i valori di alfa e beta, comunque basta in
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-02-07 Fri 15:45</p>
+<p class="date">Created: 2025-04-05 Sat 19:08</p>
 </div>
 </body>
 </html>

@@ -1,0 +1,1064 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+<head>
+<!-- 2025-04-05 Sat 19:08 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Basi di dati</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
+<script>
+    window.MathJax = {
+      tex: {
+        ams: { multlineWidth: '85%' },
+        {packages: {'[+]': ['mathtools']}},
+        tags: 'ams',
+        tagSide: 'right',
+        tagIndent: '.8em'
+      },
+      chtml: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      svg: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      output: {
+        font: 'mathjax-modern',
+        displayOverflow: 'scale'
+      },
+      loader: {
+        load: ['[tex]/mathtools']
+      },
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Basi di dati</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org5c176c8">Teoria</a>
+<ul>
+<li><a href="#orgc58f922">Lez precedente</a>
+<ul>
+<li><a href="#org977fa11">La relazione è intesa in senso matematico e definisce ogni tabella come elemento costitutivo</a></li>
+<li><a href="#orgb3aa1d8">La tabella è definita su atttributi, ciascuno dei quali definito su domini (val ammissibili)</a></li>
+<li><a href="#orgfc6ba24">Allora una relazione R è un sottoinsieme del prodotto cartesiano dei domini degli attributi sui quali è definita la relazione R</a></li>
+<li><a href="#orgac163f9">Non sempre il dominio (tipo di dato) è definito in termini enumerativi (lista), ma può essere un tipo di dato basico, potenzialmente infinito e per definizione</a>
+<ul>
+<li><a href="#orgd099586">Anche in questo caso la tabella è definita sull'insieme di valori ammissibili</a></li>
+</ul>
+</li>
+<li><a href="#org687b3cf"><span class="todo TODO">TODO</span> Viene verificato sempre che i valori attribuiti alla ennupla (ins definizione) rispettino l'integrità</a></li>
+<li><a href="#org6344c74">Tipicamente ai domini di una relazione sono associate delle label</a></li>
+<li><a href="#org02bf304"><span class="todo TODO">TODO</span> Uno schema può essere definito a livello di una singola relazione. (cos'è uno schema)</a>
+<ul>
+<li><a href="#orgab3c040">Contrapposizione schema e istanza</a></li>
+<li><a href="#org39254fe"></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgb32683a">Lez 5marzo</a>
+<ul>
+<li><a href="#org1bdecdb">Fra le proprietà di dbeaver c'è lo (schema?), ovvero la struttura (con i domini ecc. ?)</a></li>
+<li><a href="#org05fbd41">Nella parte dati, c'è la rappresentazione estensiva, ovvero i record veri e propri</a></li>
+<li><a href="#orgcb8cc5a">C'è un orientamento ai valori: non è possibile avere due record identici per ogni attributo</a>
+<ul>
+<li><a href="#orgb327c34">Se è vero che la tabella è una relazione matematica, allora due record identici sarebbero la stessa cosa.</a></li>
+</ul>
+</li>
+<li><a href="#org8cfadf0">Non esiste un ordinamento intrinseco dei dati</a>
+<ul>
+<li><a href="#org7035915">L'unico modo per riferirsi ad un record specifico è attraverso un sottoinsieme dei valori dei suoi attributi</a>
+<ul>
+<li><a href="#org4fbbb4d">Alla peggio bisogna usare tutti gli attributi</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org2057b15">Il grado è il numero di attributi definiti sulla relazione.</a>
+<ul>
+<li><a href="#orga338d3d">Non cambia a meno di ridefinire lo schema della relazione</a></li>
+</ul>
+</li>
+<li><a href="#org139b33b">La cardinalità è la numerosità delle tuple presenti in un certo istanze in una base di dati.</a>
+<ul>
+<li><a href="#org90f8026">Cambia spesso, ad ogni inserimento e cancellazione</a></li>
+</ul>
+</li>
+<li><a href="#org6777cbf">Un modello relazionale di una base di dati è una serie di informazioni schematiche di nomeTabella(attributo1, &#x2026;, attributoN)</a>
+<ul>
+<li><a href="#org9d24e04">Non possono esistere due tabelle con lo stesso nome</a></li>
+<li><a href="#org25af746">All'interno di una relazione non è possibile avere due attributi con lo stesso nome</a>
+<ul>
+<li><a href="#org7ca4473">Possono invece esistere in tue relazioni (tabelle) diverse</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org4e5e818">Si usa la notazione puntata per distinguere fra gli attributi con lo stesso nome in tabelle diverse</a></li>
+<li><a href="#org653915c">Il vincolo è un predicato definito sulla struttura della relazione, il cui valore di verità viene valutato su ogni (record?) e a seconda del quale è ammesso avere un record</a>
+<ul>
+<li><a href="#org51a1d24">Possono essere intrarelazionali, che governano come può essere fatto un record al suo interno</a></li>
+<li><a href="#org1262710">Interelazionali, vincolano l'esistenza di record diversi</a></li>
+<li><a href="#org40c9985">All'interno di una tabella possiamo soltanto memorizzare valori che siano coerente con il tipo di dato associato ad ogni attributo (dominio)</a></li>
+<li><a href="#orgaf9328c">Non tutti i NULL hanno lo stesso significato</a>
+<ul>
+<li><a href="#org889f071">In alcuni casi significa che il dato sia sconosciuto (il valore esiste ma è sconosciuto)</a></li>
+<li><a href="#org0c164bd">In altri è mancante perchè è inesistente</a></li>
+<li><a href="#orgbc2bf48">Per questo motivo(?), si può introdurre un vincolo sul NOTNULL, con cui si impone l'esistenza di un valore (non è ammesso NULL)</a>
+<ul>
+<li><a href="#org4c9fc6d">Altrimenti, si può aggirare il problema introducendo un nuovo attributo che in qualche modo spieghi se il null sia sconosciuto o mancante</a>
+<ul>
+<li><a href="#org7f86044">Un esempio è un campo alive che accompagna un campo deathdate: se una persona è viva, death null vuol dire mancante, mentre se è morta vuol dire sconosciuto</a></li>
+</ul>
+</li>
+<li><a href="#org2c61d2b">Nel modello relazionale, ogni attributo è NOTNULL a meno che non abbia un asterisco alla fine,</a>
+<ul>
+<li><a href="#org6d4bf55">Invece in SQL è il contrario: ogni attributo ammette NULL a meno che non lo si restringa a NOTNULL</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgbec1dec">Un altro vincolo, sull'esempio precedente, è che si può vincolare in modo che se una persona è viva allora la data di morte dev'essere null, altrimenti si ha una violazione di un vincolo di integrità dei dati</a></li>
+<li><a href="#orga321c76">Fra i vincoli intrarelazionali ci sono quelli di dominio, legati al dominio scelto</a>
+<ul>
+<li><a href="#org3d0f229">Ad esempio se si sceglie il tipo di dato "data" allora il vincolo è che si avrà un dato del tipo YYYY-MM-DD</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org22c716d">Un database <b>attivo</b> fa uso di <b>trigger</b> (innesco) che esegue qualcosa in automatico, forzando l'integrità dei dati in modo che questi rispettino un vincolo</a>
+<ul>
+<li><a href="#org483db82">Un esempio è che l'inserimento della data di morte rende ALIVE false</a></li>
+</ul>
+</li>
+<li><a href="#orgd678d18">Le chiavi sono usate per descrivere i record</a>
+<ul>
+<li><a href="#orgd4286bc">Una superchiave è una combinazione di un sottoinsieme degli attributi che garantisce univocità del record</a>
+<ul>
+<li><a href="#orgecac609">Ad esempio un id da solo è una superchiave</a>
+<ul>
+<li><a href="#org2217fea">L'id non è un descrittore intrinseco o naturale di un film o un entrata. L'id è un artefatto che utilizziamo per semplificarci l'esistenza.</a>
+<ul>
+<li><a href="#org7b29f21">è ragionevole che la combinazione di attributi sia esplicativa, quindi l'entrata senza l'id dovrebbe essere comunque unica.</a></li>
+<li><a href="#org6425959">Quindi tutti gli attributi senza id sono anche superchiave</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org881bd83">La scelta di quali attributi siano univoci e quindi superchiave è una scelta di progettazione, legata a quali situazioni si vuole tollerare o meno</a></li>
+</ul>
+</li>
+<li><a href="#orge2cda59">Una chiave è una superchiave minimale</a>
+<ul>
+<li><a href="#orgcc4b5dd">Ovvero una superchiave è anche chiave se non posso toglierci nessun attributo senza perdere la proprietà di univocità.</a></li>
+<li><a href="#orgd7c3e18">Data una combinazione di attributi che è superchiave, non posso trovare alcun sottoinsieme della chiave che tolto non mi permetta di perdere l'univocità</a></li>
+<li><a href="#orga431edf">In SQL le chiavi sono definite con il vincolo UNIQUE</a></li>
+</ul>
+</li>
+<li><a href="#org5621547">Una chiave primaria è <b>una sola</b> fra le chiavi per cui vale il vincolo di entity integrity</a>
+<ul>
+<li><a href="#orgf0d3372">Per una chiave primaria non sono possibili valori null</a>
+<ul>
+<li><a href="#org5d521d2">Il motivo per cui è richiesto anche questo è che altrimenti combinazioni di attributi della chiave dove sono presenti dei null sarebbero uniche fra loro, es A-B-null/A-null-C/null-B-C</a>
+<ul>
+<li><a href="#org450bff7">Questo non è desiderabile</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org4b0c4c2">Entity integrity signifca che venga sempre garantita l'unicità</a></li>
+<li><a href="#orgf24b21e">Integrità, minimalità e non nullità</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org6c804e6">Tutto ciò che è stato trattato finora sono intrarelazionali</a></li>
+<li><a href="#orga7eb47e">Il vincolo di integritàq referenziale, invece, è un vincolo <b>inter-relazionale</b>.</a>
+<ul>
+<li><a href="#org1077467">Date due relazioni c'è R1 che referenzia e R2 che è referenziata</a>
+<ul>
+<li><a href="#org0a4c203">R1 contiene un attributo (o insieme di) X detto Foreign Key (FK)</a></li>
+<li><a href="#org9fd073a">R2 contiene un attributo (o insieme di) Y detto attributo referenziato che è chiave per R2</a></li>
+</ul>
+</li>
+<li><a href="#org64e2034">Quando viene provata ad effettuare la cancellazione di R2 che contiene la chiave per R1, il dbms attua la politica di NO ACTION e ne impedisce la cancellazione</a>
+<ul>
+<li><a href="#orgd687e57">Lo stesso vale quando viene effettuato un update per il campo referenziato</a></li>
+<li><a href="#org79217c9">Questa è la politica conservativa, che impedisce la modifica quando viene messa a rischio l'integrità</a></li>
+</ul>
+</li>
+<li><a href="#orgcd40ba7">Un'altra politica è quella CASCADE, che a fronte di cancellazione del record o aggiornamento della chiave referenziante, effettua la stessa operazione sul record referenziato</a>
+<ul>
+<li><a href="#orgc490cfe">In questo caso, o si torna all'inizio, o si arriva alla fine: è impossibile rimanere in mezzo</a></li>
+</ul>
+</li>
+<li><a href="#orgdc52242">Di solito si mette cascade sulla delete e no action sulla delete</a></li>
+<li><a href="#orgacf595c">Notare che il vincolo inter-relazionale può lavorare anche sulla stessa tabella</a>
+<ul>
+<li><a href="#org5d60f66">Quindi il riferimento può essere riflessivo, ovvero la chiave esterna può essere un campo della stessa tabella</a></li>
+</ul>
+</li>
+<li><a href="#org0fa56e5">Inoltre il vincolo può essere NULL</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgdfb9f30">Lez 11 mar</a>
+<ul>
+<li><a href="#org81be67e">Il vincolo di integrità referenziale, invece, è un vincolo <b>inter-relazionale</b>.</a>
+<ul>
+<li><a href="#orgf891a5a">Date due relazioni c'è R1 che referenzia e R2 che è referenziata</a>
+<ul>
+<li><a href="#org7d88c9c">R1 contiene un attributo (o insieme di) X detto Foreign Key (FK)</a></li>
+<li><a href="#org7e7515a">R2 contiene un attributo (o insieme di) Y detto attributo referenziato che è chiave per R2</a></li>
+</ul>
+</li>
+<li><a href="#org3c370e7">Quando viene provata ad effettuare la cancellazione di R2 che contiene la chiave per R1, il dbms attua la politica di NO ACTION e ne impedisce la cancellazione</a>
+<ul>
+<li><a href="#org5108c06">Lo stesso vale quando viene effettuato un update per il campo referenziato</a></li>
+<li><a href="#org953bc85">Questa è la politica conservativa, che impedisce la modifica quando viene messa a rischio l'integrità</a></li>
+</ul>
+</li>
+<li><a href="#org095cdcc">Un'altra politica è quella CASCADE, che a fronte di cancellazione del record o aggiornamento della chiave referenziante, effettua la stessa operazione sul record referenziato</a>
+<ul>
+<li><a href="#org2ef8ff3">In questo caso, o si torna all'inizio, o si arriva alla fine: è impossibile rimanere in mezzo</a></li>
+</ul>
+</li>
+<li><a href="#orgdaa5fdf">Di solito si mette cascade sulla delete e no action sulla delete</a></li>
+<li><a href="#org4b95b6b">Notare che il vincolo inter-relazionale può lavorare anche sulla stessa tabella</a>
+<ul>
+<li><a href="#orga2b0dea">Quindi il riferimento può essere riflessivo, ovvero la chiave esterna può essere un campo della stessa tabella</a></li>
+</ul>
+</li>
+<li><a href="#org91153e7">Inoltre il vincolo può essere NULL</a></li>
+</ul>
+</li>
+<li><a href="#orgb57da53">L'algebra relazionale non è il linguaggio SQL ma è il modo in cui viene esplicitato</a>
+<ul>
+<li><a href="#org0009adb">L'unione può avvenire solo quando il grado delle tabelle è lo stesso (stesso numero di attributi) e attributo per attributo si trovano valori compatibili (i vincoli di dominio sono affini)</a>
+<ul>
+<li><a href="#org6e4c22b">Notare che la relazione risultante non ha niente a che vedere con le relazioni iniziali per quanto riguarda vincoli</a>
+<ul>
+<li><a href="#org1b6daa5">Ad esempio, due film uguali ma con una chiave diversa, verrebbero rappresentati due volte nell'unione e non ci sarebbe modo di identificarli univocamente. Anche se l'id era chiave, non è detto che lo sia ancora nell'unione</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgceb12eb">Lez 12 mar</a>
+<ul>
+<li><a href="#org1835fd8">Notare che l'intersezione non riguarda intersezione sullo stesso record (due campi dello stesso record) ma i record con lo stesso id e che hanno due campi, uno comedy e uno romance</a></li>
+<li><a href="#org54e376e">La selezione (&sigma;) è un operazione di filtro, ovvero restituisce una relazione col medesimo grado ma con cardinalità minore uguale di quella di partenza</a></li>
+<li><a href="#org09e399f">Differenza, unione, intersezione e selection sono operazioni di DQL, ovvero data query language, ovvero viste su un database</a>
+<ul>
+<li><a href="#orgf12bd6a">Non c'è possibilità di modificare i dati</a></li>
+</ul>
+</li>
+<li><a href="#org823b39e">La proiezione è ortogonale rispetto alla selezione, mantenendo la cardinalità ma riducendo il grado</a>
+<ul>
+<li><a href="#orga17cc51">Utile nei casi in cui si vuole intersecare o unire viste (non è possibile in caso di relazioni con grado diverso)</a>
+<ul>
+<li><a href="#orga059d76">Ad esempio, trovare i film di un certo anno e con un certo genere richiede di unire due relazioni diverse con grado diverso e se voglio unirli allora devo restringere all'unico sottoinsieme condiviso di attributi, in questo caso solo ID</a></li>
+</ul>
+</li>
+<li><a href="#org5737290">Si immagini adesso il caso in cui si vuole scremare la tabella 'genre' con due attributi, movie e genre, che formano insieme una chiave primaria</a>
+<ul>
+<li><a href="#orgdcb95a6">dato che la chiave primaria è composta da entrambi, un solo id può avere più entrate con genre diverso</a></li>
+<li><a href="#orga36764b">Non basta effettuare delle select e poi l'intersezione, perchè si avrebbero delle tabelle con il valore genre diverso e quindi sarebbero mutualmente esclusive necessariamente</a></li>
+<li><a href="#orgbe3f76e">Quindi bisogna filtrare al sottoinsieme comune prima di effettuare l'intersezione, per poi arrivare all'intersezione con lo stesso grado e con intersezione non nulla</a></li>
+<li><a href="#orga5e2ae1">soluzioni con AND fra selezioni non vanno bene, perchè l'and fra selezioni esclusive l'un l'altra sarà sempre vuoto (un entrata non può avere sia un valore che l'altro)</a></li>
+<li><a href="#org8c6c661">soluzioni con OR sono invece troppo larghe</a></li>
+<li><a href="#orge827fed">Va quindi SEMPRE usata l'intersezione, perchè bisogna unire necessariamente due gruppi</a></li>
+</ul>
+</li>
+<li><a href="#org8172c6e">AND è utile invece quando si vuole filtrare i campi per i valori di due campi diversi</a>
+<ul>
+<li><a href="#orge5d5f38">Nel caso di filtri <b>congiuntivi</b> è buona norma spezzarli in due operazioni atomiche (selezioni) in cascata</a>
+<ul>
+<li><a href="#org8ea52ce">Al posto di sigma(A AND B)base è meglio sigma(A)sigma(B)base</a>
+<ul>
+<li><a href="#org6ffdabf">Infatti, il sigma(A) agirà su una tabella molto più piccola di base</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org19425ef">quando si richiede di trovare qualcosa all'inizio della consegna, bisogna restringere solo alla cosa richiesta mediante una proiezione</a></li>
+<li><a href="#org2a4f5c0">Il <b>prodotto cartesiano</b> è una condizione necessaria per il <b>join</b></a>
+<ul>
+<li><a href="#orgd0255ef">Somma dei gradi delle relazioni di partenza e cardinalità uguale al prodotto</a></li>
+<li><a href="#org14cc131">Risulta in qualunque combinazione fra la prima e la seconda tabella, ovvero ogni riga di A è affiancata a ogni riga di B</a></li>
+<li><a href="#orgc1a8979">Allora il <b>join</b> è una selezione sul risultato del prodotto cartesiano</a>
+<ul>
+<li><a href="#org11463b9">Il join ha come simbolo "bowtie" (farfalla) ed è binario</a></li>
+<li><a href="#orgf7d9c93">Inoltre, lo chiamiamo theta join e ci aggiungiamo un theta accanto al simbolo</a>
+<ul>
+<li><a href="#org499f0fe">theta sta per il predicato che dev'essere rispettato</a></li>
+<li><a href="#orgb5564b8">tipicamente theta coinvolge un attributo di R1 e un altro di R2</a></li>
+<li><a href="#org9825bf9">Quando questa condizione è un uguaglianza, si ha un EQUIJOIN</a>
+<ul>
+<li><a href="#org9100502">Tipicamente usati per trovare corrispondenza tra chiave interna ed esterna</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org37217ae">Lez 18 mar</a>
+<ul>
+<li><a href="#orgcb7f315">La divisione è stata introdotta per evidenziare una relazione fra le tuple di tue tabelle con la seguente caratt. "quei record della tabella r1 che sono in relazione con tutte le tuple r2"</a>
+<ul>
+<li><a href="#org6bef3fb">Ad esempio trovare tutti i film che sono prodotti in tutti i paesi della tabella r2</a></li>
+<li><a href="#org9282a92">è opposto al prodotto cartesiano</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge26c1a8">Lez 19 mar</a>
+<ul>
+<li><a href="#orgfa3cad0">gli attributi in corsivo sono chiavi esterne</a></li>
+<li><a href="#org9f5a411"><span class="todo TODO">TODO</span> quelli sottolineati sono le chiavi</a></li>
+<li><a href="#orgebac0ea">meglio usare join e selezione piuttosto che operatori insiemistici quando non necessari</a></li>
+<li><a href="#org9fafdfa">esercizio di trovare paesi NON confinanti con l'italia</a>
+<ul>
+<li><a href="#orge402cff">i confini sono a-b e io non posso scremare soltanto in base al fatto che uno solo fra a e b sia italia perchè poi non so cosa proiettare</a></li>
+<li><a href="#org33532c9">quindi devo prima scremare a poi scremare b e infine fare l'unione dei due</a>
+<ul>
+<li><a href="#org97129df"><span class="todo TODO">TODO</span> su cosa fare l'unione?</a></li>
+</ul>
+</li>
+<li><a href="#org2d203c1"><span class="todo TODO">TODO</span> a voler essere precisi dovrei fare anche una join fra country border e country e prenderne il nome</a></li>
+<li><a href="#org2167017">non serve rinominare, solo la divisione ha bisogno di renominare perchè c'è bisogno dello stesso nome</a></li>
+</ul>
+</li>
+<li><a href="#org4f03207">esercizio politici san marino</a>
+<ul>
+<li><a href="#org31c0c67">nella divisione bisogna ricordarsi non solo di rinominare ma anche di restringere con una proiezione i valori del numeratore in modo che rimangano soltanto i valori che vogliamo siano in relazione con tutte le righe del denominatore</a></li>
+</ul>
+</li>
+<li><a href="#orgf3fa267">città con più di un politico</a>
+<ul>
+<li><a href="#orgb02c76a">join su sè stessa, così che rimangono solo i casi in cui ci sono stessa city ma head diversi ( dopo aver scremato in base all'anno)</a>
+<ul>
+<li><a href="#org0b68207">quindi non è join chiave primaria - chiave esterna</a></li>
+</ul>
+</li>
+<li><a href="#org0da2e8f">prima della join è utile ridenominare su una delle tabelle così che il join diventa chiaro su dove sta agendo</a></li>
+<li><a href="#org672a940">alla fine si proietta solo la city</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orga47c425">Lab</a>
+<ul>
+<li><a href="#org4e02a59">Lez precedente</a>
+<ul>
+<li><a href="#org42c4e92">Abbiamo visto la struttura del web, http, risposte, cookie ecc</a></li>
+<li><a href="#org353c78e">Poi abbiamo visto l'argomento della rappresentazione dell'informazione</a>
+<ul>
+<li><a href="#org2e0a467">HTML (basato su markup) che ci permette di codificare il contenuto di una pagina, marcando porzioni del contenuto così che abbiano la struttura desiderata</a></li>
+</ul>
+</li>
+<li><a href="#orgc479e9e">Finita con una discussione su come fare tabelle</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org9b561b0">Modello relazionale</a></li>
+<li><a href="#orgc40ce0a">Progetto</a>
+<ul>
+<li><a href="#org3d3628a">Usare bootstrap con supporto SAAS per essere più figo</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org5c176c8" class="outline-2">
+<h2 id="org5c176c8">Teoria</h2>
+<div class="outline-text-2" id="text-org5c176c8">
+</div>
+<div id="outline-container-orgc58f922" class="outline-3">
+<h3 id="orgc58f922">Lez precedente</h3>
+<div class="outline-text-3" id="text-orgc58f922">
+</div>
+<div id="outline-container-org977fa11" class="outline-4">
+<h4 id="org977fa11">La relazione è intesa in senso matematico e definisce ogni tabella come elemento costitutivo</h4>
+</div>
+<div id="outline-container-orgb3aa1d8" class="outline-4">
+<h4 id="orgb3aa1d8">La tabella è definita su atttributi, ciascuno dei quali definito su domini (val ammissibili)</h4>
+</div>
+<div id="outline-container-orgfc6ba24" class="outline-4">
+<h4 id="orgfc6ba24">Allora una relazione R è un sottoinsieme del prodotto cartesiano dei domini degli attributi sui quali è definita la relazione R</h4>
+</div>
+<div id="outline-container-orgac163f9" class="outline-4">
+<h4 id="orgac163f9">Non sempre il dominio (tipo di dato) è definito in termini enumerativi (lista), ma può essere un tipo di dato basico, potenzialmente infinito e per definizione</h4>
+<div class="outline-text-4" id="text-orgac163f9">
+</div>
+<div id="outline-container-orgd099586" class="outline-5">
+<h5 id="orgd099586">Anche in questo caso la tabella è definita sull'insieme di valori ammissibili</h5>
+</div>
+</div>
+<div id="outline-container-org687b3cf" class="outline-4">
+<h4 id="org687b3cf"><span class="todo TODO">TODO</span> Viene verificato sempre che i valori attribuiti alla ennupla (ins definizione) rispettino l'integrità</h4>
+</div>
+<div id="outline-container-org6344c74" class="outline-4">
+<h4 id="org6344c74">Tipicamente ai domini di una relazione sono associate delle label</h4>
+</div>
+<div id="outline-container-org02bf304" class="outline-4">
+<h4 id="org02bf304"><span class="todo TODO">TODO</span> Uno schema può essere definito a livello di una singola relazione. (cos'è uno schema)</h4>
+<div class="outline-text-4" id="text-org02bf304">
+</div>
+<div id="outline-container-orgab3c040" class="outline-5">
+<h5 id="orgab3c040">Contrapposizione schema e istanza</h5>
+</div>
+<div id="outline-container-org39254fe" class="outline-5">
+<h5 id="org39254fe"></h5>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb32683a" class="outline-3">
+<h3 id="orgb32683a">Lez 5marzo</h3>
+<div class="outline-text-3" id="text-orgb32683a">
+</div>
+<div id="outline-container-org1bdecdb" class="outline-4">
+<h4 id="org1bdecdb">Fra le proprietà di dbeaver c'è lo (schema?), ovvero la struttura (con i domini ecc. ?)</h4>
+</div>
+<div id="outline-container-org05fbd41" class="outline-4">
+<h4 id="org05fbd41">Nella parte dati, c'è la rappresentazione estensiva, ovvero i record veri e propri</h4>
+</div>
+<div id="outline-container-orgcb8cc5a" class="outline-4">
+<h4 id="orgcb8cc5a">C'è un orientamento ai valori: non è possibile avere due record identici per ogni attributo</h4>
+<div class="outline-text-4" id="text-orgcb8cc5a">
+</div>
+<div id="outline-container-orgb327c34" class="outline-5">
+<h5 id="orgb327c34">Se è vero che la tabella è una relazione matematica, allora due record identici sarebbero la stessa cosa.</h5>
+</div>
+</div>
+<div id="outline-container-org8cfadf0" class="outline-4">
+<h4 id="org8cfadf0">Non esiste un ordinamento intrinseco dei dati</h4>
+<div class="outline-text-4" id="text-org8cfadf0">
+</div>
+<div id="outline-container-org7035915" class="outline-5">
+<h5 id="org7035915">L'unico modo per riferirsi ad un record specifico è attraverso un sottoinsieme dei valori dei suoi attributi</h5>
+<div class="outline-text-5" id="text-org7035915">
+</div>
+<div id="outline-container-org4fbbb4d" class="outline-6">
+<h6 id="org4fbbb4d">Alla peggio bisogna usare tutti gli attributi</h6>
+</div>
+</div>
+</div>
+<div id="outline-container-org2057b15" class="outline-4">
+<h4 id="org2057b15">Il grado è il numero di attributi definiti sulla relazione.</h4>
+<div class="outline-text-4" id="text-org2057b15">
+</div>
+<div id="outline-container-orga338d3d" class="outline-5">
+<h5 id="orga338d3d">Non cambia a meno di ridefinire lo schema della relazione</h5>
+</div>
+</div>
+<div id="outline-container-org139b33b" class="outline-4">
+<h4 id="org139b33b">La cardinalità è la numerosità delle tuple presenti in un certo istanze in una base di dati.</h4>
+<div class="outline-text-4" id="text-org139b33b">
+</div>
+<div id="outline-container-org90f8026" class="outline-5">
+<h5 id="org90f8026">Cambia spesso, ad ogni inserimento e cancellazione</h5>
+</div>
+</div>
+<div id="outline-container-org6777cbf" class="outline-4">
+<h4 id="org6777cbf">Un modello relazionale di una base di dati è una serie di informazioni schematiche di nomeTabella(attributo1, &#x2026;, attributoN)</h4>
+<div class="outline-text-4" id="text-org6777cbf">
+</div>
+<div id="outline-container-org9d24e04" class="outline-5">
+<h5 id="org9d24e04">Non possono esistere due tabelle con lo stesso nome</h5>
+</div>
+<div id="outline-container-org25af746" class="outline-5">
+<h5 id="org25af746">All'interno di una relazione non è possibile avere due attributi con lo stesso nome</h5>
+<div class="outline-text-5" id="text-org25af746">
+</div>
+<div id="outline-container-org7ca4473" class="outline-6">
+<h6 id="org7ca4473">Possono invece esistere in tue relazioni (tabelle) diverse</h6>
+</div>
+</div>
+</div>
+<div id="outline-container-org4e5e818" class="outline-4">
+<h4 id="org4e5e818">Si usa la notazione puntata per distinguere fra gli attributi con lo stesso nome in tabelle diverse</h4>
+</div>
+<div id="outline-container-org653915c" class="outline-4">
+<h4 id="org653915c">Il vincolo è un predicato definito sulla struttura della relazione, il cui valore di verità viene valutato su ogni (record?) e a seconda del quale è ammesso avere un record</h4>
+<div class="outline-text-4" id="text-org653915c">
+</div>
+<div id="outline-container-org51a1d24" class="outline-5">
+<h5 id="org51a1d24">Possono essere intrarelazionali, che governano come può essere fatto un record al suo interno</h5>
+</div>
+<div id="outline-container-org1262710" class="outline-5">
+<h5 id="org1262710">Interelazionali, vincolano l'esistenza di record diversi</h5>
+</div>
+<div id="outline-container-org40c9985" class="outline-5">
+<h5 id="org40c9985">All'interno di una tabella possiamo soltanto memorizzare valori che siano coerente con il tipo di dato associato ad ogni attributo (dominio)</h5>
+</div>
+<div id="outline-container-orgaf9328c" class="outline-5">
+<h5 id="orgaf9328c">Non tutti i NULL hanno lo stesso significato</h5>
+<div class="outline-text-5" id="text-orgaf9328c">
+</div>
+<div id="outline-container-org889f071" class="outline-6">
+<h6 id="org889f071">In alcuni casi significa che il dato sia sconosciuto (il valore esiste ma è sconosciuto)</h6>
+</div>
+<div id="outline-container-org0c164bd" class="outline-6">
+<h6 id="org0c164bd">In altri è mancante perchè è inesistente</h6>
+</div>
+<div id="outline-container-orgbc2bf48" class="outline-6">
+<h6 id="orgbc2bf48">Per questo motivo(?), si può introdurre un vincolo sul NOTNULL, con cui si impone l'esistenza di un valore (non è ammesso NULL)</h6>
+<div class="outline-text-6" id="text-orgbc2bf48">
+</div>
+<div id="outline-container-org4c9fc6d" class="outline-7">
+<h7 id="org4c9fc6d">Altrimenti, si può aggirare il problema introducendo un nuovo attributo che in qualche modo spieghi se il null sia sconosciuto o mancante</h7>
+<div class="outline-text-7" id="text-org4c9fc6d">
+</div>
+<div id="outline-container-org7f86044" class="outline-8">
+<h8 id="org7f86044">Un esempio è un campo alive che accompagna un campo deathdate: se una persona è viva, death null vuol dire mancante, mentre se è morta vuol dire sconosciuto</h8>
+</div>
+</div>
+<div id="outline-container-org2c61d2b" class="outline-7">
+<h7 id="org2c61d2b">Nel modello relazionale, ogni attributo è NOTNULL a meno che non abbia un asterisco alla fine,</h7>
+<div class="outline-text-7" id="text-org2c61d2b">
+</div>
+<div id="outline-container-org6d4bf55" class="outline-8">
+<h8 id="org6d4bf55">Invece in SQL è il contrario: ogni attributo ammette NULL a meno che non lo si restringa a NOTNULL</h8>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbec1dec" class="outline-5">
+<h5 id="orgbec1dec">Un altro vincolo, sull'esempio precedente, è che si può vincolare in modo che se una persona è viva allora la data di morte dev'essere null, altrimenti si ha una violazione di un vincolo di integrità dei dati</h5>
+</div>
+<div id="outline-container-orga321c76" class="outline-5">
+<h5 id="orga321c76">Fra i vincoli intrarelazionali ci sono quelli di dominio, legati al dominio scelto</h5>
+<div class="outline-text-5" id="text-orga321c76">
+</div>
+<div id="outline-container-org3d0f229" class="outline-6">
+<h6 id="org3d0f229">Ad esempio se si sceglie il tipo di dato "data" allora il vincolo è che si avrà un dato del tipo YYYY-MM-DD</h6>
+</div>
+</div>
+</div>
+<div id="outline-container-org22c716d" class="outline-4">
+<h4 id="org22c716d">Un database <b>attivo</b> fa uso di <b>trigger</b> (innesco) che esegue qualcosa in automatico, forzando l'integrità dei dati in modo che questi rispettino un vincolo</h4>
+<div class="outline-text-4" id="text-org22c716d">
+</div>
+<div id="outline-container-org483db82" class="outline-5">
+<h5 id="org483db82">Un esempio è che l'inserimento della data di morte rende ALIVE false</h5>
+</div>
+</div>
+<div id="outline-container-orgd678d18" class="outline-4">
+<h4 id="orgd678d18">Le chiavi sono usate per descrivere i record</h4>
+<div class="outline-text-4" id="text-orgd678d18">
+</div>
+<div id="outline-container-orgd4286bc" class="outline-5">
+<h5 id="orgd4286bc">Una superchiave è una combinazione di un sottoinsieme degli attributi che garantisce univocità del record</h5>
+<div class="outline-text-5" id="text-orgd4286bc">
+</div>
+<div id="outline-container-orgecac609" class="outline-6">
+<h6 id="orgecac609">Ad esempio un id da solo è una superchiave</h6>
+<div class="outline-text-6" id="text-orgecac609">
+</div>
+<div id="outline-container-org2217fea" class="outline-7">
+<h7 id="org2217fea">L'id non è un descrittore intrinseco o naturale di un film o un entrata. L'id è un artefatto che utilizziamo per semplificarci l'esistenza.</h7>
+<div class="outline-text-7" id="text-org2217fea">
+</div>
+<div id="outline-container-org7b29f21" class="outline-8">
+<h8 id="org7b29f21">è ragionevole che la combinazione di attributi sia esplicativa, quindi l'entrata senza l'id dovrebbe essere comunque unica.</h8>
+</div>
+<div id="outline-container-org6425959" class="outline-8">
+<h8 id="org6425959">Quindi tutti gli attributi senza id sono anche superchiave</h8>
+</div>
+</div>
+</div>
+<div id="outline-container-org881bd83" class="outline-6">
+<h6 id="org881bd83">La scelta di quali attributi siano univoci e quindi superchiave è una scelta di progettazione, legata a quali situazioni si vuole tollerare o meno</h6>
+</div>
+</div>
+<div id="outline-container-orge2cda59" class="outline-5">
+<h5 id="orge2cda59">Una chiave è una superchiave minimale</h5>
+<div class="outline-text-5" id="text-orge2cda59">
+</div>
+<div id="outline-container-orgcc4b5dd" class="outline-6">
+<h6 id="orgcc4b5dd">Ovvero una superchiave è anche chiave se non posso toglierci nessun attributo senza perdere la proprietà di univocità.</h6>
+</div>
+<div id="outline-container-orgd7c3e18" class="outline-6">
+<h6 id="orgd7c3e18">Data una combinazione di attributi che è superchiave, non posso trovare alcun sottoinsieme della chiave che tolto non mi permetta di perdere l'univocità</h6>
+</div>
+<div id="outline-container-orga431edf" class="outline-6">
+<h6 id="orga431edf">In SQL le chiavi sono definite con il vincolo UNIQUE</h6>
+</div>
+</div>
+<div id="outline-container-org5621547" class="outline-5">
+<h5 id="org5621547">Una chiave primaria è <b>una sola</b> fra le chiavi per cui vale il vincolo di entity integrity</h5>
+<div class="outline-text-5" id="text-org5621547">
+</div>
+<div id="outline-container-orgf0d3372" class="outline-6">
+<h6 id="orgf0d3372">Per una chiave primaria non sono possibili valori null</h6>
+<div class="outline-text-6" id="text-orgf0d3372">
+</div>
+<div id="outline-container-org5d521d2" class="outline-7">
+<h7 id="org5d521d2">Il motivo per cui è richiesto anche questo è che altrimenti combinazioni di attributi della chiave dove sono presenti dei null sarebbero uniche fra loro, es A-B-null/A-null-C/null-B-C</h7>
+<div class="outline-text-7" id="text-org5d521d2">
+</div>
+<div id="outline-container-org450bff7" class="outline-8">
+<h8 id="org450bff7">Questo non è desiderabile</h8>
+</div>
+</div>
+</div>
+<div id="outline-container-org4b0c4c2" class="outline-6">
+<h6 id="org4b0c4c2">Entity integrity signifca che venga sempre garantita l'unicità</h6>
+</div>
+<div id="outline-container-orgf24b21e" class="outline-6">
+<h6 id="orgf24b21e">Integrità, minimalità e non nullità</h6>
+</div>
+</div>
+</div>
+<div id="outline-container-org6c804e6" class="outline-4">
+<h4 id="org6c804e6">Tutto ciò che è stato trattato finora sono intrarelazionali</h4>
+</div>
+<div id="outline-container-orga7eb47e" class="outline-4">
+<h4 id="orga7eb47e">Il vincolo di integritàq referenziale, invece, è un vincolo <b>inter-relazionale</b>.</h4>
+<div class="outline-text-4" id="text-orga7eb47e">
+</div>
+<div id="outline-container-org1077467" class="outline-5">
+<h5 id="org1077467">Date due relazioni c'è R1 che referenzia e R2 che è referenziata</h5>
+<div class="outline-text-5" id="text-org1077467">
+</div>
+<div id="outline-container-org0a4c203" class="outline-6">
+<h6 id="org0a4c203">R1 contiene un attributo (o insieme di) X detto Foreign Key (FK)</h6>
+</div>
+<div id="outline-container-org9fd073a" class="outline-6">
+<h6 id="org9fd073a">R2 contiene un attributo (o insieme di) Y detto attributo referenziato che è chiave per R2</h6>
+</div>
+</div>
+<div id="outline-container-org64e2034" class="outline-5">
+<h5 id="org64e2034">Quando viene provata ad effettuare la cancellazione di R2 che contiene la chiave per R1, il dbms attua la politica di NO ACTION e ne impedisce la cancellazione</h5>
+<div class="outline-text-5" id="text-org64e2034">
+</div>
+<div id="outline-container-orgd687e57" class="outline-6">
+<h6 id="orgd687e57">Lo stesso vale quando viene effettuato un update per il campo referenziato</h6>
+</div>
+<div id="outline-container-org79217c9" class="outline-6">
+<h6 id="org79217c9">Questa è la politica conservativa, che impedisce la modifica quando viene messa a rischio l'integrità</h6>
+</div>
+</div>
+<div id="outline-container-orgcd40ba7" class="outline-5">
+<h5 id="orgcd40ba7">Un'altra politica è quella CASCADE, che a fronte di cancellazione del record o aggiornamento della chiave referenziante, effettua la stessa operazione sul record referenziato</h5>
+<div class="outline-text-5" id="text-orgcd40ba7">
+</div>
+<div id="outline-container-orgc490cfe" class="outline-6">
+<h6 id="orgc490cfe">In questo caso, o si torna all'inizio, o si arriva alla fine: è impossibile rimanere in mezzo</h6>
+</div>
+</div>
+<div id="outline-container-orgdc52242" class="outline-5">
+<h5 id="orgdc52242">Di solito si mette cascade sulla delete e no action sulla delete</h5>
+</div>
+<div id="outline-container-orgacf595c" class="outline-5">
+<h5 id="orgacf595c">Notare che il vincolo inter-relazionale può lavorare anche sulla stessa tabella</h5>
+<div class="outline-text-5" id="text-orgacf595c">
+</div>
+<div id="outline-container-org5d60f66" class="outline-6">
+<h6 id="org5d60f66">Quindi il riferimento può essere riflessivo, ovvero la chiave esterna può essere un campo della stessa tabella</h6>
+</div>
+</div>
+<div id="outline-container-org0fa56e5" class="outline-5">
+<h5 id="org0fa56e5">Inoltre il vincolo può essere NULL</h5>
+</div>
+</div>
+</div>
+<div id="outline-container-orgdfb9f30" class="outline-3">
+<h3 id="orgdfb9f30">Lez 11 mar</h3>
+<div class="outline-text-3" id="text-orgdfb9f30">
+</div>
+<div id="outline-container-org81be67e" class="outline-4">
+<h4 id="org81be67e">Il vincolo di integrità referenziale, invece, è un vincolo <b>inter-relazionale</b>.</h4>
+<div class="outline-text-4" id="text-org81be67e">
+</div>
+<div id="outline-container-orgf891a5a" class="outline-5">
+<h5 id="orgf891a5a">Date due relazioni c'è R1 che referenzia e R2 che è referenziata</h5>
+<div class="outline-text-5" id="text-orgf891a5a">
+</div>
+<div id="outline-container-org7d88c9c" class="outline-6">
+<h6 id="org7d88c9c">R1 contiene un attributo (o insieme di) X detto Foreign Key (FK)</h6>
+</div>
+<div id="outline-container-org7e7515a" class="outline-6">
+<h6 id="org7e7515a">R2 contiene un attributo (o insieme di) Y detto attributo referenziato che è chiave per R2</h6>
+</div>
+</div>
+<div id="outline-container-org3c370e7" class="outline-5">
+<h5 id="org3c370e7">Quando viene provata ad effettuare la cancellazione di R2 che contiene la chiave per R1, il dbms attua la politica di NO ACTION e ne impedisce la cancellazione</h5>
+<div class="outline-text-5" id="text-org3c370e7">
+</div>
+<div id="outline-container-org5108c06" class="outline-6">
+<h6 id="org5108c06">Lo stesso vale quando viene effettuato un update per il campo referenziato</h6>
+</div>
+<div id="outline-container-org953bc85" class="outline-6">
+<h6 id="org953bc85">Questa è la politica conservativa, che impedisce la modifica quando viene messa a rischio l'integrità</h6>
+</div>
+</div>
+<div id="outline-container-org095cdcc" class="outline-5">
+<h5 id="org095cdcc">Un'altra politica è quella CASCADE, che a fronte di cancellazione del record o aggiornamento della chiave referenziante, effettua la stessa operazione sul record referenziato</h5>
+<div class="outline-text-5" id="text-org095cdcc">
+</div>
+<div id="outline-container-org2ef8ff3" class="outline-6">
+<h6 id="org2ef8ff3">In questo caso, o si torna all'inizio, o si arriva alla fine: è impossibile rimanere in mezzo</h6>
+</div>
+</div>
+<div id="outline-container-orgdaa5fdf" class="outline-5">
+<h5 id="orgdaa5fdf">Di solito si mette cascade sulla delete e no action sulla delete</h5>
+</div>
+<div id="outline-container-org4b95b6b" class="outline-5">
+<h5 id="org4b95b6b">Notare che il vincolo inter-relazionale può lavorare anche sulla stessa tabella</h5>
+<div class="outline-text-5" id="text-org4b95b6b">
+</div>
+<div id="outline-container-orga2b0dea" class="outline-6">
+<h6 id="orga2b0dea">Quindi il riferimento può essere riflessivo, ovvero la chiave esterna può essere un campo della stessa tabella</h6>
+</div>
+</div>
+<div id="outline-container-org91153e7" class="outline-5">
+<h5 id="org91153e7">Inoltre il vincolo può essere NULL</h5>
+</div>
+</div>
+<div id="outline-container-orgb57da53" class="outline-4">
+<h4 id="orgb57da53">L'algebra relazionale non è il linguaggio SQL ma è il modo in cui viene esplicitato</h4>
+<div class="outline-text-4" id="text-orgb57da53">
+</div>
+<div id="outline-container-org0009adb" class="outline-5">
+<h5 id="org0009adb">L'unione può avvenire solo quando il grado delle tabelle è lo stesso (stesso numero di attributi) e attributo per attributo si trovano valori compatibili (i vincoli di dominio sono affini)</h5>
+<div class="outline-text-5" id="text-org0009adb">
+</div>
+<div id="outline-container-org6e4c22b" class="outline-6">
+<h6 id="org6e4c22b">Notare che la relazione risultante non ha niente a che vedere con le relazioni iniziali per quanto riguarda vincoli</h6>
+<div class="outline-text-6" id="text-org6e4c22b">
+</div>
+<div id="outline-container-org1b6daa5" class="outline-7">
+<h7 id="org1b6daa5">Ad esempio, due film uguali ma con una chiave diversa, verrebbero rappresentati due volte nell'unione e non ci sarebbe modo di identificarli univocamente. Anche se l'id era chiave, non è detto che lo sia ancora nell'unione</h7>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgceb12eb" class="outline-3">
+<h3 id="orgceb12eb">Lez 12 mar</h3>
+<div class="outline-text-3" id="text-orgceb12eb">
+</div>
+<div id="outline-container-org1835fd8" class="outline-4">
+<h4 id="org1835fd8">Notare che l'intersezione non riguarda intersezione sullo stesso record (due campi dello stesso record) ma i record con lo stesso id e che hanno due campi, uno comedy e uno romance</h4>
+</div>
+<div id="outline-container-org54e376e" class="outline-4">
+<h4 id="org54e376e">La selezione (&sigma;) è un operazione di filtro, ovvero restituisce una relazione col medesimo grado ma con cardinalità minore uguale di quella di partenza</h4>
+</div>
+<div id="outline-container-org09e399f" class="outline-4">
+<h4 id="org09e399f">Differenza, unione, intersezione e selection sono operazioni di DQL, ovvero data query language, ovvero viste su un database</h4>
+<div class="outline-text-4" id="text-org09e399f">
+</div>
+<div id="outline-container-orgf12bd6a" class="outline-5">
+<h5 id="orgf12bd6a">Non c'è possibilità di modificare i dati</h5>
+</div>
+</div>
+<div id="outline-container-org823b39e" class="outline-4">
+<h4 id="org823b39e">La proiezione è ortogonale rispetto alla selezione, mantenendo la cardinalità ma riducendo il grado</h4>
+<div class="outline-text-4" id="text-org823b39e">
+</div>
+<div id="outline-container-orga17cc51" class="outline-5">
+<h5 id="orga17cc51">Utile nei casi in cui si vuole intersecare o unire viste (non è possibile in caso di relazioni con grado diverso)</h5>
+<div class="outline-text-5" id="text-orga17cc51">
+</div>
+<div id="outline-container-orga059d76" class="outline-6">
+<h6 id="orga059d76">Ad esempio, trovare i film di un certo anno e con un certo genere richiede di unire due relazioni diverse con grado diverso e se voglio unirli allora devo restringere all'unico sottoinsieme condiviso di attributi, in questo caso solo ID</h6>
+</div>
+</div>
+<div id="outline-container-org5737290" class="outline-5">
+<h5 id="org5737290">Si immagini adesso il caso in cui si vuole scremare la tabella 'genre' con due attributi, movie e genre, che formano insieme una chiave primaria</h5>
+<div class="outline-text-5" id="text-org5737290">
+</div>
+<div id="outline-container-orgdcb95a6" class="outline-6">
+<h6 id="orgdcb95a6">dato che la chiave primaria è composta da entrambi, un solo id può avere più entrate con genre diverso</h6>
+</div>
+<div id="outline-container-orga36764b" class="outline-6">
+<h6 id="orga36764b">Non basta effettuare delle select e poi l'intersezione, perchè si avrebbero delle tabelle con il valore genre diverso e quindi sarebbero mutualmente esclusive necessariamente</h6>
+</div>
+<div id="outline-container-orgbe3f76e" class="outline-6">
+<h6 id="orgbe3f76e">Quindi bisogna filtrare al sottoinsieme comune prima di effettuare l'intersezione, per poi arrivare all'intersezione con lo stesso grado e con intersezione non nulla</h6>
+</div>
+<div id="outline-container-orga5e2ae1" class="outline-6">
+<h6 id="orga5e2ae1">soluzioni con AND fra selezioni non vanno bene, perchè l'and fra selezioni esclusive l'un l'altra sarà sempre vuoto (un entrata non può avere sia un valore che l'altro)</h6>
+</div>
+<div id="outline-container-org8c6c661" class="outline-6">
+<h6 id="org8c6c661">soluzioni con OR sono invece troppo larghe</h6>
+</div>
+<div id="outline-container-orge827fed" class="outline-6">
+<h6 id="orge827fed">Va quindi SEMPRE usata l'intersezione, perchè bisogna unire necessariamente due gruppi</h6>
+</div>
+</div>
+<div id="outline-container-org8172c6e" class="outline-5">
+<h5 id="org8172c6e">AND è utile invece quando si vuole filtrare i campi per i valori di due campi diversi</h5>
+<div class="outline-text-5" id="text-org8172c6e">
+</div>
+<div id="outline-container-orge5d5f38" class="outline-6">
+<h6 id="orge5d5f38">Nel caso di filtri <b>congiuntivi</b> è buona norma spezzarli in due operazioni atomiche (selezioni) in cascata</h6>
+<div class="outline-text-6" id="text-orge5d5f38">
+</div>
+<div id="outline-container-org8ea52ce" class="outline-7">
+<h7 id="org8ea52ce">Al posto di sigma(A AND B)base è meglio sigma(A)sigma(B)base</h7>
+<div class="outline-text-7" id="text-org8ea52ce">
+</div>
+<div id="outline-container-org6ffdabf" class="outline-8">
+<h8 id="org6ffdabf">Infatti, il sigma(A) agirà su una tabella molto più piccola di base</h8>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org19425ef" class="outline-5">
+<h5 id="org19425ef">quando si richiede di trovare qualcosa all'inizio della consegna, bisogna restringere solo alla cosa richiesta mediante una proiezione</h5>
+</div>
+<div id="outline-container-org2a4f5c0" class="outline-5">
+<h5 id="org2a4f5c0">Il <b>prodotto cartesiano</b> è una condizione necessaria per il <b>join</b></h5>
+<div class="outline-text-5" id="text-org2a4f5c0">
+</div>
+<div id="outline-container-orgd0255ef" class="outline-6">
+<h6 id="orgd0255ef">Somma dei gradi delle relazioni di partenza e cardinalità uguale al prodotto</h6>
+</div>
+<div id="outline-container-org14cc131" class="outline-6">
+<h6 id="org14cc131">Risulta in qualunque combinazione fra la prima e la seconda tabella, ovvero ogni riga di A è affiancata a ogni riga di B</h6>
+</div>
+<div id="outline-container-orgc1a8979" class="outline-6">
+<h6 id="orgc1a8979">Allora il <b>join</b> è una selezione sul risultato del prodotto cartesiano</h6>
+<div class="outline-text-6" id="text-orgc1a8979">
+</div>
+<div id="outline-container-org11463b9" class="outline-7">
+<h7 id="org11463b9">Il join ha come simbolo "bowtie" (farfalla) ed è binario</h7>
+</div>
+<div id="outline-container-orgf7d9c93" class="outline-7">
+<h7 id="orgf7d9c93">Inoltre, lo chiamiamo theta join e ci aggiungiamo un theta accanto al simbolo</h7>
+<div class="outline-text-7" id="text-orgf7d9c93">
+</div>
+<div id="outline-container-org499f0fe" class="outline-8">
+<h8 id="org499f0fe">theta sta per il predicato che dev'essere rispettato</h8>
+</div>
+<div id="outline-container-orgb5564b8" class="outline-8">
+<h8 id="orgb5564b8">tipicamente theta coinvolge un attributo di R1 e un altro di R2</h8>
+</div>
+<div id="outline-container-org9825bf9" class="outline-8">
+<h8 id="org9825bf9">Quando questa condizione è un uguaglianza, si ha un EQUIJOIN</h8>
+<div class="outline-text-8" id="text-org9825bf9">
+</div>
+<div id="outline-container-org9100502" class="outline-9">
+<h9 id="org9100502">Tipicamente usati per trovare corrispondenza tra chiave interna ed esterna</h9>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org37217ae" class="outline-3">
+<h3 id="org37217ae">Lez 18 mar</h3>
+<div class="outline-text-3" id="text-org37217ae">
+</div>
+<div id="outline-container-orgcb7f315" class="outline-4">
+<h4 id="orgcb7f315">La divisione è stata introdotta per evidenziare una relazione fra le tuple di tue tabelle con la seguente caratt. "quei record della tabella r1 che sono in relazione con tutte le tuple r2"</h4>
+<div class="outline-text-4" id="text-orgcb7f315">
+</div>
+<div id="outline-container-org6bef3fb" class="outline-5">
+<h5 id="org6bef3fb">Ad esempio trovare tutti i film che sono prodotti in tutti i paesi della tabella r2</h5>
+</div>
+<div id="outline-container-org9282a92" class="outline-5">
+<h5 id="org9282a92">è opposto al prodotto cartesiano</h5>
+</div>
+</div>
+</div>
+<div id="outline-container-orge26c1a8" class="outline-3">
+<h3 id="orge26c1a8">Lez 19 mar</h3>
+<div class="outline-text-3" id="text-orge26c1a8">
+</div>
+<div id="outline-container-orgfa3cad0" class="outline-4">
+<h4 id="orgfa3cad0">gli attributi in corsivo sono chiavi esterne</h4>
+</div>
+<div id="outline-container-org9f5a411" class="outline-4">
+<h4 id="org9f5a411"><span class="todo TODO">TODO</span> quelli sottolineati sono le chiavi</h4>
+</div>
+<div id="outline-container-orgebac0ea" class="outline-4">
+<h4 id="orgebac0ea">meglio usare join e selezione piuttosto che operatori insiemistici quando non necessari</h4>
+</div>
+<div id="outline-container-org9fafdfa" class="outline-4">
+<h4 id="org9fafdfa">esercizio di trovare paesi NON confinanti con l'italia</h4>
+<div class="outline-text-4" id="text-org9fafdfa">
+</div>
+<div id="outline-container-orge402cff" class="outline-5">
+<h5 id="orge402cff">i confini sono a-b e io non posso scremare soltanto in base al fatto che uno solo fra a e b sia italia perchè poi non so cosa proiettare</h5>
+</div>
+<div id="outline-container-org33532c9" class="outline-5">
+<h5 id="org33532c9">quindi devo prima scremare a poi scremare b e infine fare l'unione dei due</h5>
+<div class="outline-text-5" id="text-org33532c9">
+</div>
+<div id="outline-container-org97129df" class="outline-6">
+<h6 id="org97129df"><span class="todo TODO">TODO</span> su cosa fare l'unione?</h6>
+</div>
+</div>
+<div id="outline-container-org2d203c1" class="outline-5">
+<h5 id="org2d203c1"><span class="todo TODO">TODO</span> a voler essere precisi dovrei fare anche una join fra country border e country e prenderne il nome</h5>
+</div>
+<div id="outline-container-org2167017" class="outline-5">
+<h5 id="org2167017">non serve rinominare, solo la divisione ha bisogno di renominare perchè c'è bisogno dello stesso nome</h5>
+</div>
+</div>
+<div id="outline-container-org4f03207" class="outline-4">
+<h4 id="org4f03207">esercizio politici san marino</h4>
+<div class="outline-text-4" id="text-org4f03207">
+</div>
+<div id="outline-container-org31c0c67" class="outline-5">
+<h5 id="org31c0c67">nella divisione bisogna ricordarsi non solo di rinominare ma anche di restringere con una proiezione i valori del numeratore in modo che rimangano soltanto i valori che vogliamo siano in relazione con tutte le righe del denominatore</h5>
+</div>
+</div>
+<div id="outline-container-orgf3fa267" class="outline-4">
+<h4 id="orgf3fa267">città con più di un politico</h4>
+<div class="outline-text-4" id="text-orgf3fa267">
+</div>
+<div id="outline-container-orgb02c76a" class="outline-5">
+<h5 id="orgb02c76a">join su sè stessa, così che rimangono solo i casi in cui ci sono stessa city ma head diversi ( dopo aver scremato in base all'anno)</h5>
+<div class="outline-text-5" id="text-orgb02c76a">
+</div>
+<div id="outline-container-org0b68207" class="outline-6">
+<h6 id="org0b68207">quindi non è join chiave primaria - chiave esterna</h6>
+</div>
+</div>
+<div id="outline-container-org0da2e8f" class="outline-5">
+<h5 id="org0da2e8f">prima della join è utile ridenominare su una delle tabelle così che il join diventa chiaro su dove sta agendo</h5>
+</div>
+<div id="outline-container-org672a940" class="outline-5">
+<h5 id="org672a940">alla fine si proietta solo la city</h5>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orga47c425" class="outline-2">
+<h2 id="orga47c425">Lab</h2>
+<div class="outline-text-2" id="text-orga47c425">
+</div>
+<div id="outline-container-org4e02a59" class="outline-3">
+<h3 id="org4e02a59">Lez precedente</h3>
+<div class="outline-text-3" id="text-org4e02a59">
+</div>
+<div id="outline-container-org42c4e92" class="outline-4">
+<h4 id="org42c4e92">Abbiamo visto la struttura del web, http, risposte, cookie ecc</h4>
+</div>
+<div id="outline-container-org353c78e" class="outline-4">
+<h4 id="org353c78e">Poi abbiamo visto l'argomento della rappresentazione dell'informazione</h4>
+<div class="outline-text-4" id="text-org353c78e">
+</div>
+<div id="outline-container-org2e0a467" class="outline-5">
+<h5 id="org2e0a467">HTML (basato su markup) che ci permette di codificare il contenuto di una pagina, marcando porzioni del contenuto così che abbiano la struttura desiderata</h5>
+</div>
+</div>
+<div id="outline-container-orgc479e9e" class="outline-4">
+<h4 id="orgc479e9e">Finita con una discussione su come fare tabelle</h4>
+</div>
+</div>
+</div>
+<div id="outline-container-org9b561b0" class="outline-2">
+<h2 id="org9b561b0">Modello relazionale</h2>
+<div class="outline-text-2" id="text-org9b561b0">
+<p>
+Un'<b>entità</b> rappresenta un oggetto o concetto del mondo reale.
+</p>
+
+<p>
+Un <b>attributo</b> rappresenta una proprietà di interesse che descrive ulteriormente un'entità. Il <b>dominio</b> è l'insieme di possibili valori sui quali sono definiti degli attributi (es. interi, stringhe). In un sistema tabellare corrisponde alle intestazioni delle colonne.
+</p>
+
+<p>
+Una <b>relazione</b> tra due o più entità rappresenta un'associazione tra le entità. Formalmente è definita come <b>sottoinsieme</b> del <b>prodotto cartesiano</b> dei <b>domini</b> degli <b>attributi</b> sui quali è definita la relazione. In un sistema tabellare corrisponde alla singola tabella.
+</p>
+
+<p>
+Una <b>tupla</b> in una relazione è un record (entrata) i cui valori sono posizionalmente coerenti con i domini della relazione. In un sistema tabellare corrisponde alla singola entrata.
+</p>
+
+<p>
+Uno <b>schema</b> è la descrizione di un database (aspetto <b>intensionale</b>) e viene specificato durante la progettazione del database. Si prevede che non cambi frequentemente. L'<b>istanza</b> invece è l'insieme di valori attuali (aspetto <b>estensionale</b>) e cambia rapidamente.
+</p>
+
+<p>
+Viene definito il valore <b>NULL</b> che ha un significato semantico doppio: dato <b>inesistente/non applicabile</b> oppure <b>dato esistente ma sconosciuto</b>. I due significati sono indistinguibili.
+</p>
+
+<p>
+Un <b>vincolo di integrità</b> è una proprietà che deve essere soddisfatta da un <b>istanza</b> ed è in forma di <b>predicato</b> logico.
+</p>
+
+<p>
+Un vincolo è <b>intrarelazionale</b> se il suo soddisfacimento è definito rispetto a singole relazioni della base di dati, mentre è <b>interrelazionale</b> se coinvolge più relazioni.
+</p>
+
+<p>
+In particolare è <b>di tupla</b> se è valutato sulla singola tupla indipendetemente dalle altre e <b>di dominio</b>, quando restringe il valore del <b>singolo attributo</b>.
+</p>
+
+<p>
+Fra i vincoli <b>intrarelazionali</b> il più importante è quello <b>di chiave</b>.
+</p>
+
+<p>
+Una <b>superchiave</b> è un insieme di attributi che identifica univocamente ogni tupla in una relazione. Formalmente, dato uno schema di relazione \(R(A_1, A_2, \ldots, A_n)\), un insieme di attributi \(K \subseteq \{A_1, A_2, \ldots, A_n\}\) è una superchiave per \(R\) se e solo se
+\[ \forall t_1, t_2 \in r(R) : t_1 \neq t_2 \Rightarrow t_1[K] \neq t_2[K] \]
+Dove \(r(R)\) è un'istanza della relazione \(R\), e \(t[K]\) denota la proiezione della tupla \(t\) sugli attributi in \(K\).
+Una <b>superchiave</b> ha la proprietà di <b>identificazione univoca</b>, ovvero garantisce che non esistano tuple distinte con stessi valori negli attributi chiave.
+L'insieme di tutti gli attributi è sempre superchiave, perchè non possono esistere più tuple con gli stessi valori.
+</p>
+
+<p>
+Una <b>chiave</b> \(K\) è una superchiave <b>minimale</b>, ovvero tale per cui \(K\subseteq S\) e non esiste un'altra chiave \(K' \subseteq K\).
+</p>
+
+<p>
+Una <b>chiave minimale</b> è una chiave che <b>non ammette</b> valori <code>NULL</code>. Rispetta le proprietà di integrità, minimalità e non nullità.
+</p>
+
+<p>
+Fra i vincoli <b>interrelazionali</b>, il più importante è quello di <b>integrità referenziale</b>.
+Un <b>vincolo di integrità referenziale</b> fra un insieme di attributi \(X\) di una relazione \(R_1\) e un'altra relazione \(R_2\) è soddisfatto se i valori \(X\) di ciascuna tupla di \(R_1\) compaiono come attributi in \(R_2\).
+</p>
+</div>
+</div>
+<div id="outline-container-orgc40ce0a" class="outline-2">
+<h2 id="orgc40ce0a">Progetto</h2>
+<div class="outline-text-2" id="text-orgc40ce0a">
+</div>
+<div id="outline-container-org3d3628a" class="outline-3">
+<h3 id="org3d3628a">Usare bootstrap con supporto SAAS per essere più figo</h3>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2025-04-05 Sat 19:08</p>
+</div>
+</body>
+</html>

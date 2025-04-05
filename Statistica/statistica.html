@@ -1,0 +1,1011 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+<head>
+<!-- 2025-04-05 Sat 19:08 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Statistica</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
+<script>
+    window.MathJax = {
+      tex: {
+        ams: { multlineWidth: '85%' },
+        {packages: {'[+]': ['mathtools']}},
+        tags: 'ams',
+        tagSide: 'right',
+        tagIndent: '.8em'
+      },
+      chtml: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      svg: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      output: {
+        font: 'mathjax-modern',
+        displayOverflow: 'scale'
+      },
+      loader: {
+        load: ['[tex]/mathtools']
+      },
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Statistica</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org718eded">Panoramica su Python</a></li>
+<li><a href="#org3e04569">Statistica descrittiva</a>
+<ul>
+<li><a href="#org3406964">Operazioni generali</a>
+<ul>
+<li><a href="#orga01a538">Riordinare indici di un datagram</a></li>
+<li><a href="#org59a407f">Riordinare colonne di un datagram</a></li>
+<li><a href="#org37a9e06">Raccogliere valori di una serie in bins</a></li>
+</ul>
+</li>
+<li><a href="#orgd65a0a0">Leggere e rappresentare dati su Python</a>
+<ul>
+<li><a href="#orgf6247de">Tipi primitivi</a></li>
+<li><a href="#org7893313">NumPy</a></li>
+<li><a href="#org3b17513">Pandas</a>
+<ul>
+<li><a href="#org174774b">Series</a>
+<ul>
+<li><a href="#org987eed6">Accedere ad un valore specifico</a></li>
+<li><a href="#orgab38687">Accedere ad un sottoinsieme dei valori</a></li>
+<li><a href="#orgb460087"><span class="todo TODO">TODO</span> https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html Compilare con questo</a></li>
+</ul>
+</li>
+<li><a href="#orga0968b7">Dataframe</a></li>
+</ul>
+</li>
+<li><a href="#org793d4ef"><span class="todo TODO">TODO</span> Lettura da csv (terza lezione)</a></li>
+</ul>
+</li>
+<li><a href="#orgc5df668"><span class="todo TODO">TODO</span> Dati quantitativi e qualitativi (lez 2)</a></li>
+<li><a href="#org1e5d71c">Descrivere i dati</a>
+<ul>
+<li><a href="#orgcd936b4">Frequenze</a>
+<ul>
+<li><a href="#org6c873ff">Arrotondare il numero di cifre decimali</a></li>
+<li><a href="#org743852a">Mostrare frequenza relativa in percentuali</a></li>
+<li><a href="#orgfa65629">Rinormalizzare su un sottoinsieme delle osservazioni</a></li>
+</ul>
+</li>
+<li><a href="#org53b88bb">Frequenze cumulate</a>
+<ul>
+<li><a href="#org96ad5bf"><span class="todo TODO">TODO</span> Funzione cumulativa empirica</a></li>
+<li><a href="#org3398d1a">Diagrammi di Pareto</a></li>
+</ul>
+</li>
+<li><a href="#orgf5ed488">Frequenze congiunte e marginali</a></li>
+</ul>
+</li>
+<li><a href="#org63ba63a">Riassumere i dati</a>
+<ul>
+<li><a href="#org418119f">Indici di centralità</a>
+<ul>
+<li><a href="#orgc0ac8a0">Media campionaria</a></li>
+<li><a href="#org6c4acd7">Mediana campionaria</a></li>
+<li><a href="#orgd5248d4">Moda campionaria</a></li>
+</ul>
+</li>
+<li><a href="#orgd279798">Indici di dispersione</a>
+<ul>
+<li><a href="#org6a7ed95">Varianza campionaria</a>
+<ul>
+<li><a href="#org2dc05a8">Perchè si usa il quadrato?</a></li>
+</ul>
+</li>
+<li><a href="#org39dcb4a">Deviazione standard</a></li>
+<li><a href="#org0cbcb88"><span class="todo WAIT">WAIT</span> Perchè si divide per \(n-1\)?</a></li>
+</ul>
+</li>
+<li><a href="#org14a9103">Quantili</a>
+<ul>
+<li><a href="#org0403396">Box plot</a>
+<ul>
+<li><a href="#org8dc1c5f"><span class="todo TODO">TODO</span> Capire cosa ha detto il professore riguardo alla relazione fra box plot e distribuzione e capire cosa c'entra la media</a></li>
+</ul>
+</li>
+<li><a href="#org5023b89">Range inter-quartile</a></li>
+<li><a href="#orgf51e9d1">QQ plot</a>
+<ul>
+<li><a href="#org11d9f65"><span class="todo TODO">TODO</span> Come stampare?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgf40875c">Distribuzione normale</a></li>
+<li><a href="#org8a94430">Coefficiente di correlazione campionaria</a></li>
+<li><a href="#org74d6d2e"><span class="todo TODO">TODO</span> Lorenz e Gini</a></li>
+</ul>
+</li>
+<li><a href="#org1e7948c">Grafici</a>
+<ul>
+<li><a href="#org0d01e63">A bastoncini</a></li>
+<li><a href="#org2aa18b4">A barre</a></li>
+<li><a href="#org36f7236">Poligonale</a></li>
+<li><a href="#org5ad55a6">A torta (aerogramma)</a></li>
+<li><a href="#orgf6fae5f">Istogramma</a>
+<ul>
+<li><a href="#orgc71887b"><span class="todo TODO">TODO</span> Find a way to do it on a dataframe</a></li>
+<li><a href="#org2e03759"><span class="todo TODO">TODO</span> Find how to do it OOP style</a></li>
+<li><a href="#orgf54a1a1"><span class="todo TODO">TODO</span> Write how to have multiple bin sizes</a></li>
+</ul>
+</li>
+<li><a href="#org538f387">Grafici multipli</a></li>
+<li><a href="#org5750333">Scatter plot</a></li>
+<li><a href="#org058e5b2"><span class="todo TODO">TODO</span> L03,1.5-6, grafici e stelofoglia (39 di rossintro)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgc4f9e77"><span class="todo TODO">TODO</span> Calcolo combinatorio</a>
+<ul>
+<li><a href="#orge7324dc">Teorema fondamentale del calcolo combinatorio</a></li>
+<li><a href="#orgd3943c9">Permutazioni</a></li>
+<li><a href="#org2db997b">Disposizioni</a></li>
+<li><a href="#orgc72e4b4">Combinazioni</a></li>
+</ul>
+</li>
+<li><a href="#org88aaa01">Probabilità</a></li>
+<li><a href="#org5d99003">ricevimento, fine lezione del giovedì, ufficio al quinto piano</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org718eded" class="outline-2">
+<h2 id="org718eded">Panoramica su Python</h2>
+<div class="outline-text-2" id="text-org718eded">
+<p>
+Tutto è un oggetto, quindi ogni variabile può contenere attributi e funzioni, accessibili con la dot notation.
+Segue il duck typing.
+I tipi di dato semplici sono intero, float e booleano.
+I tipi di dato strutturato sono le liste, le tuple, le stringhe, gli insiemi e i dizionari.
+Le liste sono eterogenee, ad accesso posizionale e dimensione dinamica. Vengono espresse in modo estensivo con le parentesi quadre.
+Le tuple sono come le liste, ma immutabili. Usano le parentesi tonde.
+Le stringhe sono tuple di caratteri unicode, quindi immutabili.
+I dizionari memorizzano associazioni di dati. Le dichiarazioni estensive sono delimitate dalle parentesi graffe e l'accesso è in base alla chiave e non posizionale. Sono meno efficienti delle liste, a causa di possibili collisioni.
+Le funzioni possono essere anonime, nel formato <code>lambda x : &lt;espressione&gt;</code>.
+Per stampare grafici si usa <code>matplotlib.pyplot as plt</code>.
+<b>DA QUA AGGIUSTARE E INTEGRARE SUI GRAFICI</b>
+</p>
+</div>
+</div>
+<div id="outline-container-org3e04569" class="outline-2">
+<h2 id="org3e04569">Statistica descrittiva</h2>
+<div class="outline-text-2" id="text-org3e04569">
+</div>
+<div id="outline-container-org3406964" class="outline-3">
+<h3 id="org3406964">Operazioni generali</h3>
+<div class="outline-text-3" id="text-org3406964">
+</div>
+<div id="outline-container-orga01a538" class="outline-4">
+<h4 id="orga01a538">Riordinare indici di un datagram</h4>
+<div class="outline-text-4" id="text-orga01a538">
+<p>
+<code>dataframe.reindex(listaDiIndiciRiordinati)</code>
+</p>
+</div>
+</div>
+<div id="outline-container-org59a407f" class="outline-4">
+<h4 id="org59a407f">Riordinare colonne di un datagram</h4>
+<div class="outline-text-4" id="text-org59a407f">
+<p>
+<code>dataframe.loc[:,listaDiColonneRiordinate]</code>
+</p>
+</div>
+</div>
+<div id="outline-container-org37a9e06" class="outline-4">
+<h4 id="org37a9e06">Raccogliere valori di una serie in bins</h4>
+<div class="outline-text-4" id="text-org37a9e06">
+<p>
+Per ottenere i valori di una serie raccolti in bins <b>qualitativi</b> si usa <code>pd.cut(series, bins = [a,b,c], right = True)</code>, dove <code>right = False</code> se l'estremo destro è escluse.
+Applicando <code>pd.crosstab</code> alla serie così ottenuta si ottengono le frequenze per le classi di valori.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd65a0a0" class="outline-3">
+<h3 id="orgd65a0a0">Leggere e rappresentare dati su Python</h3>
+<div class="outline-text-3" id="text-orgd65a0a0">
+</div>
+<div id="outline-container-orgf6247de" class="outline-4">
+<h4 id="orgf6247de">Tipi primitivi</h4>
+<div class="outline-text-4" id="text-orgf6247de">
+<p>
+Per raccogliere una lista di valori Python fornisce i seguenti oggetti:
+</p>
+<dl class="org-dl">
+<dt>tupla</dt><dd>sequenza <b>immutabile</b> e <b>fixed-length</b>, delimitata da <b>parentesi tonde</b>. Può essere concatenata. Se assegnata a più variabili viene effettuato l'<b>unpacking</b> e se l'ultima variabile inizia con un <b>asterisco</b> conterrà il <b>resto</b> degli elementi. Il vantaggio della tupla è l'efficienza dei metodi definiti su essa.</dd>
+<dt>lista</dt><dd>semanticamente simile alla tupla, ma <b>mutabile</b> mediante i metodi <code>insert</code>, <code>pop</code> e <code>remove</code> e delimitata da <b>parentesi quadre</b>. Vi si può effettuare lo <b>slicing</b>.</dd>
+<dt>dizionario</dt><dd>memorizza associazioni <b>chiave-valore</b> ed è delimitato da <b>parentesi graffe</b>.</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-org7893313" class="outline-4">
+<h4 id="org7893313">NumPy</h4>
+<div class="outline-text-4" id="text-org7893313">
+<p>
+Gli <b>array di NumPy</b> sono <b>multidimensionali</b> e offrono più funzionalità, ad esempio le operazioni di <b>moltiplicazione per scalare</b> e <b>somma fra array</b> con la solita sintassi con gli operatori. Inoltre, possono essere utilizzati per disegnare i grafici con <b>matplotlib</b>.
+</p>
+
+<p>
+Lo svantaggio del disegnare grafici utilizzando questi array è che i valori dei due array da disegnare vengono accoppiati <b>in base all'indice</b>.
+</p>
+</div>
+</div>
+<div id="outline-container-org3b17513" class="outline-4">
+<h4 id="org3b17513">Pandas</h4>
+<div class="outline-text-4" id="text-org3b17513">
+<p>
+La libreria <b>Pandas</b> fornisce due strutture dati fondamentali, <b>Series</b> e <b>DataFrame</b>.
+</p>
+</div>
+<div id="outline-container-org174774b" class="outline-5">
+<h5 id="org174774b">Series</h5>
+<div class="outline-text-5" id="text-org174774b">
+<p>
+<b>Series</b> è un oggetto contenente l'<b>associazione</b> fra un array <b>mono-dimensionale</b> di valori <b>omogenei</b>, inferiti nel modo più stringente possibile, e un array di <b>indici</b>, entrambi forniti in input al costruttore.
+</p>
+
+<p>
+La semantica e i metodi che fornisce sono affini sia agli <b>array di NumPy</b> che ai <b>dizionari</b>.
+</p>
+
+<p>
+I due array sono accessibili mediante i metodi <code>.array</code>, che ritorna un <code>PandasArray</code>, tipicamente un wrapper di un array di NumPy, e <code>.index</code>.
+</p>
+
+<p>
+Quando si disegna il grafico di due serie, i valori vengono associati in base all'indice.
+</p>
+</div>
+<div id="outline-container-org987eed6" class="outline-6">
+<h6 id="org987eed6">Accedere ad un valore specifico</h6>
+<div class="outline-text-6" id="text-org987eed6">
+<p>
+L'accesso ai valori si effettua mediante i metodi <code>.loc</code> (<i>location</i>) con l'indice o <code>.iloc</code> con la posizione.
+</p>
+</div>
+</div>
+<div id="outline-container-orgab38687" class="outline-6">
+<h6 id="orgab38687">Accedere ad un sottoinsieme dei valori</h6>
+<div class="outline-text-6" id="text-orgab38687">
+<p>
+Per prendere un <b>sottoinsieme</b> dei valori, si usa una sintassi simile allo <b>slicing</b>. Quando si usano gli indici, il secondo estremo è incluso, mentre con le posizioni no. Altrimenti, si può usare una <b>lista di booleani</b> della <b>stessa lunghezza</b> della serie, generata di solito con una <b>list comprehension</b>.
+</p>
+</div>
+</div>
+<div id="outline-container-orgb460087" class="outline-6">
+<h6 id="orgb460087"><span class="todo TODO">TODO</span> <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html">https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html</a> Compilare con questo</h6>
+</div>
+</div>
+<div id="outline-container-orga0968b7" class="outline-5">
+<h5 id="orga0968b7">Dataframe</h5>
+<div class="outline-text-5" id="text-orga0968b7">
+<p>
+Un dataframe è una <b>tabella rettangolare</b> contenente una <b>collezione di colonne</b> a cui è assegnato un nome. Ogni colonna è una <b>serie</b> con <b>stesso indice</b>. Può essere quindi pensata come un <b>dizionario di serie</b>.
+</p>
+
+<p>
+Per <b>accedere ad una colonna</b> si utilizza la sintassi dei dizionari, con il nome della colonna, es. <code>col = df['nome colonna']</code>. A più colonne con <code>rescol = df[['A', 'C']]</code>.
+</p>
+
+<p>
+Per <b>accedere ad una riga</b> si utilizza <code>loc[]</code> e <code>iloc[]</code>.
+</p>
+
+<p>
+Per <b>accedere ad un elemento</b> si usa <code>at[index, column]</code>.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org793d4ef" class="outline-4">
+<h4 id="org793d4ef"><span class="todo TODO">TODO</span> Lettura da csv (terza lezione)</h4>
+</div>
+</div>
+<div id="outline-container-orgc5df668" class="outline-3">
+<h3 id="orgc5df668"><span class="todo TODO">TODO</span> Dati quantitativi e qualitativi (lez 2)</h3>
+</div>
+<div id="outline-container-org1e5d71c" class="outline-3">
+<h3 id="org1e5d71c">Descrivere i dati</h3>
+<div class="outline-text-3" id="text-org1e5d71c">
+</div>
+<div id="outline-container-orgcd936b4" class="outline-4">
+<h4 id="orgcd936b4">Frequenze</h4>
+<div class="outline-text-4" id="text-orgcd936b4">
+<p>
+La <b>frequenza assoluta</b> è il conteggio del numero di volte che una data osservazione occorre in un campione.
+</p>
+
+<p>
+La <b>frequenza relativa</b> è la frequenza del valore di un dato divisa per il numero totale di elementi in un insieme di dati, ovvero la frazione dei casi in cui quell'osservazione occorre.
+</p>
+
+<p>
+In <code>pandas</code> si ottengono con il metodo <code>crosstab</code>, il cui parametro <code>normalize</code> è <code>True</code> per le frequenze relative, <code>False</code> altrimenti.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">tab_freq</span> = pd.crosstab(index = serie,
+                       columns = <span style="color: #8b2252;">'Abs. frequence'</span>,
+                       colnames=[<span style="color: #8b2252;">''</span>],
+                       normalize = <span style="color: #008b8b;">True</span>)
+</pre>
+</div>
+</div>
+<div id="outline-container-org6c873ff" class="outline-5">
+<h5 id="org6c873ff">Arrotondare il numero di cifre decimali</h5>
+<div class="outline-text-5" id="text-org6c873ff">
+<div class="org-src-container">
+<pre class="src src-python">publisher_rel_freq.<span style="color: #483d8b;">apply</span>(<span style="color: #a020f0;">lambda</span> p: 100 * np.<span style="color: #483d8b;">round</span>(p, 3))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org743852a" class="outline-5">
+<h5 id="org743852a">Mostrare frequenza relativa in percentuali</h5>
+<div class="outline-text-5" id="text-org743852a">
+<div class="org-src-container">
+<pre class="src src-python">(publisher_rel_freq.<span style="color: #483d8b;">apply</span>(<span style="color: #a020f0;">lambda</span> p: np.<span style="color: #483d8b;">round</span>(100*p, 2))
+                   .astype(<span style="color: #483d8b;">str</span>)
+                   .<span style="color: #483d8b;">apply</span>(<span style="color: #a020f0;">lambda</span> s: s + <span style="color: #8b2252;">'%'</span>))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfa65629" class="outline-5">
+<h5 id="orgfa65629">Rinormalizzare su un sottoinsieme delle osservazioni</h5>
+<div class="outline-text-5" id="text-orgfa65629">
+<pre class="example" id="org89e69ca">
+In statistical and data analysis terminology, what you're describing is generally known as conditional probability normalization or frequency renormalization under conditional observation.
+
+Formally, this refers to the process of recalculating the probability distribution or relative frequencies of a variable (or set of variables) after restricting the sample space through conditioning or filtering.
+</pre>
+<p>
+Quando si escludono alcune osservazioni per il calcolo delle frequenze relative (ad esempio quelle con un valore inferiore ad un certo valore), la somma di tutte le frequenze relative non sarà più \(1\).
+</p>
+
+<p>
+Per rinormalizzare le frequenze relative bisogna calcolare la somma delle osservazioni in considerazione e poi dividere ogni frequenza relativa per quel numero.
+</p>
+
+<p>
+Il modo safe (utilizzando <code>.copy()</code> come best-practice per evitare ambiguità di modifica) su <b>dataframe</b> è il seguente:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Filter the dataframe</span>
+<span style="color: #a0522d;">filtered_df</span> = df[df[<span style="color: #8b2252;">'Rel. frequence'</span>] &gt; 0.04].copy()
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Renormalize just the 'Rel. frequence' column</span>
+<span style="color: #a0522d;">filtered_df</span>[<span style="color: #8b2252;">'Rel. frequence'</span>] = filtered_df[<span style="color: #8b2252;">'Rel. frequence'</span>] / filtered_df[<span style="color: #8b2252;">'Rel. frequence'</span>].<span style="color: #483d8b;">sum</span>()
+</pre>
+</div>
+
+<p>
+Se invece si lavora su una <b>serie</b> (situazione solita), basta usare la notazione mediante un singolo operatore per applicare la trasformazione a tutti i valori della serie:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Restringi serie</span>
+<span style="color: #a0522d;">serie</span> = rel_freq[rel_freq &gt; 0.04]
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Calcola somma serie ristretta</span>
+<span style="color: #a0522d;">tsum</span> = serie.<span style="color: #483d8b;">sum</span>()
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Applica trasformazione con sintassi breve</span>
+<span style="color: #a0522d;">serie_renormalizzata1</span> = serie/tsum
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Oppure applica trasformazione con apply, che &#232; inutile</span>
+<span style="color: #b22222;">#</span><span style="color: #b22222;">serie_renormalizzata2 = serie.apply(lambda p: p/tsum)</span>
+</pre>
+</div>
+
+<p>
+Pass lello FQm67Krqn
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org53b88bb" class="outline-4">
+<h4 id="org53b88bb">Frequenze cumulate</h4>
+<div class="outline-text-4" id="text-org53b88bb">
+<p>
+La frequenza cumulata (assoluta o relativa), associata ad una modalità su cui è possibile definire una relazione d'ordine, è pari alla somma della sua frequenza (assoluta o relativa) e di quelle delle modalità che la precedono.
+</p>
+
+<p>
+In <code>pandas</code> si ottiene con il metodo <code>.cumsum()</code> su un <code>dataframe</code>.
+</p>
+</div>
+<div id="outline-container-org96ad5bf" class="outline-5">
+<h5 id="org96ad5bf"><span class="todo TODO">TODO</span> Funzione cumulativa empirica</h5>
+<div class="outline-text-5" id="text-org96ad5bf">
+<p>
+Una funzione che restituisce la proporzione di dati sotto un certo valore, aumentando di \(frac{1}{n}\) ad ogni osservazione di una certa modalità.
+inserisci formula e fai anki
+</p>
+</div>
+</div>
+<div id="outline-container-org3398d1a" class="outline-5">
+<h5 id="org3398d1a">Diagrammi di Pareto</h5>
+<div class="outline-text-5" id="text-org3398d1a">
+<p>
+Il diagramma di Pareto di un campione unisce il grafico <b>a barre</b> delle <b>frequenze relative</b> ed il grafico <b>poligonale</b> delle <b>frequenze cumulate relative</b>.
+</p>
+
+<p>
+Per generare il diagramma a partire da una serie, considerando solo i dati superiori ad un certo valore e scegliendo se renormalizzare o meno, si fa così:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">my_pareto</span>(data, threshold=0.02, renormalize=<span style="color: #008b8b;">False</span>):
+    <span style="color: #a0522d;">freq</span> = data.value_counts(normalize=<span style="color: #008b8b;">True</span>)
+    <span style="color: #a0522d;">freq</span> = freq[freq &gt; threshold]
+    <span style="color: #a020f0;">if</span> renormalize:
+        <span style="color: #a0522d;">freq</span> = freq / <span style="color: #483d8b;">sum</span>(freq)
+    freq.cumsum().plot()
+    freq.plot.bar()
+
+my_pareto(heroes[<span style="color: #8b2252;">'Eye color'</span>], threshold=0)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf5ed488" class="outline-4">
+<h4 id="orgf5ed488">Frequenze congiunte e marginali</h4>
+<div class="outline-text-4" id="text-orgf5ed488">
+<p>
+Quando si vuole analizzare un campione sulla base di due caratteri, viene specializzato il concetto di frequenza così che conti il numero di osservazioni in cui ogni modalità del carattere considerato assume un certo valore.
+</p>
+
+<p>
+In <code>pandas</code> si ottengono con <code>pd.crosstab(index = series1, columns = series2)</code>.
+</p>
+
+<p>
+Indicando il parametro opzionale <code>margins = True</code> vengono aggiunti dei margini.
+</p>
+
+<p>
+Quando si aggiungono i margini alla tabella delle frequenze relative, va specificato su quale totale considerare la frazione:
+</p>
+<ul class="org-ul">
+<li><code>normalize = 'all'</code> calcola le frequenze relative di ogni entrata della tabella, quindi di ogni carattere.</li>
+<li><code>normalize = 'index'</code> normalizza sulla somma delle righe, in modo che alla fine ogni riga sommi ad 1. In questo modo ogni entrata rappresenta la frazione di osservazioni con carattere 'riga' per ogni valore 'colonna'. Si usa quando</li>
+<li><code>normalize = 'columns'</code> normalizza sulla somma delle colonne, in modo che alla fine ogni colonna sommi ad 1. In questo modo ogni entrata rappresenta la frazione di osservazioni con carattere 'colonna' per ogni valore 'riga'. Si usa quando i caratteri delle colonne hanno frequenze assolute diverse e si vuole considerare la frazione di carattere 'riga' relativamente al solo gruppo di osservazioni 'colonna'.</li>
+</ul>
+
+<p>
+Per plottare i dataframe così ottenuti si usa <code>plot.bar(color = ['pink', 'blue'],stacked = False)</code>, dove <code>stacked = False</code> per tenere le barre affiancate o <code>True</code> per averle impilate.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org63ba63a" class="outline-3">
+<h3 id="org63ba63a">Riassumere i dati</h3>
+<div class="outline-text-3" id="text-org63ba63a">
+</div>
+<div id="outline-container-org418119f" class="outline-4">
+<h4 id="org418119f">Indici di <a id="org908fb0f">centralità</a></h4>
+<div class="outline-text-4" id="text-org418119f">
+</div>
+<div id="outline-container-orgc0ac8a0" class="outline-5">
+<h5 id="orgc0ac8a0"><a id="org01f6f69">Media</a> campionaria</h5>
+<div class="outline-text-5" id="text-orgc0ac8a0">
+<p>
+La <a href="#org01f6f69">media</a> campionaria è definita come:
+</p>
+
+<p>
+\[\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_{i}\]
+</p>
+
+<p>
+Ovvero è la somma di tutti i valori divisa per il numero di osservazioni.
+</p>
+
+<p>
+È un po' come il <b>baricentro</b> del campione.
+</p>
+
+<p>
+Dato che vanno eseguite operazioni matematiche sui valori, la <a href="#org01f6f69">media</a> può essere calcolata soltanto su dati <b>quantitativi</b> o <b>qualitativi</b> a cui è associato un <b>valore numerico</b>.
+</p>
+
+<p>
+Dato un campione \(y = ax + b\), per \(a,b\) fissati, è facile derivare attraverso la formula che \(\bar{y} = a\bar{x}+y\), ovvero la <a href="#org01f6f69">media</a> di un campione trasformato è la <a href="#org01f6f69">media</a> del campione originale trasformata nello stesso modo.
+</p>
+
+<p>
+Se di un campione si conoscono i \(k\) distinti valori quantitativi \(v\) del campione e le relative frequenze \(f\), allora la <a href="#org01f6f69">media</a> è definita come:
+\[\bar{x}=\frac{1}{n}\sum_{j=1}^{k}v_{j}f_{j}\], che è anche la <b><a href="#org01f6f69">media</a> pesata</b> dei valori distinti, dove il peso di ogni valore è la sua frequenza. Questo ragionamento vale sia per le frequenze assolute che relative.
+</p>
+
+<p>
+La <a href="#org01f6f69">media</a> campionaria <b>non è robusta</b>, ovvero è molto sensibile a <b>outlier</b> (valori fuori scala).
+</p>
+
+<p>
+La somma di <b>tutti</b> gli scarti dei valori di un campione dalla <a href="#org01f6f69">media</a> è nulla, ovvero
+\[\sum_{i=1}^{n} (x_i - \bar{x}) = 0\]
+</p>
+</div>
+</div>
+<div id="outline-container-org6c4acd7" class="outline-5">
+<h5 id="org6c4acd7"><a id="org9dfb2fc">Mediana</a> campionaria</h5>
+<div class="outline-text-5" id="text-org6c4acd7">
+<p>
+La <a href="#org9dfb2fc">mediana</a> campionaria è un altro indice di <a href="#org908fb0f">centralità</a>.
+</p>
+
+<p>
+Per calcolarla, si ordinano i valori dell'insieme dal più piccolo al più grande.
+</p>
+
+<p>
+Se il numero totale di elementi \(n\) è dispari, la <a href="#org9dfb2fc">mediana</a> è il valore che occupa la posizione \((n + 1)/2\). Se n è pari, invece, la <a href="#org9dfb2fc">mediana</a> è data dalla <a href="#org01f6f69">media</a> dei due valori centrali, ovvero quelli nelle posizioni \(n/2\) e \(n/2 + 1\).
+</p>
+
+<p>
+A differenza della <a href="#org01f6f69">media</a>, la <a href="#org9dfb2fc">mediana</a> può essere calcolata anche su dati <b>qualitativi</b>, purchè questi siano <b>ordinabili</b> e siano in numero <b>dispari</b>. Se fossero pari, sarebbe richiesto di fare la <a href="#org01f6f69">media</a> dei due valori centrali, che è impossibile.
+</p>
+
+<p>
+La <a href="#org9dfb2fc">mediana</a> è <b>robusta</b> rispetto ad eventuali outlier.
+</p>
+</div>
+</div>
+<div id="outline-container-orgd5248d4" class="outline-5">
+<h5 id="orgd5248d4"><a id="org1aaf37f">Moda</a> campionaria</h5>
+<div class="outline-text-5" id="text-orgd5248d4">
+<p>
+La <b><a href="#org1aaf37f">moda</a></b> è l'attributo che appare più spesso. Se esistono più attributi con frequenza massima, vengono chiamati <b>valori modali</b>. Può essere calcolata su qualunque tipo di dato.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd279798" class="outline-4">
+<h4 id="orgd279798">Indici di <a id="org39d10b5">dispersione</a></h4>
+<div class="outline-text-4" id="text-orgd279798">
+<p>
+Gli indici di <a href="#org39d10b5">dispersione</a> sono utilizzati per capire la <b>variabilità</b> o lo <b>spread</b> di un campione.
+</p>
+</div>
+<div id="outline-container-org6a7ed95" class="outline-5">
+<h5 id="org6a7ed95"><a id="orga1a5923">Varianza</a> campionaria</h5>
+<div class="outline-text-5" id="text-org6a7ed95">
+<p>
+\[ s^2 = \frac{1}{n-1} \sum_{i=1}^{n} \left( x_i - \overline{x} \right)^2 \]
+</p>
+
+<p>
+Il concetto su cui si basa la <b><a href="#orga1a5923">varianza</a></b> campionaria è quello di accumulare la <b>distanza</b> fra ogni osservazione e la <b><a href="#org9dfb2fc">mediana</a></b>.
+</p>
+
+<p>
+Può essere calcolata <b>soltanto</b> su dati <b>quantitativi</b>.
+</p>
+
+<p>
+Dalla definizione si ricava che la <a href="#orga1a5923">varianza</a> di un campione trasformato linearmente è uguale alla <a href="#orga1a5923">varianza</a> del campione originale <b>scalata</b> per <b>il quadrato del fattore</b>, mentre è <b>insensibile alla traslazione</b>.
+</p>
+</div>
+<div id="outline-container-org2dc05a8" class="outline-6">
+<h6 id="org2dc05a8">Perchè si usa il quadrato?</h6>
+<div class="outline-text-6" id="text-org2dc05a8">
+<p>
+Per ottenere la somma delle differenze, occorre assicurarsi che le distanze calcolate siano sempre positive.
+</p>
+
+<p>
+Infatti, le differenze per i valori superiori alla <a href="#org9dfb2fc">mediana</a>, se lasciate invariate, produrrebbero valori negativi che ridurrebbero l'accumulazione totale.
+</p>
+
+<p>
+Utilizzare la funzione del <b>valore assoluto</b> rappresenterebbe una scelta <b>subottimale</b>, poiché non si presta agevolmente a trasformazioni lineari.
+</p>
+
+<p>
+Di conseguenza, l'approccio preferito consiste nel considerare il <b>quadrato</b> di ciascuna differenza.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org39dcb4a" class="outline-5">
+<h5 id="org39dcb4a"><a id="orgb7abefe">Deviazione standard</a></h5>
+<div class="outline-text-5" id="text-org39dcb4a">
+<p>
+La <b><a href="#orgb7abefe">deviazione standard</a></b> è il quadrato della <a href="#orga1a5923">varianza</a> campionaria. È utile perchè permette di esprimere la <a href="#orga1a5923">varianza</a> nell'unità di misura originale.
+</p>
+
+<p>
+Come la <a href="#orga1a5923">varianza</a> è insensibile alla traslazione, mentre scala come il <b>valore assoluto del fattore</b> con cui è scalato il campione. Infatti, non avrebbe senso considerare una <a href="#orga1a5923">varianza</a> negativa.
+</p>
+</div>
+</div>
+<div id="outline-container-org0cbcb88" class="outline-5">
+<h5 id="org0cbcb88"><span class="todo WAIT">WAIT</span> Perchè si divide per \(n-1\)?</h5>
+</div>
+</div>
+<div id="outline-container-org14a9103" class="outline-4">
+<h4 id="org14a9103"><a id="org87ff3b9">Quantili</a></h4>
+<div class="outline-text-4" id="text-org14a9103">
+<p>
+Un <b>quantile</b> di <b>livello</b> \(p \in [0,1]\) di un campione da \(n\) <b>osservazioni</b> è uno dei valori del campione tale per cui \(np\) valori del campione sono minori o uguali ad esso e \(n(1-p)\) valori ne sono invece maggiori o uguali. \(100p\) è la percentuale di valori minori o uguali a quello scelto e \(100(1-p)\) resto sono maggiori.
+</p>
+
+<p>
+Se \(np\) è <b>intero</b>, allora si cerca quel valore che sia
+</p>
+<ul class="org-ul">
+<li>maggiore o uguale a \(np\) elementi.
+Lo trovo ordinando i valori del campione e scandendo dal più piccolo. L'elemento che incontro dopo \(n-p\) passi, ovvero in posizione \(np\), rispetta questa condizione.</li>
+<li>minore o uguale a \(n-np\) elementi. Ordinando i valori e scandendo dal più grande, l'elemento \(n-np\) rispetta la condizione. Dato che al \(1°\) elemento scandito mi trovo in posizione \(n\), al \(2°\) in posizione \(n-1\), la posizione in cui mi trovo al passo \(k\) è \(n+1-k\). Quindi, l'elemento che ho trovato è quello in posizione \(n+1-(n-np)\), ovvero \(np+1\).</li>
+</ul>
+
+<p>
+Di conseguenza, quando \(np\) è intero ci sono \(2\) elementi che rispettano entrambe le condizioni. Allora se ne prende la <b><a href="#org01f6f69">media</a></b>.
+</p>
+
+<p>
+Dato che il numero di valori in un campione è intero, se \(np\) è <b>razionale</b>, allora si cerca il valore che sia minore uguale di \(\lceil np \rceil\) elementi e maggiore di \(\lceil n-np \rceil\) elementi. Quindi l'$np$-esimo elemento a partire dal più piccolo non basta e quindi devo andare in posizione \(np+1\), mentre, come nel caso intero, prendo l'$n-np$-esimo elemento partendo dal più grande, ovvero quello in posizione \(np+1\).
+</p>
+
+<p>
+Quindi, quando \(np\) è razionale esiste <b>un solo</b> valore che rispetta entrambe le condizioni, ovvero quello in posizione \(np+1\) del campione ordinato ed è proprio quello il quantile di livello \(p\).
+</p>
+
+<p>
+I <a href="#org87ff3b9">quantili</a> dove \(p\) ha al massimo due cifre decimali sono chiamati <b>percentili</b>, mentre quelli con \(p\) corrispondente ai multipli interi di \(0.25\) sono chiamati <b>quartili</b>.
+</p>
+</div>
+<div id="outline-container-org0403396" class="outline-5">
+<h5 id="org0403396">Box plot</h5>
+<div class="outline-text-5" id="text-org0403396">
+<p>
+Il box plot è un grafico che riassume le seguenti informazioni: <b>minimo e massimo</b> del campione come <b>estremi dei baffi</b>, <b>primo e terzo</b> quartile come <b>estremi della scatola</b> e <b><a href="#org9dfb2fc">mediana</a></b> (o secondo quartile) come <b>linea nella scatola</b>.
+</p>
+</div>
+<div id="outline-container-org8dc1c5f" class="outline-6">
+<h6 id="org8dc1c5f"><span class="todo TODO">TODO</span> Capire cosa ha detto il professore riguardo alla relazione fra box plot e distribuzione e capire cosa c'entra la <a href="#org01f6f69">media</a></h6>
+</div>
+</div>
+<div id="outline-container-org5023b89" class="outline-5">
+<h5 id="org5023b89">Range inter-quartile</h5>
+<div class="outline-text-5" id="text-org5023b89">
+<p>
+Il <b>range inter-quartile</b> è un <b>indice di <a href="#org39d10b5">dispersione</a></b> ed è calcolato come \(Q_3 - Q-1\), ovvero il numero di valori che circondano la <a href="#org9dfb2fc">mediana</a> senza entrare nei quartili adiacenti. Corrisponde alla lunghezza del box nel box plot.
+</p>
+
+<p>
+Quanto più questo range è grande, quanto più i valori sono lontani dalla <a href="#org9dfb2fc">mediana</a>.
+</p>
+</div>
+</div>
+<div id="outline-container-orgf51e9d1" class="outline-5">
+<h5 id="orgf51e9d1">QQ plot</h5>
+<div class="outline-text-5" id="text-orgf51e9d1">
+<p>
+I grafici <b>quantile-quantile</b> sono usati per confrontare le distribuzioni di due campioni.
+</p>
+
+<p>
+L'idea è quella di introdurre un sistema di riferimento cartesiano sulle cui assi si trovano i corrispondenti <a href="#org87ff3b9">quantili</a> dei due campioni e i punti si trovano in corrispondenza del valore dei due <a href="#org87ff3b9">quantili</a>.
+</p>
+
+<p>
+Se i valori si allineano sulla funzione identità \(y=x\), ovvero sulla bisettrice del primo e terzo quadrante, allora le distribuzioni sono simili. Se si allineano su una retta diversa da quella precedente, c'è una relazione lineare fra i due campioni.
+</p>
+
+<p>
+Il QQ plot è uno metodo grafico e <b>qualitativo</b>, usato soltanto per refutare o validare ipotesi su campioni.
+</p>
+</div>
+<div id="outline-container-org11d9f65" class="outline-6">
+<h6 id="org11d9f65"><span class="todo TODO">TODO</span> Come stampare?</h6>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf40875c" class="outline-4">
+<h4 id="orgf40875c">Distribuzione normale</h4>
+<div class="outline-text-4" id="text-orgf40875c">
+<p>
+Un campione le frequenza dei valori presi in ordine cresce fino a raggiungere il picco in corrispondenza della <a href="#org9dfb2fc">mediana</a> e poi decresce con la stessa pendenza con cui era cresciuta viene chiamata <b>normale</b>.
+</p>
+
+<p>
+Questi campioni seguono una <b>regola empirica</b> per la quale (dove \(\bar{x}\) è la <a href="#org01f6f69">media</a> e \(s\) è la <a href="#orgb7abefe">deviazione standard</a>:
+</p>
+<ul class="org-ul">
+<li>il \(68\%\) delle osservazioni hanno valore compreso entro \(\bar{x} \pm s\)</li>
+<li>il \(95\%\) delle osservazioni hanno valore compreso entro \(\bar{x} \pm 2s\)</li>
+<li>il \(99.7\%\) delle osservazioni hanno valore compreso entro \(\bar{x} \pm 3s\)</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org8a94430" class="outline-4">
+<h4 id="org8a94430">Coefficiente di correlazione campionaria</h4>
+<div class="outline-text-4" id="text-org8a94430">
+<p>
+Lo scatter plot di due osservazioni in coppia può presentare una <b>tendenza lineare</b>. Ovvero, i valori sulle ascisse e sulle ordinate sono fra loro proporzionali.
+</p>
+
+<p>
+Date le <b>medie campionarie</b> \(\bar x, \bar y\), consideriamo gli <b>scarti</b> fra ogni valore di un campione e la propria <a href="#org01f6f69">media</a>. Quando lo scarto di un valore è <b>non negativo</b>, esso è più grande della propria <a href="#org01f6f69">media</a>, ovvero \(x-\bar x \geq 0\). Quando è <b>non positivo</b>, esso è minore e quindi \(x-\bar x \leq 0\).
+</p>
+
+<p>
+Allora, data una coppia di valori \((x_i, y_i)\), se essi sono entrambi maggiori o uguali della propria <a href="#org01f6f69">media</a>, oppure sono entrambi minori o uguali, il <b>prodotto degli scarti</b> sarà <b>non negativo</b>, ovvero \((x-\bar x)(y-\bar y)\geq 0\). Quando invece un elemento della coppia è piccolo, mentre l'altro è grande, il prodotto dei loro scarti sarà <b>non positivo</b>.
+</p>
+
+<p>
+Sommiamo quindi <b>tutti gli scarti</b>, ottenendo \(\sum_{i=1}^{n} (x-\bar x)(y-\bar y)\). Quanti più casi di coppie in cui gli entrambi gli elementi sono grandi o piccoli allo stesso momento, quanto maggiore sarà il risultato della sommatoria, mentre ogni caso di elementi l'uno grande e l'altro piccolo diminuisce il suo valore. Questo indice si chiama <b>covarianza campionaria</b>.
+</p>
+
+<p>
+<b>Standardizziamo</b> la somma dividendo per \((n-1)\) e poi dividendo per il <b>prodotto delle due deviazioni standard</b>. Notare che tale prodotto è anche il massimo valore ottenibile dalla sommatoria precedente. Il risultato è quindi quello di <b>scalare</b> il risultato della sommatoria limitandolo all'intervallo \([-1,1]\).
+</p>
+
+<p>
+Si ottiene il <b>coefficiente di correlazione campionaria</b>
+\[r_{xy} = \frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{s_x\, s_y}\]
+</p>
+
+<p>
+Quando \(r_{xy} > 0\), i dati sono <b>correlati positivamente</b>, o <b>direttamente</b>. Quando \(r_{xy} < 0\), i dati sono <b>correlati negativamente</b>, o <b>inversamente</b>. Quando \(r_{xy}\) è nullo, non c'è correlazione.
+</p>
+
+<p>
+Inoltre, quanto più il valore di \(r_{xy}\) è alto, quanto più la correlazione è forte.
+</p>
+
+<p>
+Se un dato è una trasformazione lineare dell'altro, allora:
+</p>
+<ul class="org-ul">
+<li>\(r = 1\) se il coefficiente moltiplicativo è positivo;</li>
+<li>\(r = -1\) se è negativo.</li>
+</ul>
+
+<p>
+Se entrambi i dati sono trasformazioni lineari dello stesso dato, \(r = 1\) se i coefficienti sono concordi e l'opposto se discordi.
+</p>
+</div>
+</div>
+<div id="outline-container-org74d6d2e" class="outline-4">
+<h4 id="org74d6d2e"><span class="todo TODO">TODO</span> Lorenz e Gini</h4>
+</div>
+</div>
+<div id="outline-container-org1e7948c" class="outline-3">
+<h3 id="org1e7948c">Grafici</h3>
+<div class="outline-text-3" id="text-org1e7948c">
+<p>
+<a href="https://matplotlib.org/stable/users/explain/quick_start.html">https://matplotlib.org/stable/users/explain/quick_start.html</a>
+vedi xlim e ylim e xticks
+</p>
+</div>
+<div id="outline-container-org0d01e63" class="outline-4">
+<h4 id="org0d01e63">A bastoncini</h4>
+<div class="outline-text-4" id="text-org0d01e63">
+<div class="org-src-container">
+<pre class="src src-python">plt.vlines(selected_freq.index, 0, selected_freq.values)
+<span style="color: #b22222;">#</span><span style="color: #b22222;">aggiungi puntino sull'estremit&#224; superiore</span>
+plt.plot(selected_freq.index, selected_freq.values, <span style="color: #8b2252;">'o'</span>)
+plt.show()
+</pre>
+</div>
+<p>
+oppure
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax</span> = plt.subplots()
+ax.vlines(dim_freq.index, 0, dim_freq.values)
+<span style="color: #b22222;">#</span><span style="color: #b22222;">aggiungi puntino sull'estremit&#224; superiore</span>
+ax.plot(dim_freq.index, dim_freq.values, <span style="color: #8b2252;">'o'</span>)
+plt.show()
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2aa18b4" class="outline-4">
+<h4 id="org2aa18b4">A barre</h4>
+<div class="outline-text-4" id="text-org2aa18b4">
+<p>
+Metodo definito su dataframe
+</p>
+<div class="org-src-container">
+<pre class="src src-python">dataframe.plot.bar(legend=<span style="color: #008b8b;">False</span>)
+plt.show
+</pre>
+</div>
+<p>
+Metodo OOP
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax</span> = plt.subplots()
+ax.bar(dim_freq.index, dim_freq[<span style="color: #8b2252;">'Abs. frequence'</span>])
+plt.show()
+</pre>
+</div>
+<p>
+Parametro <code>alpha</code> minore di 1 per sovrapporre colori diversi
+</p>
+</div>
+</div>
+<div id="outline-container-org36f7236" class="outline-4">
+<h4 id="org36f7236">Poligonale</h4>
+<div class="outline-text-4" id="text-org36f7236">
+<p>
+Metodo definito su dataframe, <code>marker</code> per puntino
+</p>
+<div class="org-src-container">
+<pre class="src src-python">dataframe.plot(marker=<span style="color: #8b2252;">'o'</span>, color=<span style="color: #8b2252;">'blue'</span>, legend=<span style="color: #008b8b;">False</span>)
+plt.show
+</pre>
+</div>
+<p>
+Metodo pyplot
+</p>
+<div class="org-src-container">
+<pre class="src src-python">plt.plot(dim_freq, label = <span style="color: #8b2252;">'norm'</span>)
+<span style="color: #a0522d;">new</span> = dim_freq * 2
+plt.plot(new)
+plt.legend()
+</pre>
+</div>
+<p>
+Usare invece step per step discreti
+</p>
+</div>
+</div>
+<div id="outline-container-org5ad55a6" class="outline-4">
+<h4 id="org5ad55a6">A torta (aerogramma)</h4>
+<div class="outline-text-4" id="text-org5ad55a6">
+<p>
+Sul dataframe
+</p>
+<div class="org-src-container">
+<pre class="src src-python">dataframe.plot.pie(y=<span style="color: #8b2252;">'Abs. frequence'</span>, colors=[<span style="color: #8b2252;">'pink'</span>, <span style="color: #8b2252;">'blue'</span>])
+plt.show()
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf6fae5f" class="outline-4">
+<h4 id="orgf6fae5f">Istogramma</h4>
+<div class="outline-text-4" id="text-orgf6fae5f">
+<div class="org-src-container">
+<pre class="src src-python">series.hist(bins=50)
+plt.show()
+</pre>
+</div>
+</div>
+<div id="outline-container-orgc71887b" class="outline-5">
+<h5 id="orgc71887b"><span class="todo TODO">TODO</span> Find a way to do it on a dataframe</h5>
+</div>
+<div id="outline-container-org2e03759" class="outline-5">
+<h5 id="org2e03759"><span class="todo TODO">TODO</span> Find how to do it OOP style</h5>
+</div>
+<div id="outline-container-orgf54a1a1" class="outline-5">
+<h5 id="orgf54a1a1"><span class="todo TODO">TODO</span> Write how to have multiple bin sizes</h5>
+</div>
+</div>
+<div id="outline-container-org538f387" class="outline-4">
+<h4 id="org538f387">Grafici multipli</h4>
+<div class="outline-text-4" id="text-org538f387">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">axs</span> = plt.subplots(2)
+axs[0].vlines(dim_freq.index, 0, dim_freq[<span style="color: #8b2252;">'Abs. frequence'</span>])
+axs[0].set_title(<span style="color: #8b2252;">'bastoncini'</span>)
+axs[1].plot(dim_freq)
+axs[1].set_title(<span style="color: #8b2252;">'poligono'</span>)
+fig.tight_layout()
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org5750333" class="outline-4">
+<h4 id="org5750333">Scatter plot</h4>
+<div class="outline-text-4" id="text-org5750333">
+<p>
+Si stampa con
+<code>heroes[heroes['Gender'] =</code> 'M'].plot.scatter('Height', 'Weight')=
+</p>
+</div>
+</div>
+<div id="outline-container-org058e5b2" class="outline-4">
+<h4 id="org058e5b2"><span class="todo TODO">TODO</span> L03,1.5-6, grafici e stelofoglia (39 di rossintro)</h4>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc4f9e77" class="outline-2">
+<h2 id="orgc4f9e77"><span class="todo TODO">TODO</span> Calcolo combinatorio</h2>
+<div class="outline-text-2" id="text-orgc4f9e77">
+</div>
+<div id="outline-container-orge7324dc" class="outline-3">
+<h3 id="orge7324dc">Teorema fondamentale del calcolo combinatorio</h3>
+</div>
+<div id="outline-container-orgd3943c9" class="outline-3">
+<h3 id="orgd3943c9">Permutazioni</h3>
+</div>
+<div id="outline-container-org2db997b" class="outline-3">
+<h3 id="org2db997b">Disposizioni</h3>
+</div>
+<div id="outline-container-orgc72e4b4" class="outline-3">
+<h3 id="orgc72e4b4">Combinazioni</h3>
+</div>
+</div>
+<div id="outline-container-org88aaa01" class="outline-2">
+<h2 id="org88aaa01">Probabilità</h2>
+<div class="outline-text-2" id="text-org88aaa01">
+<p>
+Lo <b>spazio campionario (sample space)</b> è l'insieme dei possibili esiti e si indica con la lettera \(\Omega\).
+</p>
+
+<p>
+Gli elementi \(\omega\) dello spazio campionario si chiamano <b>esiti o eventi elementari (outcomes)</b> e sono <b>concetti primitivi</b> (non definiti).
+</p>
+
+<p>
+L'<b>evento (event)</b> è un sottoinsieme \(A\subseteq \Omega\). Gli eventi possibili sono anche \(\Omega\) stesso, quindi <b>evento certo</b>, e \(\emptyset\), ovvero <b>evento impossibile</b>.
+</p>
+
+<p>
+Gli eventi sono insiemi e vi si possono applicare le tipiche operazioni insiemistiche, con le solite proprietà quali commutatività, associatività, distribuzione dell'unione sull'intersezione e viceversa e leggi di DeMorgan.
+</p>
+
+<p>
+Una famiglia di eventi \(\mathcal{A}\) (ovvero un insieme di sottoinsiemi di \(\Omega\)) è un <b>algebra</b> secondo l'<b>algebra degli insiemi</b> se:
+</p>
+<ul class="org-ul">
+<li>\(\Omega \in \mathcal{A}\), ovvero l'evento certo fa parte dell'algebra,</li>
+<li>\(A \in \mathcal{A} \Rightarrow A^c  \in \mathcal{A}\), ovvero se un evento fa parte dell'algebra, deve farne parte anche il suo complemento,</li>
+<li>\(A_i \in \mathcal{A} \; \forall i \in \mathcal{N} \Rightarrow \bigcup_{i = 1}^{\infty} {A_i } \in \mathcal{A}\), ovvero l'unione di ogni evento è presente nell'algebra.</li>
+</ul>
+
+<p>
+Per estendere questo concetto agli insiemi infiniti, si introduce il concetto di \(\sigma\) -algebra
+</p>
+
+<p>
+Se prendo in considerazione i singoletti di ogni evento allora l'insieme \(\mathcal{A}\) è l'<b>insieme delle parti</b> di \(\Omega\).
+</p>
+
+<p>
+La teoria della probabilità di <b>Kolmogorov</b> si basa su questi tre assiomi:
+</p>
+<ol class="org-ol">
+<li>\(P(E)\in\mathbb{R}, P(E) \geq 0 \qquad \forall E \in F\), ovvero la probabilità di un evento è un numero reale non negativo.</li>
+<li>\(P(\Omega) = 1\), ovvero la probabilità dello spazio campione è \(1\).</li>
+<li>La probabilità dell'unione di due eventi mutualmente esclusivi è la somma delle loro probabilità.</li>
+</ol>
+
+<p>
+Da questi assiomi seguono le seguenti proposizioni (facilmente dimostrabili):
+</p>
+<ul class="org-ul">
+<li>\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\), ovvero la probabilità dell'unione di eventi non disgiunti è la somma delle probabilità singole meno la probabilità dell'intersezione</li>
+<li>\(P\left(A^{c}\right) = P(\Omega\setminus A) = 1 - P(A)\), ovvero la probabilità dell'evento complementare è il complemento a 1 della probabilità di un evento.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org5d99003" class="outline-2">
+<h2 id="org5d99003">ricevimento, fine lezione del giovedì, ufficio al quinto piano</h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2025-04-05 Sat 19:08</p>
+</div>
+</body>
+</html>

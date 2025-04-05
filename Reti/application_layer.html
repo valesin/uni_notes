@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-02-17 Mon 18:56 -->
+<!-- 2025-04-05 Sat 19:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Application layer</title>
@@ -13,27 +13,80 @@
 <body>
 <div id="content" class="content">
 <h1 class="title">Application layer</h1>
-<ul class="org-ul">
-<li>viene esposto un front-end chiamato <b>middlebox</b> che è un <b>router</b> o <b>uno switch</b>, che legge gli header di <b>tutti i livelli</b> e smista le richieste in base ad essi, facendo <b>load balancing</b>, violando i principi della <b>gerarchia</b>.</li>
-<li>ogni richiesta arriva in broadcast e viene soddisfatta solo da un server in base a qualche principio, es. gli ultimi bit dell'IP sorgente</li>
-<li>si usa il DNS per restituire una lista di indirizzi IP in rotazione, in modo che ogni client ne usi uno diverso.</li>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgaac6e85">Domain Name System</a>
+<ul>
+<li><a href="#orgceeebcb">Risoluzione</a></li>
 </ul>
-
-<p>
-L'architettura di <b>Content distribution network</b> è un ulteriore approccio che sovverte l'idea del caching. Il sito stesso distribuisce il contenuto su una serie di server distribuiti geograficamente.
-Quando un client fa una richiesta CDN, verrà indicato il server più vicino.
-</p>
-
-<p>
-Esistono due tecniche:
-</p>
-<ul class="org-ul">
-<li><b>mirroring</b>, in cui il contenuto è copiato su vari nodi, i cui link sono forniti sul sito web</li>
-<li><b>DNS redirection</b>, in cui è il <b>name server</b> a fornire un IP diverso per il server a seconda della posizione geografica del client.</li>
+</li>
 </ul>
 </div>
+</div>
+<p>
++exclude<sub>tags</sub>: anki noexport
+</p>
+<div id="outline-container-orgaac6e85" class="outline-2">
+<h2 id="orgaac6e85">Domain Name System</h2>
+<div class="outline-text-2" id="text-orgaac6e85">
+<p>
+Il DNS è un sistema che associa un nome, detto <b>dominio</b>, a un certo indirizzo IP.
+</p>
+
+<p>
+Oltre a rendere più facile l'accesso alle persone, esso <b>disaccoppia</b> il nome dall'indirizzo ip, permettendo, ad esempio, di cambiare l'indirizzo ip di un server in modo <b>trasparente</b> agli utenti, o di effettuare <b>load balancing</b> dirottando su server diversi.
+</p>
+
+<p>
+Il sistema è gerarchico e parte dalla radice, senza etichetta.
+</p>
+
+<p>
+Il dominio <b>completo</b> è detto <b>FQDN (Fully Qualified Domain Name)</b> e contiene un punto alla fine, che indica la radice, e dalle macchine è tradotto eliminando i punti e prefiggendo la lunghezza dell'etichetta all'inizio di ogni livello, ad esempio <i>2DI5UNIMI2IT0</i>.
+</p>
+
+<p>
+Un server DNS mantiene in <b>cache</b> dei <b>record di risorsa</b> a cui si accede mediante delle <b>query</b>, che contengono uno <b>header</b>, il FQDN, il tipo di query (A-IPv3, AAAA-IPv6, MX-mail, CNAME-canonical name o alias del sito).
+</p>
+
+<p>
+La <b>risposta</b> contiene gli stessi dati, incluso lo header, più le informazioni ottenute dalla query in fondo.
+</p>
+
+<p>
+Le zone sono ordinate gerarchicamente e per ogni zona esistono server <b>primari</b> e <b>secondari</b> (memoria volatile). I primi contengono la cache almeno per l'intera zona. Quando viene richiesto un dominio al di fuori, essi controllano se hanno l'indirizzo in cache, altrimenti effettuano la risoluzione attraverso il server della zona superiore. Ogni entrata di cache ha un TTL (di solito 2 giorni) dopo il quale essa viene cancellata.
+</p>
+</div>
+<div id="outline-container-orgceeebcb" class="outline-3">
+<h3 id="orgceeebcb">Risoluzione</h3>
+<div class="outline-text-3" id="text-orgceeebcb">
+<p>
+All'interno di ogni macchina vi è un programma detto <b>resolver</b>. Quando un client richiede un indirizzo, passa attraverso il resolver che conosce, per <b>configurazione</b>, l'indirizzo del <b>Local DNS</b>.
+</p>
+
+<p>
+Esistono due tipi di risoluzione, quella <b>iterativa</b> e quella <b>ricorsiva</b>.
+</p>
+
+<p>
+Quella <b>ricorsiva</b> prevede che il resolver mandi una query al local dns e quest'ultimo mandi l'indirizzo IP finale. Non è scalabile, quindi viene usato un approccio <b>iterativo</b> dal local DNS, ma <b>ricorsivo</b> fra il resolver e il local dns.
+</p>
+
+<p>
+Il local dns gestisce in modo iterativo mandando l'intero dominio al root, che risponde con l'ip del name server di primo livello. Si procede così per tanti livelli quanti sono i livelli coinvolti.
+</p>
+
+<p>
+Anche questo approccio prevede uno overhead da parte del local dns, che però salva tutti gli ip dei name server intermedi, in modo che la prossima volta che arriva una richiesta che passa attraverso quel dominio, la richiesta è fatta direttamente ad esso.
+</p>
+</div>
+</div>
+</div>
+</div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-02-17 Mon 18:56</p>
+<p class="date">Created: 2025-04-05 Sat 19:08</p>
 </div>
 </body>
 </html>

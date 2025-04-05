@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-02-19 Wed 21:43 -->
+<!-- 2025-04-05 Sat 19:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Laboratorio reti</title>
@@ -17,77 +17,77 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgcdd7cae">Access list</a></li>
-<li><a href="#org0e17ec0">OSPF</a></li>
-<li><a href="#orgb1b8dd7">NAT</a></li>
+<li><a href="#org2b51f6a">Access list</a></li>
+<li><a href="#org476cd4d">OSPF</a></li>
+<li><a href="#org743d8e7">NAT</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgcdd7cae" class="outline-2">
-<h2 id="orgcdd7cae">Access list</h2>
-<div class="outline-text-2" id="text-orgcdd7cae">
+<div id="outline-container-org2b51f6a" class="outline-2">
+<h2 id="org2b51f6a">Access list</h2>
+<div class="outline-text-2" id="text-org2b51f6a">
 <ul class="org-ul">
 <li><p>
 Definisci la regola da <code>config</code>
 </p>
-<pre class="example" id="org4218b24">
+<pre class="example" id="org65ba022">
 access-list $numeroRegola permit/deny $protocollo $from $to eq $porta
 </pre></li>
 <li><p>
 Entra nell'interfaccia <b>verso</b> il dispositivo da isolare e applica la regola
 </p>
-<pre class="example" id="orgd654498">
+<pre class="example" id="org16a6af0">
 ip access-group $numeroRegola out
 </pre></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org0e17ec0" class="outline-2">
-<h2 id="org0e17ec0">OSPF</h2>
-<div class="outline-text-2" id="text-org0e17ec0">
+<div id="outline-container-org476cd4d" class="outline-2">
+<h2 id="org476cd4d">OSPF</h2>
+<div class="outline-text-2" id="text-org476cd4d">
 <ul class="org-ul">
 <li><p>
 Entra in modalità configurazione e imposta l'area come stub
 </p>
-<pre class="example" id="orgf95b7cb">
+<pre class="example" id="orgef8df45">
 router ospf 1
 area 1 stub
 </pre></li>
 <li><p>
 Inserisci <b>ogni</b> rete adiacente, incluso le stesse reti delle interfacce
 </p>
-<pre class="example" id="orgd7b7839">
+<pre class="example" id="orgaf3571b">
 network $ip $wildcard area 1
 </pre></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb1b8dd7" class="outline-2">
-<h2 id="orgb1b8dd7">NAT</h2>
-<div class="outline-text-2" id="text-orgb1b8dd7">
+<div id="outline-container-org743d8e7" class="outline-2">
+<h2 id="org743d8e7">NAT</h2>
+<div class="outline-text-2" id="text-org743d8e7">
 <ul class="org-ul">
 <li><p>
 Definire una regola Access per decidere quali dispositivi da tradurre, ad esempio per ogni ip
 </p>
-<pre class="example" id="org055fc2a">
+<pre class="example" id="org1c73490">
 access-list $num(110) permit ip any any
 </pre></li>
 <li><p>
 Impostare l'interfaccia interna, <b>verso la rete privata</b>
 </p>
-<pre class="example" id="org88d6273">
+<pre class="example" id="org2185b98">
 ip nat inside
 </pre></li>
 <li><p>
 Impostare l'interfaccia esterna, <b>verso la rete pubblica</b>
 </p>
-<pre class="example" id="org3d36bad">
+<pre class="example" id="org363522f">
 ip nat outside
 </pre></li>
 <li><p>
 Impostare il nat router-wide, da config, con l'<b>interfaccia esterna</b>
 </p>
-<pre class="example" id="orgad1f5aa">
+<pre class="example" id="org1a214ef">
 ip nat inside source list $num(110) interface $interface
 </pre></li>
 </ul>
@@ -95,7 +95,7 @@ ip nat inside source list $num(110) interface $interface
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-02-19 Wed 21:43</p>
+<p class="date">Created: 2025-04-05 Sat 19:08</p>
 </div>
 </body>
 </html>

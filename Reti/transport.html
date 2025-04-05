@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-02-15 Sat 18:55 -->
+<!-- 2025-04-05 Sat 19:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Transport layer</title>
@@ -46,60 +46,55 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org6186a90">Transmission Control Protocol (TCP)</a>
+<li><a href="#orge13bc42">Transmission Control Protocol (TCP)</a>
 <ul>
-<li><a href="#org7c5be11">Socket</a></li>
-<li><a href="#org6be72c3">Header</a></li>
-<li><a href="#orgff765a8">Apertura della connessione</a>
+<li><a href="#org70ca7ab">Socket</a></li>
+<li><a href="#org6f04268">Header</a></li>
+<li><a href="#org40ef85c">Apertura della connessione</a>
 <ul>
-<li><a href="#org6666e22">SYN flood</a></li>
+<li><a href="#org4a11789">SYN flood</a></li>
 </ul>
 </li>
-<li><a href="#org19d7bd7">Comunicazione</a>
+<li><a href="#org1e64419">Comunicazione</a>
 <ul>
-<li><a href="#orgb296d49">Segmenti piccoli</a>
+<li><a href="#org7d6a37f">Segmenti piccoli</a>
 <ul>
-<li><a href="#org5bb05b7">Delayed ACK</a></li>
-<li><a href="#orgb5ab97e">Algoritmo di Nagle</a></li>
+<li><a href="#org4508143">Delayed ACK</a></li>
+<li><a href="#org506234f">Algoritmo di Nagle</a></li>
 </ul>
 </li>
-<li><a href="#org46e07b8">Ritrasmissione</a>
+<li><a href="#orgc15da12">Ritrasmissione</a>
 <ul>
-<li><a href="#orgf210386">Calcolo dell'RTO</a></li>
+<li><a href="#org6084d8b">Calcolo dell'RTO</a></li>
 </ul>
 </li>
-<li><a href="#orgcc297b5">Controllo del flusso</a>
+<li><a href="#org164e067">Controllo del flusso</a>
 <ul>
-<li><a href="#org52ab921">Silly window syndrome</a></li>
-<li><a href="#org3aa9a64">Persist timer</a></li>
+<li><a href="#org212d61d">Silly window syndrome</a></li>
+<li><a href="#orgf84e958">Persist timer</a></li>
 </ul>
 </li>
-<li><a href="#org6e30a66">Controllo della congestione</a>
+<li><a href="#orga44c5b8">Controllo della congestione</a>
 <ul>
-<li><a href="#org1bd399c">Explicit congestion notification</a></li>
+<li><a href="#org7e5e6c2">Explicit congestion notification</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org7f6a0f5">Chiusura della connessione</a>
+<li><a href="#orga75c9e4">Chiusura della connessione</a>
 <ul>
-<li><a href="#org51a167b">Timer keepalive</a></li>
+<li><a href="#org0e5940e">Timer keepalive</a></li>
 </ul>
 </li>
-<li><a href="#orgfa1c97d">Timestamp</a></li>
-<li><a href="#org9974149">Window Scale</a></li>
-<li><a href="#org4a9bb01">SACK</a></li>
+<li><a href="#org2d286f6">Timestamp</a></li>
+<li><a href="#orgfb01149">Window Scale</a></li>
+<li><a href="#org3e6a839">SACK</a></li>
 </ul>
 </li>
-<li><a href="#org9caadf2">UDP</a></li>
+<li><a href="#orgfc87beb">UDP</a></li>
 </ul>
 </div>
 </div>
-<p>
-s
-ss
-</p>
-
 <p>
 Il transport layer è il primo livello <b>end-to-end</b>.
 </p>
@@ -107,9 +102,9 @@ Il transport layer è il primo livello <b>end-to-end</b>.
 <p>
 I due protocolli diffusi a questo livello sono <b>TCP</b> e <b>UDP</b>.
 </p>
-<div id="outline-container-org6186a90" class="outline-2">
-<h2 id="org6186a90">Transmission Control Protocol (TCP)</h2>
-<div class="outline-text-2" id="text-org6186a90">
+<div id="outline-container-orge13bc42" class="outline-2">
+<h2 id="orge13bc42">Transmission Control Protocol (TCP)</h2>
+<div class="outline-text-2" id="text-orge13bc42">
 <p>
 Il protocollo <b>TCP</b> ha fra i vari obiettivi quelli di:
 </p>
@@ -132,9 +127,9 @@ Inoltre, esso è basato sullo <b>stream di byte</b>.
 L'<b>indirizzamento</b> in TCP avviene utilizzando delle <b>porte</b>, che servono per identificare l'applicazione che sta usando una specifica connessione.
 </p>
 </div>
-<div id="outline-container-org7c5be11" class="outline-3">
-<h3 id="org7c5be11">Socket</h3>
-<div class="outline-text-3" id="text-org7c5be11">
+<div id="outline-container-org70ca7ab" class="outline-3">
+<h3 id="org70ca7ab">Socket</h3>
+<div class="outline-text-3" id="text-org70ca7ab">
 <p>
 Il TCP utilizza delle <b>socket</b>, ovvero degli <b>endpoint</b> per scambiare dati sul network.
 </p>
@@ -180,9 +175,9 @@ Una quintupla <b>[protocol, IPsrc, IPdst, portSrc, portDst]</b> descrive univoca
 </p>
 </div>
 </div>
-<div id="outline-container-org6be72c3" class="outline-3">
-<h3 id="org6be72c3">Header</h3>
-<div class="outline-text-3" id="text-org6be72c3">
+<div id="outline-container-org6f04268" class="outline-3">
+<h3 id="org6f04268">Header</h3>
+<div class="outline-text-3" id="text-org6f04268">
 <p>
 Lo header TCP è costituito da pagine larghe \(32\) bit.
 </p>
@@ -208,9 +203,9 @@ Il resto dei campi sono legati alle funzionalità fornite dal TCP.
 </p>
 </div>
 </div>
-<div id="outline-container-orgff765a8" class="outline-3">
-<h3 id="orgff765a8">Apertura della connessione</h3>
-<div class="outline-text-3" id="text-orgff765a8">
+<div id="outline-container-org40ef85c" class="outline-3">
+<h3 id="org40ef85c">Apertura della connessione</h3>
+<div class="outline-text-3" id="text-org40ef85c">
 <p>
 Il TCP opera una apertura in 3 fasi chiamata <b>three-way handshake</b>.
 </p>
@@ -236,9 +231,9 @@ I campi non indicati nell'esempio sono irrilevanti.
 Esiste inoltre un timer <b>RTO</b> alla scadenza del quale si assume che qualche segmento sia stato perso e si ritenta l'apertura della connessione.
 </p>
 </div>
-<div id="outline-container-org6666e22" class="outline-4">
-<h4 id="org6666e22">SYN flood</h4>
-<div class="outline-text-4" id="text-org6666e22">
+<div id="outline-container-org4a11789" class="outline-4">
+<h4 id="org4a11789">SYN flood</h4>
+<div class="outline-text-4" id="text-org4a11789">
 <p>
 È possibile sfruttare il three-way handshake maliziosamente aprendo tante connessioni senza finalizzarle con il terzo handshake.
 </p>
@@ -253,9 +248,9 @@ Rispondendo con un <b>RST</b> = 1 come terzo segmento si evita di pesare computa
 </div>
 </div>
 </div>
-<div id="outline-container-org19d7bd7" class="outline-3">
-<h3 id="org19d7bd7">Comunicazione</h3>
-<div class="outline-text-3" id="text-org19d7bd7">
+<div id="outline-container-org1e64419" class="outline-3">
+<h3 id="org1e64419">Comunicazione</h3>
+<div class="outline-text-3" id="text-org1e64419">
 <p>
 Una volta aperta la connessione mediante il <b>three-way handshake</b>, può iniziare la trasmissione.
 </p>
@@ -279,9 +274,9 @@ Una comunicazione <b>senza errori</b> andrebbe così:
 Si procede così fino alla fine della comunicazione.
 </p>
 </div>
-<div id="outline-container-orgb296d49" class="outline-4">
-<h4 id="orgb296d49">Segmenti piccoli</h4>
-<div class="outline-text-4" id="text-orgb296d49">
+<div id="outline-container-org7d6a37f" class="outline-4">
+<h4 id="org7d6a37f">Segmenti piccoli</h4>
+<div class="outline-text-4" id="text-org7d6a37f">
 <p>
 Quando l'applicazione richiede uno scambio di dati atomici real-time, come <b>ssh</b> o <b>telnet</b> su server remoto, può farlo settando la flag <b>PUSH</b> a \(1\).
 </p>
@@ -302,9 +297,9 @@ Sia il carattere originale che l'echo prevedono <code>ACK</code>.
 Di conseguenza, questa tecnica prevede un totale di <b>4 segmenti</b>, due di dati uguali e due di ack.
 </p>
 </div>
-<div id="outline-container-org5bb05b7" class="outline-5">
-<h5 id="org5bb05b7">Delayed ACK</h5>
-<div class="outline-text-5" id="text-org5bb05b7">
+<div id="outline-container-org4508143" class="outline-5">
+<h5 id="org4508143">Delayed ACK</h5>
+<div class="outline-text-5" id="text-org4508143">
 <p>
 Per limitare l'overhead causato dai 4 segmenti per byte nel caso del PSH=1, viene utilizzato il <b>delay acknowledgment</b>.
 </p>
@@ -330,9 +325,9 @@ Infatti, essa comporta un <b>ritardo costante minimo</b> per l'aggiornamento del
 </p>
 </div>
 </div>
-<div id="outline-container-orgb5ab97e" class="outline-5">
-<h5 id="orgb5ab97e">Algoritmo di Nagle</h5>
-<div class="outline-text-5" id="text-orgb5ab97e">
+<div id="outline-container-org506234f" class="outline-5">
+<h5 id="org506234f">Algoritmo di Nagle</h5>
+<div class="outline-text-5" id="text-org506234f">
 <p>
 Per ovviare alla scarsa user-experience del delayed ACK, viene utilizzata la tecnica dell'<b>algoritmo di Nagle</b>.
 </p>
@@ -351,9 +346,9 @@ Quindi, il server risponde con una echo prima e un semplice <b>ack cumulativo</b
 </div>
 </div>
 </div>
-<div id="outline-container-org46e07b8" class="outline-4">
-<h4 id="org46e07b8">Ritrasmissione</h4>
-<div class="outline-text-4" id="text-org46e07b8">
+<div id="outline-container-orgc15da12" class="outline-4">
+<h4 id="orgc15da12">Ritrasmissione</h4>
+<div class="outline-text-4" id="text-orgc15da12">
 <p>
 Utilizzando un <b>ACK cumulativo</b>, il campo <b>Ack</b> del ricevitore è sempre fermo all'indice del primo byte che ci si aspetta.
 </p>
@@ -374,9 +369,9 @@ Inoltre, viene usata una tecnica chiamata <b>fast retransmit</b>, che prevede ch
 Il timer rimane necessario per alcuni casi, ad esempio negli <b>ultimi 2 segmenti</b>, dopo i quali non esistono 3 <code>ACK</code> che attivino la fast retransmit.
 </p>
 </div>
-<div id="outline-container-orgf210386" class="outline-5">
-<h5 id="orgf210386">Calcolo dell'RTO</h5>
-<div class="outline-text-5" id="text-orgf210386">
+<div id="outline-container-org6084d8b" class="outline-5">
+<h5 id="org6084d8b">Calcolo dell'RTO</h5>
+<div class="outline-text-5" id="text-org6084d8b">
 <p>
 La formula per il calcolo del RTO, come indicata nella <b>RFC6298</b> prevede di calcolare l'RTO sulla base dello <b>SRTT</b> (<i>smoothed round trip time</i>) e del <b>RTTVAR</b> (<i>round-trip time variation</i>) come segue:
 \[\text{RTO} = \text{SRTT} + 4\text{RTTVAR}\]
@@ -392,11 +387,11 @@ Quando la <b>prima misurazione</b> è effettuata, si assegnano \(\text{SRTT} = R
 
 <p>
 Dalla <b>seconda</b> misurazione <b>in poi</b>, i valori sono i seguenti:
-\[
-\text{SRTT} = \alpha \cdot \text{SRTT} + (1-\alpha) \cdot R\]
-\[\text{RTTVAR} = \beta\cdot \text{RTTVAR} + (1-\beta)\cdot |\text{SRTT}-R|
-\]
 </p>
+\begin{*align}
+\text{SRTT} = \alpha \cdot \text{SRTT} + (1-\alpha) \cdot R \\
+\text{RTTVAR} = \beta\cdot \text{RTTVAR} + (1-\beta)\cdot |\text{SRTT}-R|
+\end{*align}
 
 <p>
 I valori consigliati nella <b>RFC6298</b> sono \(\alpha = \frac{7}{8}\) e \(\beta = \frac{3}{4}\)
@@ -404,9 +399,9 @@ I valori consigliati nella <b>RFC6298</b> sono \(\alpha = \frac{7}{8}\) e \(\bet
 </div>
 </div>
 </div>
-<div id="outline-container-orgcc297b5" class="outline-4">
-<h4 id="orgcc297b5">Controllo del flusso</h4>
-<div class="outline-text-4" id="text-orgcc297b5">
+<div id="outline-container-org164e067" class="outline-4">
+<h4 id="org164e067">Controllo del flusso</h4>
+<div class="outline-text-4" id="text-org164e067">
 <p>
 Quando il sender è più veloce ad inviare di quanto il receiver lo sia ad elaborare i dati, il buffer di ricezione si <b>satura</b> e tutti i segmenti successivi vengono <b>scartati</b>, causando un'<b>inefficienza</b>.
 </p>
@@ -443,9 +438,9 @@ Quando il ricevitore legge \(x\) byte, manda un nuovo segmento con <b>stesso Ack
 Così il sender può riprendere l'invio fino ad una nuova saturazione.
 </p>
 </div>
-<div id="outline-container-org52ab921" class="outline-5">
-<h5 id="org52ab921">Silly window syndrome</h5>
-<div class="outline-text-5" id="text-org52ab921">
+<div id="outline-container-org212d61d" class="outline-5">
+<h5 id="org212d61d">Silly window syndrome</h5>
+<div class="outline-text-5" id="text-org212d61d">
 <p>
 La tecnica utilizzata per il controllo di flusso, in cui uno host con buffer saturo comunica appena dello spazio è liberato, comporta un <b>problema</b>.
 </p>
@@ -469,9 +464,9 @@ La soluzione è l'<b>algoritmo di Clark</b>, che <b>impedisce</b> agli host TCP 
 </p>
 </div>
 </div>
-<div id="outline-container-org3aa9a64" class="outline-5">
-<h5 id="org3aa9a64">Persist timer</h5>
-<div class="outline-text-5" id="text-org3aa9a64">
+<div id="outline-container-orgf84e958" class="outline-5">
+<h5 id="orgf84e958">Persist timer</h5>
+<div class="outline-text-5" id="text-orgf84e958">
 <p>
 Immaginiamo la situazione in cui il sender sia fermo perchè la finestra di invio \(W_s = 0\).
 </p>
@@ -498,9 +493,9 @@ La procedura si ripete ogni <b>60 secondi</b>, finchè il buffer di ricezione si
 </div>
 </div>
 </div>
-<div id="outline-container-org6e30a66" class="outline-4">
-<h4 id="org6e30a66">Controllo della congestione</h4>
-<div class="outline-text-4" id="text-org6e30a66">
+<div id="outline-container-orga44c5b8" class="outline-4">
+<h4 id="orga44c5b8">Controllo della congestione</h4>
+<div class="outline-text-4" id="text-orga44c5b8">
 <p>
 Quando la rete è congestionata e i router nella rete sono costretti a scartare dei pacchetti (vedi <a href="terzo.html#ID-5cf15a68-c0c4-40c9-8889-e9d4150881d1">Network layer</a>), TCP mette in atto delle politiche per ridurre il numero di segmenti inviati ed allo stesso tempo non contribuire alla congestione della rete.
 </p>
@@ -537,9 +532,9 @@ Nel caso della <b>fast retransmit</b>, si suppone che la congestione sia <b>liev
 Nel caso della <b>scadenza dell'RTO</b>, si presume che la congestione sia <b>elevata</b> e si imposta immediatamente la finestra ad \(1\).
 </p>
 </div>
-<div id="outline-container-org1bd399c" class="outline-5">
-<h5 id="org1bd399c">Explicit congestion notification</h5>
-<div class="outline-text-5" id="text-org1bd399c">
+<div id="outline-container-org7e5e6c2" class="outline-5">
+<h5 id="org7e5e6c2">Explicit congestion notification</h5>
+<div class="outline-text-5" id="text-org7e5e6c2">
 <p>
 <b>ECN</b> (<i>Explicit congestion notification</i>) è una funzione di livello 3, sfruttata da TCP.
 </p>
@@ -563,9 +558,9 @@ Alla ricezione di tale segnale, il sender agisce decrementando la finestra di co
 </div>
 </div>
 </div>
-<div id="outline-container-org7f6a0f5" class="outline-3">
-<h3 id="org7f6a0f5">Chiusura della connessione</h3>
-<div class="outline-text-3" id="text-org7f6a0f5">
+<div id="outline-container-orga75c9e4" class="outline-3">
+<h3 id="orga75c9e4">Chiusura della connessione</h3>
+<div class="outline-text-3" id="text-orga75c9e4">
 <p>
 Esistono <b>quattro tipologie</b> di chiusura della connessione:
 </p>
@@ -578,9 +573,9 @@ Quando lo host <b>attivo</b> riceve il segmento di fine, manda un <code>ACK</cod
 <li><b>mezza chiusura</b>:: quando lo host che riceve il segmento di fine non ha ancora completato la trasmissione dei segmenti in buffer, esso indica con un <b>EOF</b> che la ricezione è finita, ma continua a trasmettere, aspettandosi normalmente degli <code>ACK</code>. Quando avrà finito, invierà a sua volta un segmento di fine e tutto finisce come nel caso standard, ovvero con lo host attivo che fa partire un timer e poi chiude.</li>
 </ul>
 </div>
-<div id="outline-container-org51a167b" class="outline-4">
-<h4 id="org51a167b">Timer keepalive</h4>
-<div class="outline-text-4" id="text-org51a167b">
+<div id="outline-container-org0e5940e" class="outline-4">
+<h4 id="org0e5940e">Timer keepalive</h4>
+<div class="outline-text-4" id="text-org0e5940e">
 <p>
 Se uno host si disconnette senza effettuare alcuna procedura di chiusura, l'altro host rimane bloccato in attesa di nuovi segmenti.
 </p>
@@ -599,9 +594,9 @@ Se l'altro host è irragiungibile dopo 2 ore, viene rimandato il <code>probe</co
 </div>
 </div>
 </div>
-<div id="outline-container-orgfa1c97d" class="outline-3">
-<h3 id="orgfa1c97d">Timestamp</h3>
-<div class="outline-text-3" id="text-orgfa1c97d">
+<div id="outline-container-org2d286f6" class="outline-3">
+<h3 id="org2d286f6">Timestamp</h3>
+<div class="outline-text-3" id="text-org2d286f6">
 <p>
 Per il controllo degli errori è necessario che venga calcolato il <b>round trip time</b> per settare il <b>RTO</b> dopo cui ritrasmettere un segmento senza <code>ACK</code>.
 </p>
@@ -644,9 +639,9 @@ Inoltre, il sender mantiene una variabile per il timestamp del primo segmento. I
 </p>
 </div>
 </div>
-<div id="outline-container-org9974149" class="outline-3">
-<h3 id="org9974149">Window Scale</h3>
-<div class="outline-text-3" id="text-org9974149">
+<div id="outline-container-orgfb01149" class="outline-3">
+<h3 id="orgfb01149">Window Scale</h3>
+<div class="outline-text-3" id="text-orgfb01149">
 <p>
 Quando degli host TCP comunicano su un network lungo e ad alta bandwidth possono attivare la funzione <i>window scale</i>, in un opzione dello header e negoziata all'inizio, indicando un <b>fattore</b> per cui moltiplicare la dimensione della finestra indicata.
 </p>
@@ -668,9 +663,9 @@ In questo modo aumenta l'utilizzo delle reti lunghe e ad alta bandwidth.
 </p>
 </div>
 </div>
-<div id="outline-container-org4a9bb01" class="outline-3">
-<h3 id="org4a9bb01">SACK</h3>
-<div class="outline-text-3" id="text-org4a9bb01">
+<div id="outline-container-org3e6a839" class="outline-3">
+<h3 id="org3e6a839">SACK</h3>
+<div class="outline-text-3" id="text-org3e6a839">
 <p>
 Quando un <code>ACK</code> non è ricevuto dal sender, quest'ultimo attende 3 <code>ACK</code> o un RTO. Se la distanza è lunga, il tempo perso sarebbe notevole.
 </p>
@@ -685,9 +680,9 @@ In questo modo il sender riconosce velocemente i "buchi" nella sequenza e può r
 </div>
 </div>
 </div>
-<div id="outline-container-org9caadf2" class="outline-2">
-<h2 id="org9caadf2">UDP</h2>
-<div class="outline-text-2" id="text-org9caadf2">
+<div id="outline-container-orgfc87beb" class="outline-2">
+<h2 id="orgfc87beb">UDP</h2>
+<div class="outline-text-2" id="text-orgfc87beb">
 <p>
 UDP non implementa alcune delle funzionalità di TCP su flusso, congestione o errori.
 </p>
@@ -719,7 +714,7 @@ Anche in UDP la MSS è legata alla minima MTU delle reti che vengono attraversat
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-02-15 Sat 18:55</p>
+<p class="date">Created: 2025-04-05 Sat 19:08</p>
 </div>
 </body>
 </html>

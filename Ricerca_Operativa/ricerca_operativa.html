@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+<head>
+<!-- 2025-04-05 Sat 19:08 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ricerca operativa</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
+<script>
+    window.MathJax = {
+      tex: {
+        ams: { multlineWidth: '85%' },
+        {packages: {'[+]': ['mathtools']}},
+        tags: 'ams',
+        tagSide: 'right',
+        tagIndent: '.8em'
+      },
+      chtml: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      svg: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      output: {
+        font: 'mathjax-modern',
+        displayOverflow: 'scale'
+      },
+      loader: {
+        load: ['[tex]/mathtools']
+      },
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Ricerca operativa</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org5e209e2">Modello matematico</a></li>
+<li><a href="#orgb22f14f">Programmazione lineare</a>
+<ul>
+<li><a href="#org8e75675"></a>
+<ul>
+<li><a href="#org9c55c93">Forma alle disuguaglianze</a></li>
+</ul>
+</li>
+<li><a href="#org766d78f">Interpretazione geometrica</a>
+<ul>
+<li><a href="#org8e3694b">Caso bidimensionale</a></li>
+<li><a href="#orga744cc6"><span class="todo TODO">TODO</span> Problemi inammissibili e illimitati</a></li>
+</ul>
+</li>
+<li><a href="#orga9d0c03"><span class="todo TODO">TODO</span> Tipi di PL (intorno pag 51 italiano)</a>
+<ul>
+<li><a href="#orgbf1a270">Mix produttivo</a></li>
+<li><a href="#org978925c">Allocazione di risorse</a></li>
+<li><a href="#orgc3d2e62"><span class="todo TODO">TODO</span> Mix produttivo + allocazione di risorse</a></li>
+</ul>
+</li>
+<li><a href="#org5760547">Assunzioni</a>
+<ul>
+<li><a href="#org3cdfa1a">Proporzionalità</a>
+<ul>
+<li><a href="#org7e513a7">Violazione per presenza di start-up cost</a></li>
+<li><a href="#org6942f56">Violazione per variazione di rendimento marginale</a></li>
+</ul>
+</li>
+<li><a href="#org9d5bba6">Additività</a></li>
+<li><a href="#org0afce6a">Divisibilità</a></li>
+</ul>
+</li>
+<li><a href="#org275b5ea">Metodo del simplesso (pag 101)</a>
+<ul>
+<li><a href="#org9932b71">Concetti base</a>
+<ul>
+<li><a href="#orga1c2262"><span class="todo TODO">TODO</span> dimostrazioni sui 3 concetti (68 hillier)</a></li>
+</ul>
+</li>
+<li><a href="#orgadd62ad">Proprietà su cui si basa il metodo del simplesso</a>
+<ul>
+<li><a href="#orgac877eb">Teorema fondamentale</a>
+<ul>
+<li><a href="#org8b9b50b">Trasformazione da problema continuo a discreto</a></li>
+<li><a href="#org82b080a"><span class="todo TODO">TODO</span> Località (controllare vercellis)</a></li>
+<li><a href="#orgfe89df5">Degenerazione</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge943b7d">Funzionamento</a>
+<ul>
+<li><a href="#org7629784">Inizializzazione</a></li>
+<li><a href="#orgc3371ab">Test di ottimalità</a></li>
+<li><a href="#orge19f8f9">Iterazione</a></li>
+</ul>
+</li>
+<li><a href="#org340ea54">Situazioni particolari</a>
+<ul>
+<li><a href="#org5bf005e"><span class="todo TODO">TODO</span> Soluzioni ottime multiple (89 hillier)</a></li>
+<li><a href="#org4ba13ab"><span class="todo TODO">TODO</span> Z illimitata</a></li>
+<li><a href="#org9728f1f"><span class="todo TODO">TODO</span> degenerazione</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org60e541c">Anki idee</a>
+<ul>
+<li><a href="#org6fee2ed">Ricava x<sub>b</sub> in funzione di x<sub>d</sub></a></li>
+<li><a href="#orgd9fff10">Ricava z in funzione di x<sub>d</sub></a></li>
+<li><a href="#org12dc142">scrivi il modello standard tutto in funzione di x<sub>d</sub></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org5e209e2" class="outline-2">
+<h2 id="org5e209e2">Modello matematico</h2>
+<div class="outline-text-2" id="text-org5e209e2">
+<p>
+Le \(n\) <b>decisioni quantitative</b> da prendere sono espresse dalle <b>variabili</b> \((x_{1}, x_{2},...,x_{n})\).
+</p>
+
+<p>
+Una <b>appropriata misura di performance</b> (es. profitto) è espressa in funzione delle variabili ed è chiamata <b>funzione obiettivo</b>.
+</p>
+
+<p>
+Sulle variabili possono essere definiti dei <b>vincoli</b>, tipicamente in forma di <b>(dis)equazioni</b>.
+</p>
+
+<p>
+I <b>parametri</b> del modello corrispondono ai <b>coefficienti delle variabili</b> e sono i <b>dati</b> del nostro modello. Spesso sono delle stime, quindi è utile comprendere il comportamento del modello in caso di variazioni dei dati (<b>sensitivity analysis</b>).
+</p>
+</div>
+</div>
+<div id="outline-container-orgb22f14f" class="outline-2">
+<h2 id="orgb22f14f">Programmazione lineare</h2>
+<div class="outline-text-2" id="text-orgb22f14f">
+<p>
+Il problema generale che la programmazione lineare risolve è l'allocazione di <b>risorse limitate</b> ad <b>attività concorrenti</b> in un modo <b>ottimo</b>.
+</p>
+
+<p>
+Con riferimento al modello generale di <b>programmazione matematica</b>, un problema è di <b>programmazione lineare</b> quando:
+</p>
+<ul class="org-ul">
+<li>le variabili hanno un <b>dominio continuo</b>;</li>
+<li>i vincoli sono <b>(dis)equazioni lineari</b>;</li>
+<li>la funzione obiettivo è una <b>funzione lineare delle variabili</b>.</li>
+</ul>
+
+<p>
+Ogni problema così modellato viene chiamato <b>programma lineare</b> (<i>linear program</i>) o <b>LP</b>.
+</p>
+</div>
+<div id="outline-container-org8e75675" class="outline-3">
+<h3 id="org8e75675"><a id="org5323b6f"></a></h3>
+<div class="outline-text-3" id="text-org8e75675">
+<p>
+Siano dati \(n\) attività che competono per l'utilizzo di \(m\) risorse
+</p>
+
+<p>
+La <b>forma standard</b> di un problema di PL è
+</p>
+
+\begin{align*}
+\max_{x} \quad & c^T x \\
+& Ax = b \\
+& x \geq 0
+\end{align*}
+
+<p>
+Dove \(x={x_{1},x_2, x_{...},x_{n}}\) è il vettore delle <b>variabili di decisione</b>, ovvero delle attività da allocare, \(c={c_{1},c_2, c_{...},c_{n}}\) è il vettore dei <b>coefficienti della funzione obiettivo</b>, \(A\) è la <b>matrice dei coefficienti</b> di dimensione \(m\times n\) mentre \(b={b_{1},b_2, b_{...},b_{n}}\) è il <b>vettore delle costanti</b> associate ai vincoli.
+</p>
+</div>
+<div id="outline-container-org9c55c93" class="outline-4">
+<h4 id="org9c55c93">Forma alle disuguaglianze</h4>
+<div class="outline-text-4" id="text-org9c55c93">
+<p>
+La <b>forma alle disuguaglianze</b> della programmazione lineare prevede che:
+</p>
+<ul class="org-ul">
+<li>i vincoli siano tutte <b>disequazioni</b> in direzione <b>opposta</b> all'obiettivo.</li>
+<li>tutte le variabili sono <b>non-negative</b>.</li>
+</ul>
+
+<p>
+Per ottenerla basta trasformare ogni equazione in una doppia disequazione oppure eliminarla usando la sostituzione, e trasformare ogni variabile libera nella differenza fra due variabili non-negative.
+</p>
+
+<p>
+Per ottenere la forma standard a partire dalla forma alle disuguaglianze, basta invece aggiungere delle variabili di <b>slack o surplus</b>, che sono sommate o sottratte a seconda che il vincolo sia rispettivamente di \(\leq\) o \(\geq\).
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org766d78f" class="outline-3">
+<h3 id="org766d78f">Interpretazione geometrica</h3>
+<div class="outline-text-3" id="text-org766d78f">
+<p>
+Ogni <b>soluzione</b> \(x\) è un assegnamento delle \(n\) variabili, quindi \(x\) è un <b>punto</b> in uno <b>spazio continuo</b> a \(n\) dimensioni.
+</p>
+
+<p>
+Ogni <b>vincolo di uguaglianza</b> corrisponde ad un <b>iperspazio</b>, ovvero divide lo spazio in due semispazi; corrisponde ad una <b>retta</b> quando il piano è <b>bidimensionale</b>.
+</p>
+
+<p>
+Ogni <b>vincolo di disuguaglianza</b> corrisponde ad un <b>semispazio</b>, ovvero una delle due parti in cui lo spazio è diviso da un iperspazio.
+</p>
+
+<p>
+Quindi, il <b>sistema dei vincoli</b> corrisponde all'<b>intersezione</b> dei corrispondenti <b>semispazi</b>, che è un <b>poliedro</b>; in un piano <b>bidimensionale</b>, l'intersezione è un <b>poligono</b>.
+</p>
+
+<p>
+Tali poliedri sono sempre <b>convessi</b>, ovvero il segmento che congiunge una qualsiasi coppia di punti è interamente contenuto nel poliedro.
+</p>
+
+<p>
+La <b>funzione obiettivo</b> corrisponde ad un fascio di <b>iperpiani paralleli</b>.
+</p>
+</div>
+<div id="outline-container-org8e3694b" class="outline-4">
+<h4 id="org8e3694b">Caso bidimensionale</h4>
+<div class="outline-text-4" id="text-org8e3694b">
+<p>
+I vincoli generano un <b>poligono</b> che corrisponde alla <b>regione di ammisibilità</b>. La funzione obiettivo corrisponde ad una *retta.
+</p>
+
+<p>
+Si vuole trovare il punto che si trovi <b>all'interno della regione</b> e <b>lungo la retta</b> della funzione obiettivo.
+</p>
+
+<p>
+Il fatto che si trovi all'interno della regione significa che la soluzione è <b>ammissibile</b>, mentre il fatto che si trovi lungo la retta implica che la funzione sia <b>ottima</b>.
+</p>
+</div>
+</div>
+<div id="outline-container-orga744cc6" class="outline-4">
+<h4 id="orga744cc6"><span class="todo TODO">TODO</span> Problemi inammissibili e illimitati</h4>
+</div>
+</div>
+<div id="outline-container-orga9d0c03" class="outline-3">
+<h3 id="orga9d0c03"><span class="todo TODO">TODO</span> Tipi di PL (intorno pag 51 italiano)</h3>
+<div class="outline-text-3" id="text-orga9d0c03">
+</div>
+<div id="outline-container-orgbf1a270" class="outline-4">
+<h4 id="orgbf1a270">Mix produttivo</h4>
+</div>
+<div id="outline-container-org978925c" class="outline-4">
+<h4 id="org978925c">Allocazione di risorse</h4>
+<div class="outline-text-4" id="text-org978925c">
+<p>
+Il problema di PL più frequente.
+Richiede di allocare risorse limitate fra attività concorrenti
+</p>
+</div>
+</div>
+<div id="outline-container-orgc3d2e62" class="outline-4">
+<h4 id="orgc3d2e62"><span class="todo TODO">TODO</span> Mix produttivo + allocazione di risorse</h4>
+</div>
+</div>
+<div id="outline-container-org5760547" class="outline-3">
+<h3 id="org5760547">Assunzioni</h3>
+<div class="outline-text-3" id="text-org5760547">
+</div>
+<div id="outline-container-org3cdfa1a" class="outline-4">
+<h4 id="org3cdfa1a">Proporzionalità</h4>
+<div class="outline-text-4" id="text-org3cdfa1a">
+</div>
+<div id="outline-container-org7e513a7" class="outline-5">
+<h5 id="org7e513a7">Violazione per presenza di start-up cost</h5>
+<div class="outline-text-5" id="text-org7e513a7">
+<p>
+Ogni variabile deve contribuire in modo proporzionale al suo utilizzo.
+</p>
+
+<p>
+Nel caso in cui esista uno costo di inizializzazione associato ad una variabile, la retta si interseca con le ordinate più giù dello 0.
+</p>
+
+<p>
+Sebbene rimanga una retta, dato che un contributo negativo non è ammesso, si avrebbe un contributo <b>nullo</b> quando non è utilizzata, un contributo \(x\) quando è utilizzata una volta e un contributo \(y>x\) ad ogni step successivo e il principio di proporzionalità sarebbe violato.
+</p>
+
+<p>
+Questa violazione è risolta applicando tecniche di <i>mixed pl</i>.
+</p>
+</div>
+</div>
+<div id="outline-container-org6942f56" class="outline-5">
+<h5 id="org6942f56">Violazione per variazione di rendimento marginale</h5>
+<div class="outline-text-5" id="text-org6942f56">
+<p>
+Quando il rendimento totale diminuisce all'aumentare delle risorse impiegate (ovvero delle variabili di decisione), allora la funzione obiettivo non è lineare.
+</p>
+
+<p>
+I casi di rendimenti marginali crescenti sono quelli in cui ad esempio l'economia di scala permette di attuare delle ottimizzazioni.
+</p>
+
+<p>
+Quelli decrescenti sono ad esempio i casi in cui il costo per il marketing necessario per vendere i prodotti aggiuntivi cresca più che linearmente.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org9d5bba6" class="outline-4">
+<h4 id="org9d5bba6">Additività</h4>
+<div class="outline-text-4" id="text-org9d5bba6">
+<p>
+Non è possibile che l'impatto delle variabili sulla funzione obiettivo o sui vincoli sia uguale al prodotto di più variabili.
+</p>
+
+<p>
+Il vincolo è violato nel caso in cui lo switch da un'attività all'altra richieda dei costi e quindi ogni switch comporterebbe una perdita di tempo lineare al prodotto incrociato. Allo stesso modo, se lo switch permette di utilizzare più efficientemente le risorse disponibili, allora si ha un addendo negativo all'impatto della produzione delle due variabili sui vincoli.
+</p>
+</div>
+</div>
+<div id="outline-container-org0afce6a" class="outline-4">
+<h4 id="org0afce6a">Divisibilità</h4>
+<div class="outline-text-4" id="text-org0afce6a">
+<p>
+Se le attività non possono essere arbitrariamente divise durante la produzione, ovvero le variabili non hanno dominio almeno sui razionali, allora si ha un problema di programmazione intera.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org275b5ea" class="outline-3">
+<h3 id="org275b5ea">Metodo del simplesso (pag 101)</h3>
+<div class="outline-text-3" id="text-org275b5ea">
+<p>
+I programmi lineari possono essere risolti mediante il <b>metodo (o algoritmo) del simplesso</b>.
+</p>
+</div>
+<div id="outline-container-org9932b71" class="outline-4">
+<h4 id="org9932b71">Concetti base</h4>
+<div class="outline-text-4" id="text-org9932b71">
+<p>
+Si consideri il politopo convesso ad \(n\) dimensioni generato dai vincoli funzionali e quelli di non negatività. Ogni dimensione di queste \(n\) corrisponde ad una delle variabili di decisione.
+</p>
+
+<p>
+La soluzione del problema di PL si trova su uno dei vertici di questo politopo. (a causa di un'intuizione che per ora ignoriamo)
+</p>
+
+<p>
+I vertici, che sono punti sullo spazio ad \(n\) dimensioni, si ottengono mediante l'intersezione delle linee di almeno \(n\) vincoli (di più se esistono più di \(n\) vertici che si intersecano in un certo punto), ovvero mediante la soluzione del sistema che contiene tali linee.
+</p>
+
+<p>
+Il metodo del simplesso di basa su 3 concetti:
+</p>
+<dl class="org-dl">
+<dt>teorema fondamentale della programmazione lineare</dt><dd>se una soluzione ottima esiste, questa si trova su un vertice. se ne esistono di più, allora almeno due soluzioni ottime sono vertici adiacenti. altrimenti è illimitata</dd>
+<dt>il numero di vertici ammissibili è finito</dt><dd>questo permette di trasformare il problema continuo in un problema di ottimizzazione combinatoria</dd>
+<dt>se un vertice ammissibile non ha vertici adiacenti migliori, non ci sono vertici migliori in generale</dt><dd>questo permette di implementare una semplice condizione di arresto</dd>
+</dl>
+</div>
+<div id="outline-container-orga1c2262" class="outline-5">
+<h5 id="orga1c2262"><span class="todo TODO">TODO</span> dimostrazioni sui 3 concetti (68 hillier)</h5>
+</div>
+</div>
+<div id="outline-container-orgadd62ad" class="outline-4">
+<h4 id="orgadd62ad">Proprietà su cui si basa il metodo del simplesso</h4>
+<div class="outline-text-4" id="text-orgadd62ad">
+</div>
+<div id="outline-container-orgac877eb" class="outline-5">
+<h5 id="orgac877eb">Teorema fondamentale</h5>
+<div class="outline-text-5" id="text-orgac877eb">
+<p>
+Ogni soluzione <b>ammissibile</b> si trova su un <b>vertice</b> e quindi è una soluzione di <b>base</b>, ovvero in cui \(n\) variabili sono state messe a \(0\) e le rispettive colonne sono state cancellate.
+</p>
+
+<p>
+Allora se esiste una sola soluzione ottima, si troverà su un vertice, se ne esistono di più, si troveranno su vertici adiacenti, ovvero agli estremi dello stesso spigolo.
+</p>
+</div>
+<div id="outline-container-org8b9b50b" class="outline-6">
+<h6 id="org8b9b50b">Trasformazione da problema continuo a discreto</h6>
+<div class="outline-text-6" id="text-org8b9b50b">
+<p>
+Dato che il numero di vertici ammissibili è finito, il problema diventa un problema di enumerazione.
+</p>
+
+<p>
+Dato che delle \(n+m\) colonne ne vengono scelte soltanto le \(m\) indipendenti, il numero di combinazioni differenti è \(\binom{m+n}{n} = \frac{(m+n)!}{m! \cdot n!}\).
+</p>
+</div>
+</div>
+<div id="outline-container-org82b080a" class="outline-6">
+<h6 id="org82b080a"><span class="todo TODO">TODO</span> Località (controllare vercellis)</h6>
+<div class="outline-text-6" id="text-org82b080a">
+<p>
+Se un vertice non ha vertici adiacenti migliori in termini della funzione obiettivo, allora non ci sono vertici migliori in generale.
+</p>
+
+<p>
+Il problema di trovare l'ottimalità globale si trasforma nel trovare l'ottimalità locale di una soluzione. In questo modo si possono effettuare iterazioni ripetute fino ad arrivare alla soluzione finale.
+</p>
+</div>
+</div>
+<div id="outline-container-orgfe89df5" class="outline-6">
+<h6 id="orgfe89df5">Degenerazione</h6>
+<div class="outline-text-6" id="text-orgfe89df5">
+<p>
+Quando una delle variabili <b>non</b> in base risulta uguale a 0, si ha degenerazione, ovvero più di \(n\) vincoli coincidono in quel punto
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orge943b7d" class="outline-4">
+<h4 id="orge943b7d">Funzionamento</h4>
+<div class="outline-text-4" id="text-orge943b7d">
+<p>
+Dato che il sistema ha \(m+n\) variabili e \(m\) equazioni (non ho idea della rappresentazione grafica di ciò. cosa significa questo spazio ad \(m\) dimensioni?), ci sono \(n\) gradi di libertà.
+Il sistema è risolvibile eliminando gli \(m-n\) gradi di libertà, ottenendo un sistema quadrato di lato \(m\). Per eliminare i gradi di libertà, si mettono \(m-n\) variabili a \(0\) (<i>fuori base</i>) e si risolve il sistema nelle altre variabili (<i>in base</i>). Il punto così identificato è in uno spazio a \(m\) dimensioni e proiettato sul politopo di \(n\) dimensioni identifica esattamente il vertice di intersezione delle due rette associate alle variabili fuori base. (perchè esattamente? per esempio funziona così anche per le intersezioni normali. pensa ad esempio a due linee sul piano cartesiano: la loro intersezione si ottiene non mettendo x o y a zero, che infatti devono variare, ma risolvendo il sistema. oppure, per trovare l'intersezione con l'asse delle x, si imposta y a 0).
+</p>
+
+<p>
+Il prof dice che la forma standard è di minimizzazione, ma sul libro non ce n'è traccia, quindi io considero la massimizzazione.
+</p>
+
+\begin{aligned}
+& \text{max} \quad z = \mathbf{c}^T \mathbf{x} \\
+& \text{subject to} \quad A\mathbf{x} = \mathbf{b} \\
+& \quad \quad \quad \quad \mathbf{x} \geq \mathbf{0}
+\end{aligned}
+
+<p>
+Scomponiamo ogni matrice e vettore nella parte in base e in quella fuori base.
+</p>
+
+<p>
+Selezionata una base \(B\) (insieme di colonne linearmente indipendenti di \(A\)) e riorganizzate le colonne, possiamo partizionare:
+\[
+A = [B \mid N], \quad \mathbf{x} = \begin{bmatrix} \mathbf{x}_B \\ \mathbf{x}_N \end{bmatrix}, \quad \mathbf{c} = \begin{bmatrix} \mathbf{c}_B \\ \mathbf{c}_N \end{bmatrix}
+\]
+</p>
+
+<p>
+Dove \(N\) indica le colonne fuori base.
+</p>
+
+<p>
+Il sistema diventa:
+\[
+B\mathbf{x}_B + N\mathbf{x}_N = \mathbf{b}
+\]
+</p>
+
+<p>
+Allora possiamo ricavare \(\mathbf{x}_B\) in funzione di \(\mathbf{x}_N\).
+</p>
+
+<p>
+Moltiplicando entrambi i membri per \(B^{-1}\):
+\[ I\mathbf{x}_B + B^{-1}N\mathbf{x}_N = B^{-1}\mathbf{b} \]
+</p>
+
+<p>
+E poi isolando \(\mathbf{x}_B\) otteniamo
+</p>
+
+<p>
+\[\mathbf{x}_B = B^{-1}\mathbf{b} - B^{-1}N\mathbf{x}_N\]
+</p>
+
+<p>
+A questo punto possiamo sostituire \(\mathbf{x}_B\) in \(z\) per ottenere la funzione obiettivo in funzione delle sole variabili non basiche \(\mathbf{x}_N\):
+\[
+z = \mathbf{c}_B^T (B^{-1}\mathbf{b} - B^{-1}N\mathbf{x}_N) + \mathbf{c}_N^T \mathbf{x}_N
+\]
+</p>
+
+<p>
+E semplifichiamo:
+\[
+z = \underbrace{\mathbf{c}_B^T B^{-1}\mathbf{b}}_{z_B} + \underbrace{(\mathbf{c}_N^T - \mathbf{c}_B^T B^{-1}N)}_{r_D} \mathbf{x}_N \quad
+\]
+</p>
+
+<p>
+A questo punto la funzione obiettivo è composta da due addendi:
+</p>
+<ul class="org-ul">
+<li>\(z_B\), che non dipende da alcuna variabile ed è il valore della funzione obiettivo associato alla soluzione di base corrente.</li>
+<li>\(r_D \mathbf{x}_N\), che rappresenta l'impatto delle variabili non di base sulla funzione obiettivo.</li>
+</ul>
+
+<p>
+\(r_D\) è chiamato <b>vettore dei <a id="org43335bd">coefficienti di costo ridotto</a></b> ed è usato per effettuare il <b>test di ottimalità</b>. Infatti, se ogni sua componente è non-positiva, allora non c'è modo di incrementare una variabile fuori base per ottenere un aumento della funzione obiettivo.
+</p>
+
+<p>
+Notare che il vettore dei coefficienti ridotti per le variabili basiche è nullo e infatti non è possibile ottenere un incremento della funzione obiettivo aumentando le variabili basiche che si trovano già al vertice.
+</p>
+
+
+<p>
+Quando \(\mathbf{x}_N = \mathbf{0}\), si ottiene la soluzione di base:
+\[
+\mathbf{x}_B = B^{-1}\mathbf{b}
+\]
+</p>
+
+<p>
+Questa soluzione è ammissibile se \(B^{-1}\mathbf{b} \geq \mathbf{0}\), altrimenti la forma canonica è detta <b>debole</b> e la soluzione non è ammissibile.
+</p>
+
+<p>
+A questo punto il problema assume la forma canonica:
+</p>
+
+\begin{aligned}
+& \text{minimize} \quad z = z_B + r_D \mathbf{x}_N \\
+& \text{subject to} \quad \mathbf{x}_B + B^{-1}N\mathbf{x}_N = B^{-1}\mathbf{b} \\
+& \quad \quad \quad \quad \mathbf{x}_B, \mathbf{x}_N \geq \mathbf{0}
+\end{aligned}
+</div>
+<div id="outline-container-org7629784" class="outline-5">
+<h5 id="org7629784">Inizializzazione</h5>
+<div class="outline-text-5" id="text-org7629784">
+<p>
+determina un vertice ammissibile iniziale (di solito è l'origine sul piano ad \(n\) dimensioni, altrimenti bisogna fare più cose. se è il primo caso, la soluzione del sistema è banale (perchè ho la matrice identità)
+</p>
+</div>
+</div>
+<div id="outline-container-orgc3371ab" class="outline-5">
+<h5 id="orgc3371ab">Test di ottimalità</h5>
+<div class="outline-text-5" id="text-orgc3371ab">
+<p>
+Nel momento della scelta dello spigolo lungo cui muoversi, si sceglie quello associato alla variabile con massimo tasso di miglioramento in \(f\).
+Se i tassi di miglioramento di \(f\) sono tutti non positivi, allora il vertice attuale è l'ottimo locale e quindi globale.
+</p>
+
+<p>
+I tassi di miglioramento sono rappresentati dai <a href="#org43335bd">coefficienti di costo ridotto</a>.
+</p>
+
+<p>
+Quando questo vettore non contiene alcuna componente positiva, il vertice è quello ottimo locale, ovvero rispetto ai vertici ad esso adiacenti.
+</p>
+
+<p>
+Valgono delle proprietà in base alle quali l'ottimalità locale implica quella globale.
+</p>
+
+<p>
+Se la soluzione di base corrente non è degenere, allora la non positivita di \(r_D\) è necessaria e sufficiente per l'ottimalità globale.
+</p>
+</div>
+</div>
+<div id="outline-container-orge19f8f9" class="outline-5">
+<h5 id="orge19f8f9">Iterazione</h5>
+<div class="outline-text-5" id="text-orge19f8f9">
+<p>
+L'obiettivo è spostarsi lungo lo spigolo che conduce al vertice con il maggiore tasso di miglioramento di \(f\).
+</p>
+
+<p>
+Per capirlo, basta guardare i <a href="#org43335bd">coefficienti di costo ridotto</a> e aumentare la variabile associata al coefficiente maggiore, che sarà quindi <i>entrante</i>.
+</p>
+
+<p>
+Aumentando la variabile entrante, bisogna modificare le altre variabili per rispettare i vincoli funzionali e/o quelli di non-negatività. (Dico e/o perchè le due cose si equivalgono: aumentando troppo, per rispettare il vincolo funzionale dovrò rendere qualche variabile negativa).
+</p>
+
+<p>
+Avevamo già ricavato le variabili di base in funzione di quelle fuori base e quindi la condizione da rispettare è che queste non diventino negative, ovvero:
+</p>
+
+<p>
+\[\mathbf{x}_B = B^{-1}\mathbf{b} - B^{-1}N\mathbf{x}_N \geq 0\]
+</p>
+
+<p>
+Ad ogni iterazione (per motivi legati al passo di riduzione in forma canonica), si avrà sempre che massimo \(n-1\) delle variabili fuori base saranno fissate a \(0\) ed oltre esse <b>una sola</b> variabile in base. Questa variabile in base identifica lo spigolo su cui ci si muoverebbe e sarebbe l'unica ad essere influenzata se la scegliessimo come base uscente.
+</p>
+
+<p>
+Dato che l'obiettivo è quello di massimizzare la funzione obiettivo, scegliamo di muoverci lungo lo spigolo che ci permette di aumentare quanto più possibile la variabile entrante. Per identificare sia lo spigolo che la quantità di cui aumentarla, si usa il <b>test del minimo rapporto</b>, ovvero si sceglie l'equazione per cui \(r = b_i / x_{i}\) è massimo (\(b_i\) indica il parametro del vincolo e \(x_i\) l'unica variabile in base presente nel vincolo) e \(r\) sarà il nuovo valore della variabile entrante.
+</p>
+
+<p>
+Scelta la variabile da aumentare, bisogna capire <b>di quanto</b> aumentarla. Il punto è che quella variabile, che è una variabile di base, dovrà uscire dalle basi (uscente) e quindi dovrà essere settata a \(0\)
+</p>
+
+<p>
+<span class="underline">__</span>
+</p>
+
+<p>
+Se 
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org340ea54" class="outline-4">
+<h4 id="org340ea54">Situazioni particolari</h4>
+<div class="outline-text-4" id="text-org340ea54">
+</div>
+<div id="outline-container-org5bf005e" class="outline-5">
+<h5 id="org5bf005e"><span class="todo TODO">TODO</span> Soluzioni ottime multiple (89 hillier)</h5>
+</div>
+<div id="outline-container-org4ba13ab" class="outline-5">
+<h5 id="org4ba13ab"><span class="todo TODO">TODO</span> Z illimitata</h5>
+</div>
+<div id="outline-container-org9728f1f" class="outline-5">
+<h5 id="org9728f1f"><span class="todo TODO">TODO</span> degenerazione</h5>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org60e541c" class="outline-2">
+<h2 id="org60e541c">Anki idee</h2>
+<div class="outline-text-2" id="text-org60e541c">
+</div>
+<div id="outline-container-org6fee2ed" class="outline-3">
+<h3 id="org6fee2ed">Ricava x<sub>b</sub> in funzione di x<sub>d</sub></h3>
+</div>
+<div id="outline-container-orgd9fff10" class="outline-3">
+<h3 id="orgd9fff10">Ricava z in funzione di x<sub>d</sub></h3>
+</div>
+<div id="outline-container-org12dc142" class="outline-3">
+<h3 id="org12dc142">scrivi il modello standard tutto in funzione di x<sub>d</sub></h3>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2025-04-05 Sat 19:08</p>
+</div>
+</body>
+</html>
