@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+<head>
+<!-- 2025-04-07 Mon 21:07 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ProvaModello</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
+<script>
+    window.MathJax = {
+      tex: {
+        ams: { multlineWidth: '85%' },
+        {packages: {'[+]': ['mathtools']}},
+        tags: 'ams',
+        tagSide: 'right',
+        tagIndent: '.8em'
+      },
+      chtml: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      svg: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      output: {
+        font: 'mathjax-modern',
+        displayOverflow: 'scale'
+      },
+      loader: {
+        load: ['[tex]/mathtools']
+      },
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">ProvaModello</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org0e81319">Model-building</a>
+<ul>
+<li><a href="#orgcbe60b1">Define the Activity Set (attività da allocare)</a></li>
+<li><a href="#orgd529080">Define the Item Set (unità consumate e prodotte dalle attività, es. forza lavoro e soldi)</a></li>
+<li><a href="#orgddb1d2e">Determine the Input-Output Coefficients (matrice dei coefficienti e funzione obiettivo)</a></li>
+<li><a href="#orge443ce2">Determine the Exogenous Flows (parametri dei vincoli e incognita z della funzione obiettivo)</a></li>
+<li><a href="#orgb8353f2">Determine the Material Balance Equations.</a></li>
+</ul>
+</li>
+<li><a href="#orgfdaf258">Mathematical program</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org0e81319" class="outline-2">
+<h2 id="org0e81319">Model-building</h2>
+<div class="outline-text-2" id="text-org0e81319">
+</div>
+<div id="outline-container-orgcbe60b1" class="outline-3">
+<h3 id="orgcbe60b1">Define the Activity Set (attività da allocare)</h3>
+<div class="outline-text-3" id="text-orgcbe60b1">
+<p>
+Decompose the entire system under study into all of its elementary functions, the activities, and choose a unit for each activity in terms of which its quantity, or level, can be measured.
+</p>
+</div>
+</div>
+<div id="outline-container-orgd529080" class="outline-3">
+<h3 id="orgd529080">Define the Item Set (unità consumate e prodotte dalle attività, es. forza lavoro e soldi)</h3>
+<div class="outline-text-3" id="text-orgd529080">
+<p>
+Determine the classes of objects, the items, which are consumed or produced by the activities, and choose a unit for measuring each item.
+Select one item such that the net quantity of it produced by the system as a whole measures the “cost” (or such that its negative measures the “profit”) of the entire system.
+</p>
+</div>
+</div>
+<div id="outline-container-orgddb1d2e" class="outline-3">
+<h3 id="orgddb1d2e">Determine the Input-Output Coefficients (matrice dei coefficienti e funzione obiettivo)</h3>
+<div class="outline-text-3" id="text-orgddb1d2e">
+<p>
+Determine the quantity of each item consumed or produced by the operation of each activity at its unit level. These numbers, the input-output coefficients, are the factors of proportionality between activity levels and item flows.
+</p>
+
+<p>
+Ovvero il consumo di ogni attività (colonna), dove si indicano con \(+\) le entrate e con \(-\) le uscite
+</p>
+</div>
+</div>
+<div id="outline-container-orge443ce2" class="outline-3">
+<h3 id="orge443ce2">Determine the Exogenous Flows (parametri dei vincoli e incognita z della funzione obiettivo)</h3>
+<div class="outline-text-3" id="text-orge443ce2">
+<p>
+Determine the net inputs or outputs of the items between the system, taken as a whole, and the outside.
+</p>
+
+<p>
+Ovvero il consumo del sistema complessivo (ultime riga e colonna, ovvero parametri dei vincoli e coefficienti)
+</p>
+</div>
+</div>
+<div id="outline-container-orgb8353f2" class="outline-3">
+<h3 id="orgb8353f2">Determine the Material Balance Equations.</h3>
+<div class="outline-text-3" id="text-orgb8353f2">
+<p>
+Assign unknown nonnegative activity levels xv x2, . . to all the activities; then, for each item, write the material balance equation which asserts that the algebraic sum of the flows of that item into each activity (given as the product of the activity level by the appropriate input-output coefficient) is equal to the exogenous flow of the item.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfdaf258" class="outline-2">
+<h2 id="orgfdaf258">Mathematical program</h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2025-04-07 Mon 21:07</p>
+</div>
+</body>
+</html>

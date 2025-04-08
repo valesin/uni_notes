@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-04-05 Sat 19:08 -->
+<!-- 2025-04-07 Mon 21:07 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Statistica</title>
@@ -163,7 +163,6 @@
 </ul>
 </li>
 <li><a href="#org88aaa01">Probabilità</a></li>
-<li><a href="#org5d99003">ricevimento, fine lezione del giovedì, ufficio al quinto piano</a></li>
 </ul>
 </div>
 </div>
@@ -372,7 +371,7 @@ In <code>pandas</code> si ottengono con il metodo <code>crosstab</code>, il cui 
 <div id="outline-container-orgfa65629" class="outline-5">
 <h5 id="orgfa65629">Rinormalizzare su un sottoinsieme delle osservazioni</h5>
 <div class="outline-text-5" id="text-orgfa65629">
-<pre class="example" id="org89e69ca">
+<pre class="example" id="orgd712bd2">
 In statistical and data analysis terminology, what you're describing is generally known as conditional probability normalization or frequency renormalization under conditional observation.
 
 Formally, this refers to the process of recalculating the probability distribution or relative frequencies of a variable (or set of variables) after restricting the sample space through conditioning or filtering.
@@ -497,14 +496,14 @@ Per plottare i dataframe così ottenuti si usa <code>plot.bar(color = ['pink', '
 <div class="outline-text-3" id="text-org63ba63a">
 </div>
 <div id="outline-container-org418119f" class="outline-4">
-<h4 id="org418119f">Indici di <a id="org908fb0f">centralità</a></h4>
+<h4 id="org418119f">Indici di <a id="org4b855f2">centralità</a></h4>
 <div class="outline-text-4" id="text-org418119f">
 </div>
 <div id="outline-container-orgc0ac8a0" class="outline-5">
-<h5 id="orgc0ac8a0"><a id="org01f6f69">Media</a> campionaria</h5>
+<h5 id="orgc0ac8a0"><a id="org3581d88">Media</a> campionaria</h5>
 <div class="outline-text-5" id="text-orgc0ac8a0">
 <p>
-La <a href="#org01f6f69">media</a> campionaria è definita come:
+La <a href="#org3581d88">media</a> campionaria è definita come:
 </p>
 
 <p>
@@ -520,33 +519,33 @@ Ovvero è la somma di tutti i valori divisa per il numero di osservazioni.
 </p>
 
 <p>
-Dato che vanno eseguite operazioni matematiche sui valori, la <a href="#org01f6f69">media</a> può essere calcolata soltanto su dati <b>quantitativi</b> o <b>qualitativi</b> a cui è associato un <b>valore numerico</b>.
+Dato che vanno eseguite operazioni matematiche sui valori, la <a href="#org3581d88">media</a> può essere calcolata soltanto su dati <b>quantitativi</b> o <b>qualitativi</b> a cui è associato un <b>valore numerico</b>.
 </p>
 
 <p>
-Dato un campione \(y = ax + b\), per \(a,b\) fissati, è facile derivare attraverso la formula che \(\bar{y} = a\bar{x}+y\), ovvero la <a href="#org01f6f69">media</a> di un campione trasformato è la <a href="#org01f6f69">media</a> del campione originale trasformata nello stesso modo.
+Dato un campione \(y = ax + b\), per \(a,b\) fissati, è facile derivare attraverso la formula che \(\bar{y} = a\bar{x}+y\), ovvero la <a href="#org3581d88">media</a> di un campione trasformato è la <a href="#org3581d88">media</a> del campione originale trasformata nello stesso modo.
 </p>
 
 <p>
-Se di un campione si conoscono i \(k\) distinti valori quantitativi \(v\) del campione e le relative frequenze \(f\), allora la <a href="#org01f6f69">media</a> è definita come:
-\[\bar{x}=\frac{1}{n}\sum_{j=1}^{k}v_{j}f_{j}\], che è anche la <b><a href="#org01f6f69">media</a> pesata</b> dei valori distinti, dove il peso di ogni valore è la sua frequenza. Questo ragionamento vale sia per le frequenze assolute che relative.
+Se di un campione si conoscono i \(k\) distinti valori quantitativi \(v\) del campione e le relative frequenze \(f\), allora la <a href="#org3581d88">media</a> è definita come:
+\[\bar{x}=\frac{1}{n}\sum_{j=1}^{k}v_{j}f_{j}\], che è anche la <b><a href="#org3581d88">media</a> pesata</b> dei valori distinti, dove il peso di ogni valore è la sua frequenza. Questo ragionamento vale sia per le frequenze assolute che relative.
 </p>
 
 <p>
-La <a href="#org01f6f69">media</a> campionaria <b>non è robusta</b>, ovvero è molto sensibile a <b>outlier</b> (valori fuori scala).
+La <a href="#org3581d88">media</a> campionaria <b>non è robusta</b>, ovvero è molto sensibile a <b>outlier</b> (valori fuori scala).
 </p>
 
 <p>
-La somma di <b>tutti</b> gli scarti dei valori di un campione dalla <a href="#org01f6f69">media</a> è nulla, ovvero
+La somma di <b>tutti</b> gli scarti dei valori di un campione dalla <a href="#org3581d88">media</a> è nulla, ovvero
 \[\sum_{i=1}^{n} (x_i - \bar{x}) = 0\]
 </p>
 </div>
 </div>
 <div id="outline-container-org6c4acd7" class="outline-5">
-<h5 id="org6c4acd7"><a id="org9dfb2fc">Mediana</a> campionaria</h5>
+<h5 id="org6c4acd7"><a id="org6d49e3b">Mediana</a> campionaria</h5>
 <div class="outline-text-5" id="text-org6c4acd7">
 <p>
-La <a href="#org9dfb2fc">mediana</a> campionaria è un altro indice di <a href="#org908fb0f">centralità</a>.
+La <a href="#org6d49e3b">mediana</a> campionaria è un altro indice di <a href="#org4b855f2">centralità</a>.
 </p>
 
 <p>
@@ -554,43 +553,43 @@ Per calcolarla, si ordinano i valori dell'insieme dal più piccolo al più grand
 </p>
 
 <p>
-Se il numero totale di elementi \(n\) è dispari, la <a href="#org9dfb2fc">mediana</a> è il valore che occupa la posizione \((n + 1)/2\). Se n è pari, invece, la <a href="#org9dfb2fc">mediana</a> è data dalla <a href="#org01f6f69">media</a> dei due valori centrali, ovvero quelli nelle posizioni \(n/2\) e \(n/2 + 1\).
+Se il numero totale di elementi \(n\) è dispari, la <a href="#org6d49e3b">mediana</a> è il valore che occupa la posizione \((n + 1)/2\). Se n è pari, invece, la <a href="#org6d49e3b">mediana</a> è data dalla <a href="#org3581d88">media</a> dei due valori centrali, ovvero quelli nelle posizioni \(n/2\) e \(n/2 + 1\).
 </p>
 
 <p>
-A differenza della <a href="#org01f6f69">media</a>, la <a href="#org9dfb2fc">mediana</a> può essere calcolata anche su dati <b>qualitativi</b>, purchè questi siano <b>ordinabili</b> e siano in numero <b>dispari</b>. Se fossero pari, sarebbe richiesto di fare la <a href="#org01f6f69">media</a> dei due valori centrali, che è impossibile.
+A differenza della <a href="#org3581d88">media</a>, la <a href="#org6d49e3b">mediana</a> può essere calcolata anche su dati <b>qualitativi</b>, purchè questi siano <b>ordinabili</b> e siano in numero <b>dispari</b>. Se fossero pari, sarebbe richiesto di fare la <a href="#org3581d88">media</a> dei due valori centrali, che è impossibile.
 </p>
 
 <p>
-La <a href="#org9dfb2fc">mediana</a> è <b>robusta</b> rispetto ad eventuali outlier.
+La <a href="#org6d49e3b">mediana</a> è <b>robusta</b> rispetto ad eventuali outlier.
 </p>
 </div>
 </div>
 <div id="outline-container-orgd5248d4" class="outline-5">
-<h5 id="orgd5248d4"><a id="org1aaf37f">Moda</a> campionaria</h5>
+<h5 id="orgd5248d4"><a id="orge7d9863">Moda</a> campionaria</h5>
 <div class="outline-text-5" id="text-orgd5248d4">
 <p>
-La <b><a href="#org1aaf37f">moda</a></b> è l'attributo che appare più spesso. Se esistono più attributi con frequenza massima, vengono chiamati <b>valori modali</b>. Può essere calcolata su qualunque tipo di dato.
+La <b><a href="#orge7d9863">moda</a></b> è l'attributo che appare più spesso. Se esistono più attributi con frequenza massima, vengono chiamati <b>valori modali</b>. Può essere calcolata su qualunque tipo di dato.
 </p>
 </div>
 </div>
 </div>
 <div id="outline-container-orgd279798" class="outline-4">
-<h4 id="orgd279798">Indici di <a id="org39d10b5">dispersione</a></h4>
+<h4 id="orgd279798">Indici di <a id="orgc53cf0c">dispersione</a></h4>
 <div class="outline-text-4" id="text-orgd279798">
 <p>
-Gli indici di <a href="#org39d10b5">dispersione</a> sono utilizzati per capire la <b>variabilità</b> o lo <b>spread</b> di un campione.
+Gli indici di <a href="#orgc53cf0c">dispersione</a> sono utilizzati per capire la <b>variabilità</b> o lo <b>spread</b> di un campione.
 </p>
 </div>
 <div id="outline-container-org6a7ed95" class="outline-5">
-<h5 id="org6a7ed95"><a id="orga1a5923">Varianza</a> campionaria</h5>
+<h5 id="org6a7ed95"><a id="orga4f3732">Varianza</a> campionaria</h5>
 <div class="outline-text-5" id="text-org6a7ed95">
 <p>
 \[ s^2 = \frac{1}{n-1} \sum_{i=1}^{n} \left( x_i - \overline{x} \right)^2 \]
 </p>
 
 <p>
-Il concetto su cui si basa la <b><a href="#orga1a5923">varianza</a></b> campionaria è quello di accumulare la <b>distanza</b> fra ogni osservazione e la <b><a href="#org9dfb2fc">mediana</a></b>.
+Il concetto su cui si basa la <b><a href="#orga4f3732">varianza</a></b> campionaria è quello di accumulare la <b>distanza</b> fra ogni osservazione e la <b><a href="#org6d49e3b">mediana</a></b>.
 </p>
 
 <p>
@@ -598,7 +597,7 @@ Può essere calcolata <b>soltanto</b> su dati <b>quantitativi</b>.
 </p>
 
 <p>
-Dalla definizione si ricava che la <a href="#orga1a5923">varianza</a> di un campione trasformato linearmente è uguale alla <a href="#orga1a5923">varianza</a> del campione originale <b>scalata</b> per <b>il quadrato del fattore</b>, mentre è <b>insensibile alla traslazione</b>.
+Dalla definizione si ricava che la <a href="#orga4f3732">varianza</a> di un campione trasformato linearmente è uguale alla <a href="#orga4f3732">varianza</a> del campione originale <b>scalata</b> per <b>il quadrato del fattore</b>, mentre è <b>insensibile alla traslazione</b>.
 </p>
 </div>
 <div id="outline-container-org2dc05a8" class="outline-6">
@@ -609,7 +608,7 @@ Per ottenere la somma delle differenze, occorre assicurarsi che le distanze calc
 </p>
 
 <p>
-Infatti, le differenze per i valori superiori alla <a href="#org9dfb2fc">mediana</a>, se lasciate invariate, produrrebbero valori negativi che ridurrebbero l'accumulazione totale.
+Infatti, le differenze per i valori superiori alla <a href="#org6d49e3b">mediana</a>, se lasciate invariate, produrrebbero valori negativi che ridurrebbero l'accumulazione totale.
 </p>
 
 <p>
@@ -623,14 +622,14 @@ Di conseguenza, l'approccio preferito consiste nel considerare il <b>quadrato</b
 </div>
 </div>
 <div id="outline-container-org39dcb4a" class="outline-5">
-<h5 id="org39dcb4a"><a id="orgb7abefe">Deviazione standard</a></h5>
+<h5 id="org39dcb4a"><a id="org442be38">Deviazione standard</a></h5>
 <div class="outline-text-5" id="text-org39dcb4a">
 <p>
-La <b><a href="#orgb7abefe">deviazione standard</a></b> è il quadrato della <a href="#orga1a5923">varianza</a> campionaria. È utile perchè permette di esprimere la <a href="#orga1a5923">varianza</a> nell'unità di misura originale.
+La <b><a href="#org442be38">deviazione standard</a></b> è il quadrato della <a href="#orga4f3732">varianza</a> campionaria. È utile perchè permette di esprimere la <a href="#orga4f3732">varianza</a> nell'unità di misura originale.
 </p>
 
 <p>
-Come la <a href="#orga1a5923">varianza</a> è insensibile alla traslazione, mentre scala come il <b>valore assoluto del fattore</b> con cui è scalato il campione. Infatti, non avrebbe senso considerare una <a href="#orga1a5923">varianza</a> negativa.
+Come la <a href="#orga4f3732">varianza</a> è insensibile alla traslazione, mentre scala come il <b>valore assoluto del fattore</b> con cui è scalato il campione. Infatti, non avrebbe senso considerare una <a href="#orga4f3732">varianza</a> negativa.
 </p>
 </div>
 </div>
@@ -639,7 +638,7 @@ Come la <a href="#orga1a5923">varianza</a> è insensibile alla traslazione, ment
 </div>
 </div>
 <div id="outline-container-org14a9103" class="outline-4">
-<h4 id="org14a9103"><a id="org87ff3b9">Quantili</a></h4>
+<h4 id="org14a9103"><a id="org35c73f1">Quantili</a></h4>
 <div class="outline-text-4" id="text-org14a9103">
 <p>
 Un <b>quantile</b> di <b>livello</b> \(p \in [0,1]\) di un campione da \(n\) <b>osservazioni</b> è uno dei valori del campione tale per cui \(np\) valori del campione sono minori o uguali ad esso e \(n(1-p)\) valori ne sono invece maggiori o uguali. \(100p\) è la percentuale di valori minori o uguali a quello scelto e \(100(1-p)\) resto sono maggiori.
@@ -655,7 +654,7 @@ Lo trovo ordinando i valori del campione e scandendo dal più piccolo. L'element
 </ul>
 
 <p>
-Di conseguenza, quando \(np\) è intero ci sono \(2\) elementi che rispettano entrambe le condizioni. Allora se ne prende la <b><a href="#org01f6f69">media</a></b>.
+Di conseguenza, quando \(np\) è intero ci sono \(2\) elementi che rispettano entrambe le condizioni. Allora se ne prende la <b><a href="#org3581d88">media</a></b>.
 </p>
 
 <p>
@@ -667,29 +666,29 @@ Quindi, quando \(np\) è razionale esiste <b>un solo</b> valore che rispetta ent
 </p>
 
 <p>
-I <a href="#org87ff3b9">quantili</a> dove \(p\) ha al massimo due cifre decimali sono chiamati <b>percentili</b>, mentre quelli con \(p\) corrispondente ai multipli interi di \(0.25\) sono chiamati <b>quartili</b>.
+I <a href="#org35c73f1">quantili</a> dove \(p\) ha al massimo due cifre decimali sono chiamati <b>percentili</b>, mentre quelli con \(p\) corrispondente ai multipli interi di \(0.25\) sono chiamati <b>quartili</b>.
 </p>
 </div>
 <div id="outline-container-org0403396" class="outline-5">
 <h5 id="org0403396">Box plot</h5>
 <div class="outline-text-5" id="text-org0403396">
 <p>
-Il box plot è un grafico che riassume le seguenti informazioni: <b>minimo e massimo</b> del campione come <b>estremi dei baffi</b>, <b>primo e terzo</b> quartile come <b>estremi della scatola</b> e <b><a href="#org9dfb2fc">mediana</a></b> (o secondo quartile) come <b>linea nella scatola</b>.
+Il box plot è un grafico che riassume le seguenti informazioni: <b>minimo e massimo</b> del campione come <b>estremi dei baffi</b>, <b>primo e terzo</b> quartile come <b>estremi della scatola</b> e <b><a href="#org6d49e3b">mediana</a></b> (o secondo quartile) come <b>linea nella scatola</b>.
 </p>
 </div>
 <div id="outline-container-org8dc1c5f" class="outline-6">
-<h6 id="org8dc1c5f"><span class="todo TODO">TODO</span> Capire cosa ha detto il professore riguardo alla relazione fra box plot e distribuzione e capire cosa c'entra la <a href="#org01f6f69">media</a></h6>
+<h6 id="org8dc1c5f"><span class="todo TODO">TODO</span> Capire cosa ha detto il professore riguardo alla relazione fra box plot e distribuzione e capire cosa c'entra la <a href="#org3581d88">media</a></h6>
 </div>
 </div>
 <div id="outline-container-org5023b89" class="outline-5">
 <h5 id="org5023b89">Range inter-quartile</h5>
 <div class="outline-text-5" id="text-org5023b89">
 <p>
-Il <b>range inter-quartile</b> è un <b>indice di <a href="#org39d10b5">dispersione</a></b> ed è calcolato come \(Q_3 - Q-1\), ovvero il numero di valori che circondano la <a href="#org9dfb2fc">mediana</a> senza entrare nei quartili adiacenti. Corrisponde alla lunghezza del box nel box plot.
+Il <b>range inter-quartile</b> è un <b>indice di <a href="#orgc53cf0c">dispersione</a></b> ed è calcolato come \(Q_3 - Q-1\), ovvero il numero di valori che circondano la <a href="#org6d49e3b">mediana</a> senza entrare nei quartili adiacenti. Corrisponde alla lunghezza del box nel box plot.
 </p>
 
 <p>
-Quanto più questo range è grande, quanto più i valori sono lontani dalla <a href="#org9dfb2fc">mediana</a>.
+Quanto più questo range è grande, quanto più i valori sono lontani dalla <a href="#org6d49e3b">mediana</a>.
 </p>
 </div>
 </div>
@@ -701,7 +700,7 @@ I grafici <b>quantile-quantile</b> sono usati per confrontare le distribuzioni d
 </p>
 
 <p>
-L'idea è quella di introdurre un sistema di riferimento cartesiano sulle cui assi si trovano i corrispondenti <a href="#org87ff3b9">quantili</a> dei due campioni e i punti si trovano in corrispondenza del valore dei due <a href="#org87ff3b9">quantili</a>.
+L'idea è quella di introdurre un sistema di riferimento cartesiano sulle cui assi si trovano i corrispondenti <a href="#org35c73f1">quantili</a> dei due campioni e i punti si trovano in corrispondenza del valore dei due <a href="#org35c73f1">quantili</a>.
 </p>
 
 <p>
@@ -721,11 +720,11 @@ Il QQ plot è uno metodo grafico e <b>qualitativo</b>, usato soltanto per refuta
 <h4 id="orgf40875c">Distribuzione normale</h4>
 <div class="outline-text-4" id="text-orgf40875c">
 <p>
-Un campione le frequenza dei valori presi in ordine cresce fino a raggiungere il picco in corrispondenza della <a href="#org9dfb2fc">mediana</a> e poi decresce con la stessa pendenza con cui era cresciuta viene chiamata <b>normale</b>.
+Un campione le frequenza dei valori presi in ordine cresce fino a raggiungere il picco in corrispondenza della <a href="#org6d49e3b">mediana</a> e poi decresce con la stessa pendenza con cui era cresciuta viene chiamata <b>normale</b>.
 </p>
 
 <p>
-Questi campioni seguono una <b>regola empirica</b> per la quale (dove \(\bar{x}\) è la <a href="#org01f6f69">media</a> e \(s\) è la <a href="#orgb7abefe">deviazione standard</a>:
+Questi campioni seguono una <b>regola empirica</b> per la quale (dove \(\bar{x}\) è la <a href="#org3581d88">media</a> e \(s\) è la <a href="#org442be38">deviazione standard</a>:
 </p>
 <ul class="org-ul">
 <li>il \(68\%\) delle osservazioni hanno valore compreso entro \(\bar{x} \pm s\)</li>
@@ -742,11 +741,11 @@ Lo scatter plot di due osservazioni in coppia può presentare una <b>tendenza li
 </p>
 
 <p>
-Date le <b>medie campionarie</b> \(\bar x, \bar y\), consideriamo gli <b>scarti</b> fra ogni valore di un campione e la propria <a href="#org01f6f69">media</a>. Quando lo scarto di un valore è <b>non negativo</b>, esso è più grande della propria <a href="#org01f6f69">media</a>, ovvero \(x-\bar x \geq 0\). Quando è <b>non positivo</b>, esso è minore e quindi \(x-\bar x \leq 0\).
+Date le <b>medie campionarie</b> \(\bar x, \bar y\), consideriamo gli <b>scarti</b> fra ogni valore di un campione e la propria <a href="#org3581d88">media</a>. Quando lo scarto di un valore è <b>non negativo</b>, esso è più grande della propria <a href="#org3581d88">media</a>, ovvero \(x-\bar x \geq 0\). Quando è <b>non positivo</b>, esso è minore e quindi \(x-\bar x \leq 0\).
 </p>
 
 <p>
-Allora, data una coppia di valori \((x_i, y_i)\), se essi sono entrambi maggiori o uguali della propria <a href="#org01f6f69">media</a>, oppure sono entrambi minori o uguali, il <b>prodotto degli scarti</b> sarà <b>non negativo</b>, ovvero \((x-\bar x)(y-\bar y)\geq 0\). Quando invece un elemento della coppia è piccolo, mentre l'altro è grande, il prodotto dei loro scarti sarà <b>non positivo</b>.
+Allora, data una coppia di valori \((x_i, y_i)\), se essi sono entrambi maggiori o uguali della propria <a href="#org3581d88">media</a>, oppure sono entrambi minori o uguali, il <b>prodotto degli scarti</b> sarà <b>non negativo</b>, ovvero \((x-\bar x)(y-\bar y)\geq 0\). Quando invece un elemento della coppia è piccolo, mentre l'altro è grande, il prodotto dei loro scarti sarà <b>non positivo</b>.
 </p>
 
 <p>
@@ -1000,12 +999,9 @@ Da questi assiomi seguono le seguenti proposizioni (facilmente dimostrabili):
 </ul>
 </div>
 </div>
-<div id="outline-container-org5d99003" class="outline-2">
-<h2 id="org5d99003">ricevimento, fine lezione del giovedì, ufficio al quinto piano</h2>
-</div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-04-05 Sat 19:08</p>
+<p class="date">Created: 2025-04-07 Mon 21:07</p>
 </div>
 </body>
 </html>

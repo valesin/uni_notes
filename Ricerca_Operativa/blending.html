@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+<head>
+<!-- 2025-04-07 Mon 21:07 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Blending</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
+<script>
+    window.MathJax = {
+      tex: {
+        ams: { multlineWidth: '85%' },
+        {packages: {'[+]': ['mathtools']}},
+        tags: 'ams',
+        tagSide: 'right',
+        tagIndent: '.8em'
+      },
+      chtml: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      svg: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      output: {
+        font: 'mathjax-modern',
+        displayOverflow: 'scale'
+      },
+      loader: {
+        load: ['[tex]/mathtools']
+      },
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Blending</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org049bd46">Modello</a>
+<ul>
+<li><a href="#orgcd51da4">Attività (colonne)</a></li>
+<li><a href="#org48caa3f">Item set (righe)</a></li>
+<li><a href="#org7bbcd53">Input output coefficients (matrice)</a></li>
+<li><a href="#org5cfe067">Exogenous flows</a></li>
+</ul>
+</li>
+<li><a href="#orgc622f88">MathProg</a>
+<ul>
+<li><a href="#org2ba6329">Attività e items</a></li>
+<li><a href="#orgbafec6f">Parametri</a></li>
+<li><a href="#org4caba07">Funzione obiettivo</a></li>
+<li><a href="#org953de76">Vincoli</a></li>
+<li><a href="#org3a7599f">Dati</a></li>
+</ul>
+</li>
+<li><a href="#org540d609">La soluzione non è in linea con quella proposta da Dantzig</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org049bd46" class="outline-2">
+<h2 id="org049bd46">Modello</h2>
+<div class="outline-text-2" id="text-org049bd46">
+</div>
+<div id="outline-container-orgcd51da4" class="outline-3">
+<h3 id="orgcd51da4">Attività (colonne)</h3>
+<div class="outline-text-3" id="text-orgcd51da4">
+<p>
+Acquisto di uno dei nove blend \(B\), misurato in \(\%\) rispetto al totale degli acquisti
+</p>
+</div>
+</div>
+<div id="outline-container-org48caa3f" class="outline-3">
+<h3 id="org48caa3f">Item set (righe)</h3>
+<div class="outline-text-3" id="text-org48caa3f">
+<p>
+Ogni attività \(b\in B\) prende in input del denaro e risulta nella produzione di una certa quantità di metallo \(m\in M\)
+</p>
+</div>
+</div>
+<div id="outline-container-org7bbcd53" class="outline-3">
+<h3 id="org7bbcd53">Input output coefficients (matrice)</h3>
+<div class="outline-text-3" id="text-org7bbcd53">
+<p>
+Siano \(c_j\) i costi di ogni blend \(b_j\in B\) e \(a_{ij}\) la percentuale di un certo metallo \(m_i\in M\) per il blend \(b_j\in B\).
+</p>
+</div>
+</div>
+<div id="outline-container-org5cfe067" class="outline-3">
+<h3 id="org5cfe067">Exogenous flows</h3>
+<div class="outline-text-3" id="text-org5cfe067">
+<p>
+Sia \(o_i\) la quantità del metallo \(b_i\in B\) nell'output finale.
+</p>
+
+<p>
+Voglio che la somma di ogni blend \(b\in B\) acquistato, indicato con \(x_b\), moltiplicato per la quantità di metallo \(m \in M\) che \(b\) contiene, che è indicato in \(a_{mb}\) sia uguale ad \(o_m\). Ovvero
+\[\sum_{b\in B} x_b a_{mb} = o_m \]
+</p>
+
+<p>
+Inoltre, sia \(z\) la quantità di denaro speso per acquistare i blend ed ottenuto come \[z = \sum_{b\in B} x_b c_{b}\], allora voglio minimizzarlo.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc622f88" class="outline-2">
+<h2 id="orgc622f88">MathProg</h2>
+<div class="outline-text-2" id="text-orgc622f88">
+</div>
+<div id="outline-container-org2ba6329" class="outline-3">
+<h3 id="org2ba6329">Attività e items</h3>
+<div class="outline-text-3" id="text-org2ba6329">
+<div class="org-src-container">
+<pre class="src src-mod">set B;
+/* blends, attività*/
+
+set M;
+/* metalli, items */
+
+var x{b in B} &gt;= 0;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbafec6f" class="outline-3">
+<h3 id="orgbafec6f">Parametri</h3>
+<div class="outline-text-3" id="text-orgbafec6f">
+<div class="org-src-container">
+<pre class="src src-mod">param c{b in B};
+/* costi di ogni blend b */
+
+param a{m in M, b in B};
+/* quantità di metallo m contenuto nel blend b */
+
+param o{m in M};
+/* quantità di metallo b nel blend finale, di cui uno è il totale */
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org4caba07" class="outline-3">
+<h3 id="org4caba07">Funzione obiettivo</h3>
+<div class="outline-text-3" id="text-org4caba07">
+<div class="org-src-container">
+<pre class="src src-mod">minimize z: sum{b in B} c[b] * x[b];
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org953de76" class="outline-3">
+<h3 id="org953de76">Vincoli</h3>
+<div class="outline-text-3" id="text-org953de76">
+<div class="org-src-container">
+<pre class="src src-mod">s.t. composizione{m in M} : sum{b in B} a[m,b] * x[b] = o[m];
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org3a7599f" class="outline-3">
+<h3 id="org3a7599f">Dati</h3>
+<div class="outline-text-3" id="text-org3a7599f">
+<div class="org-src-container">
+<pre class="src src-mod">data;
+
+set B := 1 2 3 4 5 6 7 8 9;
+
+set M := All, Lead, Zinc, Tin;
+
+param c :=
+1 4.1
+2 4.3
+3 5.8
+4 6.0
+5 7.6
+6 7.5
+7 7.3
+8 6.9
+9 7.3;
+
+param o :=
+All 1
+Lead 0.3
+Zinc 0.3
+Tin 0.4;
+
+param a :      1   2   3   4   5   6   7   8   9 :=
+         All   1   1   1   1   1   1   1   1   1  
+         Lead  0.1 0.1 0.4 0.6 0.3 0.3 0.3 0.5 0.2
+         Zinc  0.1 0.1 0.5 0.3 0.3 0.4 0.2 0.4 0.3
+         Tin   0.8 0.6 0.1 0.1 0.4 0.3 0.5 0.1 0.5;
+
+end;
+
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org540d609" class="outline-2">
+<h2 id="org540d609">La soluzione non è in linea con quella proposta da Dantzig</h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2025-04-07 Mon 21:07</p>
+</div>
+</body>
+</html>

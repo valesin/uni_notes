@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+<head>
+<!-- 2025-04-07 Mon 21:07 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Carpentry</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
+<script>
+    window.MathJax = {
+      tex: {
+        ams: { multlineWidth: '85%' },
+        {packages: {'[+]': ['mathtools']}},
+        tags: 'ams',
+        tagSide: 'right',
+        tagIndent: '.8em'
+      },
+      chtml: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      svg: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      output: {
+        font: 'mathjax-modern',
+        displayOverflow: 'scale'
+      },
+      loader: {
+        load: ['[tex]/mathtools']
+      },
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Carpentry</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgd7851bb">Esercizio</a></li>
+<li><a href="#orga033ec1">Modello</a>
+<ul>
+<li><a href="#orga584f03">Matematicamente</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+Pag 12, Thapa
+</p>
+<div id="outline-container-orgd7851bb" class="outline-2">
+<h2 id="orgd7851bb">Esercizio</h2>
+<div class="outline-text-2" id="text-orgd7851bb">
+<p>
+A furniture company manufactures four models of desks. Each desk is first constructed in the carpentry shop and is next sent to the finishing shop, where it is varnished, waxed, and polished. The number of man hours of labor required in each shop is as shown in the display below.
+(figura sul testo)
+</p>
+</div>
+</div>
+<div id="outline-container-orga033ec1" class="outline-2">
+<h2 id="orga033ec1">Modello</h2>
+<div class="outline-text-2" id="text-orga033ec1">
+<dl class="org-dl">
+<dt>attività</dt><dd>manifattura di ogni modello di tavolo</dd>
+<dt>oggetti</dt><dd>ore lavoro in carpentry ed in finishing, soldi</dd>
+<dt>coefficienti di input-output</dt><dd>interno della tabella</dd>
+<dt>flusso esogeno</dt><dd>entrano(+) ore lavoro ed escono(-) soldi</dd>
+<dt>crea le equazioni</dt><dd>aggiungo le variabili di slack</dd>
+</dl>
+</div>
+<div id="outline-container-orga584f03" class="outline-3">
+<h3 id="orga584f03">Matematicamente</h3>
+<div class="outline-text-3" id="text-orga584f03">
+<p>
+Siano \(T\) i tipi di tavolo e \(F\) le fasi.
+</p>
+<div class="org-src-container">
+<pre class="src src-mod">set T;
+
+set F;
+</pre>
+</div>
+
+<p>
+Nel testo sono indicati i seguenti valori:
+</p>
+<div class="org-src-container">
+<pre class="src src-mod">set T := A B C D;
+
+set F := Car Fin;
+</pre>
+</div>
+
+<p>
+Ogni tavolo \(t\) necessita di trascorrere un certo numero di <i>ore lavoro</i> nella fase \(f\). Tale quantità è rappresentata da \(a_{tf}\).
+</p>
+<div class="org-src-container">
+<pre class="src src-mod">param a{f in F, t in T};
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-mod">param a : A  B  C  D :=
+     Car  4  9  7  10
+     Fin  1  1  3  40;
+
+</pre>
+</div>
+
+<p>
+Inoltre, ogni tavolo \(t\) risulta in un certo guadagno \(c_t\).
+</p>
+<div class="org-src-container">
+<pre class="src src-mod">param c{t in T};
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-mod">param c :=
+  A -12
+  B -20
+  C -18
+  D -40;
+
+</pre>
+</div>
+
+<p>
+Dall'esterno, complessivamente, entrano nel sistema un massimo di \(b\) ore, che sono limitate.
+</p>
+<div class="org-src-container">
+<pre class="src src-mod">param b{f in F};
+
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-mod">param b :=
+      Car 6000
+      Fin 4000;
+
+</pre>
+</div>
+
+<p>
+L'output del sistema è un certo guadagno \(z\) uguale alla somma del guadagno ottenuto dalla quantità \(x_t\) prodotta per ogni tavolo \(t\). Dato che rappresentiamo le uscite come negative, l'obiettivo è quello di minimizzare \(z\).
+</p>
+<div class="org-src-container">
+<pre class="src src-mod">var x{t in T} &gt;= 0;
+
+minimize z: sum{t in T} c[t] * x[t];
+</pre>
+</div>
+
+<p>
+La scelta delle variabili di decisione \(x_t\) dev'essere fatta in modo da rispettare i vincoli di ore lavoro complessive \(b_f\), ovvero
+\[\forall f \in F, \quad \sum_{t \in T} a_{ft}x_t \leq b_f\]
+</p>
+
+<div class="org-src-container">
+<pre class="src src-mod">s.t. oremax{f in F} : sum{t in T} a[f,t] * x[t] &lt;= b[f];
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-mod">
+data;
+set T := A B C D;
+
+set F := Car Fin;
+param a : A  B  C  D :=
+     Car  4  9  7  10
+     Fin  1  1  3  40;
+
+param c :=
+  A -12
+  B -20
+  C -18
+  D -40;
+
+param b :=
+      Car 6000
+      Fin 4000;
+
+end;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2025-04-07 Mon 21:07</p>
+</div>
+</body>
+</html>
