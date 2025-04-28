@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-04-07 Mon 21:07 -->
+<!-- 2025-04-28 Mon 22:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ricerca operativa</title>
@@ -92,7 +92,7 @@
 <ul>
 <li><a href="#org8b9b50b">Trasformazione da problema continuo a discreto</a></li>
 <li><a href="#org82b080a"><span class="todo TODO">TODO</span> Località (controllare vercellis)</a></li>
-<li><a href="#org9728f1f">Degenerazione</a></li>
+<li><a href="#org4a335d4">Degenerazione</a></li>
 </ul>
 </li>
 </ul>
@@ -108,7 +108,7 @@
 <ul>
 <li><a href="#org5bf005e"><span class="todo TODO">TODO</span> Soluzioni ottime multiple (89 hillier)</a></li>
 <li><a href="#org4ba13ab"><span class="todo TODO">TODO</span> Z illimitata</a></li>
-<li><a href="#org4a335d4"><span class="todo TODO">TODO</span> degenerazione</a></li>
+<li><a href="#orgf0e9620"><span class="todo TODO">TODO</span> degenerazione</a></li>
 </ul>
 </li>
 </ul>
@@ -127,6 +127,7 @@
 <li><a href="#orgcea5225">ProvaModello</a></li>
 <li><a href="#org5ed1240">Blending</a></li>
 <li><a href="#org42b7982">Carpentry</a></li>
+<li><a href="#org1bde576">RicOp-Radioterapia</a></li>
 </ul>
 </li>
 </ul>
@@ -421,9 +422,9 @@ Il problema di trovare l'ottimalità globale si trasforma nel trovare l'ottimali
 </p>
 </div>
 </div>
-<div id="outline-container-org9728f1f" class="outline-6">
-<h6 id="org9728f1f">Degenerazione</h6>
-<div class="outline-text-6" id="text-org9728f1f">
+<div id="outline-container-org4a335d4" class="outline-6">
+<h6 id="org4a335d4">Degenerazione</h6>
+<div class="outline-text-6" id="text-org4a335d4">
 <p>
 Quando una delle variabili <b>non</b> in base risulta uguale a 0, si ha degenerazione, ovvero più di \(n\) vincoli coincidono in quel punto
 </p>
@@ -511,7 +512,7 @@ A questo punto la funzione obiettivo è composta da due addendi:
 </ul>
 
 <p>
-\(r_D\) è chiamato <b>vettore dei <a id="org5cf5b36">coefficienti di costo ridotto</a></b> ed è usato per effettuare il <b>test di ottimalità</b>. Infatti, se ogni sua componente è non-positiva, allora non c'è modo di incrementare una variabile fuori base per ottenere un aumento della funzione obiettivo.
+\(r_D\) è chiamato <b>vettore dei <a id="org36d958a">coefficienti di costo ridotto</a></b> ed è usato per effettuare il <b>test di ottimalità</b>. Infatti, se ogni sua componente è non-positiva, allora non c'è modo di incrementare una variabile fuori base per ottenere un aumento della funzione obiettivo.
 </p>
 
 <p>
@@ -557,7 +558,7 @@ Se i tassi di miglioramento di \(f\) sono tutti non positivi, allora il vertice 
 </p>
 
 <p>
-I tassi di miglioramento sono rappresentati dai <a href="#org5cf5b36">coefficienti di costo ridotto</a>.
+I tassi di miglioramento sono rappresentati dai <a href="#org36d958a">coefficienti di costo ridotto</a>.
 </p>
 
 <p>
@@ -581,7 +582,7 @@ L'obiettivo è spostarsi lungo lo spigolo che conduce al vertice con il maggiore
 </p>
 
 <p>
-Per capirlo, basta guardare i <a href="#org5cf5b36">coefficienti di costo ridotto</a> e aumentare la variabile associata al coefficiente maggiore, che sarà quindi <i>entrante</i>.
+Per capirlo, basta guardare i <a href="#org36d958a">coefficienti di costo ridotto</a> e aumentare la variabile associata al coefficiente maggiore, che sarà quindi <i>entrante</i>.
 </p>
 
 <p>
@@ -631,8 +632,8 @@ Se
 <div id="outline-container-org4ba13ab" class="outline-5">
 <h5 id="org4ba13ab"><span class="todo TODO">TODO</span> Z illimitata</h5>
 </div>
-<div id="outline-container-org4a335d4" class="outline-5">
-<h5 id="org4a335d4"><span class="todo TODO">TODO</span> degenerazione</h5>
+<div id="outline-container-orgf0e9620" class="outline-5">
+<h5 id="orgf0e9620"><span class="todo TODO">TODO</span> degenerazione</h5>
 </div>
 </div>
 </div>
@@ -664,10 +665,13 @@ Se
 <div id="outline-container-org42b7982" class="outline-3">
 <h3 id="org42b7982"><a href="carpentry.html#ID-1b081e61-03de-4734-874d-709f0da9dcb3">Carpentry</a></h3>
 </div>
+<div id="outline-container-org1bde576" class="outline-3">
+<h3 id="org1bde576"><a href="ricop_radioterapia.html#ID-40f7984f-9e03-433d-b969-7a7fd05b593b">RicOp-Radioterapia</a></h3>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-04-07 Mon 21:07</p>
+<p class="date">Created: 2025-04-28 Mon 22:54</p>
 </div>
 </body>
 </html>

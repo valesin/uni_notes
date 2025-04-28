@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+<head>
+<!-- 2025-04-28 Mon 22:54 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RicOp-Radioterapia</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" onerror="this.onerror=null;this.href='local.css';" />
+<script>
+    window.MathJax = {
+      tex: {
+        ams: { multlineWidth: '85%' },
+        {packages: {'[+]': ['mathtools']}},
+        tags: 'ams',
+        tagSide: 'right',
+        tagIndent: '.8em'
+      },
+      chtml: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      svg: {
+        scale: 1.0,
+        displayAlign: 'center',
+        displayIndent: '0em'
+      },
+      output: {
+        font: 'mathjax-modern',
+        displayOverflow: 'scale'
+      },
+      loader: {
+        load: ['[tex]/mathtools']
+      },
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">RicOp-Radioterapia</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org02790cf">Spiegazione</a></li>
+<li><a href="#orgc039de4">Modello</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org02790cf" class="outline-2">
+<h2 id="org02790cf">Spiegazione</h2>
+<div class="outline-text-2" id="text-org02790cf">
+<dl class="org-dl">
+<dt>attività</dt><dd>erogare trattamento da posizione \(p \in P = {1,2,3,4,5}\) oppure slack</dd>
+<dt>oggetti</dt><dd>(+)intensità del trattamento [gray] _ (-)intensità del trattamento su organo \(o \in O\) (incluso tumore)</dd>
+<dt>flussi esogeni</dt><dd><ul class="org-ul">
+<li>limiti nel trattamento dell'organo \(o\)</li>
+<li>limite nel totale dei trattamento</li>
+</ul></dd>
+<dt>material balance equations</dt><dd><ul class="org-ul">
+<li>limite di trattamento per organo
+\[\forall o \in O, \quad \sum_{p \in P} a_{op}x_p = b_o\]</li>
+<li>massimizzare l'output, ovvero minimizzare il valore di \(z\)</li>
+</ul></dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-orgc039de4" class="outline-2">
+<h2 id="orgc039de4">Modello</h2>
+<div class="outline-text-2" id="text-orgc039de4">
+<div class="org-src-container">
+<pre class="src src-mod">set P;
+set O;
+
+param a{o in O, p in P};
+param c{p in P};
+param b{o in O};
+
+var x{p in P} &gt;= 0;
+
+minimize z: sum{p in P} c[p] * x[p];
+
+s.t. intperorgano{o in O} : sum{p in P} a[o,p] * x[p] &lt;= b[o];
+
+data;
+
+set P := 1,2,3,4,5;
+set O := 1,2,3,4,5,6,7,8;
+
+param a :   1    2    3    4    5 :=
+         1  0.1  0    0    0.1  0.2
+         2  0.1  0    0.15 0    0.1
+         3  0    0.1  0    0    0
+         4  0    0.2  0.1  0.1  0
+         5  0.1  0    0.2  0    0.1
+         6  0.1  0.3  0.15 0.1  0.1
+         7  0.2  0.1  0.15 0    0
+         8  1    1    1    1    1;
+
+param b :=
+1 5.5
+2 9
+3 6
+4 2.4
+5 7.0
+6 5.5
+7 9.5
+8 60;
+
+param c :=
+1 -0.4
+2 -0.3
+3 -0.25
+4 -0.7
+5 -0.5;
+
+end;
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2025-04-28 Mon 22:54</p>
+</div>
+</body>
+</html>
