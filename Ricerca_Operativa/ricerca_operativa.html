@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-04-28 Mon 22:54 -->
+<!-- 2025-05-02 Fri 21:38 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ricerca operativa</title>
@@ -81,34 +81,38 @@
 </li>
 <li><a href="#org8c00562">Metodo del simplesso (pag 101 italiano)</a>
 <ul>
-<li><a href="#org9932b71">Concetti base</a>
-<ul>
-<li><a href="#orga1c2262"><span class="todo TODO">TODO</span> dimostrazioni sui 3 concetti (68 hillier)</a></li>
-</ul>
-</li>
+<li><a href="#org9932b71">Concetti base</a></li>
 <li><a href="#orgadd62ad">Proprietà su cui si basa il metodo del simplesso</a>
 <ul>
 <li><a href="#orgac877eb">Teorema fondamentale</a>
 <ul>
 <li><a href="#org8b9b50b">Trasformazione da problema continuo a discreto</a></li>
 <li><a href="#org82b080a"><span class="todo TODO">TODO</span> Località (controllare vercellis)</a></li>
-<li><a href="#org4a335d4">Degenerazione</a></li>
+<li><a href="#orgf0e9620">Degenerazione</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#orge943b7d">Funzionamento</a>
 <ul>
-<li><a href="#org7629784">Inizializzazione</a></li>
-<li><a href="#orgc3371ab">Test di ottimalità</a></li>
+<li><a href="#org869f55e">Rappresentazione</a></li>
+<li><a href="#org503dd3f">Pseudocodice</a></li>
+<li><a href="#org7629784">Inizializzazione</a>
+<ul>
+<li><a href="#org138ff05">Metodo delle variabili artificiali (124 vercellis)</a></li>
+<li><a href="#org31853da">Metodo "big M"</a></li>
+<li><a href="#orgac95d4e">Metodo Balinsky-Gòmory</a></li>
+</ul>
+</li>
 <li><a href="#orge19f8f9">Iterazione</a></li>
+<li><a href="#orgc3371ab">Test di ottimalità</a></li>
 </ul>
 </li>
 <li><a href="#org340ea54">Situazioni particolari</a>
 <ul>
 <li><a href="#org5bf005e"><span class="todo TODO">TODO</span> Soluzioni ottime multiple (89 hillier)</a></li>
-<li><a href="#org4ba13ab"><span class="todo TODO">TODO</span> Z illimitata</a></li>
-<li><a href="#orgf0e9620"><span class="todo TODO">TODO</span> degenerazione</a></li>
+<li><a href="#org52a7c08">Funzione obiettivo illimitata</a></li>
+<li><a href="#orgc401958"><span class="todo TODO">TODO</span> Degenerazione</a></li>
 </ul>
 </li>
 </ul>
@@ -128,6 +132,11 @@
 <li><a href="#org5ed1240">Blending</a></li>
 <li><a href="#org42b7982">Carpentry</a></li>
 <li><a href="#org1bde576">RicOp-Radioterapia</a></li>
+</ul>
+</li>
+<li><a href="#orgd830ac9">Domande per il prof</a>
+<ul>
+<li><a href="#orge73b309">Percorso di studio per espandere a partire da questo corso ed arrivare a concetti come Computational Social Science, Algorithmic Game Theory</a></li>
 </ul>
 </li>
 </ul>
@@ -374,13 +383,13 @@ I vertici, che sono punti sullo spazio ad \(n\) dimensioni, si ottengono mediant
 Il metodo del simplesso di basa su 3 concetti:
 </p>
 <dl class="org-dl">
-<dt>teorema fondamentale della programmazione lineare</dt><dd>se una soluzione ottima esiste, questa si trova su un vertice. se ne esistono di più, allora almeno due soluzioni ottime sono vertici adiacenti. altrimenti è illimitata</dd>
+<dt>teorema fondamentale della programmazione lineare</dt><dd>Dato un problema in forma di standard \(z=\min\{ c^tx:Ax = b, x \geq 0 \}\), con \(\text{rank}(A)=m\), allora ogni soluzione ammissibile o ottima è una soluzione di base, ovvero si trova su un vertice.
+Se ne esistono di più, allora almeno due soluzioni ottime sono vertici adiacenti.
+Se non esistono soluzioni di base, allora il politopo è illimitato.
+In questo modo si trasforma un problema continuo in uno concreto.</dd>
 <dt>il numero di vertici ammissibili è finito</dt><dd>questo permette di trasformare il problema continuo in un problema di ottimizzazione combinatoria</dd>
 <dt>se un vertice ammissibile non ha vertici adiacenti migliori, non ci sono vertici migliori in generale</dt><dd>questo permette di implementare una semplice condizione di arresto</dd>
 </dl>
-</div>
-<div id="outline-container-orga1c2262" class="outline-5">
-<h5 id="orga1c2262"><span class="todo TODO">TODO</span> dimostrazioni sui 3 concetti (68 hillier)</h5>
 </div>
 </div>
 <div id="outline-container-orgadd62ad" class="outline-4">
@@ -422,9 +431,9 @@ Il problema di trovare l'ottimalità globale si trasforma nel trovare l'ottimali
 </p>
 </div>
 </div>
-<div id="outline-container-org4a335d4" class="outline-6">
-<h6 id="org4a335d4">Degenerazione</h6>
-<div class="outline-text-6" id="text-org4a335d4">
+<div id="outline-container-orgf0e9620" class="outline-6">
+<h6 id="orgf0e9620">Degenerazione</h6>
+<div class="outline-text-6" id="text-orgf0e9620">
 <p>
 Quando una delle variabili <b>non</b> in base risulta uguale a 0, si ha degenerazione, ovvero più di \(n\) vincoli coincidono in quel punto
 </p>
@@ -441,7 +450,11 @@ Il sistema è risolvibile eliminando gli \(m-n\) gradi di libertà, ottenendo un
 </p>
 
 <p>
-Il prof dice che la forma standard è di minimizzazione, ma sul libro non ce n'è traccia, quindi io considero la massimizzazione.
+Il prof dice che la forma canonica è di minimizzazione, ma sul libro non ce n'è traccia.
+</p>
+
+<p>
+Dalla forma standard
 </p>
 
 \begin{aligned}
@@ -451,7 +464,7 @@ Il prof dice che la forma standard è di minimizzazione, ma sul libro non ce n'�
 \end{aligned}
 
 <p>
-Scomponiamo ogni matrice e vettore nella parte in base e in quella fuori base.
+scomponiamo ogni matrice e vettore nella parte in base e in quella fuori base.
 </p>
 
 <p>
@@ -503,8 +516,19 @@ z = \underbrace{\mathbf{c}_B^T B^{-1}\mathbf{b}}_{z_B} + \underbrace{(\mathbf{c}
 \]
 </p>
 
+
 <p>
-A questo punto la funzione obiettivo è composta da due addendi:
+A questo punto il problema assume la forma canonica:
+</p>
+
+\begin{aligned}
+& \text{minimize} \quad z = z_B + r_D \mathbf{x}_N \\
+& \text{subject to} \quad \mathbf{x}_B + B^{-1}N\mathbf{x}_N = B^{-1}\mathbf{b} \\
+& \quad \quad \quad \quad \mathbf{x}_B, \mathbf{x}_N \geq \mathbf{0}
+\end{aligned}
+
+<p>
+Notare che la funzione obiettivo è composta da due addendi:
 </p>
 <ul class="org-ul">
 <li>\(z_B\), che non dipende da alcuna variabile ed è il valore della funzione obiettivo associato alla soluzione di base corrente.</li>
@@ -512,13 +536,12 @@ A questo punto la funzione obiettivo è composta da due addendi:
 </ul>
 
 <p>
-\(r_D\) è chiamato <b>vettore dei <a id="org36d958a">coefficienti di costo ridotto</a></b> ed è usato per effettuare il <b>test di ottimalità</b>. Infatti, se ogni sua componente è non-positiva, allora non c'è modo di incrementare una variabile fuori base per ottenere un aumento della funzione obiettivo.
+\(r_D\) è chiamato <b>vettore dei <a id="orge1e4037">coefficienti di costo ridotto</a></b> ed è usato per effettuare il <b>test di ottimalità</b>. Infatti, se ogni sua componente è non-positiva, allora non c'è modo di incrementare una variabile fuori base per ottenere un aumento della funzione obiettivo.
 </p>
 
 <p>
-Notare che il vettore dei coefficienti ridotti per le variabili basiche è nullo e infatti non è possibile ottenere un incremento della funzione obiettivo aumentando le variabili basiche che si trovano già al vertice.
+Generalizzando il vettore dei <a href="#orge1e4037">coefficienti di costo ridotto</a> per tutte le variabili, ovvero \[c^T - c_B^T B^{-1}A\], e considerando soltanto le sue componenti di base, si ottiene \[c_B^T - c_B^T B^{-1}B=0\], ovvero non è possibile ottenere un incremento della funzione obiettivo aumentando le variabili basiche che si trovano già al vertice. (?)
 </p>
-
 
 <p>
 Quando \(\mathbf{x}_N = \mathbf{0}\), si ottiene la soluzione di base:
@@ -530,9 +553,12 @@ Quando \(\mathbf{x}_N = \mathbf{0}\), si ottiene la soluzione di base:
 <p>
 Questa soluzione è ammissibile se \(B^{-1}\mathbf{b} \geq \mathbf{0}\), altrimenti la forma canonica è detta <b>debole</b> e la soluzione non è ammissibile.
 </p>
-
+</div>
+<div id="outline-container-org869f55e" class="outline-5">
+<h5 id="org869f55e">Rappresentazione</h5>
+<div class="outline-text-5" id="text-org869f55e">
 <p>
-A questo punto il problema assume la forma canonica:
+Dalla forma canonica
 </p>
 
 \begin{aligned}
@@ -540,38 +566,159 @@ A questo punto il problema assume la forma canonica:
 & \text{subject to} \quad \mathbf{x}_B + B^{-1}N\mathbf{x}_N = B^{-1}\mathbf{b} \\
 & \quad \quad \quad \quad \mathbf{x}_B, \mathbf{x}_N \geq \mathbf{0}
 \end{aligned}
+
+<p>
+si ottiene un <b>tableau</b>, strutturato in questo modo:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">\(-z_b\)</td>
+<td class="org-left">\(r_D\)</td>
+<td class="org-left">\(0\)</td>
+</tr>
+
+<tr>
+<td class="org-left">\(B^{-1}b\)</td>
+<td class="org-left">\(B^{-1}N\)</td>
+<td class="org-left">\(I\)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+La colonna sinistra rappresenta il valore attuale della funzione obiettivo e gli attuali limiti, tutte costanti.
+</p>
+
+<p>
+La seconda e terza colonna indicano rispettivamente l'impatto delle variabili fuori base ed in base, sopra per la funzione obiettivo, sotto per i limiti dei vincoli.
+</p>
+</div>
+</div>
+<div id="outline-container-org503dd3f" class="outline-5">
+<h5 id="org503dd3f">Pseudocodice</h5>
+<div class="outline-text-5" id="text-org503dd3f">
+<pre class="example" id="org45e4fd4">
+while (¬Infeasible(b, c)) ∧ (¬FeasibleBase(b)) do
+    Pivot(A, b, c)
+if Infeasible(b, c) then
+    Stop: problema inammissibile
+else
+    while (¬Optimal(c)) ∧ (¬Unbounded(A, c)) do
+        Pivot(A, b, c)
+    if Optimal(c) then
+        Stop: soluzione ottima
+    else
+        Stop: problema illimitato
+</pre>
+</div>
 </div>
 <div id="outline-container-org7629784" class="outline-5">
 <h5 id="org7629784">Inizializzazione</h5>
 <div class="outline-text-5" id="text-org7629784">
 <p>
-determina un vertice ammissibile iniziale (di solito è l'origine sul piano ad \(n\) dimensioni, altrimenti bisogna fare più cose. se è il primo caso, la soluzione del sistema è banale (perchè ho la matrice identità)
+L'algoritmo del simplesso mantiene l'ammissibilità e cerca l'ottimalità.
+</p>
+
+<p>
+Di solito, il vertice corrispondente all'origine delle variabili di decisione è una soluzione ammissibile, in quanto esse sono fuori base e le variabili di slack associate ad ogni vincolo sono tutte in base e unitarie.
+</p>
+
+<p>
+Non è detto che questo sia possibile (forse quando lo slack ha un costo che già all'inizio fa superare i vincoli?)
+</p>
+
+<p>
+Quando la soluzione iniziale non è ammissibile, vanno applicate delle tecniche per trovare un vertice ammissibile da cui partire.
+</p>
+
+<p>
+Vediamo 3 metodi per farlo.
+</p>
+</div>
+<div id="outline-container-org138ff05" class="outline-6">
+<h6 id="org138ff05">Metodo delle variabili artificiali (124 vercellis)</h6>
+<div class="outline-text-6" id="text-org138ff05">
+<p>
+Questo metodo si basa sull'idea di generare un <b>problema ausiliario</b> con un vertice fittizio  ammissibile, introducendo delle variabili artificiali unitarie ad ogni vincolo, effettivamente generando una matrice identità, che rappresenta necessariamente una soluzione con assegnamento delle variabili fittizie uguale ai termini noti.
+</p>
+
+<p>
+Dato che l'ammissibilità non c'entra nulla con l'ottimalità, possiamo ignorare la funzione obiettivo originale.
+</p>
+
+<p>
+Invece, la nuova funzione obiettivo diventa quella di minimizzare le variabili fittizie. Se alla fine dell'algoritmo, tale funzione obiettivo fittizia è 0, allora posso tranquillamente eliminare le variabili fittizie, tornare al problema originale e risolvere per la vera funzione obiettivo, partendo dall'assegnamento delle variabili trovato che è ovviamente corretto, dato che rispetta i vincoli senza contributi negativi dalle variabili fittizie.
+</p>
+
+<p>
+Lo <b>svantaggio</b> di questa tecnica è che richiede di lavorare su un tableau molto più grande ed effettuare molti più step.
+</p>
+
+<p>
+Per ovviare a questo problema, ragioniamo in questo modo: quando il problema è in forma alle disuguaglianze, impostiamo l'ordine dei vincoli in modo che il termine noto \(b\) sia sempre maggiore uguale di 0. L'importanza di ciò è che in questo modo, ammesso che io trovi una base di partenza valida con coefficienti unitari, la soluzione in quel punto è ammissibile, perchè la soluzione sarà uguale alle variabili di partenza con valore uguale ai termini noti.
+</p>
+
+<p>
+Possiamo poi dividere i vincoli in:
+</p>
+<dl class="org-dl">
+<dt>\(leq\)</dt><dd>le variabili sono di slack e hanno quindi un impatto positivo, quindi un coefficiente \(1\) e quindi non hanno bisogno di variabili aggiuntive perchè rispettano già la forma canonica e possono formare la matrice identità</dd>
+<dt>\(geq\)</dt><dd>le variabili aggiunte sono di surplus, e quindi hanno fattore \(-1\). Allora scelgo fra tutti i vincoli di questo gruppo quello con \(b\) massimo e trasformo tutti gli altri vincoli moltiplicandoli per \(-1\) e sommandoli a questo scelto (o ugualmente trasformandoli nella sottrazione fra quello scelto ed essi).
+A questo punto, ognuno di essi avrà la variabile con fattore positivo (perchè ne inverto il segno ma non sommo o sottraggo nulla dato che il vincolo scelto non ha quella variabile).
+Soltanto il vincolo scelto avrà bisogno di una variabile fittizia.</dd>
+<dt>\(=\)</dt><dd>questi hanno sempre bisogno di una variabile fittizia</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-org31853da" class="outline-6">
+<h6 id="org31853da">Metodo "big M"</h6>
+<div class="outline-text-6" id="text-org31853da">
+<p>
+Introduco le variabili artificiali nei vincoli come prima, ma al posto di introdurre le variabili artificiali con coefficiente \(1\) nella funzione obiettivo e poi minimizzarla, lascio le variabili originali nella funzione obiettivo ma ci in più sommo quelle artificiali con un coefficiente molto alto. In questo modo è difficile che la soluzione ottima le contenga in base, ovvero con un valore maggiore di \(0\), perchè è molto probabile che qualunque soluzione in cui una sola di esse sia maggiore di \(0\) sia peggiore di quella ottima.
+</p>
+
+<p>
+Si evita il passo di inizializzazione, ma è difficile determinare il valore corretto di \(M\) (infatti una variabile artificiale potrebbe far parte della soluzione con un valore molto piccolo) e inoltre provoca instabilità numerica (i solutori usano la consistenza dei valori come "sanity check")
 </p>
 </div>
 </div>
-<div id="outline-container-orgc3371ab" class="outline-5">
-<h5 id="orgc3371ab">Test di ottimalità</h5>
-<div class="outline-text-5" id="text-orgc3371ab">
+<div id="outline-container-orgac95d4e" class="outline-6">
+<h6 id="orgac95d4e">Metodo Balinsky-Gòmory</h6>
+<div class="outline-text-6" id="text-orgac95d4e">
 <p>
-Nel momento della scelta dello spigolo lungo cui muoversi, si sceglie quello associato alla variabile con massimo tasso di miglioramento in \(f\).
-Se i tassi di miglioramento di \(f\) sono tutti non positivi, allora il vertice attuale è l'ottimo locale e quindi globale.
+Questo caso è complementare ai precedenti. Infatti, i precedenti garantiva l'ammissibilità durante tutto il processo ammettendo soltanto termini noti positivi, creando poi una soluzione di base artificiale ma ammissibile, eliminando poi le variabili artificiali in modi diversi (portandole a 0 o penalizzandole). Introdurre variabili artificiali era necessario perchè se un problema contiene un vincolo di maggiore uguale con la massimizzazione, la variabile associata a quel vincolo dovrà avere peso negativo e quindi non può essere usata all'inizio con un valore di non negativo perchè sarebbe \(-x=b\) e quindi porterebbe ad una soluzione iniziale non ammissibile. Insomma, il metodo precedente mantiene l'ammissibilità e manipola le variabili.
 </p>
 
 <p>
-I tassi di miglioramento sono rappresentati dai <a href="#org36d958a">coefficienti di costo ridotto</a>.
+Questo metodo, invece, lascia le variabili come sono, ma inizia da uno stato inammissibile, per poi cercare l'ammissibilità. La funzione obiettivo viene sostituita con il vincolo responsabile dell'inammissibilità. La funzione obiettivo originale è inizialmente ignorata ma continua a far parte del tableau perchè va trasformata insieme al resto.
 </p>
 
 <p>
-Quando questo vettore non contiene alcuna componente positiva, il vertice è quello ottimo locale, ovvero rispetto ai vertici ad esso adiacenti.
+A questo punto si continua applica il simplesso minimizzando il termine noto del vincolo scelto, ovvero portandolo verso \(0\).
 </p>
 
 <p>
-Valgono delle proprietà in base alle quali l'ottimalità locale implica quella globale.
+Se il simplesso termina, ovvero i costi ridotti sono tutti non-negativi, ma il termine noto è ancora negativo, allora il problema è inammissibile.
 </p>
 
 <p>
-Se la soluzione di base corrente non è degenere, allora la non positivita di \(r_D\) è necessaria e sufficiente per l'ottimalità globale.
+Se il simplesso arriva al punto in cui di solito il problema si definisce illimitato, ovvero una colonna contiene tutti valori negativi ma positivo nella funzione obiettivo, allora non è detto che il problema originale sia illimitato. In realtà, mi basta fare pivot proprio su quella colonna, con il risultato di invertire il termine noto, che diventerà positivo.
 </p>
+
+<p>
+Nel frattempo, la funzione obiettivo sarà peggiorata di molto perchè non stavamo ottimizzando per quella.
+</p>
+</div>
 </div>
 </div>
 <div id="outline-container-orge19f8f9" class="outline-5">
@@ -582,7 +729,7 @@ L'obiettivo è spostarsi lungo lo spigolo che conduce al vertice con il maggiore
 </p>
 
 <p>
-Per capirlo, basta guardare i <a href="#org36d958a">coefficienti di costo ridotto</a> e aumentare la variabile associata al coefficiente maggiore, che sarà quindi <i>entrante</i>.
+Per capirlo, basta guardare i <a href="#orge1e4037">coefficienti di costo ridotto</a> e aumentare la variabile associata al coefficiente maggiore, che sarà quindi <i>entrante</i>.
 </p>
 
 <p>
@@ -598,26 +745,52 @@ Avevamo già ricavato le variabili di base in funzione di quelle fuori base e qu
 </p>
 
 <p>
-Dato che una sola variabile di base
-</p>
-<p>
 Ad ogni iterazione (per motivi legati al passo di riduzione in forma canonica), si avrà sempre che massimo \(n-1\) delle variabili fuori base saranno fissate a \(0\) ed oltre esse <b>una sola</b> variabile in base. Questa variabile in base identifica lo spigolo su cui ci si muoverebbe e sarebbe l'unica ad essere influenzata se la scegliessimo come base uscente.
 </p>
 
 <p>
-Dato che l'obiettivo è quello di massimizzare la funzione obiettivo, scegliamo di muoverci lungo lo spigolo che ci permette di aumentare quanto più possibile la variabile entrante. Per identificare sia lo spigolo che la quantità di cui aumentarla, si usa il <b>test del minimo rapporto</b>, ovvero si sceglie l'equazione per cui \(r = b_i / x_{i}\) è massimo (\(b_i\) indica il parametro del vincolo e \(x_i\) l'unica variabile in base presente nel vincolo) e \(r\) sarà il nuovo valore della variabile entrante.
+Dato che l'obiettivo è quello di massimizzare la funzione obiettivo, ma rispettando i vincoli funzionali, scegliamo di muoverci lungo lo spigolo che ci permette di aumentare quanto più possibile la variabile entrante senza rendere l'equazione precedente falsa.
 </p>
 
 <p>
-Scelta la variabile da aumentare, bisogna capire <b>di quanto</b> aumentarla. Il punto è che quella variabile, che è una variabile di base, dovrà uscire dalle basi (uscente) e quindi dovrà essere settata a \(0\)
+Per identificare sia lo spigolo che la quantità di cui aumentarla, si usa il <b>test del minimo rapporto</b>, ovvero si sceglie l'equazione per cui \(r = b_i / x_{i}\) è massimo (\(b_i\) indica il parametro del vincolo e \(x_i\) l'unica variabile in base presente nel vincolo) e \(r\) sarà il nuovo valore della variabile entrante che "satura" il vincolo.
 </p>
 
 <p>
-<span class="underline">__</span>
+Il passo di pivot del professore non è altro che un modo meccanico per fare questo ragionamento: data una colonna \(j\) scelta con un certo criterio (es. minimo valore di \(r_D\)), scegliere di "fare pivot" su una riga \(i\) tale per cui \(A_{ij}\) sia positivo e con rapporto con \(b_i\) minimo, vuol dire semplicemente scegliere di muoversi lungo il vincolo che permette di muoversi quanto più lontano senza uscire dal politopo. Se scegliessi una riga con \(A_{ij}\) non positivo, sarebbe come scegliere un vincolo a cui la variabile entrante o non partecipa (caso nullo) o ha un contributo negativo e quindi sarebbe illimitata. Inoltre, facendo pivot con coefficiente negativo, si renderebbe il termine noto negativo, perdendo l'ammissibilità.
 </p>
 
 <p>
-Se 
+Da questo consegue anche il caso di illimitatezza: se una variabile ha contributo positivo per la funzione obiettivo, ma tutti contributi negativi per i vincoli, allora posso aumentarla indiscriminatamente, aumentando il guadagno senza mai intaccare i vincoli funzionali. Quindi il problema è illimitato.
+</p>
+</div>
+</div>
+<div id="outline-container-orgc3371ab" class="outline-5">
+<h5 id="orgc3371ab">Test di ottimalità</h5>
+<div class="outline-text-5" id="text-orgc3371ab">
+<p>
+Nel momento della scelta dello spigolo lungo cui muoversi, si sceglie quello associato alla variabile con massimo tasso di miglioramento in \(f\), ovvero quello della variabile associata al minimo (dato che stiamo massimizzando) fra i valori di \(r_D\).
+</p>
+
+<p>
+I tassi di miglioramento sono rappresentati dai <a href="#orge1e4037">coefficienti di costo ridotto</a>.
+</p>
+
+<p>
+Quando questo vettore non contiene alcuna componente negativa, il vertice è quello ottimo locale, ovvero rispetto ai vertici ad esso adiacenti.
+</p>
+
+<p>
+Valgono delle proprietà in base alle quali l'ottimalità locale implica quella globale.
+</p>
+
+<p>
+Quindi, la condizione di ottimalità è semplicemente
+\[r_D > 0\]
+</p>
+
+<p>
+Se la soluzione di base corrente non è degenere, allora la non negatività di \(r_D\) è necessaria e sufficiente per l'ottimalità globale, mentre se è degenere allora non è necessaria: infatti potrebbero degli elementi positivi anche per la soluzione ottima.
 </p>
 </div>
 </div>
@@ -629,11 +802,16 @@ Se
 <div id="outline-container-org5bf005e" class="outline-5">
 <h5 id="org5bf005e"><span class="todo TODO">TODO</span> Soluzioni ottime multiple (89 hillier)</h5>
 </div>
-<div id="outline-container-org4ba13ab" class="outline-5">
-<h5 id="org4ba13ab"><span class="todo TODO">TODO</span> Z illimitata</h5>
+<div id="outline-container-org52a7c08" class="outline-5">
+<h5 id="org52a7c08">Funzione obiettivo illimitata</h5>
+<div class="outline-text-5" id="text-org52a7c08">
+<p>
+Vedi fine sezione iterazione
+</p>
 </div>
-<div id="outline-container-orgf0e9620" class="outline-5">
-<h5 id="orgf0e9620"><span class="todo TODO">TODO</span> degenerazione</h5>
+</div>
+<div id="outline-container-orgc401958" class="outline-5">
+<h5 id="orgc401958"><span class="todo TODO">TODO</span> Degenerazione</h5>
 </div>
 </div>
 </div>
@@ -669,9 +847,17 @@ Se
 <h3 id="org1bde576"><a href="ricop_radioterapia.html#ID-40f7984f-9e03-433d-b969-7a7fd05b593b">RicOp-Radioterapia</a></h3>
 </div>
 </div>
+<div id="outline-container-orgd830ac9" class="outline-2">
+<h2 id="orgd830ac9">Domande per il prof</h2>
+<div class="outline-text-2" id="text-orgd830ac9">
+</div>
+<div id="outline-container-orge73b309" class="outline-3">
+<h3 id="orge73b309">Percorso di studio per espandere a partire da questo corso ed arrivare a concetti come Computational Social Science, Algorithmic Game Theory</h3>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-04-28 Mon 22:54</p>
+<p class="date">Created: 2025-05-02 Fri 21:38</p>
 </div>
 </body>
 </html>
