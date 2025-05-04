@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-05-02 Fri 21:38 -->
+<!-- 2025-05-04 Sun 19:22 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Statistica</title>
@@ -46,38 +46,59 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org718eded">Panoramica su Python</a></li>
-<li><a href="#org3e04569">Statistica descrittiva</a>
-<ul>
-<li><a href="#org3406964">Operazioni generali</a>
-<ul>
-<li><a href="#orga01a538">Riordinare indici di un datagram</a></li>
-<li><a href="#org59a407f">Riordinare colonne di un datagram</a></li>
-<li><a href="#org37a9e06">Raccogliere valori di una serie in bins</a></li>
-</ul>
-</li>
 <li><a href="#orgd65a0a0">Leggere e rappresentare dati su Python</a>
 <ul>
-<li><a href="#orgf6247de">Tipi primitivi</a></li>
+<li><a href="#orgc08f01b">Tipi primitivi di collezioni</a></li>
 <li><a href="#org7893313">NumPy</a></li>
 <li><a href="#org3b17513">Pandas</a>
 <ul>
 <li><a href="#org174774b">Series</a>
 <ul>
+<li><a href="#orgcec67db">Creazione</a></li>
+<li><a href="#org7b4bfa1">Accesso</a>
+<ul>
 <li><a href="#org987eed6">Accedere ad un valore specifico</a></li>
-<li><a href="#orgab38687">Accedere ad un sottoinsieme dei valori</a></li>
-<li><a href="#orgb460087"><span class="todo TODO">TODO</span> https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html Compilare con questo</a></li>
+<li><a href="#orgd396d2f">Accedere ad una sottocollezione</a></li>
 </ul>
 </li>
-<li><a href="#orga0968b7">Dataframe</a></li>
+<li><a href="#orga7a5000">Proprietà</a></li>
+<li><a href="#orge324c00">Visualizzazione</a></li>
+<li><a href="#orgea62f5a">Categorizzare dati</a>
+<ul>
+<li><a href="#org240e4b9">Raccogliere valori in bins</a></li>
 </ul>
 </li>
-<li><a href="#org793d4ef"><span class="todo TODO">TODO</span> Lettura da csv (terza lezione)</a></li>
 </ul>
 </li>
-<li><a href="#orgc5df668"><span class="todo TODO">TODO</span> Dati quantitativi e qualitativi (lez 2)</a></li>
+<li><a href="#orga0968b7">Dataframe</a>
+<ul>
+<li><a href="#org2e432cb">Creazione</a></li>
+<li><a href="#org1990e01">Accesso</a>
+<ul>
+<li><a href="#orgba4c936">Colonne</a></li>
+<li><a href="#org10d56e5">Righe</a></li>
+<li><a href="#orgc48681e">Elementi specifici</a></li>
+</ul>
+</li>
+<li><a href="#orgbb6609a">Filtri e selezione</a></li>
+<li><a href="#org056ffe5">Riordinamento</a>
+<ul>
+<li><a href="#org38841f7">Riordina indici (righe)</a></li>
+<li><a href="#org488a726">Riordina colonne</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org2b9ac2f">Lettura da CSV</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgb4f68ba">Statistica descrittiva (continuare con anki e revisione da qui)</a>
+<ul>
 <li><a href="#org1e5d71c">Descrivere i dati</a>
 <ul>
+<li><a href="#org28044a0">Dati quantitativi e qualitativi</a></li>
 <li><a href="#orgcd936b4">Frequenze</a>
 <ul>
 <li><a href="#org6c873ff">Arrotondare il numero di cifre decimali</a></li>
@@ -162,108 +183,111 @@
 <li><a href="#orgc72e4b4">Combinazioni</a></li>
 </ul>
 </li>
-<li><a href="#org88aaa01">Probabilità</a></li>
+<li><a href="#org88aaa01">Probabilità</a>
+<ul>
+<li><a href="#org9eea659">Variabili aleatorie</a>
+<ul>
+<li><a href="#org9a7b68f"><span class="todo TODO">TODO</span> fare anki</a></li>
+</ul>
+</li>
+<li><a href="#orgb05c5fa"><span class="todo TODO">TODO</span> Classificatore bayes</a></li>
+<li><a href="#org1490421"><span class="todo TODO">TODO</span> Formalizzare spazio di probabilità</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org718eded" class="outline-2">
-<h2 id="org718eded">Panoramica su Python</h2>
-<div class="outline-text-2" id="text-org718eded">
-<p>
-Tutto è un oggetto, quindi ogni variabile può contenere attributi e funzioni, accessibili con la dot notation.
-Segue il duck typing.
-I tipi di dato semplici sono intero, float e booleano.
-I tipi di dato strutturato sono le liste, le tuple, le stringhe, gli insiemi e i dizionari.
-Le liste sono eterogenee, ad accesso posizionale e dimensione dinamica. Vengono espresse in modo estensivo con le parentesi quadre.
-Le tuple sono come le liste, ma immutabili. Usano le parentesi tonde.
-Le stringhe sono tuple di caratteri unicode, quindi immutabili.
-I dizionari memorizzano associazioni di dati. Le dichiarazioni estensive sono delimitate dalle parentesi graffe e l'accesso è in base alla chiave e non posizionale. Sono meno efficienti delle liste, a causa di possibili collisioni.
-Le funzioni possono essere anonime, nel formato <code>lambda x : &lt;espressione&gt;</code>.
-Per stampare grafici si usa <code>matplotlib.pyplot as plt</code>.
-<b>DA QUA AGGIUSTARE E INTEGRARE SUI GRAFICI</b>
-</p>
+<div id="outline-container-orgd65a0a0" class="outline-2">
+<h2 id="orgd65a0a0">Leggere e rappresentare dati su Python</h2>
+<div class="outline-text-2" id="text-orgd65a0a0">
 </div>
-</div>
-<div id="outline-container-org3e04569" class="outline-2">
-<h2 id="org3e04569">Statistica descrittiva</h2>
-<div class="outline-text-2" id="text-org3e04569">
-</div>
-<div id="outline-container-org3406964" class="outline-3">
-<h3 id="org3406964">Operazioni generali</h3>
-<div class="outline-text-3" id="text-org3406964">
-</div>
-<div id="outline-container-orga01a538" class="outline-4">
-<h4 id="orga01a538">Riordinare indici di un datagram</h4>
-<div class="outline-text-4" id="text-orga01a538">
-<p>
-<code>dataframe.reindex(listaDiIndiciRiordinati)</code>
-</p>
-</div>
-</div>
-<div id="outline-container-org59a407f" class="outline-4">
-<h4 id="org59a407f">Riordinare colonne di un datagram</h4>
-<div class="outline-text-4" id="text-org59a407f">
-<p>
-<code>dataframe.loc[:,listaDiColonneRiordinate]</code>
-</p>
-</div>
-</div>
-<div id="outline-container-org37a9e06" class="outline-4">
-<h4 id="org37a9e06">Raccogliere valori di una serie in bins</h4>
-<div class="outline-text-4" id="text-org37a9e06">
-<p>
-Per ottenere i valori di una serie raccolti in bins <b>qualitativi</b> si usa <code>pd.cut(series, bins = [a,b,c], right = True)</code>, dove <code>right = False</code> se l'estremo destro è escluse.
-Applicando <code>pd.crosstab</code> alla serie così ottenuta si ottengono le frequenze per le classi di valori.
-</p>
-</div>
-</div>
-</div>
-<div id="outline-container-orgd65a0a0" class="outline-3">
-<h3 id="orgd65a0a0">Leggere e rappresentare dati su Python</h3>
-<div class="outline-text-3" id="text-orgd65a0a0">
-</div>
-<div id="outline-container-orgf6247de" class="outline-4">
-<h4 id="orgf6247de">Tipi primitivi</h4>
-<div class="outline-text-4" id="text-orgf6247de">
-<p>
-Per raccogliere una lista di valori Python fornisce i seguenti oggetti:
-</p>
+<div id="outline-container-orgc08f01b" class="outline-3">
+<h3 id="orgc08f01b">Tipi primitivi di collezioni</h3>
+<div class="outline-text-3" id="text-orgc08f01b">
 <dl class="org-dl">
-<dt>tupla</dt><dd>sequenza <b>immutabile</b> e <b>fixed-length</b>, delimitata da <b>parentesi tonde</b>. Può essere concatenata. Se assegnata a più variabili viene effettuato l'<b>unpacking</b> e se l'ultima variabile inizia con un <b>asterisco</b> conterrà il <b>resto</b> degli elementi. Il vantaggio della tupla è l'efficienza dei metodi definiti su essa.</dd>
-<dt>lista</dt><dd>semanticamente simile alla tupla, ma <b>mutabile</b> mediante i metodi <code>insert</code>, <code>pop</code> e <code>remove</code> e delimitata da <b>parentesi quadre</b>. Vi si può effettuare lo <b>slicing</b>.</dd>
-<dt>dizionario</dt><dd>memorizza associazioni <b>chiave-valore</b> ed è delimitato da <b>parentesi graffe</b>.</dd>
+<dt>tupla</dt><dd><p>
+sequenza <b>immutabile</b> e <b>fixed-length</b>, delimitata da <b>parentesi tonde</b>.
+</p>
+<ul class="org-ul">
+<li>Non può essere modificata dopo la creazione</li>
+<li>Efficiente in termini di memoria e velocità</li>
+<li>Supporta l'unpacking: <code>a, b, c = (1, 2, 3)</code></li>
+<li>Con asterisco: <code>a, *b = (1, 2, 3, 4)</code> → <code>a  =1, b = [2, 3, 4]</code></li>
+<li>Può essere concatenata: <code>(1, 2) + (3, 4) → (1, 2, 3, 4)</code></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">hero</span> = (<span style="color: #8b2252;">'Iron Man'</span>, <span style="color: #8b2252;">'Tony Stark'</span>, 1963, 191.85)
+<span style="color: #a0522d;">name</span>, <span style="color: #a0522d;">identity</span>, <span style="color: #a0522d;">year</span>, <span style="color: #a0522d;">_</span> = hero  <span style="color: #b22222;"># </span><span style="color: #b22222;">unpacking</span>
+</pre>
+</div></dd>
+<dt>lista</dt><dd><p>
+semanticamente simile alla tupla, ma <b>mutabile</b>.
+</p>
+<ul class="org-ul">
+<li>Modificabile con metodi come <code>append()</code>, <code>insert()</code>, <code>pop()</code>, <code>remove()</code></li>
+<li>Supporta lo slicing: <code>lista[1:4], lista[-3:]</code></li>
+<li>Può contenere elementi eterogenei</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">heroes</span> = [<span style="color: #8b2252;">'Iron Man'</span>, <span style="color: #8b2252;">'Thor'</span>, <span style="color: #8b2252;">'Captain America'</span>]
+heroes.append(<span style="color: #8b2252;">'Hulk'</span>)  <span style="color: #b22222;"># </span><span style="color: #b22222;">Aggiunge elemento</span>
+heroes.pop(1)  <span style="color: #b22222;"># </span><span style="color: #b22222;">Rimuove Thor</span>
+</pre>
+</div></dd>
+<dt>dizionario</dt><dd>memorizza associazioni <b>chiave-valore</b> ed è delimitato da <b>parentesi graffe</b>.
+<ul class="org-ul">
+<li>Accesso per chiave in tempo costante</li>
+<li>Chiavi immutabili (stringhe, numeri, tuple)</li>
+<li>Valori di qualsiasi tipo</li>
+</ul></dd>
 </dl>
 </div>
 </div>
-<div id="outline-container-org7893313" class="outline-4">
-<h4 id="org7893313">NumPy</h4>
-<div class="outline-text-4" id="text-org7893313">
+<div id="outline-container-org7893313" class="outline-3">
+<h3 id="org7893313">NumPy</h3>
+<div class="outline-text-3" id="text-org7893313">
 <p>
-Gli <b>array di NumPy</b> sono <b>multidimensionali</b> e offrono più funzionalità, ad esempio le operazioni di <b>moltiplicazione per scalare</b> e <b>somma fra array</b> con la solita sintassi con gli operatori. Inoltre, possono essere utilizzati per disegnare i grafici con <b>matplotlib</b>.
+Array NumPy: Strutture multidimensionali e omogenee che offrono performance superiori per calcoli numerici.
 </p>
 
 <p>
-Lo svantaggio del disegnare grafici utilizzando questi array è che i valori dei due array da disegnare vengono accoppiati <b>in base all'indice</b>.
+Vantaggi:
+</p>
+<dl class="org-dl">
+<dt>Operazioni vettorizzate (elemento per elemento)</dt><dd><code>array * 2</code>, <code>array1 + array2</code></dd>
+<dt>Funzioni matematiche avanzate</dt><dd><code>np.sin()</code>, <code>np.mean()</code>, etc.</dd>
+<dt>(no term)</dt><dd>Integrazione con matplotlib per visualizzazioni</dd>
+</dl>
+
+<p>
+Uno svantaggio è che quando si creano grafici con NumPy, i valori di due array vengono accoppiati in base alla posizione/indice, non per valore logico.
 </p>
 </div>
 </div>
-<div id="outline-container-org3b17513" class="outline-4">
-<h4 id="org3b17513">Pandas</h4>
-<div class="outline-text-4" id="text-org3b17513">
+<div id="outline-container-org3b17513" class="outline-3">
+<h3 id="org3b17513">Pandas</h3>
+<div class="outline-text-3" id="text-org3b17513">
 <p>
 La libreria <b>Pandas</b> fornisce due strutture dati fondamentali, <b>Series</b> e <b>DataFrame</b>.
 </p>
 </div>
-<div id="outline-container-org174774b" class="outline-5">
-<h5 id="org174774b">Series</h5>
-<div class="outline-text-5" id="text-org174774b">
+<div id="outline-container-org174774b" class="outline-4">
+<h4 id="org174774b">Series</h4>
+<div class="outline-text-4" id="text-org174774b">
 <p>
-<b>Series</b> è un oggetto contenente l'<b>associazione</b> fra un array <b>mono-dimensionale</b> di valori <b>omogenei</b>, inferiti nel modo più stringente possibile, e un array di <b>indici</b>, entrambi forniti in input al costruttore.
+<b>Series</b> è un oggetto che associa un array mono-dimensionale di valori a un array di indici.
 </p>
 
 <p>
-La semantica e i metodi che fornisce sono affini sia agli <b>array di NumPy</b> che ai <b>dizionari</b>.
+Caratteristiche:
 </p>
+<ul class="org-ul">
+<li>Valori omogenei (stesso tipo)</li>
+<li>Indici personalizzabili</li>
+<li>Gestione automatica dei valori mancanti (NaN)</li>
+<li>Comportamento ibrido tra array NumPy e dizionario</li>
+</ul>
+
 
 <p>
 I due array sono accessibili mediante i metodi <code>.array</code>, che ritorna un <code>PandasArray</code>, tipicamente un wrapper di un array di NumPy, e <code>.index</code>.
@@ -273,31 +297,115 @@ I due array sono accessibili mediante i metodi <code>.array</code>, che ritorna 
 Quando si disegna il grafico di due serie, i valori vengono associati in base all'indice.
 </p>
 </div>
+<div id="outline-container-orgcec67db" class="outline-5">
+<h5 id="orgcec67db">Creazione</h5>
+<div class="outline-text-5" id="text-orgcec67db">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> pandas <span style="color: #a020f0;">as</span> pd
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Con indici espliciti</span>
+<span style="color: #a0522d;">first_appearance</span> = pd.Series([1963, 1962, 1941], 
+                             index=[<span style="color: #8b2252;">'Iron Man'</span>, <span style="color: #8b2252;">'Hulk'</span>, <span style="color: #8b2252;">'Captain America'</span>])
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Da dizionario (le chiavi diventano indici)</span>
+<span style="color: #a0522d;">heights</span> = pd.Series({<span style="color: #8b2252;">'Iron Man'</span>: 198.51, <span style="color: #8b2252;">'Hulk'</span>: 244.0, <span style="color: #8b2252;">'Thor'</span>: 198.0})
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org7b4bfa1" class="outline-5">
+<h5 id="org7b4bfa1">Accesso</h5>
+<div class="outline-text-5" id="text-org7b4bfa1">
+</div>
 <div id="outline-container-org987eed6" class="outline-6">
 <h6 id="org987eed6">Accedere ad un valore specifico</h6>
 <div class="outline-text-6" id="text-org987eed6">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Per indice</span>
+first_appearance[<span style="color: #8b2252;">'Iron Man'</span>]        <span style="color: #b22222;"># </span><span style="color: #b22222;">1963</span>
+first_appearance.loc[<span style="color: #8b2252;">'Iron Man'</span>]    <span style="color: #b22222;"># </span><span style="color: #b22222;">1963 (pi&#249; esplicito)</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Per posizione</span>
+first_appearance.iloc[0]            <span style="color: #b22222;"># </span><span style="color: #b22222;">1963 (primo elemento)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd396d2f" class="outline-6">
+<h6 id="orgd396d2f">Accedere ad una sottocollezione</h6>
+<div class="outline-text-6" id="text-orgd396d2f">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Slicing per indice (inclusivo dell'ultimo)</span>
+first_appearance.loc[<span style="color: #8b2252;">'Hulk'</span>:<span style="color: #8b2252;">'Thor'</span>]
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Slicing per posizione (esclusivo dell'ultimo)</span>
+first_appearance.iloc[0:2]  <span style="color: #b22222;"># </span><span style="color: #b22222;">primi due elementi</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Con lista di booleani (list comprehension)</span>
+first_appearance[first_appearance &gt; 1960]
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Con espressione</span>
+first_appearance[[1960 &lt;= y &lt; 1970 <span style="color: #a020f0;">for</span> y <span style="color: #a020f0;">in</span> first_appearance]]
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orga7a5000" class="outline-5">
+<h5 id="orga7a5000">Proprietà</h5>
+<div class="outline-text-5" id="text-orga7a5000">
+<div class="org-src-container">
+<pre class="src src-python">first_appearance.array  <span style="color: #b22222;"># </span><span style="color: #b22222;">Accede all'array dei valori (PandasArray)</span>
+first_appearance.index  <span style="color: #b22222;"># </span><span style="color: #b22222;">Accede all'array degli indici</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge324c00" class="outline-5">
+<h5 id="orge324c00">Visualizzazione</h5>
+<div class="outline-text-5" id="text-orge324c00">
+<div class="org-src-container">
+<pre class="src src-python">first_appearance.plot.bar()  <span style="color: #b22222;"># </span><span style="color: #b22222;">Crea un grafico a barre</span>
+<span style="color: #b22222;"># </span><span style="color: #b22222;">I valori vengono accoppiati per indice, non per posizione</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgea62f5a" class="outline-5">
+<h5 id="orgea62f5a">Categorizzare dati</h5>
+<div class="outline-text-5" id="text-orgea62f5a">
+</div>
+<div id="outline-container-org240e4b9" class="outline-6">
+<h6 id="org240e4b9">Raccogliere valori in bins</h6>
+<div class="outline-text-6" id="text-org240e4b9">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Esempio di categorizzazione delle altezze in bins</span>
+<span style="color: #a0522d;">height_categories</span> = pd.cut(heroes_df[<span style="color: #8b2252;">'height'</span>], 
+                          bins=[0, 170, 190, 250],
+                          labels=[<span style="color: #8b2252;">'Basso'</span>, <span style="color: #8b2252;">'Medio'</span>, <span style="color: #8b2252;">'Alto'</span>],
+                          right=<span style="color: #008b8b;">True</span>)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Calcolo delle frequenze per categoria</span>
+<span style="color: #a0522d;">frequency_table</span> = pd.crosstab(index=height_categories, columns=<span style="color: #8b2252;">'count'</span>)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orga0968b7" class="outline-4">
+<h4 id="orga0968b7">Dataframe</h4>
+<div class="outline-text-4" id="text-orga0968b7">
 <p>
-L'accesso ai valori si effettua mediante i metodi <code>.loc</code> (<i>location</i>) con l'indice o <code>.iloc</code> con la posizione.
+Un dataframe è una <b>tabella rettangolare</b> contenente una <b>collezione di Series</b>, con uno specifico nome e con lo stesso indice.
 </p>
-</div>
-</div>
-<div id="outline-container-orgab38687" class="outline-6">
-<h6 id="orgab38687">Accedere ad un sottoinsieme dei valori</h6>
-<div class="outline-text-6" id="text-orgab38687">
+
 <p>
-Per prendere un <b>sottoinsieme</b> dei valori, si usa una sintassi simile allo <b>slicing</b>. Quando si usano gli indici, il secondo estremo è incluso, mentre con le posizioni no. Altrimenti, si può usare una <b>lista di booleani</b> della <b>stessa lunghezza</b> della serie, generata di solito con una <b>list comprehension</b>.
+Può essere quindi pensata come un <b>dizionario di serie eterogenee</b>.
 </p>
-</div>
-</div>
-<div id="outline-container-orgb460087" class="outline-6">
-<h6 id="orgb460087"><span class="todo TODO">TODO</span> <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html">https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html</a> Compilare con questo</h6>
-</div>
-</div>
-<div id="outline-container-orga0968b7" class="outline-5">
-<h5 id="orga0968b7">Dataframe</h5>
-<div class="outline-text-5" id="text-orga0968b7">
+
 <p>
-Un dataframe è una <b>tabella rettangolare</b> contenente una <b>collezione di colonne</b> a cui è assegnato un nome. Ogni colonna è una <b>serie</b> con <b>stesso indice</b>. Può essere quindi pensata come un <b>dizionario di serie</b>.
+Gestisce automaticamente i dati mancanti (come?)
 </p>
 
 <p>
@@ -312,18 +420,183 @@ Per <b>accedere ad una riga</b> si utilizza <code>loc[]</code> e <code>iloc[]</c
 Per <b>accedere ad un elemento</b> si usa <code>at[index, column]</code>.
 </p>
 </div>
+<div id="outline-container-org2e432cb" class="outline-5">
+<h5 id="org2e432cb">Creazione</h5>
+<div class="outline-text-5" id="text-org2e432cb">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Da dizionario di liste/array</span>
+<span style="color: #a0522d;">heroes_df</span> = pd.DataFrame({
+    <span style="color: #8b2252;">'name'</span>: [<span style="color: #8b2252;">'Iron Man'</span>, <span style="color: #8b2252;">'Hulk'</span>, <span style="color: #8b2252;">'Thor'</span>],
+    <span style="color: #8b2252;">'height'</span>: [198.51, 244.0, 198.0],
+    <span style="color: #8b2252;">'first_appearance'</span>: [1963, 1962, 1963]
+})
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Da lista di dizionari</span>
+<span style="color: #a0522d;">heroes_df</span> = pd.DataFrame([
+    {<span style="color: #8b2252;">'name'</span>: <span style="color: #8b2252;">'Iron Man'</span>, <span style="color: #8b2252;">'height'</span>: 198.51, <span style="color: #8b2252;">'first_appearance'</span>: 1963},
+    {<span style="color: #8b2252;">'name'</span>: <span style="color: #8b2252;">'Hulk'</span>, <span style="color: #8b2252;">'height'</span>: 244.0, <span style="color: #8b2252;">'first_appearance'</span>: 1962},
+    {<span style="color: #8b2252;">'name'</span>: <span style="color: #8b2252;">'Thor'</span>, <span style="color: #8b2252;">'height'</span>: 198.0, <span style="color: #8b2252;">'first_appearance'</span>: 1963}
+])
+</pre>
 </div>
 </div>
-<div id="outline-container-org793d4ef" class="outline-4">
-<h4 id="org793d4ef"><span class="todo TODO">TODO</span> Lettura da csv (terza lezione)</h4>
+</div>
+<div id="outline-container-org1990e01" class="outline-5">
+<h5 id="org1990e01">Accesso</h5>
+<div class="outline-text-5" id="text-org1990e01">
+</div>
+<div id="outline-container-orgba4c936" class="outline-6">
+<h6 id="orgba4c936">Colonne</h6>
+<div class="outline-text-6" id="text-orgba4c936">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Singola colonna (restituisce Series)</span>
+<span style="color: #a0522d;">heights</span> = heroes_df[<span style="color: #8b2252;">'height'</span>]
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Multiple colonne (restituisce DataFrame)</span>
+<span style="color: #a0522d;">subset</span> = heroes_df[[<span style="color: #8b2252;">'name'</span>, <span style="color: #8b2252;">'height'</span>]]
+</pre>
 </div>
 </div>
-<div id="outline-container-orgc5df668" class="outline-3">
-<h3 id="orgc5df668"><span class="todo TODO">TODO</span> Dati quantitativi e qualitativi (lez 2)</h3>
+</div>
+<div id="outline-container-org10d56e5" class="outline-6">
+<h6 id="org10d56e5">Righe</h6>
+<div class="outline-text-6" id="text-org10d56e5">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Per indice</span>
+heroes_df.loc[0]  <span style="color: #b22222;"># </span><span style="color: #b22222;">prima riga</span>
+heroes_df.loc[<span style="color: #8b2252;">'Iron Man'</span>]  <span style="color: #b22222;"># </span><span style="color: #b22222;">se l'indice &#232; 'Iron Man'</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Per posizione</span>
+heroes_df.iloc[1]  <span style="color: #b22222;"># </span><span style="color: #b22222;">seconda riga</span>
+heroes_df.iloc[1:3]  <span style="color: #b22222;"># </span><span style="color: #b22222;">seconda e terza riga</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc48681e" class="outline-6">
+<h6 id="orgc48681e">Elementi specifici</h6>
+<div class="outline-text-6" id="text-orgc48681e">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Per indice</span>
+heroes_df.loc[0]  <span style="color: #b22222;"># </span><span style="color: #b22222;">prima riga</span>
+heroes_df.loc[<span style="color: #8b2252;">'Iron Man'</span>]  <span style="color: #b22222;"># </span><span style="color: #b22222;">se l'indice &#232; 'Iron Man'</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Per posizione</span>
+heroes_df.iloc[1]  <span style="color: #b22222;"># </span><span style="color: #b22222;">seconda riga</span>
+heroes_df.iloc[1:3]  <span style="color: #b22222;"># </span><span style="color: #b22222;">seconda e terza riga</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbb6609a" class="outline-5">
+<h5 id="orgbb6609a">Filtri e selezione</h5>
+<div class="outline-text-5" id="text-orgbb6609a">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Filtro con condizioni</span>
+<span style="color: #a0522d;">tall_heroes</span> = heroes_df[heroes_df[<span style="color: #8b2252;">'height'</span>] &gt; 190]
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Filtri multipli</span>
+<span style="color: #a0522d;">strong_tall</span> = heroes_df[(heroes_df[<span style="color: #8b2252;">'height'</span>] &gt; 190) &amp; 
+                         (heroes_df[<span style="color: #8b2252;">'strength'</span>] &gt; 50)]
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Metodi di selezione</span>
+heroes_df.query(<span style="color: #8b2252;">'height &gt; 190 and strength &gt; 50'</span>)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org056ffe5" class="outline-5">
+<h5 id="org056ffe5">Riordinamento</h5>
+<div class="outline-text-5" id="text-org056ffe5">
+</div>
+<div id="outline-container-org38841f7" class="outline-6">
+<h6 id="org38841f7">Riordina indici (righe)</h6>
+<div class="outline-text-6" id="text-org38841f7">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Riordinare gli indici di un DataFrame</span>
+<span style="color: #a0522d;">df_reordered</span> = dataframe.reindex([<span style="color: #8b2252;">'indice3'</span>, <span style="color: #8b2252;">'indice1'</span>, <span style="color: #8b2252;">'indice2'</span>])
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Specificare valori per righe mancanti</span>
+<span style="color: #a0522d;">df_reordered</span> = dataframe.reindex([<span style="color: #8b2252;">'indice3'</span>, <span style="color: #8b2252;">'indice1'</span>, <span style="color: #8b2252;">'nuovo'</span>], fill_value=0)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org488a726" class="outline-6">
+<h6 id="org488a726">Riordina colonne</h6>
+<div class="outline-text-6" id="text-org488a726">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Modo pi&#249; diretto per riordinare le colonne</span>
+<span style="color: #a0522d;">df_reordered</span> = dataframe[[<span style="color: #8b2252;">'colonna3'</span>, <span style="color: #8b2252;">'colonna1'</span>, <span style="color: #8b2252;">'colonna2'</span>]]
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Esempio concreto</span>
+<span style="color: #a0522d;">columns_order</span> = [<span style="color: #8b2252;">'name'</span>, <span style="color: #8b2252;">'strength'</span>, <span style="color: #8b2252;">'first_appearance'</span>]
+<span style="color: #a0522d;">heroes_reordered</span> = heroes_df[columns_order]
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Metodo che usa loc inutilmente</span>
+dataframe.loc[:,listaDiColonneRiordinate]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org2b9ac2f" class="outline-4">
+<h4 id="org2b9ac2f">Lettura da CSV</h4>
+<div class="outline-text-4" id="text-org2b9ac2f">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Lettura di base</span>
+<span style="color: #a0522d;">df</span> = pd.read_csv(<span style="color: #8b2252;">'file.csv'</span>)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Con opzioni personalizzate</span>
+<span style="color: #a0522d;">heroes</span> = pd.read_csv(<span style="color: #8b2252;">'heroes.csv'</span>, 
+                     delimiter=<span style="color: #8b2252;">';'</span>,  <span style="color: #b22222;"># </span><span style="color: #b22222;">Separatore personalizzato</span>
+                     quotechar=<span style="color: #8b2252;">'"'</span>,  <span style="color: #b22222;"># </span><span style="color: #b22222;">Carattere di quotazione</span>
+                     na_values=[<span style="color: #8b2252;">'NA'</span>, <span style="color: #8b2252;">''</span>],  <span style="color: #b22222;"># </span><span style="color: #b22222;">Valori da considerare come NA</span>
+                     index_col=<span style="color: #8b2252;">'name'</span>)  <span style="color: #b22222;"># </span><span style="color: #b22222;">Colonna da usare come indice</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb4f68ba" class="outline-2">
+<h2 id="orgb4f68ba">Statistica descrittiva (continuare con anki e revisione da qui)</h2>
+<div class="outline-text-2" id="text-orgb4f68ba">
 </div>
 <div id="outline-container-org1e5d71c" class="outline-3">
 <h3 id="org1e5d71c">Descrivere i dati</h3>
 <div class="outline-text-3" id="text-org1e5d71c">
+</div>
+<div id="outline-container-org28044a0" class="outline-4">
+<h4 id="org28044a0">Dati quantitativi e qualitativi</h4>
+<div class="outline-text-4" id="text-org28044a0">
+<dl class="org-dl">
+<dt>Dati quantitativi</dt><dd>Misurati attraverso quantità numeriche
+<ul class="org-ul">
+<li><b><b>Discreti</b></b>: Ha senso considerare singoli valori specifici (es. anno di prima apparizione)</li>
+<li><b><b>Continui</b></b>: Ha senso considerare intervalli di valori (es. altezza, peso)</li>
+</ul></dd>
+
+<dt>Dati qualitativi (categorici/nominali)</dt><dd>Misurati attraverso etichette selezionate da un insieme predefinito
+<ul class="org-ul">
+<li><b><b>Binari/booleani</b></b>: Due sole possibili etichette non confrontabili (es. Gender: M/F)</li>
+<li><b><b>Nominali</b></b> (sconnessi): Multiple etichette non confrontabili tra loro (es. Name, Eye color)
+<ul class="org-ul">
+<li>È possibile solo stabilire relazioni di equivalenza (uguale/diverso)</li>
+</ul></li>
+<li><b><b>Ordinali</b></b>: Etichette tra cui è possibile stabilire una relazione d'ordine (es. Intelligence)</li>
+</ul></dd>
+</dl>
+
+<p>
+Certi dati temporali come gli anni sono formalmente numerici ma possono essere considerati qualitativi quando le operazioni aritmetiche perdono significato.
+</p>
+
+<p>
+Nei dataset reali, va inoltre considerato che anche i dati continui vengono discretizzati quando memorizzati su computer, rendendo la distinzione talvolta sfumata.
+</p>
+</div>
 </div>
 <div id="outline-container-orgcd936b4" class="outline-4">
 <h4 id="orgcd936b4">Frequenze</h4>
@@ -371,13 +644,8 @@ In <code>pandas</code> si ottengono con il metodo <code>crosstab</code>, il cui 
 <div id="outline-container-orgfa65629" class="outline-5">
 <h5 id="orgfa65629">Rinormalizzare su un sottoinsieme delle osservazioni</h5>
 <div class="outline-text-5" id="text-orgfa65629">
-<pre class="example" id="org207c477">
-In statistical and data analysis terminology, what you're describing is generally known as conditional probability normalization or frequency renormalization under conditional observation.
-
-Formally, this refers to the process of recalculating the probability distribution or relative frequencies of a variable (or set of variables) after restricting the sample space through conditioning or filtering.
-</pre>
 <p>
-Quando si escludono alcune osservazioni per il calcolo delle frequenze relative (ad esempio quelle con un valore inferiore ad un certo valore), la somma di tutte le frequenze relative non sarà più \(1\).
+Quando si filtrano alcune osservazioni (ad esempio quelle con un valore inferiore ad un certo valore), la somma di tutte le frequenze relative non sarà più \(1\).
 </p>
 
 <p>
@@ -409,10 +677,6 @@ Se invece si lavora su una <b>serie</b> (situazione solita), basta usare la nota
 <span style="color: #b22222;">#</span><span style="color: #b22222;">serie_renormalizzata2 = serie.apply(lambda p: p/tsum)</span>
 </pre>
 </div>
-
-<p>
-Pass lello FQm67Krqn
-</p>
 </div>
 </div>
 </div>
@@ -465,29 +729,134 @@ my_pareto(heroes[<span style="color: #8b2252;">'Eye color'</span>], threshold=0)
 <h4 id="orgf5ed488">Frequenze congiunte e marginali</h4>
 <div class="outline-text-4" id="text-orgf5ed488">
 <p>
-Quando si vuole analizzare un campione sulla base di due caratteri, viene specializzato il concetto di frequenza così che conti il numero di osservazioni in cui ogni modalità del carattere considerato assume un certo valore.
+Le <b>frequenze congiunte*</b> contano il numero di osservazioni in cui due caratteri (variabili) assumono simultaneamente determinati valori. Rappresentano la distribuzione bidimensionale di due variabili.
 </p>
 
 <p>
-In <code>pandas</code> si ottengono con <code>pd.crosstab(index = series1, columns = series2)</code>.
+Vengono stampate nelle <b>tabelle di contingenza</b>, in cui le righe sono una variabile, le colonne l'altra e i valori sono le frequenze congiunte.
 </p>
 
 <p>
-Indicando il parametro opzionale <code>margins = True</code> vengono aggiunti dei margini.
+Le <b>frequenze marginali</b> sono i totali di riga e colonna in una tabella di contingenza e rappresentano le frequenze di ciascuna variabile considerata singolarmente.
 </p>
 
 <p>
-Quando si aggiungono i margini alla tabella delle frequenze relative, va specificato su quale totale considerare la frazione:
+Le tabelle di contingenza relative possono essere <b>normalizzate</b> nei seguenti modi:
 </p>
-<ul class="org-ul">
-<li><code>normalize = 'all'</code> calcola le frequenze relative di ogni entrata della tabella, quindi di ogni carattere.</li>
-<li><code>normalize = 'index'</code> normalizza sulla somma delle righe, in modo che alla fine ogni riga sommi ad 1. In questo modo ogni entrata rappresenta la frazione di osservazioni con carattere 'riga' per ogni valore 'colonna'. Si usa quando</li>
-<li><code>normalize = 'columns'</code> normalizza sulla somma delle colonne, in modo che alla fine ogni colonna sommi ad 1. In questo modo ogni entrata rappresenta la frazione di osservazioni con carattere 'colonna' per ogni valore 'riga'. Si usa quando i caratteri delle colonne hanno frequenze assolute diverse e si vuole considerare la frazione di carattere 'riga' relativamente al solo gruppo di osservazioni 'colonna'.</li>
-</ul>
-
+<dl class="org-dl">
+<dt>Normalizzazione totale ('all')</dt><dd>Ogni cella rappresenta la proporzione rispetto al totale generale delle osservazioni. Tutte le celle sommate danno 1.</dd>
+<dt>Normalizzazione per riga ('index')</dt><dd>Ogni cella rappresenta la proporzione rispetto al totale della riga. Ogni riga somma a 1, mostrando la distribuzione della variabile colonna all'interno di ciascun valore della variabile riga.</dd>
+<dt>Normalizzazione per colonna ('columns')</dt><dd>Ogni cella rappresenta la proporzione rispetto al totale della colonna. Ogni colonna somma a 1, mostrando la distribuzione della variabile riga all'interno di ciascun valore della variabile colonna.</dd>
+</dl>
 <p>
-Per plottare i dataframe così ottenuti si usa <code>plot.bar(color = ['pink', 'blue'],stacked = False)</code>, dove <code>stacked = False</code> per tenere le barre affiancate o <code>True</code> per averle impilate.
+Se \(x\) è sulle righe e \(y\) sulle colonne, si normalizza in base ad \(x\) quando si vogliono ottenere le frequenze relative dei valori di \(y\) per gli specifici valori di \(x\). 
 </p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Creazione di una tabella di frequenze congiunte tra intelligenza e genere</span>
+<span style="color: #a0522d;">int_gender_freq</span> = pd.crosstab(index=heroes[<span style="color: #8b2252;">'Intelligence'</span>], 
+                              columns=heroes[<span style="color: #8b2252;">'Gender'</span>])
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Riordinare le righe secondo un ordine logico anzich&#233; alfabetico</span>
+<span style="color: #a0522d;">int_gender_freq</span> = int_gender_freq.reindex([<span style="color: #8b2252;">'low'</span>, <span style="color: #8b2252;">'moderate'</span>,
+                                           <span style="color: #8b2252;">'average'</span>, <span style="color: #8b2252;">'good'</span>, <span style="color: #8b2252;">'high'</span>])
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Riordinare le colonne specificando l'ordine desiderato</span>
+int_gender_freq.loc[:,[<span style="color: #8b2252;">'M'</span>, <span style="color: #8b2252;">'F'</span>]]
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Selezionare solo alcune righe della tabella</span>
+<span style="color: #a0522d;">subset_freq</span> = int_gender_freq.loc[<span style="color: #8b2252;">'moderate'</span>:<span style="color: #8b2252;">'good'</span>, :]
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Visualizzazione grafica con barre affiancate</span>
+int_gender_freq.plot.bar(color=[<span style="color: #8b2252;">'pink'</span>, <span style="color: #8b2252;">'blue'</span>])
+plt.show()
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Visualizzazione grafica con barre impilate</span>
+int_gender_freq.plot.bar(color=[<span style="color: #8b2252;">'pink'</span>, <span style="color: #8b2252;">'blue'</span>], stacked=<span style="color: #008b8b;">True</span>)
+plt.show()
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Gestione di variabili quantitative mediante discretizzazione</span>
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Converte i pesi numerici in intervalli categorici</span>
+<span style="color: #a0522d;">weight_categories</span> = pd.cut(heroes[<span style="color: #8b2252;">'Weight'</span>], 
+                          bins=[30, 50, 80, 100, 200, 500, 1000])
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Creazione di tabella di contingenza con la variabile discretizzata</span>
+<span style="color: #a0522d;">weight_gender_freq</span> = pd.crosstab(index=weight_categories,
+                                columns=[heroes[<span style="color: #8b2252;">'Gender'</span>]])
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Modifica della direzione degli intervalli (aperti a sinistra)</span>
+<span style="color: #a0522d;">weight_gender_freq_left</span> = pd.crosstab(index=pd.cut(heroes[<span style="color: #8b2252;">'Weight'</span>],
+                                                 bins=[30, 50, 80, 100, 200, 500, 1000],
+                                                 right=<span style="color: #008b8b;">False</span>),
+                                     columns=[heroes[<span style="color: #8b2252;">'Gender'</span>]])
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Aggiunta delle frequenze marginali (totali di riga e colonna)</span>
+<span style="color: #a0522d;">freq_with_margins</span> = pd.crosstab(index=heroes[<span style="color: #8b2252;">'Intelligence'</span>], 
+                               columns=heroes[<span style="color: #8b2252;">'Gender'</span>], 
+                               margins=<span style="color: #008b8b;">True</span>)  <span style="color: #b22222;"># </span><span style="color: #b22222;">Aggiunge riga e colonna 'All'</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Calcolo delle frequenze relative normalizzate sul totale</span>
+<span style="color: #a0522d;">rel_freq_all</span> = pd.crosstab(index=heroes[<span style="color: #8b2252;">'Intelligence'</span>], 
+                          columns=heroes[<span style="color: #8b2252;">'Gender'</span>],
+                          margins=<span style="color: #008b8b;">True</span>,
+                          normalize=<span style="color: #8b2252;">'all'</span>)  <span style="color: #b22222;"># </span><span style="color: #b22222;">Ogni cella divisa per il numero totale</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Calcolo delle frequenze relative normalizzate per riga</span>
+<span style="color: #a0522d;">rel_freq_row</span> = pd.crosstab(index=heroes[<span style="color: #8b2252;">'Intelligence'</span>], 
+                          columns=heroes[<span style="color: #8b2252;">'Gender'</span>],
+                          margins=<span style="color: #008b8b;">True</span>,
+                          normalize=<span style="color: #8b2252;">'index'</span>)  <span style="color: #b22222;"># </span><span style="color: #b22222;">Ogni riga somma a 1</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Calcolo delle frequenze relative normalizzate per colonna</span>
+<span style="color: #a0522d;">rel_freq_col</span> = pd.crosstab(index=heroes[<span style="color: #8b2252;">'Intelligence'</span>], 
+                          columns=heroes[<span style="color: #8b2252;">'Gender'</span>],
+                          margins=<span style="color: #008b8b;">True</span>,
+                          normalize=<span style="color: #8b2252;">'columns'</span>)  <span style="color: #b22222;"># </span><span style="color: #b22222;">Ogni colonna somma a 1</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Visualizzazione delle frequenze normalizzate per colonna con grafico a barre</span>
+pd.crosstab(index=heroes[<span style="color: #8b2252;">'Strength'</span>],
+           columns=[heroes[<span style="color: #8b2252;">'Gender'</span>]],
+           normalize=<span style="color: #8b2252;">'columns'</span>).plot.bar(color=[<span style="color: #8b2252;">'pink'</span>, <span style="color: #8b2252;">'blue'</span>],
+                                        stacked=<span style="color: #008b8b;">False</span>)
+plt.show()
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Creazione di un diagramma di dispersione (scatter plot)</span>
+<span style="color: #b22222;"># </span><span style="color: #b22222;">per visualizzare la relazione tra altezza e peso</span>
+heroes[heroes[<span style="color: #8b2252;">'Gender'</span>]==<span style="color: #8b2252;">'M'</span>].plot.scatter(<span style="color: #8b2252;">'Height'</span>, <span style="color: #8b2252;">'Weight'</span>)
+plt.show()
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Aggiunta di una linea di tendenza manuale</span>
+heroes[heroes[<span style="color: #8b2252;">'Gender'</span>]==<span style="color: #8b2252;">'M'</span>].plot.scatter(<span style="color: #8b2252;">'Height'</span>, <span style="color: #8b2252;">'Weight'</span>)
+<span style="color: #a0522d;">trend</span> = <span style="color: #a020f0;">lambda</span> x: -1200 + x * 7
+<span style="color: #a0522d;">x_range</span> = [170, 300]
+<span style="color: #a0522d;">line</span>, = plt.plot(x_range, <span style="color: #483d8b;">list</span>(<span style="color: #483d8b;">map</span>(trend, x_range)), color=<span style="color: #8b2252;">'black'</span>)
+line.set_dashes([3, 2])  <span style="color: #b22222;"># </span><span style="color: #b22222;">Linea tratteggiata</span>
+line.set_linewidth(2)    <span style="color: #b22222;"># </span><span style="color: #b22222;">Spessore della linea</span>
+plt.show()
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Calcolo e visualizzazione di una linea di tendenza con regressione lineare</span>
+<span style="color: #a020f0;">from</span> sklearn <span style="color: #a020f0;">import</span> linear_model
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Creazione di un modello di regressione lineare</span>
+<span style="color: #a0522d;">regr</span> = linear_model.LinearRegression()
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Preparazione dei dati (rimozione dei valori mancanti)</span>
+<span style="color: #a0522d;">heroes_with_data</span> = heroes[heroes[<span style="color: #8b2252;">'Gender'</span>]==<span style="color: #8b2252;">'M'</span>].copy().dropna()
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Definizione delle variabili X (predittore) e Y (risposta)</span>
+<span style="color: #a0522d;">X</span> = heroes_with_data.loc[:, [<span style="color: #8b2252;">'Height'</span>]]
+<span style="color: #a0522d;">Y</span> = heroes_with_data[<span style="color: #8b2252;">'Weight'</span>]
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Addestramento del modello</span>
+regr.fit(X, Y)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Visualizzazione del grafico con la linea di tendenza</span>
+heroes[heroes[<span style="color: #8b2252;">'Gender'</span>]==<span style="color: #8b2252;">'M'</span>].plot.scatter(<span style="color: #8b2252;">'Height'</span>, <span style="color: #8b2252;">'Weight'</span>)
+<span style="color: #a0522d;">line</span>, = plt.plot([0, 1000], regr.predict([[0], [1000]]), color=<span style="color: #8b2252;">'black'</span>)
+line.set_dashes([3, 2])
+line.set_linewidth(2)
+plt.show()
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -496,14 +865,14 @@ Per plottare i dataframe così ottenuti si usa <code>plot.bar(color = ['pink', '
 <div class="outline-text-3" id="text-org63ba63a">
 </div>
 <div id="outline-container-org418119f" class="outline-4">
-<h4 id="org418119f">Indici di <a id="orgaae504f">centralità</a></h4>
+<h4 id="org418119f">Indici di <a id="org1441aa0">centralità</a></h4>
 <div class="outline-text-4" id="text-org418119f">
 </div>
 <div id="outline-container-orgc0ac8a0" class="outline-5">
-<h5 id="orgc0ac8a0"><a id="org66a777b">Media</a> campionaria</h5>
+<h5 id="orgc0ac8a0"><a id="org41eda68">Media</a> campionaria</h5>
 <div class="outline-text-5" id="text-orgc0ac8a0">
 <p>
-La <a href="#org66a777b">media</a> campionaria è definita come:
+La <a href="#org41eda68">media</a> campionaria è definita come:
 </p>
 
 <p>
@@ -519,33 +888,33 @@ Ovvero è la somma di tutti i valori divisa per il numero di osservazioni.
 </p>
 
 <p>
-Dato che vanno eseguite operazioni matematiche sui valori, la <a href="#org66a777b">media</a> può essere calcolata soltanto su dati <b>quantitativi</b> o <b>qualitativi</b> a cui è associato un <b>valore numerico</b>.
+Dato che vanno eseguite operazioni matematiche sui valori, la <a href="#org41eda68">media</a> può essere calcolata soltanto su dati <b>quantitativi</b> o <b>qualitativi</b> a cui è associato un <b>valore numerico</b>.
 </p>
 
 <p>
-Dato un campione \(y = ax + b\), per \(a,b\) fissati, è facile derivare attraverso la formula che \(\bar{y} = a\bar{x}+y\), ovvero la <a href="#org66a777b">media</a> di un campione trasformato è la <a href="#org66a777b">media</a> del campione originale trasformata nello stesso modo.
+Dato un campione \(y = ax + b\), per \(a,b\) fissati, è facile derivare attraverso la formula che \(\bar{y} = a\bar{x}+y\), ovvero la <a href="#org41eda68">media</a> di un campione trasformato è la <a href="#org41eda68">media</a> del campione originale trasformata nello stesso modo.
 </p>
 
 <p>
-Se di un campione si conoscono i \(k\) distinti valori quantitativi \(v\) del campione e le relative frequenze \(f\), allora la <a href="#org66a777b">media</a> è definita come:
-\[\bar{x}=\frac{1}{n}\sum_{j=1}^{k}v_{j}f_{j}\], che è anche la <b><a href="#org66a777b">media</a> pesata</b> dei valori distinti, dove il peso di ogni valore è la sua frequenza. Questo ragionamento vale sia per le frequenze assolute che relative.
+Se di un campione si conoscono i \(k\) distinti valori quantitativi \(v\) del campione e le relative frequenze \(f\), allora la <a href="#org41eda68">media</a> è definita come:
+\[\bar{x}=\frac{1}{n}\sum_{j=1}^{k}v_{j}f_{j}\], che è anche la <b><a href="#org41eda68">media</a> pesata</b> dei valori distinti, dove il peso di ogni valore è la sua frequenza. Questo ragionamento vale sia per le frequenze assolute che relative.
 </p>
 
 <p>
-La <a href="#org66a777b">media</a> campionaria <b>non è robusta</b>, ovvero è molto sensibile a <b>outlier</b> (valori fuori scala).
+La <a href="#org41eda68">media</a> campionaria <b>non è robusta</b>, ovvero è molto sensibile a <b>outlier</b> (valori fuori scala).
 </p>
 
 <p>
-La somma di <b>tutti</b> gli scarti dei valori di un campione dalla <a href="#org66a777b">media</a> è nulla, ovvero
+La somma di <b>tutti</b> gli scarti dei valori di un campione dalla <a href="#org41eda68">media</a> è nulla, ovvero
 \[\sum_{i=1}^{n} (x_i - \bar{x}) = 0\]
 </p>
 </div>
 </div>
 <div id="outline-container-org6c4acd7" class="outline-5">
-<h5 id="org6c4acd7"><a id="orgf54db74">Mediana</a> campionaria</h5>
+<h5 id="org6c4acd7"><a id="orgfbe1075">Mediana</a> campionaria</h5>
 <div class="outline-text-5" id="text-org6c4acd7">
 <p>
-La <a href="#orgf54db74">mediana</a> campionaria è un altro indice di <a href="#orgaae504f">centralità</a>.
+La <a href="#orgfbe1075">mediana</a> campionaria è un altro indice di <a href="#org1441aa0">centralità</a>.
 </p>
 
 <p>
@@ -553,43 +922,43 @@ Per calcolarla, si ordinano i valori dell'insieme dal più piccolo al più grand
 </p>
 
 <p>
-Se il numero totale di elementi \(n\) è dispari, la <a href="#orgf54db74">mediana</a> è il valore che occupa la posizione \((n + 1)/2\). Se n è pari, invece, la <a href="#orgf54db74">mediana</a> è data dalla <a href="#org66a777b">media</a> dei due valori centrali, ovvero quelli nelle posizioni \(n/2\) e \(n/2 + 1\).
+Se il numero totale di elementi \(n\) è dispari, la <a href="#orgfbe1075">mediana</a> è il valore che occupa la posizione \((n + 1)/2\). Se n è pari, invece, la <a href="#orgfbe1075">mediana</a> è data dalla <a href="#org41eda68">media</a> dei due valori centrali, ovvero quelli nelle posizioni \(n/2\) e \(n/2 + 1\).
 </p>
 
 <p>
-A differenza della <a href="#org66a777b">media</a>, la <a href="#orgf54db74">mediana</a> può essere calcolata anche su dati <b>qualitativi</b>, purchè questi siano <b>ordinabili</b> e siano in numero <b>dispari</b>. Se fossero pari, sarebbe richiesto di fare la <a href="#org66a777b">media</a> dei due valori centrali, che è impossibile.
+A differenza della <a href="#org41eda68">media</a>, la <a href="#orgfbe1075">mediana</a> può essere calcolata anche su dati <b>qualitativi</b>, purchè questi siano <b>ordinabili</b> e siano in numero <b>dispari</b>. Se fossero pari, sarebbe richiesto di fare la <a href="#org41eda68">media</a> dei due valori centrali, che è impossibile.
 </p>
 
 <p>
-La <a href="#orgf54db74">mediana</a> è <b>robusta</b> rispetto ad eventuali outlier.
+La <a href="#orgfbe1075">mediana</a> è <b>robusta</b> rispetto ad eventuali outlier.
 </p>
 </div>
 </div>
 <div id="outline-container-orgd5248d4" class="outline-5">
-<h5 id="orgd5248d4"><a id="org7573f3d">Moda</a> campionaria</h5>
+<h5 id="orgd5248d4"><a id="org739ae05">Moda</a> campionaria</h5>
 <div class="outline-text-5" id="text-orgd5248d4">
 <p>
-La <b><a href="#org7573f3d">moda</a></b> è l'attributo che appare più spesso. Se esistono più attributi con frequenza massima, vengono chiamati <b>valori modali</b>. Può essere calcolata su qualunque tipo di dato.
+La <b><a href="#org739ae05">moda</a></b> è l'attributo che appare più spesso. Se esistono più attributi con frequenza massima, vengono chiamati <b>valori modali</b>. Può essere calcolata su qualunque tipo di dato.
 </p>
 </div>
 </div>
 </div>
 <div id="outline-container-orgd279798" class="outline-4">
-<h4 id="orgd279798">Indici di <a id="org7b6c5a7">dispersione</a></h4>
+<h4 id="orgd279798">Indici di <a id="orgc870418">dispersione</a></h4>
 <div class="outline-text-4" id="text-orgd279798">
 <p>
-Gli indici di <a href="#org7b6c5a7">dispersione</a> sono utilizzati per capire la <b>variabilità</b> o lo <b>spread</b> di un campione.
+Gli indici di <a href="#orgc870418">dispersione</a> sono utilizzati per capire la <b>variabilità</b> o lo <b>spread</b> di un campione.
 </p>
 </div>
 <div id="outline-container-org6a7ed95" class="outline-5">
-<h5 id="org6a7ed95"><a id="orgf68fe22">Varianza</a> campionaria</h5>
+<h5 id="org6a7ed95"><a id="org3dac624">Varianza</a> campionaria</h5>
 <div class="outline-text-5" id="text-org6a7ed95">
 <p>
 \[ s^2 = \frac{1}{n-1} \sum_{i=1}^{n} \left( x_i - \overline{x} \right)^2 \]
 </p>
 
 <p>
-Il concetto su cui si basa la <b><a href="#orgf68fe22">varianza</a></b> campionaria è quello di accumulare la <b>distanza</b> fra ogni osservazione e la <b><a href="#orgf54db74">mediana</a></b>.
+Il concetto su cui si basa la <b><a href="#org3dac624">varianza</a></b> campionaria è quello di accumulare la <b>distanza</b> fra ogni osservazione e la <b><a href="#orgfbe1075">mediana</a></b>.
 </p>
 
 <p>
@@ -597,7 +966,7 @@ Può essere calcolata <b>soltanto</b> su dati <b>quantitativi</b>.
 </p>
 
 <p>
-Dalla definizione si ricava che la <a href="#orgf68fe22">varianza</a> di un campione trasformato linearmente è uguale alla <a href="#orgf68fe22">varianza</a> del campione originale <b>scalata</b> per <b>il quadrato del fattore</b>, mentre è <b>insensibile alla traslazione</b>.
+Dalla definizione si ricava che la <a href="#org3dac624">varianza</a> di un campione trasformato linearmente è uguale alla <a href="#org3dac624">varianza</a> del campione originale <b>scalata</b> per <b>il quadrato del fattore</b>, mentre è <b>insensibile alla traslazione</b>.
 </p>
 </div>
 <div id="outline-container-org2dc05a8" class="outline-6">
@@ -608,7 +977,7 @@ Per ottenere la somma delle differenze, occorre assicurarsi che le distanze calc
 </p>
 
 <p>
-Infatti, le differenze per i valori superiori alla <a href="#orgf54db74">mediana</a>, se lasciate invariate, produrrebbero valori negativi che ridurrebbero l'accumulazione totale.
+Infatti, le differenze per i valori superiori alla <a href="#orgfbe1075">mediana</a>, se lasciate invariate, produrrebbero valori negativi che ridurrebbero l'accumulazione totale.
 </p>
 
 <p>
@@ -622,14 +991,14 @@ Di conseguenza, l'approccio preferito consiste nel considerare il <b>quadrato</b
 </div>
 </div>
 <div id="outline-container-org39dcb4a" class="outline-5">
-<h5 id="org39dcb4a"><a id="org78624be">Deviazione standard</a></h5>
+<h5 id="org39dcb4a"><a id="orgb177bef">Deviazione standard</a></h5>
 <div class="outline-text-5" id="text-org39dcb4a">
 <p>
-La <b><a href="#org78624be">deviazione standard</a></b> è il quadrato della <a href="#orgf68fe22">varianza</a> campionaria. È utile perchè permette di esprimere la <a href="#orgf68fe22">varianza</a> nell'unità di misura originale.
+La <b><a href="#orgb177bef">deviazione standard</a></b> è il quadrato della <a href="#org3dac624">varianza</a> campionaria. È utile perchè permette di esprimere la <a href="#org3dac624">varianza</a> nell'unità di misura originale.
 </p>
 
 <p>
-Come la <a href="#orgf68fe22">varianza</a> è insensibile alla traslazione, mentre scala come il <b>valore assoluto del fattore</b> con cui è scalato il campione. Infatti, non avrebbe senso considerare una <a href="#orgf68fe22">varianza</a> negativa.
+Come la <a href="#org3dac624">varianza</a> è insensibile alla traslazione, mentre scala come il <b>valore assoluto del fattore</b> con cui è scalato il campione. Infatti, non avrebbe senso considerare una <a href="#org3dac624">varianza</a> negativa.
 </p>
 </div>
 </div>
@@ -638,7 +1007,7 @@ Come la <a href="#orgf68fe22">varianza</a> è insensibile alla traslazione, ment
 </div>
 </div>
 <div id="outline-container-org14a9103" class="outline-4">
-<h4 id="org14a9103"><a id="org143337b">Quantili</a></h4>
+<h4 id="org14a9103"><a id="org6a03d9a">Quantili</a></h4>
 <div class="outline-text-4" id="text-org14a9103">
 <p>
 Un <b>quantile</b> di <b>livello</b> \(p \in [0,1]\) di un campione da \(n\) <b>osservazioni</b> è uno dei valori del campione tale per cui \(np\) valori del campione sono minori o uguali ad esso e \(n(1-p)\) valori ne sono invece maggiori o uguali. \(100p\) è la percentuale di valori minori o uguali a quello scelto e \(100(1-p)\) resto sono maggiori.
@@ -654,7 +1023,7 @@ Lo trovo ordinando i valori del campione e scandendo dal più piccolo. L'element
 </ul>
 
 <p>
-Di conseguenza, quando \(np\) è intero ci sono \(2\) elementi che rispettano entrambe le condizioni. Allora se ne prende la <b><a href="#org66a777b">media</a></b>.
+Di conseguenza, quando \(np\) è intero ci sono \(2\) elementi che rispettano entrambe le condizioni. Allora se ne prende la <b><a href="#org41eda68">media</a></b>.
 </p>
 
 <p>
@@ -666,29 +1035,29 @@ Quindi, quando \(np\) è razionale esiste <b>un solo</b> valore che rispetta ent
 </p>
 
 <p>
-I <a href="#org143337b">quantili</a> dove \(p\) ha al massimo due cifre decimali sono chiamati <b>percentili</b>, mentre quelli con \(p\) corrispondente ai multipli interi di \(0.25\) sono chiamati <b>quartili</b>.
+I <a href="#org6a03d9a">quantili</a> dove \(p\) ha al massimo due cifre decimali sono chiamati <b>percentili</b>, mentre quelli con \(p\) corrispondente ai multipli interi di \(0.25\) sono chiamati <b>quartili</b>.
 </p>
 </div>
 <div id="outline-container-org0403396" class="outline-5">
 <h5 id="org0403396">Box plot</h5>
 <div class="outline-text-5" id="text-org0403396">
 <p>
-Il box plot è un grafico che riassume le seguenti informazioni: <b>minimo e massimo</b> del campione come <b>estremi dei baffi</b>, <b>primo e terzo</b> quartile come <b>estremi della scatola</b> e <b><a href="#orgf54db74">mediana</a></b> (o secondo quartile) come <b>linea nella scatola</b>.
+Il box plot è un grafico che riassume le seguenti informazioni: <b>minimo e massimo</b> del campione come <b>estremi dei baffi</b>, <b>primo e terzo</b> quartile come <b>estremi della scatola</b> e <b><a href="#orgfbe1075">mediana</a></b> (o secondo quartile) come <b>linea nella scatola</b>.
 </p>
 </div>
 <div id="outline-container-org8dc1c5f" class="outline-6">
-<h6 id="org8dc1c5f"><span class="todo TODO">TODO</span> Capire cosa ha detto il professore riguardo alla relazione fra box plot e distribuzione e capire cosa c'entra la <a href="#org66a777b">media</a></h6>
+<h6 id="org8dc1c5f"><span class="todo TODO">TODO</span> Capire cosa ha detto il professore riguardo alla relazione fra box plot e distribuzione e capire cosa c'entra la <a href="#org41eda68">media</a></h6>
 </div>
 </div>
 <div id="outline-container-org5023b89" class="outline-5">
 <h5 id="org5023b89">Range inter-quartile</h5>
 <div class="outline-text-5" id="text-org5023b89">
 <p>
-Il <b>range inter-quartile</b> è un <b>indice di <a href="#org7b6c5a7">dispersione</a></b> ed è calcolato come \(Q_3 - Q_1\), ovvero l'ampiezza della fascia di valori che circonda la <a href="#orgf54db74">mediana</a> senza entrare nei quartili adiacenti. Corrisponde alla lunghezza del box nel box plot.
+Il <b>range inter-quartile</b> è un <b>indice di <a href="#orgc870418">dispersione</a></b> ed è calcolato come \(Q_3 - Q_1\), ovvero l'ampiezza della fascia di valori che circonda la <a href="#orgfbe1075">mediana</a> senza entrare nei quartili adiacenti. Corrisponde alla lunghezza del box nel box plot.
 </p>
 
 <p>
-Quanto più questo range è grande, quanto più i valori sono lontani dalla <a href="#orgf54db74">mediana</a>.
+Quanto più questo range è grande, quanto più i valori sono lontani dalla <a href="#orgfbe1075">mediana</a>.
 </p>
 </div>
 </div>
@@ -700,7 +1069,7 @@ I grafici <b>quantile-quantile</b> sono usati per confrontare le distribuzioni d
 </p>
 
 <p>
-L'idea è quella di introdurre un sistema di riferimento cartesiano sulle cui assi si trovano i corrispondenti <a href="#org143337b">quantili</a> dei due campioni e i punti si trovano in corrispondenza del valore dei due <a href="#org143337b">quantili</a>.
+L'idea è quella di introdurre un sistema di riferimento cartesiano sulle cui assi si trovano i corrispondenti <a href="#org6a03d9a">quantili</a> dei due campioni e i punti si trovano in corrispondenza del valore dei due <a href="#org6a03d9a">quantili</a>.
 </p>
 
 <p>
@@ -720,11 +1089,11 @@ Il QQ plot è uno metodo grafico e <b>qualitativo</b>, usato soltanto per refuta
 <h4 id="orgf40875c">Distribuzione normale</h4>
 <div class="outline-text-4" id="text-orgf40875c">
 <p>
-Un campione le frequenza dei valori presi in ordine cresce fino a raggiungere il picco in corrispondenza della <a href="#orgf54db74">mediana</a> e poi decresce con la stessa pendenza con cui era cresciuta viene chiamata <b>normale</b>.
+Un campione le frequenza dei valori presi in ordine cresce fino a raggiungere il picco in corrispondenza della <a href="#orgfbe1075">mediana</a> e poi decresce con la stessa pendenza con cui era cresciuta viene chiamata <b>normale</b>.
 </p>
 
 <p>
-Questi campioni seguono una <b>regola empirica</b> per la quale (dove \(\bar{x}\) è la <a href="#org66a777b">media</a> e \(s\) è la <a href="#org78624be">deviazione standard</a>:
+Questi campioni seguono una <b>regola empirica</b> per la quale (dove \(\bar{x}\) è la <a href="#org41eda68">media</a> e \(s\) è la <a href="#orgb177bef">deviazione standard</a>:
 </p>
 <ul class="org-ul">
 <li>il \(68\%\) delle osservazioni hanno valore compreso entro \(\bar{x} \pm s\)</li>
@@ -741,11 +1110,11 @@ Lo scatter plot di due osservazioni in coppia può presentare una <b>tendenza li
 </p>
 
 <p>
-Date le <b>medie campionarie</b> \(\bar x, \bar y\), consideriamo gli <b>scarti</b> fra ogni valore di un campione e la propria <a href="#org66a777b">media</a>. Quando lo scarto di un valore è <b>non negativo</b>, esso è più grande della propria <a href="#org66a777b">media</a>, ovvero \(x-\bar x \geq 0\). Quando è <b>non positivo</b>, esso è minore e quindi \(x-\bar x \leq 0\).
+Date le <b>medie campionarie</b> \(\bar x, \bar y\), consideriamo gli <b>scarti</b> fra ogni valore di un campione e la propria <a href="#org41eda68">media</a>. Quando lo scarto di un valore è <b>non negativo</b>, esso è più grande della propria <a href="#org41eda68">media</a>, ovvero \(x-\bar x \geq 0\). Quando è <b>non positivo</b>, esso è minore e quindi \(x-\bar x \leq 0\).
 </p>
 
 <p>
-Allora, data una coppia di valori \((x_i, y_i)\), se essi sono entrambi maggiori o uguali della propria <a href="#org66a777b">media</a>, oppure sono entrambi minori o uguali, il <b>prodotto degli scarti</b> sarà <b>non negativo</b>, ovvero \((x-\bar x)(y-\bar y)\geq 0\). Quando invece un elemento della coppia è piccolo, mentre l'altro è grande, il prodotto dei loro scarti sarà <b>non positivo</b>.
+Allora, data una coppia di valori \((x_i, y_i)\), se essi sono entrambi maggiori o uguali della propria <a href="#org41eda68">media</a>, oppure sono entrambi minori o uguali, il <b>prodotto degli scarti</b> sarà <b>non negativo</b>, ovvero \((x-\bar x)(y-\bar y)\geq 0\). Quando invece un elemento della coppia è piccolo, mentre l'altro è grande, il prodotto dei loro scarti sarà <b>non positivo</b>.
 </p>
 
 <p>
@@ -753,7 +1122,7 @@ Sommiamo quindi <b>tutti gli scarti</b>, ottenendo \(\sum_{i=1}^{n} (x-\bar x)(y
 </p>
 
 <p>
-\[ \text{Cov}(X, Y) = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{n-1}\]
+\[ s_{xy} = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{n-1}\]
 </p>
 
 <p>
@@ -766,7 +1135,7 @@ Dato che i valori della covarianza sono nell'intervallo \([s_xs_y]\) (non dimost
 
 <p>
 Si ottiene il <b>coefficiente di correlazione campionaria</b>
-\[r_{xy} = \frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{s_x\, s_y}\]
+\[r_{xy} = \frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{(n-1)s_x s_y}\]
 </p>
 
 <p>
@@ -1013,12 +1382,21 @@ Altri corollari sono che ogni probabilità è minore di \(1\) e che un evento so
 </p>
 
 <p>
+Per ottenere la probabilità dell'unione di più eventi, si può procedere in questo modo:
+\[P(A_1 \cup A_2 \cup ... \cup A_n) = 1 - P((A_1 \cup A_2 \cup ... \cup A_n)^c) = 1-P(A_1^cA_2^c ...A_n^c)\]
+</p>
+
+<p>
 Uno spazio è detto <b>equiprobabile</b> se ogni evento ha la stessa probabiltità di verificarsi.
 </p>
 
 <p>
 La <b>probabilità condizionata</b> di un evento \(E\) dato che l'evento \(F\) è avvenuto è indicata con \(P(E|F)\). Si parla dei casi in cui sia \(E\) che \(F\) accadono, ma restringendo lo spazio campionario ai soli casi in cui \(F\) è accaduto, quindi:
 \[P(E|F)=\frac{P(EF)}{P(F)}\]
+</p>
+
+<p>
+Registra il concetto di "come cambia la certezza conoscendo un informazione parziale sull'esito dell'esperimento casuale".
 </p>
 
 <p>
@@ -1037,7 +1415,7 @@ La formula può essere estesa ad \(n\) eventi \(F_i\) tali per cui essi sono tut
 </p>
 
 <p>
-Questa formula mi dice che \(P(E)\) è la <a href="#org66a777b">media</a> degli \(P(E|F_i)\) pesata in base ad \(F_i\).
+Questa formula mi dice che \(P(E)\) è la <a href="#org41eda68">media</a> degli \(P(E|F_i)\) pesata in base ad \(F_i\).
 </p>
 
 <p>
@@ -1057,11 +1435,116 @@ Ho un'insieme di ipotesi disgiunte \(F_i\) che unite coprono l'intero spazio del
 <p>
 Dato \(P(H|E)\), ovvero quanto è probabile l'ipotesi considerando il dato nuovo, allora la quantità \(P(E|H)\) è come chiedersi quanto il nuovo dato "predica" l'ipotesi. Se \(P(E|H)\) è molto alto, allora c'è una forte "correlazione" fra gli eventi.
 </p>
+
+<p>
+Due eventi sono detti <b>indipendenti</b> quando \(P(E|F) = P(E)\), in base alla definizione di probabilità condizionata. Questa definizione non è molto apprezzata perchè "tratta \(E\) ed \(F\) in modo diverso" (probabilmente si intende il fatto che la probabilità condizionata a sinistra non è commutativa).
+</p>
+
+<p>
+Allora sostituisco alla probabilità condizionata la sua definizione e manipolando ottengo \(P(EF) = P(E)P(F)\), ovvero la probabilità dell'intersezione fattorizza come il prodotto dei singoli eventi. Questa seconda formula è chiaramente simmetrica e anche l'indipendenza è una relazione simmetrica.
+</p>
+
+<p>
+L'indipendenza cattura il concetto che i due eventi non sono influenzati, ovvero il fatto che un evento sia accaduto non cambia la probabilità che l'altro accada. La probabilità di un evento \(E\) l'altro \(F\) è la stessa probabilità dell'evento \(E\) da solo, che è come dire che la proporzione dei casi in cui gli eventi \(E\) ed \(F\) avvengono entrambi rispetto ai casi in cui avviene \(F\) è la stessa proporzione con cui \(E\) avviene nella popolazione generale.
+</p>
+
+<p>
+Il fatto che \(F\) sia accaduto o meno non cambia l'informazione riguardo \(E\). Infatti, se provo ad incorporare un evidenza indipendente nella mia ipotesi (caso d'uso della formula di Bayes), ottengo \(P(H|E) = \frac{P(EF)}{P(E)} = \frac{P(E)P(F)}{P(E)} = P(H)\)
+</p>
+
+<pre class="example" id="orgea2e938">
+Immagina una popolazione in cui:
+la metà sono uomini, P(U)=0.5
+un decimo sono mancini, P(M)=0.1
+
+Se gli eventi sono indipendenti, allora la probabilità di trovare un mancino fra gli uomini è P(M|U) = P(M), perchè un uomo può essere mancino tanto quanto la popolazione generale.
+
+Allo stesso modo, ci si aspetta che la metà dei mancini sia uomo e quindi P(U|M)=P(U).
+
+Quindi ci sono P(U) uomini fra i P(M) mancini, quindi il 50% dei mancini, che sono il 10%, per un totale di 5%.
+
+Allo stesso modo c'è il 10% di mancini fra gli uomini, che sono il 50%, per un totale di 5%.
+
+Si può considerare che data una persona fra 100, la probabilità che sia un uomo mancino è come pescare una palla da un urna di 100, dove 50 sono uomo e 50 donna, e poi pescare una palla da un'altra urna, sempre da 100, dove 10 sono mancino e 90 no. Esistono 50×10 casi in cui la persona sia un uomo mancino e 10000 casi in totale.
+</pre>
+
+<p>
+Se \(E\) e \(F\) sono indipendenti, lo sono anche \(E\) e \(F^c\). La dimostrazione è una semplice manipolazione algebrica di \(P(E) = P(EF)+P(EF^c)\) (3 assioma) usando che \(P(EF) = P(E)P(F)\) per ipotesi.
+</p>
+
+<p>
+Se \(E\) e \(F\) sono disgiunti e le probabilità di entrambi sono maggiori di \(0\), allora non sono indipendenti. L'intuizione è che se gli eventi sono disgiunti e gli eventi sono entrambi maggiori di \(0\), allora \(F^c\) è un sovrainsieme di \(E\) e quindi \(P(E|F^c)\) è necessariamente minore di $P(E)
+</p>
+
+<p>
+Più di due eventi \(E\) &isin; \(I\) sono indipendenti gli eventi di ogni sottoinsieme di \(I\) sono indipendenti fra loro.
+</p>
+
+<p>
+<b><b>Sistemi in serie</b></b>
+</p>
+
+<ul class="org-ul">
+<li>\[ P(\text{funziona}) = P(A_1) P(A_2) \dots P(A_n) \]</li>
+
+<li>\[ P(\text{non funziona}) = 1 - P(A_1) P(A_2) \dots P(A_n) \]</li>
+</ul>
+
+<p>
+&#x2014;
+</p>
+
+<p>
+<b><b>Sistemi in parallelo</b></b>
+</p>
+
+<ul class="org-ul">
+<li>\[ P(\text{funziona}) = 1 - P(A_1^c) P(A_2^c) \dots P(A_n^c) \]</li>
+
+<li>\[ P(\text{non funziona}) = P(A_1^c) P(A_2^c) \dots P(A_n^c) \]</li>
+</ul>
+</div>
+<div id="outline-container-org9eea659" class="outline-3">
+<h3 id="org9eea659">Variabili aleatorie</h3>
+<div class="outline-text-3" id="text-org9eea659">
+<p>
+Le <b>variabili aleatorie</b> si usano per poter codificare degli esiti di un esperimento aleatorio in termini numerici, permettendo più operazioni.
+</p>
+
+<p>
+Una variabile aleatoria si "costruisce" associando ad ogni esito \(\omega \in \Omega\) un valore mediante la funzione \(X:\Omega\rightarrow\mathbb{R}\) e poi ragionando sui valori assunti dalla variabile e non più sugli esiti dell'esperimento.
+</p>
+
+<p>
+I valori assunti dalla variabile (specificazioni) sono definiti in base agli esiti dell'esperimento su cui è definita:
+\(\{ x=\alpha \} = \{\omega\in\Omega:X(\omega)=\alpha\}\)
+ovvero, la variabile assume il valore \(\alpha\) quando l'immagine dell'esito \(\omega\) èn \(\alpha\)
+</p>
+
+<p>
+Una funzione indicatrice di un evento è una funzione che restituisce \(1\) se è avvenuto l'evento e \(0\) altrimenti.
+</p>
+</div>
+<div id="outline-container-org9a7b68f" class="outline-4">
+<h4 id="org9a7b68f"><span class="todo TODO">TODO</span> fare anki</h4>
+</div>
+</div>
+<div id="outline-container-orgb05c5fa" class="outline-3">
+<h3 id="orgb05c5fa"><span class="todo TODO">TODO</span> Classificatore bayes</h3>
+</div>
+
+<div id="outline-container-org1490421" class="outline-3">
+<h3 id="org1490421"><span class="todo TODO">TODO</span> Formalizzare spazio di probabilità</h3>
+<div class="outline-text-3" id="text-org1490421">
+<p>
+Spazio di probabilità (Spazio degli eventi (Omega), Algebra, P)
+</p>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-05-02 Fri 21:38</p>
+<p class="date">Created: 2025-05-04 Sun 19:22</p>
 </div>
 </body>
 </html>
