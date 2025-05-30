@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-05-04 Sun 19:23 -->
+<!-- 2025-05-30 Fri 07:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Basi di dati</title>
@@ -69,9 +69,88 @@
 <li><a href="#orga17ab93">Domini elementari</a></li>
 </ul>
 </li>
+<li><a href="#org618fc09">Modello Entità Relazione (progettazione concettuale)</a>
+<ul>
+<li><a href="#org6747221">Costrutti di base (entità, relazioni, attributi)</a></li>
+</ul>
+</li>
+<li><a href="#org56951a6">Progettazione logica</a>
+<ul>
+<li><a href="#orgca2d74e">Ristruttazione</a></li>
+<li><a href="#orgfc04f5d">Traduzione a modello relazionale</a></li>
+<li><a href="#orge62db05"><span class="todo TODO">TODO</span> Reverse Engineering</a></li>
+</ul>
+</li>
 <li><a href="#orgc40ce0a">Progetto</a>
 <ul>
-<li><a href="#org3d3628a">Usare bootstrap con supporto SAAS per essere più figo</a></li>
+<li><a href="#org266508c">Usare bootstrap con supporto SAAS (forse)</a></li>
+<li><a href="#orgd3753a8">Presentazione</a>
+<ul>
+<li><a href="#orgc7e7fa6">La discussione serve per capire quello che c'è dietro</a>
+<ul>
+<li><a href="#orga256f47">Giustificare le scelte</a>
+<ul>
+<li><a href="#orgf20ed8d">Come scrivere un trigger in un altro modo?</a></li>
+<li><a href="#org5d6a9fd">Domande su viste</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge364219">La parte di progettazione è importante</a>
+<ul>
+<li><a href="#org9d8e77e">DDL, progettazione degli schema, integrità referenziale</a></li>
+</ul>
+</li>
+<li><a href="#orgf08af85">Specifiche</a>
+<ul>
+<li><a href="#orgbf8816e">Non è detto che il manager sia il responsabile, sono due cose diverse</a></li>
+<li><a href="#org0bc5694">Informazioni di tipo testuale suggerisce il tipo di dominio da usare</a></li>
+<li><a href="#org0a8ccfa">Il prezzo di un prodotto non dipende dal prodotto stesso, ma dal prodotto e dal negozio in cui è in vendita</a></li>
+<li><a href="#orgd1c2601">I clienti possono acquistare da negozi diversi nella stessa fattura</a></li>
+<li><a href="#orgda40b9e">Anche i fornitori forniscono prezzi diversi</a></li>
+<li><a href="#org1dbd577">Un cliente può avere o non avere una tessera. La tessera è associata ad un negozio specifico e il cliente può averne una sola.</a>
+<ul>
+<li><a href="#orgda52999">È importante tenere traccia la data e il negozio in cui è stata effettuata</a></li>
+</ul>
+</li>
+<li><a href="#org0eb19a0">Queste sono le specifiche che dobbiamo tener presente quando progettiamo lo schema concettuale e passiamo a quello logico</a></li>
+</ul>
+</li>
+<li><a href="#orgc7d5baf">2.2</a>
+<ul>
+<li><a href="#orga0b64f6">Tutto implementato con viste, viste materializzate, funzioni, trigger, procedure</a></li>
+<li><a href="#org60a3aee">Applicazione sconto</a>
+<ul>
+<li><a href="#org55353f6">Sono un cliente, faccio un acquisto, decido di usare lo sconto del 15%, mi viene proposto di applicare lo sconto</a></li>
+<li><a href="#org1e1aa51">Si può usare un solo sconto per acquisto (si può fare anche diversamente ma va motivato)</a></li>
+</ul>
+</li>
+<li><a href="#org972a1c7">Ordine prodotti da fornitore</a>
+<ul>
+<li><a href="#orgb74e63b">Mentre il cliente sceglie autonomamente il negozio da cui comprare, il fornitore di un negozio è scelto sulla base di un criterio di economicità</a></li>
+</ul>
+</li>
+<li><a href="#org9c2b875">L'elenco dei saldi punti &gt; 300 dev'essere mantenuto e non calcolato a volo</a></li>
+</ul>
+</li>
+<li><a href="#orgafdf17b">Consegna</a>
+<ul>
+<li><a href="#org0550496">Due folder, una con il dump (non in esadecimale ma in testo) e l'altro è l'insieme delle pagine pgp</a></li>
+</ul>
+</li>
+<li><a href="#org762d0bd">Struttura orale</a>
+<ul>
+<li><a href="#org7743b1c">Ci lascia 5 minuti per mostrare le funzionalità principali o pirotecniche</a></li>
+<li><a href="#orga7e0150">Ci fa domande sul codice sorgente, fa fare qualche modifica</a></li>
+<li><a href="#org98714eb">Guardiamo la progettazione e la correggiamo</a></li>
+<li><a href="#org0bfa77f">Qualche domandina su PHP</a></li>
+</ul>
+</li>
+<li><a href="#org77afa91">Pg query non va usato, ma si usa prepare and execute</a></li>
+</ul>
+</li>
+<li><a href="#org3a200d5">Tabelle derivate (trigger) o materialized view?</a></li>
+<li><a href="#orgd53ed62">PGquery non va usato, ma va usato pg<sub>prepare</sub> e pg<sub>execute</sub> (o anche pg<sub>query</sub> params)</a></li>
 </ul>
 </li>
 </ul>
@@ -425,17 +504,270 @@ Si possono usare anche costruttori di tupla, che vengono usati per racchiudere v
 </div>
 </div>
 </div>
+<div id="outline-container-org618fc09" class="outline-2">
+<h2 id="org618fc09">Modello Entità Relazione (progettazione concettuale)</h2>
+<div class="outline-text-2" id="text-org618fc09">
+</div>
+<div id="outline-container-org6747221" class="outline-3">
+<h3 id="org6747221">Costrutti di base (entità, relazioni, attributi)</h3>
+<div class="outline-text-3" id="text-org6747221">
+<p>
+Le <b>entità</b> rappresentano classi di oggetti che hanno proprietà comuni. Vengono rappresentate mediante un <b>rettangolo</b>.
+</p>
+
+<p>
+Le <b>relazioni (associazioni)</b> rappresentano legami logici significativi per la relazione di interesse. Una sua occorrenza è una ennupla contenente occorrenze delle entità coinvolte. Vengono rappresentate mediante un <b>rombo</b>.
+Possono essere ricorsive, e in tal caso se non sono simmetriche allora va indicato con un identificatore alle linee uscenti dalla relazione ricorsiva.
+Possono essere specificate delle <b>cardinalità</b> per ciascuna partecipazione di un entità ad una relazione. In generale si usano i valori 0, 1 e N. La cardinalità minima può essere 0, opzionale, o 1, obbligatoria. Quella massima può essere 1, in tal caso la relazione è come una funzione, o N, ovvero arbitraria. In base alla cardinalità massima si possono classificare le relazioni come uno-a-uno, uno-a-molti, molti-a-molti.
+</p>
+
+<p>
+Gli <b>attributi</b> descrivono proprietà elementari di attributi o relazioni. Possono essere raggrupati in attributi composti (ma non vengono usati spesso).
+Possono essere obbligatori se la loro cardinalità minima è 1, opzionali altrimenti. Quando la cardinalità massima è N, sono detti multivalore e vuol dire che ad un'occorrenza di entità possono essere associati più valori.
+</p>
+
+<p>
+Un <b>identificatore</b> è specificato per un'entità e descrive i concetti (attributi ed entità) che identificano univocamente un'occorrenza dell'entità. Quando un sottoinsieme degli attributi è identificatore, si parla di identificatori interni.
+A volte è invece necessario includere altre entità. In tal caso sono identificatori esterni e si indicano collegando l'attributo interno che fa da id con la linea che collega l'entità in questione con l'entità identificatrice.
+Gli attributi identificativi devono avere cardinalità uno-ad-uno, e le relazioni che collegano all'entità identificativa devono avere cardinalità uno-ad-uno con l'entità in questione. Se queste condizioni non avvengono, allora lo stesso attributo potrebbe riferirsi a più occorrenze e alla stessa occorrenza potrebbero essere associate più entità esterne, quindi non potrebbero essere identificatori.
+</p>
+
+<p>
+Una <b>generalizzazione</b> rappresenta legami logici fra un entità genitore e le entità figlie. L'entità genitore è una <b>generalizzazione</b> di quelle figlie e le comprende come caso particolare. Le figlie <b>specializzano</b> quella genitore ed ogni loro occorrenza è anche un occorrenza dell'entità genitore.
+Inoltre, ogni attributo dell'entità genitore lo è anche delle entità figlie.
+In generale, ogni sottoclasse <b>eredita</b> tutte le proprietà della superclasse, ovvero attributi, identificatori e relazioni.
+Se ogni occorrenza dell'entità generale lo è di almeno una delle figlie, allora la generalizzazione è <b>totale</b> ed è indicata con la freccia piena. Altrimenti esiste qualche occorrenza che non è inclusa in nessun'entità figlia e la generalizzazione è <b>parziale</b>.
+Se ogni occorrenza è occorrenza di al massimo una delle entità figlie, allora è <b>esclusiva</b>. Altrimenti esistono occorrenze che appartengono a più figlie ed è <b>sovrapposta</b>.
+Se esiste una sola entità figlia, si parla di <b>sottoinsieme</b>.
+Può esistere una serie di generalizzazioni, detta <b>gerarchia</b>.
+</p>
+
+
+<p>
+Sia cardinalità che identificatori sono vincoli di integrità su relazioni ed entità.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org56951a6" class="outline-2">
+<h2 id="org56951a6">Progettazione logica</h2>
+<div class="outline-text-2" id="text-org56951a6">
+<p>
+Una volta creato un modello ER completo, bisogna ristrutturarlo e poi tradurlo nel modello relazionale.
+</p>
+</div>
+<div id="outline-container-orgca2d74e" class="outline-3">
+<h3 id="orgca2d74e">Ristruttazione</h3>
+<div class="outline-text-3" id="text-orgca2d74e">
+<p>
+Si basano su valutazioni legate ai parametri di carico della basi di dati. Questi parametri includono:
+</p>
+<ul class="org-ul">
+<li>Volume dei dati, compreso numerosità delle occorrenze delle entità e quante di esse partecipano a relazioni</li>
+<li>Tipo di operazioni svolte più frequentemente</li>
+<li>Interattiva o batch (?)</li>
+<li>Frequenza (quante operazioni per unità di tempo)</li>
+</ul>
+
+<p>
+Le modifiche effettuate sono le tre seguenti:
+</p>
+<ul class="org-ul">
+<li>Analisi dei dati derivati (eliminazione ridondanza)</li>
+<li>Eliminazione delle gerarchie di generalizzazione</li>
+<li>Scelta degli identificatori primari</li>
+</ul>
+
+<p>
+Alcuni dati (attributi) possono essere <b>derivati</b> da altri dati già immagazzinati. In questo caso possono essere eliminati, con il vantaggio di ridurre il volume dei dati e non essere più costretti a mantenere la coerenza. Lo svantaggio è che servirà uno overhead maggiore per calcolarli. Bisogna quindi valutare il tradeoff fra il risparmio di memoria e il guadagno in efficienza nell'evitare di mantenere la coerenza rispetto all'aumento dell'overhead nel calcolare il dato ogni volta.
+</p>
+
+<p>
+Le gerarchie di generalizzazione non possono essere rappresentate direttamente dal modello relazionale e quindi vanno eliminate. Ci sono 3 opzioni:
+</p>
+<dl class="org-dl">
+<dt>mantenimento dell'entità padre</dt><dd>aggiungo l'attributo "tipo" all'entità padre, che indica a quale sottoclasse ogni occorrenza appartenga. Se la generalizzazione non è totale (ma parziale), allora può assumere valori nulli. Se le generalizzazione non è esclusiva (ma sovrapposta) allora è un attributo multivalore. Questa soluzione è sempre applicabile.
+Il vantaggio è un numero minore di accessi, ma porta ad un volume maggiore perchè ci saranno degli attributi aggiuntivi e dei valori null.</dd>
+<dt>mantenimento delle entità figlie</dt><dd>elimino l'entità padre e trasferisco tutti gli attributi e tutte le partecipazioni a relazione a ogni entità figlia. La generalizzazione dev'essere totale (altrimenti perderei le occorrenze solo in padre) e esclusiva (altrimenti avrei occorrenze identiche in posti separati).
+Il vantaggio è di evitare l'accesso all'entità generica.</dd>
+<dt>mantenimento di tutte le entità</dt><dd>introduco la relazione IS<sub>A</sub> che indica la generalizzazione. Diventa necessario che ogni occorrenza delle specializzazioni sia riflettuta nel padre, e se la generalizzazione è totale, anche il viceversa.
+Sebbene si richiedono più accessi, essi hanno meno attributi è questo permette un accesso più veloce.</dd>
+</dl>
+
+<p>
+Gli <b>attributi multivalore</b> in generale vengono "reificati" introducendo una nuova relazione con la stessa cardinalità dell'attributo in questione.
+</p>
+</div>
+</div>
+<div id="outline-container-orgfc04f5d" class="outline-3">
+<h3 id="orgfc04f5d">Traduzione a modello relazionale</h3>
+<div class="outline-text-3" id="text-orgfc04f5d">
+<p>
+Le <b>entità</b> vengono tradotte in relazioni (tabelle) la cui chiave primaria è l'identificatore interno.
+</p>
+
+<p>
+Le <b>relazioni ER N a N</b> vengono trasformate in relazioni (tabelle) la cui chiave è l'unione delle chiavi delle entità che vi partecipano. GLi attributi aggiuntivi sono gli altri attributi e possono essere inclusi nella chiave quando se si vuole rendere possibili più relazioni fra stesse occorrenze con attributi propri della relazione diversi (es. Milan-Inter 0-0, Milan-Inter 3-1)
+</p>
+
+<p>
+Le <b>relazioni ER 1 a 1</b> vengono trasformate inglobando una delle chiavi nell'altra relazione, accompagnata dagli attributi della relazione.
+</p>
+
+<p>
+Le <b>relazioni 1 a N</b> sono trasformate o inglobando nell'entità con cardinalità 1 la chiave dell'altra, oppure creando una nuova relazione che contenga entrambe le chiavi e gli attributi dell'entità con cardinalità 1. In questo caso la chiave primaria è composta solo dagli attributi dell'entità con cardinalità 1, quindi si permettono più valori dell'altra.
+</p>
+
+<p>
+<b>Relazioni n-arie</b>: si traducono come le relazioni N:M con una chiave esterna per ogni entità implicata nell’associazione.
+<b>Relazioni ricorsive</b>: si traducono come normali associazioni ma ridenominando le chiavi esterne in modo da evidenziarne il ruolo nell’associazione.
+</p>
+</div>
+</div>
+<div id="outline-container-orge62db05" class="outline-3">
+<h3 id="orge62db05"><span class="todo TODO">TODO</span> Reverse Engineering</h3>
+</div>
+</div>
 <div id="outline-container-orgc40ce0a" class="outline-2">
 <h2 id="orgc40ce0a">Progetto</h2>
 <div class="outline-text-2" id="text-orgc40ce0a">
 </div>
-<div id="outline-container-org3d3628a" class="outline-3">
-<h3 id="org3d3628a">Usare bootstrap con supporto SAAS per essere più figo</h3>
+<div id="outline-container-org266508c" class="outline-3">
+<h3 id="org266508c">Usare bootstrap con supporto SAAS (forse)</h3>
+</div>
+<div id="outline-container-orgd3753a8" class="outline-3">
+<h3 id="orgd3753a8">Presentazione</h3>
+<div class="outline-text-3" id="text-orgd3753a8">
+</div>
+<div id="outline-container-orgc7e7fa6" class="outline-4">
+<h4 id="orgc7e7fa6">La discussione serve per capire quello che c'è dietro</h4>
+<div class="outline-text-4" id="text-orgc7e7fa6">
+</div>
+<div id="outline-container-orga256f47" class="outline-5">
+<h5 id="orga256f47">Giustificare le scelte</h5>
+<div class="outline-text-5" id="text-orga256f47">
+</div>
+<div id="outline-container-orgf20ed8d" class="outline-6">
+<h6 id="orgf20ed8d">Come scrivere un trigger in un altro modo?</h6>
+</div>
+<div id="outline-container-org5d6a9fd" class="outline-6">
+<h6 id="org5d6a9fd">Domande su viste</h6>
+</div>
+</div>
+</div>
+<div id="outline-container-orge364219" class="outline-4">
+<h4 id="orge364219">La parte di progettazione è importante</h4>
+<div class="outline-text-4" id="text-orge364219">
+</div>
+<div id="outline-container-org9d8e77e" class="outline-5">
+<h5 id="org9d8e77e">DDL, progettazione degli schema, integrità referenziale</h5>
+</div>
+</div>
+<div id="outline-container-orgf08af85" class="outline-4">
+<h4 id="orgf08af85">Specifiche</h4>
+<div class="outline-text-4" id="text-orgf08af85">
+</div>
+<div id="outline-container-orgbf8816e" class="outline-5">
+<h5 id="orgbf8816e">Non è detto che il manager sia il responsabile, sono due cose diverse</h5>
+</div>
+<div id="outline-container-org0bc5694" class="outline-5">
+<h5 id="org0bc5694">Informazioni di tipo testuale suggerisce il tipo di dominio da usare</h5>
+</div>
+<div id="outline-container-org0a8ccfa" class="outline-5">
+<h5 id="org0a8ccfa">Il prezzo di un prodotto non dipende dal prodotto stesso, ma dal prodotto e dal negozio in cui è in vendita</h5>
+</div>
+<div id="outline-container-orgd1c2601" class="outline-5">
+<h5 id="orgd1c2601">I clienti possono acquistare da negozi diversi nella stessa fattura</h5>
+</div>
+<div id="outline-container-orgda40b9e" class="outline-5">
+<h5 id="orgda40b9e">Anche i fornitori forniscono prezzi diversi</h5>
+</div>
+<div id="outline-container-org1dbd577" class="outline-5">
+<h5 id="org1dbd577">Un cliente può avere o non avere una tessera. La tessera è associata ad un negozio specifico e il cliente può averne una sola.</h5>
+<div class="outline-text-5" id="text-org1dbd577">
+</div>
+<div id="outline-container-orgda52999" class="outline-6">
+<h6 id="orgda52999">È importante tenere traccia la data e il negozio in cui è stata effettuata</h6>
+</div>
+</div>
+<div id="outline-container-org0eb19a0" class="outline-5">
+<h5 id="org0eb19a0">Queste sono le specifiche che dobbiamo tener presente quando progettiamo lo schema concettuale e passiamo a quello logico</h5>
+</div>
+</div>
+<div id="outline-container-orgc7d5baf" class="outline-4">
+<h4 id="orgc7d5baf">2.2</h4>
+<div class="outline-text-4" id="text-orgc7d5baf">
+</div>
+<div id="outline-container-orga0b64f6" class="outline-5">
+<h5 id="orga0b64f6">Tutto implementato con viste, viste materializzate, funzioni, trigger, procedure</h5>
+</div>
+<div id="outline-container-org60a3aee" class="outline-5">
+<h5 id="org60a3aee">Applicazione sconto</h5>
+<div class="outline-text-5" id="text-org60a3aee">
+</div>
+<div id="outline-container-org55353f6" class="outline-6">
+<h6 id="org55353f6">Sono un cliente, faccio un acquisto, decido di usare lo sconto del 15%, mi viene proposto di applicare lo sconto</h6>
+</div>
+<div id="outline-container-org1e1aa51" class="outline-6">
+<h6 id="org1e1aa51">Si può usare un solo sconto per acquisto (si può fare anche diversamente ma va motivato)</h6>
+</div>
+</div>
+<div id="outline-container-org972a1c7" class="outline-5">
+<h5 id="org972a1c7">Ordine prodotti da fornitore</h5>
+<div class="outline-text-5" id="text-org972a1c7">
+</div>
+<div id="outline-container-orgb74e63b" class="outline-6">
+<h6 id="orgb74e63b">Mentre il cliente sceglie autonomamente il negozio da cui comprare, il fornitore di un negozio è scelto sulla base di un criterio di economicità</h6>
+</div>
+</div>
+<div id="outline-container-org9c2b875" class="outline-5">
+<h5 id="org9c2b875">L'elenco dei saldi punti &gt; 300 dev'essere mantenuto e non calcolato a volo</h5>
+</div>
+</div>
+<div id="outline-container-orgafdf17b" class="outline-4">
+<h4 id="orgafdf17b">Consegna</h4>
+<div class="outline-text-4" id="text-orgafdf17b">
+</div>
+<div id="outline-container-org0550496" class="outline-5">
+<h5 id="org0550496">Due folder, una con il dump (non in esadecimale ma in testo) e l'altro è l'insieme delle pagine pgp</h5>
+</div>
+</div>
+<div id="outline-container-org762d0bd" class="outline-4">
+<h4 id="org762d0bd">Struttura orale</h4>
+<div class="outline-text-4" id="text-org762d0bd">
+</div>
+<div id="outline-container-org7743b1c" class="outline-5">
+<h5 id="org7743b1c">Ci lascia 5 minuti per mostrare le funzionalità principali o pirotecniche</h5>
+</div>
+<div id="outline-container-orga7e0150" class="outline-5">
+<h5 id="orga7e0150">Ci fa domande sul codice sorgente, fa fare qualche modifica</h5>
+</div>
+<div id="outline-container-org98714eb" class="outline-5">
+<h5 id="org98714eb">Guardiamo la progettazione e la correggiamo</h5>
+</div>
+<div id="outline-container-org0bfa77f" class="outline-5">
+<h5 id="org0bfa77f">Qualche domandina su PHP</h5>
+</div>
+</div>
+<div id="outline-container-org77afa91" class="outline-4">
+<h4 id="org77afa91">Pg query non va usato, ma si usa prepare and execute</h4>
+</div>
+</div>
+<div id="outline-container-org3a200d5" class="outline-3">
+<h3 id="org3a200d5">Tabelle derivate (trigger) o materialized view?</h3>
+<div class="outline-text-3" id="text-org3a200d5">
+<p>
+Materialized view, ma le tabelle derivate mostrano che si sa come funziona. Comunque bisogna sapere come fare con le tabelle derivate. (Domanda classica)
+</p>
+</div>
+</div>
+<div id="outline-container-orgd53ed62" class="outline-3">
+<h3 id="orgd53ed62">PGquery non va usato, ma va usato pg<sub>prepare</sub> e pg<sub>execute</sub> (o anche pg<sub>query</sub> params)</h3>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-05-04 Sun 19:23</p>
+<p class="date">Created: 2025-05-30 Fri 07:58</p>
 </div>
 </body>
 </html>

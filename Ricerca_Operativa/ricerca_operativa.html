@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-05-02 Fri 21:38 -->
+<!-- 2025-05-30 Fri 07:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ricerca operativa</title>
@@ -88,7 +88,7 @@
 <ul>
 <li><a href="#org8b9b50b">Trasformazione da problema continuo a discreto</a></li>
 <li><a href="#org82b080a"><span class="todo TODO">TODO</span> Località (controllare vercellis)</a></li>
-<li><a href="#orgf0e9620">Degenerazione</a></li>
+<li><a href="#orgc401958">Degenerazione</a></li>
 </ul>
 </li>
 </ul>
@@ -112,7 +112,7 @@
 <ul>
 <li><a href="#org5bf005e"><span class="todo TODO">TODO</span> Soluzioni ottime multiple (89 hillier)</a></li>
 <li><a href="#org52a7c08">Funzione obiettivo illimitata</a></li>
-<li><a href="#orgc401958"><span class="todo TODO">TODO</span> Degenerazione</a></li>
+<li><a href="#orga129fd0"><span class="todo TODO">TODO</span> Degenerazione</a></li>
 </ul>
 </li>
 </ul>
@@ -139,6 +139,10 @@
 <li><a href="#orge73b309">Percorso di studio per espandere a partire da questo corso ed arrivare a concetti come Computational Social Science, Algorithmic Game Theory</a></li>
 </ul>
 </li>
+<li><a href="#orgc128764">Puzzle logici</a></li>
+<li><a href="#org53247a3">Esercizio bonus</a></li>
+<li><a href="#org4e5a82a">Domande</a></li>
+<li><a href="#org63d30ad">AI</a></li>
 </ul>
 </div>
 </div>
@@ -431,9 +435,9 @@ Il problema di trovare l'ottimalità globale si trasforma nel trovare l'ottimali
 </p>
 </div>
 </div>
-<div id="outline-container-orgf0e9620" class="outline-6">
-<h6 id="orgf0e9620">Degenerazione</h6>
-<div class="outline-text-6" id="text-orgf0e9620">
+<div id="outline-container-orgc401958" class="outline-6">
+<h6 id="orgc401958">Degenerazione</h6>
+<div class="outline-text-6" id="text-orgc401958">
 <p>
 Quando una delle variabili <b>non</b> in base risulta uguale a 0, si ha degenerazione, ovvero più di \(n\) vincoli coincidono in quel punto
 </p>
@@ -536,11 +540,20 @@ Notare che la funzione obiettivo è composta da due addendi:
 </ul>
 
 <p>
-\(r_D\) è chiamato <b>vettore dei <a id="orge1e4037">coefficienti di costo ridotto</a></b> ed è usato per effettuare il <b>test di ottimalità</b>. Infatti, se ogni sua componente è non-positiva, allora non c'è modo di incrementare una variabile fuori base per ottenere un aumento della funzione obiettivo.
+\(r_D\) è chiamato <b>vettore dei <a id="orgb831e0d">coefficienti di costo ridotto</a></b>. Misura il costo opportunità legato all'uso della risorsa associata, ovvero quanto costa (in positivo o in negativo) tale scelta di variabili rispetto ad un'altra scelta in cui la variabile fosse usata di più o di meno.
 </p>
 
 <p>
-Generalizzando il vettore dei <a href="#orge1e4037">coefficienti di costo ridotto</a> per tutte le variabili, ovvero \[c^T - c_B^T B^{-1}A\], e considerando soltanto le sue componenti di base, si ottiene \[c_B^T - c_B^T B^{-1}B=0\], ovvero non è possibile ottenere un incremento della funzione obiettivo aumentando le variabili basiche che si trovano già al vertice. (?)
+È composto dalla prima parte che indica il ricavo marginale di un aumento unitario della variabile e la seconda parte che indica la riduzione del ricavo mediante i costi ombra delle risorse utilizzate. Se aumentare la produzione comporta una spesa per le risorse maggiore al ricavo, allora il guadagno è negativo. Queste informazioni sono tutte incorporate nei costi ridotti. I costi ombra sono utili alla fine per l'analisi parametrica [todo]
+</p>
+
+
+<p>
+È usato per effettuare il <b>test di ottimalità</b>. Infatti, se ogni sua componente è non-positiva, allora non c'è modo di incrementare una variabile fuori base per ottenere un aumento della funzione obiettivo.
+</p>
+
+<p>
+Generalizzando il vettore dei <a href="#orgb831e0d">coefficienti di costo ridotto</a> per tutte le variabili, ovvero \[c^T - c_B^T B^{-1}A\], e considerando soltanto le sue componenti di base, si ottiene \[c_B^T - c_B^T B^{-1}B=0\], ovvero non è possibile ottenere un incremento della funzione obiettivo aumentando le variabili basiche che si trovano già al vertice. (?)
 </p>
 
 <p>
@@ -607,7 +620,7 @@ La seconda e terza colonna indicano rispettivamente l'impatto delle variabili fu
 <div id="outline-container-org503dd3f" class="outline-5">
 <h5 id="org503dd3f">Pseudocodice</h5>
 <div class="outline-text-5" id="text-org503dd3f">
-<pre class="example" id="org45e4fd4">
+<pre class="example" id="org2ed87c5">
 while (¬Infeasible(b, c)) ∧ (¬FeasibleBase(b)) do
     Pivot(A, b, c)
 if Infeasible(b, c) then
@@ -729,7 +742,7 @@ L'obiettivo è spostarsi lungo lo spigolo che conduce al vertice con il maggiore
 </p>
 
 <p>
-Per capirlo, basta guardare i <a href="#orge1e4037">coefficienti di costo ridotto</a> e aumentare la variabile associata al coefficiente maggiore, che sarà quindi <i>entrante</i>.
+Per capirlo, basta guardare i <a href="#orgb831e0d">coefficienti di costo ridotto</a> e aumentare la variabile associata al coefficiente maggiore, che sarà quindi <i>entrante</i>.
 </p>
 
 <p>
@@ -773,7 +786,7 @@ Nel momento della scelta dello spigolo lungo cui muoversi, si sceglie quello ass
 </p>
 
 <p>
-I tassi di miglioramento sono rappresentati dai <a href="#orge1e4037">coefficienti di costo ridotto</a>.
+I tassi di miglioramento sono rappresentati dai <a href="#orgb831e0d">coefficienti di costo ridotto</a>.
 </p>
 
 <p>
@@ -810,8 +823,8 @@ Vedi fine sezione iterazione
 </p>
 </div>
 </div>
-<div id="outline-container-orgc401958" class="outline-5">
-<h5 id="orgc401958"><span class="todo TODO">TODO</span> Degenerazione</h5>
+<div id="outline-container-orga129fd0" class="outline-5">
+<h5 id="orga129fd0"><span class="todo TODO">TODO</span> Degenerazione</h5>
 </div>
 </div>
 </div>
@@ -855,9 +868,652 @@ Vedi fine sezione iterazione
 <h3 id="orge73b309">Percorso di studio per espandere a partire da questo corso ed arrivare a concetti come Computational Social Science, Algorithmic Game Theory</h3>
 </div>
 </div>
+<div id="outline-container-orgc128764" class="outline-2">
+<h2 id="orgc128764">Puzzle logici</h2>
+<div class="outline-text-2" id="text-orgc128764">
+<pre class="example" id="org88494c0">
+# Tackling Self-Referential Logic Puzzles in Operations Research
+
+Before diving into techniques for solving your self-referential logic puzzle, it's worth noting that this type of problem presents a fascinating intersection between mathematical logic, constraint programming, and operations research. These puzzles often require systematic approaches rather than trial and error.
+
+## Understanding the Puzzle Structure
+
+Your puzzle belongs to a class of self-referential logic puzzles where statements make claims about the truth values of other statements. This creates a complex web of interdependencies that can be formalized mathematically[1][7].
+
+The key characteristics of your puzzle include:
+- Each statement can be either true or false
+- Statements refer to the truth values of other statements
+- There is an unknown value N that needs to be determined
+- The solution must satisfy all logical constraints simultaneously
+
+## Mathematical Modeling Approaches
+
+### Constraint Satisfaction Problem (CSP) Formulation
+
+One powerful approach is to model this as a constraint satisfaction problem:
+
+1. **Define Variables**: For each sentence i, create a binary variable S_i where:
+   - S_i = 1 if statement i is true
+   - S_i = 0 if statement i is false
+   
+2. **Translate Statements to Constraints**: Each statement can be converted into mathematical constraints[7][17].
+
+For example, statement 3 ("There are three consecutive false sentences") could be expressed as:
+```
+∃i such that (1-S_i)*(1-S_{i+1})*(1-S_{i+2}) = 1
+```
+
+### Integer Linear Programming (ILP) Approach
+
+You can reformulate this problem as an integer programming model:
+
+1. **Define Binary Variables**: Same as in the CSP approach
+   
+2. **Express Logical Relations**: Convert logical statements into linear constraints[5]
+
+For instance, the constraint "at least one of the two last sentences is true" can be expressed as:
+```
+S_9 + S_10 ≥ 1
+```
+
+3. **Solve Using ILP Solver**: Once all constraints are formulated, the problem can be solved using standard ILP solvers[4][5].
+
+## Practical Techniques
+
+### Matrix-Based Approach
+
+For certain logic puzzles, researchers have found that using a matrix representation can help track logical implications:
+
+1. Create a grid where rows and columns represent possible values
+2. Mark cells as true, false, or unknown
+3. Use elimination and logical inference to reduce possibilities[12]
+
+This approach is commonly used in puzzles like the Einstein riddle (also known as the Zebra puzzle)[3][15].
+
+### Inference Chains
+
+Building inference chains is another powerful technique:
+1. Start with the most restrictive statements
+2. Derive implications
+3. Use these to make deductions about other statements[2]
+
+This approach is demonstrated in research on inference-based constraint satisfaction for explanation in logic puzzles[2].
+
+## Programming Implementation Examples
+
+### Prolog Implementation
+
+Constraint Logic Programming is particularly well-suited to these types of puzzles:
+
+```prolog
+:- use_module(library(clpfd)).
+
+solve(N, TrueStatements) :-
+    % Create variables for each statement
+    length(Statements, 10),
+    Statements ins 0..1,
+    
+    % Implement constraints for each statement
+    % ...
+    
+    % Find solution
+    label(Statements).
+```
+
+Bennycheung's blog provides excellent examples of implementing constraint logic programming for puzzles[10].
+
+### Integer Programming Example
+
+The Sudoku example provides a template for formulating logic puzzles as integer programs:
+
+```
+min 0
+s.t.
+  constraints representing logical relations
+  binary variables for truth values
+```
+
+This approach has been successfully used for a variety of puzzles[5][16].
+
+## References for Further Study
+
+1. **Academic Papers**:
+   - "Mathematical Definition and Systematization of Puzzle Rules" discusses formal frameworks for puzzle rules[1]
+   - "Inference-Based Constraint Satisfaction Supports Explanation" shows how inference can be used for logic puzzles[2]
+
+2. **Books and Tutorials**:
+   - "Solving Puzzles using Constraint Logic Programming in Prolog" provides practical examples[10]
+   - "Operations Research, Sudoko, Rogo, and Puzzles" explores the connection between OR and puzzles[16]
+
+3. **Online Resources**:
+   - OR Stack Exchange has discussions on solving logic puzzles through optimization[17]
+   - Tutorials on modeling logic puzzles as constraint satisfaction problems[12]
+
+## Suggested Approach for Your Puzzle
+
+1. Formalize each statement mathematically
+2. Set up a system of constraints based on these statements
+3. Consider the special constraints related to N
+4. Use either CSP or ILP techniques to solve the system
+5. Verify your solution by checking each original statement
+
+Remember that systematic logical reasoning combined with mathematical formalization is more effective than trial and error for complex puzzles like yours.
+
+Good luck with your puzzle!
+
+Citations:
+[1] https://arxiv.org/abs/2501.01433
+[2] https://aaai.org/Papers/AAAI/1996/AAAI96-048.pdf
+[3] https://blog.adamfurmanek.pl/2016/02/20/ilp-part-27/index.html
+[4] https://www.semanticscholar.org/paper/ccd7e210b4c3324c8143a1204353180568832436
+[5] https://langvillea.people.charleston.edu/Sudoku/sudoku2.pdf
+[6] https://www.semanticscholar.org/paper/ff5ed12d085bac8d8874ff1fc966ea33e72808e4
+[7] https://en.wikipedia.org/wiki/Constraint_satisfaction_problem
+[8] https://www.semanticscholar.org/paper/e00603a3579ce4fe50d058c8033173ec1266ac09
+[9] https://arxiv.org/abs/2502.20238
+[10] https://bennycheung.github.io/solving-puzzles-using-clp
+[11] https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10081044/
+[12] https://mpopov.com/tutorials/logic-puzzle-ompr/
+[13] https://www.semanticscholar.org/paper/1cc5d7fd98d0a93a90248e6bf6086e8fc3afacb2
+[14] https://fileadmin.cs.lth.se/ai/Proceedings/aaai07/22/AAAI07-361.pdf
+[15] https://arxiv.org/abs/2407.03956
+[16] https://mat.tepper.cmu.edu/blog/index.php/2010/12/07/operations-research-sudoko-rogo-and-puzzles/
+[17] https://or.stackexchange.com/questions/7496/solving-logic-puzzles-through-optimization
+[18] https://pubsonline.informs.org/doi/pdf/10.1287/ited.7.2.160
+[19] https://engineering.lehigh.edu/news/article/larry-snyder-publishes-book-puzzles
+[20] https://giorgionardone.com/en/strategic-logic-and-problem-solving/
+[21] https://www.semanticscholar.org/paper/dc5daabc50ed241e371da65e7396b0b6dff95bbf
+[22] https://www.semanticscholar.org/paper/e2ac050c92a81368891fb67b8adfe641935271c2
+[23] https://www.semanticscholar.org/paper/41669bc5abd53c24d88ea682f1e240638db2669c
+[24] https://pubmed.ncbi.nlm.nih.gov/36006535/
+[25] https://de.mathworks.com/help/optim/ug/solve-sudoku-puzzles-via-integer-programming-solver-based.html
+[26] https://rbcborealis.com/research-blogs/tutorial-10-sat-solvers-ii-algorithms/
+[27] https://www.mindlabpro.com/blogs/nootropics/einsteins-riddle
+[28] https://blogs.sas.com/content/operations/2017/02/24/solving-kakuro-puzzles-with-sasor/
+[29] https://fileadmin.cs.lth.se/ai/Proceedings/aaai07/22/AAAI07-361.pdf
+[30] https://langvillea.people.charleston.edu/Sudoku/sudoku2.pdf
+[31] https://cse.iitkgp.ac.in/~sourangshu/coursefiles/ComputingLab21A/Computing%20Lab%20-%201%20(2021)%20Tutorial%20on%20SAT%20Solvers.pdf
+[32] https://en.wikipedia.org/wiki/Zebra_Puzzle
+[33] https://arxiv.org/abs/1304.1628
+[34] https://www.mathworks.com/help/optim/ug/sudoku-puzzles-problem-based.html
+[35] https://avigad.github.io/lamr/using_sat_solvers.html
+[36] https://artificialcognition.github.io/who-owns-the-zebra
+[37] https://arxiv.org/abs/2006.06343
+[38] https://or.stackexchange.com/questions/8228/common-problems-puzzles-that-can-creatively-be-solved-with-linear-programming
+[39] https://www.semanticscholar.org/paper/0f92a7777d01c057ca8debd21c2abe9a555631b7
+[40] https://www.semanticscholar.org/paper/cb9551ffe94024ec3a7d67373061048cf72ec4a4
+[41] https://www.semanticscholar.org/paper/ab1feb1144e1ebea216c1209f756835a74352efc
+[42] https://www.semanticscholar.org/paper/777baa5b67aabf166de297277599a10de135c7c2
+[43] https://cs.uwaterloo.ca/~cbright/reports/sat-maple.pdf
+[44] https://web.stanford.edu/~jduchi/projects/crossword_writeup.pdf
+[45] https://citeseerx.ist.psu.edu/document?repid=rep1&amp;type=pdf&amp;doi=1df5f2be84521b8caeb820ea04eceb7fbb028bec
+[46] https://www.scribd.com/document/210850347/Modelling-Logical-Puzzles-From-Raymond-Smullyan-Using-Integer-Programming
+[47] http://lcs.ios.ac.cn/~caisw/Talks/CaiSATtutorial-Indian6.pdf
+[48] https://dcyoung.github.io/images/constraint-satisfaction-problems/csp-wordpuzzles.pdf
+[49] https://www.youtube.com/watch?v=84amHOgCEe8
+[50] https://or.stackexchange.com/questions/7496/solving-logic-puzzles-through-optimization
+[51] https://matheo.uliege.be/bitstream/2268.2/17699/5/TFE.pdf
+[52] https://elearning.di.unipi.it/mod/resource/view.php?id=3383
+[53] http://www.mat.unimi.it/users/djcollins/math340/Lecture33.pdf
+[54] http://www.cs.unibo.it/~gabbri/MaterialeCorsi/CP@CS-final.pdf
+[55] https://www.semanticscholar.org/paper/78dcaa5d34e6c68df8d19484c743470674ef4f80
+[56] https://arxiv.org/abs/1806.04325
+[57] https://www.semanticscholar.org/paper/711a265556ea430826c0045bbd546c81d6b7fe07
+[58] https://www.semanticscholar.org/paper/ed1a1c698706f2fdfb2dc4f1b2965fef50a54068
+[59] https://aixia.it/wp-content/uploads/2018/12/ConstraintProgramming-28-34.pdf
+[60] https://ijcai-15.org/downloads/tutorials/T10-ConstraintLogicProgramming.pdf
+[61] https://www.cs.ru.nl/bachelors-theses/2022/Laura_Kolijn___1025724___Generating_and_Solving_Skyscrapers_Puzzles_Using_a_SAT_Solver.pdf
+[62] https://www.palermo.edu/ingenieria/Cica2009/Papers/64.pdf
+
+---
+Answer from Perplexity: pplx.ai/share
+</pre>
+</div>
+</div>
+<div id="outline-container-org53247a3" class="outline-2">
+<h2 id="org53247a3">Esercizio bonus</h2>
+<div class="outline-text-2" id="text-org53247a3">
+<p>
+Posso associare ad ogni affermazione \(i\) una variabile binaria \(x_i\) e scrivere ogni affermazione come una combinazione lineare di tali variabili.
+</p>
+
+<ol class="org-ol">
+<li>Almeno una delle ultime due dichiarazioni è vera.
+\[x_1 = 1 \rightarrow x_9 + x_{10} \geq 1\]
+\[x_1 = 0 \rightarrow x_9 + x_{10} \leq 0\]
+Voglio che il primo vincolo sia attivo solo quando \(x_1 = 1\), ovvero \(x_9 + x_{10} \geq x_1\).
+Invece il secondo valga solo quando \(x_1 = 0\) e si disattivi altrimenti, ovvero \(x_9+x_{10} \leq 2 x_1\).
+Logicamente falsa per la seconda.</li>
+<li>Questa è o la prima dichiarazione vera, o la prima dichiarazione falsa.
+Se la frase è vera, allora la prima è falsa.
+Se la frase è falsa, allora vuol dire che <b>non</b> è nè la prima vera, nè la prima falsa. Il fatto che non sia la prima dichiarazione vera consegue dal fatto che non sia vera. Se non è la prima falsa, allora vuol dire che prima di essa ce n'è un'altra falsa. Quindi la prima è falsa. In ogni caso la prima è falsa.</li>
+<li>Ci sono tre dichiarazioni false consecutive.
+Siano \(y_i\) con \(i=1...8\) le variabili che indicano che la sequenza \(x_i, x_{i+1}, x_{i+2} \leq 0\), ovvero che una certa sequenza di tre dichiarazioni sia negativa.
+Per fare in modo che \(y_i\) abbia questa specificazione serve che \(y_i \geq 1 - (x_{i+1}+x_{i+2}+x_{i+3})\).
+Allora \(\sum_{i=1}^8 y_i \geq x_3\) impone che ciò accada almeno una volta se la dichiarazione è vera e si disattiva quando è falsa, mentre \(\sum_{i=1}^8 y_i \leq 8 x_3\) impone che ciò non accada se la dichiarazione è vera e si disattiva quando il vincolo è 1 (perchè la somma è sempre limitata da \(8\)).</li>
+<li><p>
+La differenza tra il numero d’ordine dell’ultima dichiarazione vera e il numero d’ordine della prima dichiarazione vera è un fattore di \(N\).
+Se \(d\) è quella differenza, allora \(dk=N\) per un qualunque \(k\) intero.
+Per trovare la differenza mi servono le affermazioni prima e ultima fra quelle vere.
+Sia \(f_i = 1\) se la dichiarazione \(i\) è vera e \(0\) altrimenti.
+Allora ogni \(f_i\) deve rispettare i seguenti vincoli:
+</p>
+<ul class="org-ul">
+<li>\(f_i \leq x_i\), perchè non può essere vera se la rispettiva dichiarazione non lo è</li>
+<li>\(\sum_{i=0}^10 f_i = 1\)</li>
+<li>\(f_i \leq 1-f_j, \quad \forall j<i\)</li>
+</ul>
+
+<p>
+Per l'ultima vale lo stesso ma in senso opposto.
+</p>
+
+<p>
+Ho ottenuto la differenza ma non è possibile usare il modulo della divisione di \(N\), perchè sarebbe non lineare.
+</p>
+
+<p>
+Allora creo delle variabili aggiuntive \(d_j\) che sono \(1\) quando \(\sum_{i=1}^{10} l_i i - \sum_{i=1}^{10} f_i i = i\)
+</p>
+
+<p>
+Queste variabili devono sommare tutte insieme a \(1\), e il valore che selezionano dev'essere uguale alla differenza, ovvero \(\sum_{i=1}^{10} l_i i - \sum_{i=1}^{10} f_i i = \sum_{j=1}^{9} j d_j\)
+</p>
+
+<p>
+A questo punto, per ogni valore di \(j\), introduco una variabile non-negativa e non vincolata \(k_j\) con il vincolo che se \(y_j = 1\), allora \(N=j\cdot k_j\), mentre se \(y_j = 0\), il vincolo di disattiva. Ovvero \(j\cdot k_j - M(1-y_j) \leq N \leq j\cdot k_j + M(1-y_j)\).
+</p>
+
+<p>
+Infine, voglio che questo vincolo su \(N\) si attivi soltanto quando questa dichiarazione è vera, quindi ottengo \(j\cdot k_j - M(1-y_j) - M'(1-x_4) \leq N \leq j\cdot k_j + M(1-y_j)+ M'(1-x_4)\).
+</p>
+
+<p>
+Potrei infine introdurre un vincolo che impedisca ad \(N\) di essere uguale ad un multiplo della distanza, ma data la bassa probabilità, evito e al massimo rieseguo il solutore escludendo manualmente quella soluzione.
+</p></li>
+<li>La somma dei numeri delle dichiarazioni vere è \(N\).</li>
+<li>Questa non è l’ultima dichiarazione vera.
+Allora o una delle successive è vera, o sono tutte false.
+\(\sum_{i=7}^10 \geq x_6\) e \(\sum_{i=7}^10 \leq 4 x_6\).</li>
+<li>Il numero d’ordine di ogni dichiarazione vera è un fattore di \(N\).</li>
+<li>N è uguale alla percentuale delle dichiarazioni vere.</li>
+<li>Il numero dei diversi fattori di N (non necessariamente primi, ma diversi da 1 e N) è maggiore della somma dei numeri d’ordine delle dichiarazioni vere.</li>
+<li>Non ci sono tre dichiarazioni consecutive vere.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org4e5a82a" class="outline-2">
+<h2 id="org4e5a82a">Domande</h2>
+<div class="outline-text-2" id="text-org4e5a82a">
+<p>
+Perchè vogliamo variabili non negative, e quindi sostituiamo le variabili libere con differenze fra variabili, perchè la minimizzazione vuole vincoli maggiori uguali e viceversa?
+</p>
+</div>
+</div>
+<div id="outline-container-org63d30ad" class="outline-2">
+<h2 id="org63d30ad">AI</h2>
+<div class="outline-text-2" id="text-org63d30ad">
+<p>
+I'll help you reason through your integer programming model with precise mathematical formulation. Let's analyze the first sentence.
+</p>
+
+<p>
+## First Sentence Analysis
+The sentence states: "At least one of the two last sentences is wrong."
+</p>
+
+<p>
+You've modeled this using the following constraints:
+\[x_9 + x_{10} \geq x_1\]
+\[x_9 + x_{10} \leq 2x_1\]
+</p>
+
+<p>
+Let me analyze this formulation:
+</p>
+
+<p>
+### Interpretation
+</p>
+<ul class="org-ul">
+<li>\(x_1 = 1\) if sentence 1 is true, \(x_1 = 0\) if false</li>
+<li>\(x_9, x_{10}\) are binary variables for sentences 9 and 10 (1 = true, 0 = false)</li>
+</ul>
+
+<p>
+### Issue with Current Formulation
+Your current constraints don't correctly capture the sentence's meaning. Let's see why:
+</p>
+
+<p>
+If sentence 1 is true (\(x_1 = 1\)), then at least one of sentences 9 and 10 must be false. This means \(x_9 + x_{10} \leq 1\).
+</p>
+
+<p>
+If sentence 1 is false (\(x_1 = 0\)), then both sentences 9 and 10 must be true, so \(x_9 = x_{10} = 1\).
+</p>
+
+<p>
+### Correct Formulation
+The constraints should be:
+\[x_9 + x_{10} \leq 1 + (1-x_1)\]
+\[x_9 + x_{10} \geq 2(1-x_1)\]
+</p>
+
+<p>
+Which can be simplified to:
+\[x_9 + x_{10} \leq 2 - x_1\]
+\[x_9 + x_{10} \geq 2 - 2x_1\]
+</p>
+
+<p>
+Would you like to continue with the remaining sentences, or should we discuss this formulation further?
+</p>
+
+<p>
+Let's analyze the second sentence: "This is the first true sentence, or the first wrong sentence."
+</p>
+
+<p>
+Your model: \(x_1 + x_2 \leq 1\)
+</p>
+
+<p>
+I believe your constraint is incomplete for this logical statement. The sentence claims that sentence 2 is either:
+</p>
+<ol class="org-ol">
+<li>The first true sentence (meaning \(x_1 = 0\) and \(x_2 = 1\)), or</li>
+<li>The first wrong/false sentence (meaning \(x_1 = 1\) and \(x_2 = 0\))</li>
+</ol>
+
+<p>
+This is an exclusive OR (XOR) relationship between \(x_1\) and \(x_2\). Your constraint \(x_1 + x_2 \leq 1\) ensures that at most one of the sentences is true, but it doesn't ensure that at least one of them is true.
+</p>
+
+<p>
+For a proper XOR relationship, the complete constraint should be:
+\(x_1 + x_2 = 1\)
+</p>
+
+<p>
+This can be expressed as two constraints:
+</p>
+<ul class="org-ul">
+<li>\(x_1 + x_2 \leq 1\) (at most one is true)</li>
+<li>\(x_1 + x_2 \geq 1\) (at least one is true)</li>
+</ul>
+
+<p>
+Would you like to adjust your model with this additional constraint?
+</p>
+
+<p>
+I notice there seems to be some metadata accidentally included in your message. Let me focus on what appears to be your third sentence for the integer programming model:
+</p>
+
+<p>
+<b><b>Sentence 3</b></b>: "There are three consecutive false sentences."
+</p>
+
+<p>
+This is an interesting constraint that requires us to model the existence of three consecutive false sentences somewhere in the sequence. Let me formalize this:
+</p>
+
+<p>
+For this sentence to be true (\(x_3 = 1\)), we need to ensure that there exist three consecutive sentences that are all false. For this sentence to be false (\(x_3 = 0\)), there should be no such consecutive triplet.
+</p>
+
+<p>
+To model this mathematically, we need auxiliary variables:
+</p>
+<ul class="org-ul">
+<li>Let \(y_i\) be 1 if sentences \(i\), \(i+1\), and \(i+2\) are all false, and 0 otherwise</li>
+<li>We need these variables for \(i \in \{1, 2, ..., 8\}\) (since we can't go beyond sentence 10)</li>
+</ul>
+
+<p>
+For each \(i\), we need:
+\(y_i \leq 1-x_i\)
+\(y_i \leq 1-x_{i+1}\)
+\(y_i \leq 1-x_{i+2}\)
+\(y_i \geq (1-x_i) + (1-x_{i+1}) + (1-x_{i+2}) - 2\)
+</p>
+
+<p>
+Then the relationship with \(x_3\) is:
+\(\sum_{i=1}^8 y_i \geq x_3\)
+\(\sum_{i=1}^8 y_i \leq M \cdot x_3\) (where \(M\) is a sufficiently large number, e.g., 8)
+</p>
+
+<p>
+These constraints ensure that \(x_3 = 1\) if and only if there are three consecutive false sentences somewhere in the sequence.
+</p>
+
+<p>
+Would you like me to explain any part of this formulation further?
+</p>
+
+<p>
+Thank you for sharing the fourth sentence and your approach. The problem is indeed challenging!
+</p>
+
+<p>
+<b><b>Sentence 4</b></b>: "The difference between the number of the last true declaration and of the first true declaration is a factor of N."
+</p>
+
+<p>
+You're right about the two main challenges:
+</p>
+<ol class="org-ol">
+<li>The division \(N/d = w\) creates a non-linear constraint</li>
+<li>Determining the first and last true declarations requires careful modeling</li>
+</ol>
+
+<p>
+Here's a direction you might consider:
+</p>
+
+<ol class="org-ol">
+<li>Create binary variables to identify the first and last true declarations:
+<ul class="org-ul">
+<li>Let \(f_i = 1\) if sentence \(i\) is the first true sentence (and 0 otherwise)</li>
+<li>Let \(l_i = 1\) if sentence \(i\) is the last true sentence (and 0 otherwise)</li>
+</ul></li>
+
+<li>Add constraints to ensure proper definition of \(f_i\):
+<ul class="org-ul">
+<li>\(f_i \leq x_i\) (first true must be true)</li>
+<li>\(f_i \leq 1 - x_j\) for all \(j < i\) (all earlier sentences must be false)</li>
+<li>Plus constraints ensuring exactly one \(f_i\) equals 1 (if any sentence is true)</li>
+</ul></li>
+
+<li>Similarly, define constraints for \(l_i\):
+<ul class="org-ul">
+<li>\(l_i \leq x_i\) (last true must be true)</li>
+<li>\(l_i \leq 1 - x_j\) for all \(j > i\) (all later sentences must be false)</li>
+<li>Plus constraints ensuring exactly one \(l_i\) equals 1 (if any sentence is true)</li>
+</ul></li>
+
+<li>Calculate the difference:
+<ul class="org-ul">
+<li>\(d = \sum_{i=1}^{10} i \cdot l_i - \sum_{i=1}^{10} i \cdot f_i\)</li>
+</ul></li>
+
+<li>For the "factor of N" relationship, since we have only 10 sentences, the maximum difference is 9. You could use a discrete approach:
+<ul class="org-ul">
+<li>Create binary variables \(y_d\) for each possible difference value \(d \in \{1,2,...,9\}\)</li>
+<li>Ensure only one \(y_d = 1\)</li>
+<li>Add constraints: if \(y_d = 1\), then \(N \bmod d = 0\)</li>
+</ul></li>
+</ol>
+
+<p>
+This avoids non-linearity by considering all possible values of \(d\) explicitly.
+</p>
+
+<p>
+Let's start fresh with this sentence:
+</p>
+
+<p>
+<b><b>Sentence 4</b></b>: "The difference between the number of the last true declaration and of the first true declaration is a factor of N."
+</p>
+
+<p>
+To model this properly in integer programming:
+</p>
+
+<ol class="org-ol">
+<li>First, create binary variables to identify the first and last true declarations:
+<ul class="org-ul">
+<li>Let \(f_i = 1\) if sentence \(i\) is the first true sentence, 0 otherwise (for \(i = 1,2,...,10\))</li>
+<li>Let \(l_i = 1\) if sentence \(i\) is the last true sentence, 0 otherwise (for \(i = 1,2,...,10\))</li>
+</ul></li>
+
+<li><p>
+Define constraints to ensure \(f_i\) and \(l_i\) work correctly:
+</p>
+<ul class="org-ul">
+<li>\(f_i \leq x_i\) (first true must be true)</li>
+<li>\(f_i \leq 1 - x_j\) for all \(j < i\) (all earlier must be false)</li>
+<li>\(\sum_{i=1}^{10} f_i = \min(1, \sum_{i=1}^{10} x_i)\) (exactly one first if any are true)</li>
+</ul>
+
+<p>
+Similarly for \(l_i\):
+</p>
+<ul class="org-ul">
+<li>\(l_i \leq x_i\) (last true must be true)</li>
+<li>\(l_i \leq 1 - x_j\) for all \(j > i\) (all later must be false)</li>
+<li>\(\sum_{i=1}^{10} l_i = \min(1, \sum_{i=1}^{10} x_i)\) (exactly one last if any are true)</li>
+</ul></li>
+
+<li>Calculate the difference:
+<ul class="org-ul">
+<li>\(d = \sum_{i=1}^{10} i \cdot l_i - \sum_{i=1}^{10} i \cdot f_i\)</li>
+</ul></li>
+
+<li>For the "factor of N" relationship in MATHPROG, since modulo can't be used directly in constraints, you can:
+<ul class="org-ul">
+<li>Introduce integer variable \(k\) representing the multiplier</li>
+<li>Add the constraint: \(d \cdot k = N\)</li>
+<li>This enforces that \(d\) is a factor of \(N\) without using modulo</li>
+</ul></li>
+
+<li>To ensure sentence 4 is correctly modeled:
+<ul class="org-ul">
+<li>If \(x_4 = 1\) (sentence is true), the constraints enforce that \(d\) is a factor of \(N\)</li>
+<li>If \(x_4 = 0\) (sentence is false), we need to break this relationship</li>
+</ul></li>
+</ol>
+
+<p>
+For \(x_4 = 0\) case, you can use a big-M approach:
+</p>
+<ul class="org-ul">
+<li>\(d \cdot k \leq N + M \cdot (1-x_4)\)</li>
+<li>\(d \cdot k \geq N - M \cdot (1-x_4)\)</li>
+</ul>
+
+<p>
+Where \(M\) is a sufficiently large constant. When \(x_4 = 0\), these constraints become inactive.
+</p>
+
+<p>
+Does this approach make sense for your MATHPROG model?
+</p>
+
+<p>
+You're absolutely correct - I made an error in my suggestion. The constraint \(d \cdot k = N\) is indeed non-linear because it involves multiplication of two variables (\(d\) and \(k\)). This would make the model non-linear, which standard linear integer programming solvers like GLPSOL cannot handle directly.
+</p>
+
+<p>
+Let me correct my approach:
+</p>
+
+<p>
+Since you have at most 10 sentences, the difference \(d\) can only take values from the set \(\{0,1,2,...,9\}\). We can use this finite set of possibilities to create a linear formulation:
+</p>
+
+<ol class="org-ol">
+<li>Create binary variables \(y_j\) for each possible difference value \(j \in \{1,2,...,9\}\)
+<ul class="org-ul">
+<li>\(y_j = 1\) if the difference equals \(j\), otherwise \(y_j = 0\)</li>
+</ul></li>
+
+<li>Ensure that the calculated difference matches the selected \(y_j\):
+<ul class="org-ul">
+<li>\(\sum_{i=1}^{10} i \cdot l_i - \sum_{i=1}^{10} i \cdot f_i = \sum_{j=1}^{9} j \cdot y_j\)</li>
+</ul></li>
+</ol>
+
+
+
+<ol class="org-ol">
+<li>Ensure exactly one \(y_j\) is selected when there is at least one true statement:
+<ul class="org-ul">
+<li>\(\sum_{j=1}^{9} y_j = \min(1, \sum_{i=1}^{10} x_i)\)</li>
+</ul></li>
+
+<li>For each possible value of \(j\), introduce integer variables \(k_j\) and constraints:
+<ul class="org-ul">
+<li>If \(y_j = 1\), then \(N = j \cdot k_j\) (using big-M constraints)</li>
+<li>If \(y_j = 0\), then \(k_j = 0\)</li>
+</ul></li>
+
+<li>Finally, connect this to \(x_4\) (the truth of sentence 4):
+<ul class="org-ul">
+<li>If \(x_4 = 1\), the factor relationship must hold</li>
+<li>If \(x_4 = 0\), the factor relationship must be broken</li>
+</ul></li>
+</ol>
+
+<p>
+This approach avoids the non-linear multiplication while capturing the logic of the sentence.
+</p>
+
+<p>
+Let me focus on the logical formulation for sentence 3: "Ci sono tre dichiarazioni false consecutive."
+</p>
+
+<p>
+Your approach using auxiliary variables \(y_i\) is logical, but there's a critical component missing:
+</p>
+
+<p>
+You need to define the relationship between each \(y_i\) and the corresponding \(x\) variables. Currently, you've defined what \(y_i\) should represent (three consecutive false statements), but haven't established the mathematical constraints that enforce this definition.
+</p>
+
+<p>
+To properly link \(y_i\) to the original variables:
+</p>
+
+<p>
+\(y_i = 1\) if and only if \((x_i = 0 \text{ AND } x_{i+1} = 0 \text{ AND } x_{i+2} = 0)\)
+</p>
+
+<p>
+This can be expressed with these linear constraints:
+</p>
+<ul class="org-ul">
+<li>\(y_i \leq 1 - x_i\) (if \(x_i = 1\), then \(y_i\) must be 0)</li>
+<li>\(y_i \leq 1 - x_{i+1}\) (if \(x_{i+1} = 1\), then \(y_i\) must be 0)</li>
+<li>\(y_i \leq 1 - x_{i+2}\) (if \(x_{i+2} = 1\), then \(y_i\) must be 0)</li>
+<li>\(y_i \geq 1 - (x_i + x_{i+1} + x_{i+2})\) (if all three are 0, then \(y_i\) must be 1)</li>
+</ul>
+
+<p>
+With these linking constraints added, your formulation for sentence 3 will be correct:
+</p>
+<ul class="org-ul">
+<li>\(\sum_{i=1}^8 y_i \geq x_3\) ensures there's at least one sequence of three consecutive false statements when statement 3 is true</li>
+<li>\(\sum_{i=1}^8 y_i \leq 8 \cdot x_3\) ensures there are no such sequences when statement 3 is false</li>
+</ul>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-05-02 Fri 21:38</p>
+<p class="date">Created: 2025-05-30 Fri 07:58</p>
 </div>
 </body>
 </html>

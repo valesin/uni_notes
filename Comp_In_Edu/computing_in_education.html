@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-05-02 Fri 21:38 -->
+<!-- 2025-05-30 Fri 07:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Computing in Education</title>
@@ -73,27 +73,91 @@
 </li>
 </ul>
 </li>
-<li><a href="#org4878c0b">Points of project</a>
+<li><a href="#org77e3956">Project</a>
 <ul>
-<li><a href="#orgc3880dc">Keeping concepts simple by creating a discrete latex with easy way to rotate (no degrees involved) as that's not the goal and it would add useless friction. We want to concentrare only on the computational thinking aspect</a></li>
-<li><a href="#orgdc82dad">gear-level understanding: the core is not the window of the game but the whole program including the code. the student is suggested to take a look at the code to understand what ahppens. It is not required a full understanding, but it is made possible for them to grasp the basics of the functioning of the program, while allowing them a easy interface to take part in the computation (using the same tools as the programmer of the activity, as the student writes real code)</a></li>
-<li><a href="#orgcbaccf1">Importance of exploration and thinkin out of the box. a particularly creative student that, even not knowing programming, recognizes names</a>
+<li><a href="#org00bc39a">Description</a>
 <ul>
-<li><a href="#org3a88f9f">opn this account, it is important to give a good introductiuon to the activity. the student must understand that the code that is powering the movement of the kangaroo in the maze, is the same code that the student is writing and so he has full power on everything that happens, as long as they understand what is the right command</a>
+<li><a href="#org3dd72ac">The concept behind my activity stems from an didactic workshop for secundary low grade schools (middle school) developed by https://aladdin.di.unimi.it/activities.html at my uni</a>
 <ul>
-<li><a href="#org6203277">about the structue, it is an idea to let the students experiment at first. playing "by the rules". They will just move the kangaroo in an easy way. During the activity, some hints will be dropped. How to use a cicle with "range", how to use "random" to automatize the solution by bruteforcing and the last level of this would be to explain to them how to change the very fundamentals of the program, for example the walls. By understanding the rules behind the code, they gained total power on the game</a></li>
+<li><a href="#org62bdcf9">The activity consists of programming a "kangaroo" to get out of a maze by using programmatic steps.</a></li>
+<li><a href="#org12fe414">The original activiuty was made in MAZE language but I used python, preferring an approach that more closely resembles real-life code</a></li>
+<li><a href="#orgf19bc82">I also simplified the structure of the mazes, building discrete lattices instead of continuos mazes. This way, a turn can only be of 90 degrees</a></li>
+</ul>
+</li>
+<li><a href="#orgc3880dc">Keeping concepts simple by creating a discrete latex with easy way to rotate (no degrees involved) as that's not the goal and it would add useless friction. We want to concentrare only on the computational thinking aspect</a>
+<ul>
+<li><a href="#org0bead1b">The fact that every command relates to the kangaroo allows body-syntonic learning as theorized by papert for his programming language LOGO.</a></li>
+</ul>
+</li>
+<li><a href="#orge8beaf9">J Wing position is that CT is composed of abstraction and automation</a>
+<ul>
+<li><a href="#org11c8846">She thinks that „CT is a method of solving a problem that focuses on its description, analysis and finding an effective solution, with an emphasis on systematicity and the use of concepts known in the field of computer science.</a></li>
+<li><a href="#org94421e1">This workshop starts from the description and builds on basic commands to understand how to solve sistematically mazes. In the last stages, i.e. the highest goals in the learning outcomes, the students will be able to understand the abstraction and go over it by changing the mazes themselves2</a></li>
+</ul>
+</li>
+<li><a href="#orge4501b1">To the larners it should be made clear that the code they are running is the same as the one that powers the simulation. They should be given access to the original code, in order to copy parts and recognise useful bits</a>
+<ul>
+<li><a href="#org03d971d">gear-level understanding: the core is not the window of the game but the whole program including the code. the student is suggested to take a look at the code to understand what ahppens. It is not required a full understanding, but it is made possible for them to grasp the basics of the functioning of the program, while allowing them a easy interface to take part in the computation (using the same tools as the programmer of the activity, as the student writes real code).</a>
+<ul>
+<li><a href="#orgf36ae51">Learners should be exposed to the whole code of the simulation and not just the code in the interface of the game. In that way, even not knowing programming, they can recognise patterns and gain insights that can help them</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orga46a264">Ideas for future evolutions of the game</a>
+</ul>
+</li>
+<li><a href="#org2e736ba">Target,duration and learning outcomes</a>
+<ul>
+<li><a href="#org90f3453">This activity is towards ISCED 2 Lower Secondary School. Students should be aware of informatic competence such as algorithms, modeling and programming</a></li>
+<li><a href="#org18d7e03">The time of one session of this activity is one hour. Several sessions should be `ade and i forecast that three sessions, 3 hours in total, would get student to reach the highest level of the learning outcome</a></li>
+<li><a href="#org1e87f21">The workshop is separated in several layers, and the learning outcomes based on CSF (add something relating to it) that reflect the degree of understanding of the code and of CT concepts.</a>
+<ul>
+<li><a href="#org06927e3">This idea is based on Eshet Cognitive Skills Mastery Matrix from Are Computational Thinking Skills Measurable? An Analysis Loice Victorine Atienoa , Richard Kwabena Akrofi Baafib ,Turcsanyi-Szabo Marta</a></li>
+<li><a href="#org34dff95">The first level is understanding the code and how it works: you can move and you can rotate and based on this you can slowly get to the end. It is possible to run the code several times, and it is possible to program every single step to be taken</a>
+<ul>
+<li><a href="#orgd26898a">This takes half of the first session</a></li>
+</ul>
+</li>
+<li><a href="#org16166f3">A second level is to apply and analyze. By abstracting (WHO) and analyzing a student can apply the understanding they had before to new mazes (that can be generated by a teacher or use the prebuilt). When a student reaches the skill to solve the prebuilt mazes and some created ones, then he has reached this level</a>
+<ul>
+<li><a href="#org8c856ac">This is in the rest of the first session, and spans along the second session</a></li>
+</ul>
+</li>
+<li><a href="#orgfca2973">A third level is the level of creation and evaluation. A student understands alone if a solution is feasible, he does not need to run it to guess if it is gonig to work (except for some advanced ones), he understands solutions that take advantage of coding (using loops) (what can be "effectively" automated) fundamental question of computer science, sentence by Denning in 1989. The student is also able to interact with the code in an indipendent and creative manner</a>
+<ul>
+<li><a href="#org4ad474a">what do we mean by interact creatively? in a later stage, maybe second session of the workshop, students should be made aware that code they are running is the same that powers the maze. they are acting on the code itself. this means that they are able to change the code of the maze itself. They should be given access to the code that powers the simulations and they can look in the code for pattern recognition (an important concept in CT) and recognize names. They should be exposed to the different level of abstraction and shown that if you find a way, you can interact with the simulation itself (moving the kangaroo, changing the walls, changing the end square) examples will be given before the end of the workshop so that students will be free to experiment, challenging their assimilated knolwedge and incorportating some new knolwedge about computer systems</a></li>
+<li><a href="#orge2718cb">this is reached after 3 hours, in the third session</a></li>
+</ul>
+</li>
+<li><a href="#org2d8abb1">Increasing Complexity: Gradually introduce maze complexity and programming constructs to maintain engagement and support differentiated learning, avoiding cognitive overload</a></li>
+</ul>
+</li>
+<li><a href="#org19ff6f8">The presence of a teacher who understands how the code works, even if they're not programmer themselves, is crucial</a>
+<ul>
+<li><a href="#org31edc71">In Vygotsky’s Zone of Proximal Development (ZPD), the goal is that even students that start from the stage where they need assistance, they will eventually move to the stage of being able to carry out the activity alone</a></li>
+</ul>
+</li>
+<li><a href="#org2b1b8e3">The social aspect is crucial: As constructionism says, A child's cognitive development and learning ability can be guided and mediated by their social interactions. Learning is a crucially social process as opposed to an independent journey of discovery.</a>
+<ul>
+<li><a href="#org75c9888">This activity is wide: several solutions are possible and sharing them is reccomended and useful. One learner coming up with an idea and sharing it early would completely change the course of the activity</a></li>
+<li><a href="#org93a00df">As the paper by TURCSANI says:</a></li>
+<li><a href="#org0007a8c">Focus should be given that solution are not necessarily good or bad but they tackle the problem in different ways</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org165f4dd">*Ways the workshop could be expanded</a>
 <ul>
 <li><a href="#org5045e1f">Attributing a score based on the number of steps of the kangaroo and the number of lines of code (create a simple formula to show in the presentation), to let understand the student that elegant and efficient solutions that reuse code are the best</a></li>
 <li><a href="#orgcd635aa">allowing multiplayer on the same maze, introducing ways for students to collaborate (invent examples that would allow students to have to cooperate for the good of both of them) (check link with papert constructionism and how knowledge is built by building but also by sharing)</a></li>
+<li><a href="#org19be7da">Attribute a score based on the number of steps and lines of code (e.g., score = steps + 2 * lines<sub>of</sub><sub>code</sub>), teaching students the value of elegant, efficient solutions.</a></li>
+<li><a href="#orgcd525e3">Collaborative Learning: Design multiplayer challenges where students must coordinate commands or share code segments, fostering social CT skills.</a></li>
 </ul>
 </li>
+<li><a href="#org3aee290">Improvements</a></li>
 </ul>
 </li>
+<li><a href="#orgf1eaa14">About the corse</a></li>
 </ul>
 </div>
 </div>
@@ -253,32 +317,145 @@ Question for next time: what should kid be able to understand and know about com
 </div>
 </div>
 </div>
-<div id="outline-container-org4878c0b" class="outline-2">
-<h2 id="org4878c0b">Points of project</h2>
-<div class="outline-text-2" id="text-org4878c0b">
+<div id="outline-container-org77e3956" class="outline-2">
+<h2 id="org77e3956">Project</h2>
+<div class="outline-text-2" id="text-org77e3956">
 </div>
-<div id="outline-container-orgc3880dc" class="outline-3">
-<h3 id="orgc3880dc">Keeping concepts simple by creating a discrete latex with easy way to rotate (no degrees involved) as that's not the goal and it would add useless friction. We want to concentrare only on the computational thinking aspect</h3>
+<div id="outline-container-org00bc39a" class="outline-3">
+<h3 id="org00bc39a">Description</h3>
+<div class="outline-text-3" id="text-org00bc39a">
 </div>
-<div id="outline-container-orgdc82dad" class="outline-3">
-<h3 id="orgdc82dad">gear-level understanding: the core is not the window of the game but the whole program including the code. the student is suggested to take a look at the code to understand what ahppens. It is not required a full understanding, but it is made possible for them to grasp the basics of the functioning of the program, while allowing them a easy interface to take part in the computation (using the same tools as the programmer of the activity, as the student writes real code)</h3>
+<div id="outline-container-org3dd72ac" class="outline-4">
+<h4 id="org3dd72ac">The concept behind my activity stems from an didactic workshop for secundary low grade schools (middle school) developed by <a href="https://aladdin.di.unimi.it/activities.html">https://aladdin.di.unimi.it/activities.html</a> at my uni</h4>
+<div class="outline-text-4" id="text-org3dd72ac">
 </div>
-<div id="outline-container-orgcbaccf1" class="outline-3">
-<h3 id="orgcbaccf1">Importance of exploration and thinkin out of the box. a particularly creative student that, even not knowing programming, recognizes names</h3>
-<div class="outline-text-3" id="text-orgcbaccf1">
+<div id="outline-container-org62bdcf9" class="outline-5">
+<h5 id="org62bdcf9">The activity consists of programming a "kangaroo" to get out of a maze by using programmatic steps.</h5>
 </div>
-<div id="outline-container-org3a88f9f" class="outline-4">
-<h4 id="org3a88f9f">opn this account, it is important to give a good introductiuon to the activity. the student must understand that the code that is powering the movement of the kangaroo in the maze, is the same code that the student is writing and so he has full power on everything that happens, as long as they understand what is the right command</h4>
-<div class="outline-text-4" id="text-org3a88f9f">
+<div id="outline-container-org12fe414" class="outline-5">
+<h5 id="org12fe414">The original activiuty was made in MAZE language but I used python, preferring an approach that more closely resembles real-life code</h5>
 </div>
-<div id="outline-container-org6203277" class="outline-5">
-<h5 id="org6203277">about the structue, it is an idea to let the students experiment at first. playing "by the rules". They will just move the kangaroo in an easy way. During the activity, some hints will be dropped. How to use a cicle with "range", how to use "random" to automatize the solution by bruteforcing and the last level of this would be to explain to them how to change the very fundamentals of the program, for example the walls. By understanding the rules behind the code, they gained total power on the game</h5>
-</div>
+<div id="outline-container-orgf19bc82" class="outline-5">
+<h5 id="orgf19bc82">I also simplified the structure of the mazes, building discrete lattices instead of continuos mazes. This way, a turn can only be of 90 degrees</h5>
 </div>
 </div>
-<div id="outline-container-orga46a264" class="outline-3">
-<h3 id="orga46a264">Ideas for future evolutions of the game</h3>
-<div class="outline-text-3" id="text-orga46a264">
+<div id="outline-container-orgc3880dc" class="outline-4">
+<h4 id="orgc3880dc">Keeping concepts simple by creating a discrete latex with easy way to rotate (no degrees involved) as that's not the goal and it would add useless friction. We want to concentrare only on the computational thinking aspect</h4>
+<div class="outline-text-4" id="text-orgc3880dc">
+</div>
+<div id="outline-container-org0bead1b" class="outline-5">
+<h5 id="org0bead1b">The fact that every command relates to the kangaroo allows body-syntonic learning as theorized by papert for his programming language LOGO.</h5>
+</div>
+</div>
+<div id="outline-container-orge8beaf9" class="outline-4">
+<h4 id="orge8beaf9">J Wing position is that CT is composed of abstraction and automation</h4>
+<div class="outline-text-4" id="text-orge8beaf9">
+</div>
+<div id="outline-container-org11c8846" class="outline-5">
+<h5 id="org11c8846">She thinks that „CT is a method of solving a problem that focuses on its description, analysis and finding an effective solution, with an emphasis on systematicity and the use of concepts known in the field of computer science.</h5>
+</div>
+<div id="outline-container-org94421e1" class="outline-5">
+<h5 id="org94421e1">This workshop starts from the description and builds on basic commands to understand how to solve sistematically mazes. In the last stages, i.e. the highest goals in the learning outcomes, the students will be able to understand the abstraction and go over it by changing the mazes themselves2</h5>
+</div>
+</div>
+<div id="outline-container-orge4501b1" class="outline-4">
+<h4 id="orge4501b1">To the larners it should be made clear that the code they are running is the same as the one that powers the simulation. They should be given access to the original code, in order to copy parts and recognise useful bits</h4>
+<div class="outline-text-4" id="text-orge4501b1">
+</div>
+<div id="outline-container-org03d971d" class="outline-5">
+<h5 id="org03d971d">gear-level understanding: the core is not the window of the game but the whole program including the code. the student is suggested to take a look at the code to understand what ahppens. It is not required a full understanding, but it is made possible for them to grasp the basics of the functioning of the program, while allowing them a easy interface to take part in the computation (using the same tools as the programmer of the activity, as the student writes real code).</h5>
+<div class="outline-text-5" id="text-org03d971d">
+</div>
+<div id="outline-container-orgf36ae51" class="outline-6">
+<h6 id="orgf36ae51">Learners should be exposed to the whole code of the simulation and not just the code in the interface of the game. In that way, even not knowing programming, they can recognise patterns and gain insights that can help them</h6>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org2e736ba" class="outline-3">
+<h3 id="org2e736ba">Target,duration and learning outcomes</h3>
+<div class="outline-text-3" id="text-org2e736ba">
+</div>
+<div id="outline-container-org90f3453" class="outline-4">
+<h4 id="org90f3453">This activity is towards ISCED 2 Lower Secondary School. Students should be aware of informatic competence such as algorithms, modeling and programming</h4>
+</div>
+<div id="outline-container-org18d7e03" class="outline-4">
+<h4 id="org18d7e03">The time of one session of this activity is one hour. Several sessions should be `ade and i forecast that three sessions, 3 hours in total, would get student to reach the highest level of the learning outcome</h4>
+</div>
+<div id="outline-container-org1e87f21" class="outline-4">
+<h4 id="org1e87f21">The workshop is separated in several layers, and the learning outcomes based on CSF (add something relating to it) that reflect the degree of understanding of the code and of CT concepts.</h4>
+<div class="outline-text-4" id="text-org1e87f21">
+</div>
+<div id="outline-container-org06927e3" class="outline-5">
+<h5 id="org06927e3">This idea is based on Eshet Cognitive Skills Mastery Matrix from Are Computational Thinking Skills Measurable? An Analysis Loice Victorine Atienoa , Richard Kwabena Akrofi Baafib ,Turcsanyi-Szabo Marta</h5>
+</div>
+<div id="outline-container-org34dff95" class="outline-5">
+<h5 id="org34dff95">The first level is understanding the code and how it works: you can move and you can rotate and based on this you can slowly get to the end. It is possible to run the code several times, and it is possible to program every single step to be taken</h5>
+<div class="outline-text-5" id="text-org34dff95">
+</div>
+<div id="outline-container-orgd26898a" class="outline-6">
+<h6 id="orgd26898a">This takes half of the first session</h6>
+</div>
+</div>
+<div id="outline-container-org16166f3" class="outline-5">
+<h5 id="org16166f3">A second level is to apply and analyze. By abstracting (WHO) and analyzing a student can apply the understanding they had before to new mazes (that can be generated by a teacher or use the prebuilt). When a student reaches the skill to solve the prebuilt mazes and some created ones, then he has reached this level</h5>
+<div class="outline-text-5" id="text-org16166f3">
+</div>
+<div id="outline-container-org8c856ac" class="outline-6">
+<h6 id="org8c856ac">This is in the rest of the first session, and spans along the second session</h6>
+</div>
+</div>
+<div id="outline-container-orgfca2973" class="outline-5">
+<h5 id="orgfca2973">A third level is the level of creation and evaluation. A student understands alone if a solution is feasible, he does not need to run it to guess if it is gonig to work (except for some advanced ones), he understands solutions that take advantage of coding (using loops) (what can be "effectively" automated) fundamental question of computer science, sentence by Denning in 1989. The student is also able to interact with the code in an indipendent and creative manner</h5>
+<div class="outline-text-5" id="text-orgfca2973">
+</div>
+<div id="outline-container-org4ad474a" class="outline-6">
+<h6 id="org4ad474a">what do we mean by interact creatively? in a later stage, maybe second session of the workshop, students should be made aware that code they are running is the same that powers the maze. they are acting on the code itself. this means that they are able to change the code of the maze itself. They should be given access to the code that powers the simulations and they can look in the code for pattern recognition (an important concept in CT) and recognize names. They should be exposed to the different level of abstraction and shown that if you find a way, you can interact with the simulation itself (moving the kangaroo, changing the walls, changing the end square) examples will be given before the end of the workshop so that students will be free to experiment, challenging their assimilated knolwedge and incorportating some new knolwedge about computer systems</h6>
+</div>
+<div id="outline-container-orge2718cb" class="outline-6">
+<h6 id="orge2718cb">this is reached after 3 hours, in the third session</h6>
+</div>
+</div>
+<div id="outline-container-org2d8abb1" class="outline-5">
+<h5 id="org2d8abb1">Increasing Complexity: Gradually introduce maze complexity and programming constructs to maintain engagement and support differentiated learning, avoiding cognitive overload</h5>
+</div>
+</div>
+<div id="outline-container-org19ff6f8" class="outline-4">
+<h4 id="org19ff6f8">The presence of a teacher who understands how the code works, even if they're not programmer themselves, is crucial</h4>
+<div class="outline-text-4" id="text-org19ff6f8">
+</div>
+<div id="outline-container-org31edc71" class="outline-5">
+<h5 id="org31edc71">In Vygotsky’s Zone of Proximal Development (ZPD), the goal is that even students that start from the stage where they need assistance, they will eventually move to the stage of being able to carry out the activity alone</h5>
+</div>
+</div>
+<div id="outline-container-org2b1b8e3" class="outline-4">
+<h4 id="org2b1b8e3">The social aspect is crucial: As constructionism says, A child's cognitive development and learning ability can be guided and mediated by their social interactions. Learning is a crucially social process as opposed to an independent journey of discovery.</h4>
+<div class="outline-text-4" id="text-org2b1b8e3">
+</div>
+<div id="outline-container-org75c9888" class="outline-5">
+<h5 id="org75c9888">This activity is wide: several solutions are possible and sharing them is reccomended and useful. One learner coming up with an idea and sharing it early would completely change the course of the activity</h5>
+</div>
+<div id="outline-container-org93a00df" class="outline-5">
+<h5 id="org93a00df">As the paper by TURCSANI says:</h5>
+<div class="outline-text-5" id="text-org93a00df">
+<p>
+One of the non-technical skills enhanced by CT is connecting and expressing. De-
+veloping projects using Scratch is further facilitated by sharing [7]. The learners de-
+veloped collaboration skills by participating in group projects; presenting progress
+of on going project in order to solicite more and unique ideas from their peers; and
+peer-reviewing which helped in making a critical analysis of their projects. This
+gave the learners confidence to express themselves fully
+</p>
+</div>
+</div>
+<div id="outline-container-org0007a8c" class="outline-5">
+<h5 id="org0007a8c">Focus should be given that solution are not necessarily good or bad but they tackle the problem in different ways</h5>
+</div>
+</div>
+</div>
+<div id="outline-container-org165f4dd" class="outline-3">
+<h3 id="org165f4dd">*Ways the workshop could be expanded</h3>
+<div class="outline-text-3" id="text-org165f4dd">
 </div>
 <div id="outline-container-org5045e1f" class="outline-4">
 <h4 id="org5045e1f">Attributing a score based on the number of steps of the kangaroo and the number of lines of code (create a simple formula to show in the presentation), to let understand the student that elegant and efficient solutions that reuse code are the best</h4>
@@ -286,11 +463,78 @@ Question for next time: what should kid be able to understand and know about com
 <div id="outline-container-orgcd635aa" class="outline-4">
 <h4 id="orgcd635aa">allowing multiplayer on the same maze, introducing ways for students to collaborate (invent examples that would allow students to have to cooperate for the good of both of them) (check link with papert constructionism and how knowledge is built by building but also by sharing)</h4>
 </div>
+<div id="outline-container-org19be7da" class="outline-4">
+<h4 id="org19be7da">Attribute a score based on the number of steps and lines of code (e.g., score = steps + 2 * lines<sub>of</sub><sub>code</sub>), teaching students the value of elegant, efficient solutions.</h4>
+</div>
+<div id="outline-container-orgcd525e3" class="outline-4">
+<h4 id="orgcd525e3">Collaborative Learning: Design multiplayer challenges where students must coordinate commands or share code segments, fostering social CT skills.</h4>
+</div>
+</div>
+<div id="outline-container-org3aee290" class="outline-3">
+<h3 id="org3aee290">Improvements</h3>
+<div class="outline-text-3" id="text-org3aee290">
+<p>
+Suggested Improvements Based on Provided Material
+</p>
+
+<p>
+Explicit Integration of CT Concepts: Incorporate explicit teaching moments that highlight CT concepts such as decomposition, pattern recognition, and abstraction during the activity, referencing CT taxonomies
+</p>
+
+<p>
+.
+</p>
+
+<p>
+Formative Assessment: Use tools or rubrics aligned with the Cognitive Skills Framework (CSF) to assess students’ progression in CT skills, including problem-solving, debugging, and collaboration
+</p>
+
+<p>
+.
+</p>
+
+<p>
+Reflective Discussions: Include a debrief phase where students discuss their strategies, challenges, and learning outcomes to reinforce meta-cognitive skills and connect activity to broader CT practices
+</p>
+
+<p>
+.
+</p>
+
+<p>
+Scaffolded Complexity: Gradually introduce maze complexity and programming constructs to maintain engagement and support differentiated learning, avoiding cognitive overload
+</p>
+
+<p>
+.
+</p>
+
+<p>
+Incorporate AI Literacy Elements: Introduce simple AI concepts such as randomness and brute force as early examples of computational problem-solving and automation, connecting to modern CT perspectives
+</p>
+
+<p>
+.
+</p>
+
+<p>
+Collaborative Learning: Design multiplayer challenges where students must coordinate commands or share code segments, fostering social CT skills and echoing constructionist principles
+.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf1eaa14" class="outline-2">
+<h2 id="orgf1eaa14">About the corse</h2>
+<div class="outline-text-2" id="text-orgf1eaa14">
+<p>
+I really appreciated the course. It was very instructive and it gave me an idea about the history, the teaching and the situtation in several countries of computational thinking, even if i didn't have a strong background. The part about constructionism and constructivism and the one about misconceptions were the most interesting. Also sharing the curricula from our countries was an interesting part. The part about the curriculum in Czech Republic was interesting and very detailed, although I couldnt fully grasp every detail of it. It was a great and very instructive experience.
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-05-02 Fri 21:38</p>
+<p class="date">Created: 2025-05-30 Fri 07:58</p>
 </div>
 </body>
 </html>

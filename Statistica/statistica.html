@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-05-04 Sun 19:22 -->
+<!-- 2025-05-30 Fri 09:00 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Statistica</title>
@@ -54,8 +54,8 @@
 <ul>
 <li><a href="#org174774b">Series</a>
 <ul>
-<li><a href="#orgcec67db">Creazione</a></li>
-<li><a href="#org7b4bfa1">Accesso</a>
+<li><a href="#org405fef2">Creazione</a></li>
+<li><a href="#orgd88c7a3">Accesso</a>
 <ul>
 <li><a href="#org987eed6">Accedere ad un valore specifico</a></li>
 <li><a href="#orgd396d2f">Accedere ad una sottocollezione</a></li>
@@ -72,8 +72,8 @@
 </li>
 <li><a href="#orga0968b7">Dataframe</a>
 <ul>
-<li><a href="#org2e432cb">Creazione</a></li>
-<li><a href="#org1990e01">Accesso</a>
+<li><a href="#orgb94cb44">Creazione</a></li>
+<li><a href="#org5be234e">Accesso</a>
 <ul>
 <li><a href="#orgba4c936">Colonne</a></li>
 <li><a href="#org10d56e5">Righe</a></li>
@@ -185,9 +185,18 @@
 </li>
 <li><a href="#org88aaa01">Probabilità</a>
 <ul>
-<li><a href="#org9eea659">Variabili aleatorie</a>
+<li><a href="#org9eea659">Variabili aleatorie</a></li>
+</ul>
+</li>
+<li><a href="#org1bc5353">Formalizzazione di Concetti di Probabilità e Statistica</a>
 <ul>
-<li><a href="#org9a7b68f"><span class="todo TODO">TODO</span> fare anki</a></li>
+<li><a href="#orgfc3764d">Massa di Probabilità Congiunta e Marginale</a></li>
+<li><a href="#orga8e1458">Indipendenza tra Variabili Aleatorie</a></li>
+<li><a href="#org3f57426">Valore Atteso di una Somma di Variabili Aleatorie</a></li>
+<li><a href="#org573876c">Stima di una Variabile Aleatoria</a></li>
+<li><a href="#org39d0753">Covarianza: Definizione e Proprietà</a>
+<ul>
+<li><a href="#org6ab2102"><span class="todo TODO">TODO</span> fare anki di tutto il paragrafo</a></li>
 </ul>
 </li>
 <li><a href="#orgb05c5fa"><span class="todo TODO">TODO</span> Classificatore bayes</a></li>
@@ -297,9 +306,9 @@ I due array sono accessibili mediante i metodi <code>.array</code>, che ritorna 
 Quando si disegna il grafico di due serie, i valori vengono associati in base all'indice.
 </p>
 </div>
-<div id="outline-container-orgcec67db" class="outline-5">
-<h5 id="orgcec67db">Creazione</h5>
-<div class="outline-text-5" id="text-orgcec67db">
+<div id="outline-container-org405fef2" class="outline-5">
+<h5 id="org405fef2">Creazione</h5>
+<div class="outline-text-5" id="text-org405fef2">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #a020f0;">import</span> pandas <span style="color: #a020f0;">as</span> pd
 
@@ -313,9 +322,9 @@ Quando si disegna il grafico di due serie, i valori vengono associati in base al
 </div>
 </div>
 </div>
-<div id="outline-container-org7b4bfa1" class="outline-5">
-<h5 id="org7b4bfa1">Accesso</h5>
-<div class="outline-text-5" id="text-org7b4bfa1">
+<div id="outline-container-orgd88c7a3" class="outline-5">
+<h5 id="orgd88c7a3">Accesso</h5>
+<div class="outline-text-5" id="text-orgd88c7a3">
 </div>
 <div id="outline-container-org987eed6" class="outline-6">
 <h6 id="org987eed6">Accedere ad un valore specifico</h6>
@@ -420,9 +429,9 @@ Per <b>accedere ad una riga</b> si utilizza <code>loc[]</code> e <code>iloc[]</c
 Per <b>accedere ad un elemento</b> si usa <code>at[index, column]</code>.
 </p>
 </div>
-<div id="outline-container-org2e432cb" class="outline-5">
-<h5 id="org2e432cb">Creazione</h5>
-<div class="outline-text-5" id="text-org2e432cb">
+<div id="outline-container-orgb94cb44" class="outline-5">
+<h5 id="orgb94cb44">Creazione</h5>
+<div class="outline-text-5" id="text-orgb94cb44">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Da dizionario di liste/array</span>
 <span style="color: #a0522d;">heroes_df</span> = pd.DataFrame({
@@ -441,9 +450,9 @@ Per <b>accedere ad un elemento</b> si usa <code>at[index, column]</code>.
 </div>
 </div>
 </div>
-<div id="outline-container-org1990e01" class="outline-5">
-<h5 id="org1990e01">Accesso</h5>
-<div class="outline-text-5" id="text-org1990e01">
+<div id="outline-container-org5be234e" class="outline-5">
+<h5 id="org5be234e">Accesso</h5>
+<div class="outline-text-5" id="text-org5be234e">
 </div>
 <div id="outline-container-orgba4c936" class="outline-6">
 <h6 id="orgba4c936">Colonne</h6>
@@ -865,14 +874,14 @@ plt.show()
 <div class="outline-text-3" id="text-org63ba63a">
 </div>
 <div id="outline-container-org418119f" class="outline-4">
-<h4 id="org418119f">Indici di <a id="org1441aa0">centralità</a></h4>
+<h4 id="org418119f">Indici di <a id="org6bcbf75">centralità</a></h4>
 <div class="outline-text-4" id="text-org418119f">
 </div>
 <div id="outline-container-orgc0ac8a0" class="outline-5">
-<h5 id="orgc0ac8a0"><a id="org41eda68">Media</a> campionaria</h5>
+<h5 id="orgc0ac8a0"><a id="orga9d3e4a">Media</a> campionaria</h5>
 <div class="outline-text-5" id="text-orgc0ac8a0">
 <p>
-La <a href="#org41eda68">media</a> campionaria è definita come:
+La <a href="#orga9d3e4a">media</a> campionaria è definita come:
 </p>
 
 <p>
@@ -888,33 +897,33 @@ Ovvero è la somma di tutti i valori divisa per il numero di osservazioni.
 </p>
 
 <p>
-Dato che vanno eseguite operazioni matematiche sui valori, la <a href="#org41eda68">media</a> può essere calcolata soltanto su dati <b>quantitativi</b> o <b>qualitativi</b> a cui è associato un <b>valore numerico</b>.
+Dato che vanno eseguite operazioni matematiche sui valori, la <a href="#orga9d3e4a">media</a> può essere calcolata soltanto su dati <b>quantitativi</b> o <b>qualitativi</b> a cui è associato un <b>valore numerico</b>.
 </p>
 
 <p>
-Dato un campione \(y = ax + b\), per \(a,b\) fissati, è facile derivare attraverso la formula che \(\bar{y} = a\bar{x}+y\), ovvero la <a href="#org41eda68">media</a> di un campione trasformato è la <a href="#org41eda68">media</a> del campione originale trasformata nello stesso modo.
+Dato un campione \(y = ax + b\), per \(a,b\) fissati, è facile derivare attraverso la formula che \(\bar{y} = a\bar{x}+y\), ovvero la <a href="#orga9d3e4a">media</a> di un campione trasformato è la <a href="#orga9d3e4a">media</a> del campione originale trasformata nello stesso modo.
 </p>
 
 <p>
-Se di un campione si conoscono i \(k\) distinti valori quantitativi \(v\) del campione e le relative frequenze \(f\), allora la <a href="#org41eda68">media</a> è definita come:
-\[\bar{x}=\frac{1}{n}\sum_{j=1}^{k}v_{j}f_{j}\], che è anche la <b><a href="#org41eda68">media</a> pesata</b> dei valori distinti, dove il peso di ogni valore è la sua frequenza. Questo ragionamento vale sia per le frequenze assolute che relative.
+Se di un campione si conoscono i \(k\) distinti valori quantitativi \(v\) del campione e le relative frequenze \(f\), allora la <a href="#orga9d3e4a">media</a> è definita come:
+\[\bar{x}=\frac{1}{n}\sum_{j=1}^{k}v_{j}f_{j}\], che è anche la <b><a href="#orga9d3e4a">media</a> pesata</b> dei valori distinti, dove il peso di ogni valore è la sua frequenza. Questo ragionamento vale sia per le frequenze assolute che relative.
 </p>
 
 <p>
-La <a href="#org41eda68">media</a> campionaria <b>non è robusta</b>, ovvero è molto sensibile a <b>outlier</b> (valori fuori scala).
+La <a href="#orga9d3e4a">media</a> campionaria <b>non è robusta</b>, ovvero è molto sensibile a <b>outlier</b> (valori fuori scala).
 </p>
 
 <p>
-La somma di <b>tutti</b> gli scarti dei valori di un campione dalla <a href="#org41eda68">media</a> è nulla, ovvero
+La somma di <b>tutti</b> gli scarti dei valori di un campione dalla <a href="#orga9d3e4a">media</a> è nulla, ovvero
 \[\sum_{i=1}^{n} (x_i - \bar{x}) = 0\]
 </p>
 </div>
 </div>
 <div id="outline-container-org6c4acd7" class="outline-5">
-<h5 id="org6c4acd7"><a id="orgfbe1075">Mediana</a> campionaria</h5>
+<h5 id="org6c4acd7"><a id="org28ae8b4">Mediana</a> campionaria</h5>
 <div class="outline-text-5" id="text-org6c4acd7">
 <p>
-La <a href="#orgfbe1075">mediana</a> campionaria è un altro indice di <a href="#org1441aa0">centralità</a>.
+La <a href="#org28ae8b4">mediana</a> campionaria è un altro indice di <a href="#org6bcbf75">centralità</a>.
 </p>
 
 <p>
@@ -922,43 +931,43 @@ Per calcolarla, si ordinano i valori dell'insieme dal più piccolo al più grand
 </p>
 
 <p>
-Se il numero totale di elementi \(n\) è dispari, la <a href="#orgfbe1075">mediana</a> è il valore che occupa la posizione \((n + 1)/2\). Se n è pari, invece, la <a href="#orgfbe1075">mediana</a> è data dalla <a href="#org41eda68">media</a> dei due valori centrali, ovvero quelli nelle posizioni \(n/2\) e \(n/2 + 1\).
+Se il numero totale di elementi \(n\) è dispari, la <a href="#org28ae8b4">mediana</a> è il valore che occupa la posizione \((n + 1)/2\). Se n è pari, invece, la <a href="#org28ae8b4">mediana</a> è data dalla <a href="#orga9d3e4a">media</a> dei due valori centrali, ovvero quelli nelle posizioni \(n/2\) e \(n/2 + 1\).
 </p>
 
 <p>
-A differenza della <a href="#org41eda68">media</a>, la <a href="#orgfbe1075">mediana</a> può essere calcolata anche su dati <b>qualitativi</b>, purchè questi siano <b>ordinabili</b> e siano in numero <b>dispari</b>. Se fossero pari, sarebbe richiesto di fare la <a href="#org41eda68">media</a> dei due valori centrali, che è impossibile.
+A differenza della <a href="#orga9d3e4a">media</a>, la <a href="#org28ae8b4">mediana</a> può essere calcolata anche su dati <b>qualitativi</b>, purchè questi siano <b>ordinabili</b> e siano in numero <b>dispari</b>. Se fossero pari, sarebbe richiesto di fare la <a href="#orga9d3e4a">media</a> dei due valori centrali, che è impossibile.
 </p>
 
 <p>
-La <a href="#orgfbe1075">mediana</a> è <b>robusta</b> rispetto ad eventuali outlier.
+La <a href="#org28ae8b4">mediana</a> è <b>robusta</b> rispetto ad eventuali outlier.
 </p>
 </div>
 </div>
 <div id="outline-container-orgd5248d4" class="outline-5">
-<h5 id="orgd5248d4"><a id="org739ae05">Moda</a> campionaria</h5>
+<h5 id="orgd5248d4"><a id="org7f133d2">Moda</a> campionaria</h5>
 <div class="outline-text-5" id="text-orgd5248d4">
 <p>
-La <b><a href="#org739ae05">moda</a></b> è l'attributo che appare più spesso. Se esistono più attributi con frequenza massima, vengono chiamati <b>valori modali</b>. Può essere calcolata su qualunque tipo di dato.
+La <b><a href="#org7f133d2">moda</a></b> è l'attributo che appare più spesso. Se esistono più attributi con frequenza massima, vengono chiamati <b>valori modali</b>. Può essere calcolata su qualunque tipo di dato.
 </p>
 </div>
 </div>
 </div>
 <div id="outline-container-orgd279798" class="outline-4">
-<h4 id="orgd279798">Indici di <a id="orgc870418">dispersione</a></h4>
+<h4 id="orgd279798">Indici di <a id="orgacf5e90">dispersione</a></h4>
 <div class="outline-text-4" id="text-orgd279798">
 <p>
-Gli indici di <a href="#orgc870418">dispersione</a> sono utilizzati per capire la <b>variabilità</b> o lo <b>spread</b> di un campione.
+Gli indici di <a href="#orgacf5e90">dispersione</a> sono utilizzati per capire la <b>variabilità</b> o lo <b>spread</b> di un campione.
 </p>
 </div>
 <div id="outline-container-org6a7ed95" class="outline-5">
-<h5 id="org6a7ed95"><a id="org3dac624">Varianza</a> campionaria</h5>
+<h5 id="org6a7ed95"><a id="org3523bea">Varianza</a> campionaria</h5>
 <div class="outline-text-5" id="text-org6a7ed95">
 <p>
 \[ s^2 = \frac{1}{n-1} \sum_{i=1}^{n} \left( x_i - \overline{x} \right)^2 \]
 </p>
 
 <p>
-Il concetto su cui si basa la <b><a href="#org3dac624">varianza</a></b> campionaria è quello di accumulare la <b>distanza</b> fra ogni osservazione e la <b><a href="#orgfbe1075">mediana</a></b>.
+Il concetto su cui si basa la <b><a href="#org3523bea">varianza</a></b> campionaria è quello di accumulare la <b>distanza</b> fra ogni osservazione e la <b><a href="#org28ae8b4">mediana</a></b>.
 </p>
 
 <p>
@@ -966,7 +975,7 @@ Può essere calcolata <b>soltanto</b> su dati <b>quantitativi</b>.
 </p>
 
 <p>
-Dalla definizione si ricava che la <a href="#org3dac624">varianza</a> di un campione trasformato linearmente è uguale alla <a href="#org3dac624">varianza</a> del campione originale <b>scalata</b> per <b>il quadrato del fattore</b>, mentre è <b>insensibile alla traslazione</b>.
+Dalla definizione si ricava che la <a href="#org3523bea">varianza</a> di un campione trasformato linearmente è uguale alla <a href="#org3523bea">varianza</a> del campione originale <b>scalata</b> per <b>il quadrato del fattore</b>, mentre è <b>insensibile alla traslazione</b>.
 </p>
 </div>
 <div id="outline-container-org2dc05a8" class="outline-6">
@@ -977,7 +986,7 @@ Per ottenere la somma delle differenze, occorre assicurarsi che le distanze calc
 </p>
 
 <p>
-Infatti, le differenze per i valori superiori alla <a href="#orgfbe1075">mediana</a>, se lasciate invariate, produrrebbero valori negativi che ridurrebbero l'accumulazione totale.
+Infatti, le differenze per i valori superiori alla <a href="#org28ae8b4">mediana</a>, se lasciate invariate, produrrebbero valori negativi che ridurrebbero l'accumulazione totale.
 </p>
 
 <p>
@@ -991,14 +1000,14 @@ Di conseguenza, l'approccio preferito consiste nel considerare il <b>quadrato</b
 </div>
 </div>
 <div id="outline-container-org39dcb4a" class="outline-5">
-<h5 id="org39dcb4a"><a id="orgb177bef">Deviazione standard</a></h5>
+<h5 id="org39dcb4a"><a id="org82320fe">Deviazione standard</a></h5>
 <div class="outline-text-5" id="text-org39dcb4a">
 <p>
-La <b><a href="#orgb177bef">deviazione standard</a></b> è il quadrato della <a href="#org3dac624">varianza</a> campionaria. È utile perchè permette di esprimere la <a href="#org3dac624">varianza</a> nell'unità di misura originale.
+La <b><a href="#org82320fe">deviazione standard</a></b> è il quadrato della <a href="#org3523bea">varianza</a> campionaria. È utile perchè permette di esprimere la <a href="#org3523bea">varianza</a> nell'unità di misura originale.
 </p>
 
 <p>
-Come la <a href="#org3dac624">varianza</a> è insensibile alla traslazione, mentre scala come il <b>valore assoluto del fattore</b> con cui è scalato il campione. Infatti, non avrebbe senso considerare una <a href="#org3dac624">varianza</a> negativa.
+Come la <a href="#org3523bea">varianza</a> è insensibile alla traslazione, mentre scala come il <b>valore assoluto del fattore</b> con cui è scalato il campione. Infatti, non avrebbe senso considerare una <a href="#org3523bea">varianza</a> negativa.
 </p>
 </div>
 </div>
@@ -1007,7 +1016,7 @@ Come la <a href="#org3dac624">varianza</a> è insensibile alla traslazione, ment
 </div>
 </div>
 <div id="outline-container-org14a9103" class="outline-4">
-<h4 id="org14a9103"><a id="org6a03d9a">Quantili</a></h4>
+<h4 id="org14a9103"><a id="orgbfe740d">Quantili</a></h4>
 <div class="outline-text-4" id="text-org14a9103">
 <p>
 Un <b>quantile</b> di <b>livello</b> \(p \in [0,1]\) di un campione da \(n\) <b>osservazioni</b> è uno dei valori del campione tale per cui \(np\) valori del campione sono minori o uguali ad esso e \(n(1-p)\) valori ne sono invece maggiori o uguali. \(100p\) è la percentuale di valori minori o uguali a quello scelto e \(100(1-p)\) resto sono maggiori.
@@ -1023,7 +1032,7 @@ Lo trovo ordinando i valori del campione e scandendo dal più piccolo. L'element
 </ul>
 
 <p>
-Di conseguenza, quando \(np\) è intero ci sono \(2\) elementi che rispettano entrambe le condizioni. Allora se ne prende la <b><a href="#org41eda68">media</a></b>.
+Di conseguenza, quando \(np\) è intero ci sono \(2\) elementi che rispettano entrambe le condizioni. Allora se ne prende la <b><a href="#orga9d3e4a">media</a></b>.
 </p>
 
 <p>
@@ -1035,29 +1044,29 @@ Quindi, quando \(np\) è razionale esiste <b>un solo</b> valore che rispetta ent
 </p>
 
 <p>
-I <a href="#org6a03d9a">quantili</a> dove \(p\) ha al massimo due cifre decimali sono chiamati <b>percentili</b>, mentre quelli con \(p\) corrispondente ai multipli interi di \(0.25\) sono chiamati <b>quartili</b>.
+I <a href="#orgbfe740d">quantili</a> dove \(p\) ha al massimo due cifre decimali sono chiamati <b>percentili</b>, mentre quelli con \(p\) corrispondente ai multipli interi di \(0.25\) sono chiamati <b>quartili</b>.
 </p>
 </div>
 <div id="outline-container-org0403396" class="outline-5">
 <h5 id="org0403396">Box plot</h5>
 <div class="outline-text-5" id="text-org0403396">
 <p>
-Il box plot è un grafico che riassume le seguenti informazioni: <b>minimo e massimo</b> del campione come <b>estremi dei baffi</b>, <b>primo e terzo</b> quartile come <b>estremi della scatola</b> e <b><a href="#orgfbe1075">mediana</a></b> (o secondo quartile) come <b>linea nella scatola</b>.
+Il box plot è un grafico che riassume le seguenti informazioni: <b>minimo e massimo</b> del campione come <b>estremi dei baffi</b>, <b>primo e terzo</b> quartile come <b>estremi della scatola</b> e <b><a href="#org28ae8b4">mediana</a></b> (o secondo quartile) come <b>linea nella scatola</b>.
 </p>
 </div>
 <div id="outline-container-org8dc1c5f" class="outline-6">
-<h6 id="org8dc1c5f"><span class="todo TODO">TODO</span> Capire cosa ha detto il professore riguardo alla relazione fra box plot e distribuzione e capire cosa c'entra la <a href="#org41eda68">media</a></h6>
+<h6 id="org8dc1c5f"><span class="todo TODO">TODO</span> Capire cosa ha detto il professore riguardo alla relazione fra box plot e distribuzione e capire cosa c'entra la <a href="#orga9d3e4a">media</a></h6>
 </div>
 </div>
 <div id="outline-container-org5023b89" class="outline-5">
 <h5 id="org5023b89">Range inter-quartile</h5>
 <div class="outline-text-5" id="text-org5023b89">
 <p>
-Il <b>range inter-quartile</b> è un <b>indice di <a href="#orgc870418">dispersione</a></b> ed è calcolato come \(Q_3 - Q_1\), ovvero l'ampiezza della fascia di valori che circonda la <a href="#orgfbe1075">mediana</a> senza entrare nei quartili adiacenti. Corrisponde alla lunghezza del box nel box plot.
+Il <b>range inter-quartile</b> è un <b>indice di <a href="#orgacf5e90">dispersione</a></b> ed è calcolato come \(Q_3 - Q_1\), ovvero l'ampiezza della fascia di valori che circonda la <a href="#org28ae8b4">mediana</a> senza entrare nei quartili adiacenti. Corrisponde alla lunghezza del box nel box plot.
 </p>
 
 <p>
-Quanto più questo range è grande, quanto più i valori sono lontani dalla <a href="#orgfbe1075">mediana</a>.
+Quanto più questo range è grande, quanto più i valori sono lontani dalla <a href="#org28ae8b4">mediana</a>.
 </p>
 </div>
 </div>
@@ -1069,7 +1078,7 @@ I grafici <b>quantile-quantile</b> sono usati per confrontare le distribuzioni d
 </p>
 
 <p>
-L'idea è quella di introdurre un sistema di riferimento cartesiano sulle cui assi si trovano i corrispondenti <a href="#org6a03d9a">quantili</a> dei due campioni e i punti si trovano in corrispondenza del valore dei due <a href="#org6a03d9a">quantili</a>.
+L'idea è quella di introdurre un sistema di riferimento cartesiano sulle cui assi si trovano i corrispondenti <a href="#orgbfe740d">quantili</a> dei due campioni e i punti si trovano in corrispondenza del valore dei due <a href="#orgbfe740d">quantili</a>.
 </p>
 
 <p>
@@ -1089,11 +1098,11 @@ Il QQ plot è uno metodo grafico e <b>qualitativo</b>, usato soltanto per refuta
 <h4 id="orgf40875c">Distribuzione normale</h4>
 <div class="outline-text-4" id="text-orgf40875c">
 <p>
-Un campione le frequenza dei valori presi in ordine cresce fino a raggiungere il picco in corrispondenza della <a href="#orgfbe1075">mediana</a> e poi decresce con la stessa pendenza con cui era cresciuta viene chiamata <b>normale</b>.
+Un campione le frequenza dei valori presi in ordine cresce fino a raggiungere il picco in corrispondenza della <a href="#org28ae8b4">mediana</a> e poi decresce con la stessa pendenza con cui era cresciuta viene chiamata <b>normale</b>.
 </p>
 
 <p>
-Questi campioni seguono una <b>regola empirica</b> per la quale (dove \(\bar{x}\) è la <a href="#org41eda68">media</a> e \(s\) è la <a href="#orgb177bef">deviazione standard</a>:
+Questi campioni seguono una <b>regola empirica</b> per la quale (dove \(\bar{x}\) è la <a href="#orga9d3e4a">media</a> e \(s\) è la <a href="#org82320fe">deviazione standard</a>:
 </p>
 <ul class="org-ul">
 <li>il \(68\%\) delle osservazioni hanno valore compreso entro \(\bar{x} \pm s\)</li>
@@ -1110,11 +1119,11 @@ Lo scatter plot di due osservazioni in coppia può presentare una <b>tendenza li
 </p>
 
 <p>
-Date le <b>medie campionarie</b> \(\bar x, \bar y\), consideriamo gli <b>scarti</b> fra ogni valore di un campione e la propria <a href="#org41eda68">media</a>. Quando lo scarto di un valore è <b>non negativo</b>, esso è più grande della propria <a href="#org41eda68">media</a>, ovvero \(x-\bar x \geq 0\). Quando è <b>non positivo</b>, esso è minore e quindi \(x-\bar x \leq 0\).
+Date le <b>medie campionarie</b> \(\bar x, \bar y\), consideriamo gli <b>scarti</b> fra ogni valore di un campione e la propria <a href="#orga9d3e4a">media</a>. Quando lo scarto di un valore è <b>non negativo</b>, esso è più grande della propria <a href="#orga9d3e4a">media</a>, ovvero \(x-\bar x \geq 0\). Quando è <b>non positivo</b>, esso è minore e quindi \(x-\bar x \leq 0\).
 </p>
 
 <p>
-Allora, data una coppia di valori \((x_i, y_i)\), se essi sono entrambi maggiori o uguali della propria <a href="#org41eda68">media</a>, oppure sono entrambi minori o uguali, il <b>prodotto degli scarti</b> sarà <b>non negativo</b>, ovvero \((x-\bar x)(y-\bar y)\geq 0\). Quando invece un elemento della coppia è piccolo, mentre l'altro è grande, il prodotto dei loro scarti sarà <b>non positivo</b>.
+Allora, data una coppia di valori \((x_i, y_i)\), se essi sono entrambi maggiori o uguali della propria <a href="#orga9d3e4a">media</a>, oppure sono entrambi minori o uguali, il <b>prodotto degli scarti</b> sarà <b>non negativo</b>, ovvero \((x-\bar x)(y-\bar y)\geq 0\). Quando invece un elemento della coppia è piccolo, mentre l'altro è grande, il prodotto dei loro scarti sarà <b>non positivo</b>.
 </p>
 
 <p>
@@ -1415,7 +1424,7 @@ La formula può essere estesa ad \(n\) eventi \(F_i\) tali per cui essi sono tut
 </p>
 
 <p>
-Questa formula mi dice che \(P(E)\) è la <a href="#org41eda68">media</a> degli \(P(E|F_i)\) pesata in base ad \(F_i\).
+Questa formula mi dice che \(P(E)\) è la <a href="#orga9d3e4a">media</a> degli \(P(E|F_i)\) pesata in base ad \(F_i\).
 </p>
 
 <p>
@@ -1452,7 +1461,7 @@ L'indipendenza cattura il concetto che i due eventi non sono influenzati, ovvero
 Il fatto che \(F\) sia accaduto o meno non cambia l'informazione riguardo \(E\). Infatti, se provo ad incorporare un evidenza indipendente nella mia ipotesi (caso d'uso della formula di Bayes), ottengo \(P(H|E) = \frac{P(EF)}{P(E)} = \frac{P(E)P(F)}{P(E)} = P(H)\)
 </p>
 
-<pre class="example" id="orgea2e938">
+<pre class="example" id="orgd00d2d1">
 Immagina una popolazione in cui:
 la metà sono uomini, P(U)=0.5
 un decimo sono mancini, P(M)=0.1
@@ -1522,17 +1531,270 @@ ovvero, la variabile assume il valore \(\alpha\) quando l'immagine dell'esito \(
 </p>
 
 <p>
-Una funzione indicatrice di un evento è una funzione che restituisce \(1\) se è avvenuto l'evento e \(0\) altrimenti.
+La <b><b>funzione di ripartizione</b></b> di X, indicata con \(F_X(x)\), è definita come la probabilità che la variabile aleatoria X assuma valore minore o uguale a x: \(F_X(x) = P(X \leq x)\).
+</p>
+
+<p>
+Per variabili aleatorie su supporti discreti, vale il ragionamento per cui \(F_X(b) - F_X(a) = P(a < X \leq b)\). (dimostrazione)
+</p>
+
+<p>
+La <b><b>funzione di ripartizione</b></b> \(F_X(x)\) ha le seguenti proprietà: è sempre \(F_X(x) \geq 0\), il suo limite a infinito è \(\lim_{x \to \infty} F_X(x) = 1\) ed è continua da destra.
+</p>
+
+<p>
+La <b><b>funzione di massa di probabilità</b></b>, indicata con \(p_X(x)\), è definita come la probabilità che la variabile aleatoria X assuma esattamente il valore x: \(p_X(x) = P(X = x)\). Questa funzione è sempre \(p_X(x) \geq 0\) e la somma su ogni valore della variabile è \(\sum_x p_X(x) = 1\).
+</p>
+
+<p>
+Sia la <b><b>funzione di ripartizione</b></b> \(F_X(x)\) che la <b><b>funzione di massa di probabilità</b></b> \(p_X(x)\) da sole bastano per descrivere una variabile aleatoria e si può passare dall'una all'altra considerando che \(F_X(x)\) è una funzione costante a tratti e i salti fra i tratti sono uguali al valore di \(p_X(x)\) in quel punto. I passaggi sono questi: \(F_X(x) = P(X \leq x) = P\left(\bigcup_{a \leq x} \{X = a\}\right) = \sum_{a \leq x} p_X(a)\).
+</p>
+
+<p>
+Una <b><b>funzione indicatrice</b></b> di un evento A, indicata con \(I_A(x)\), è una funzione che restituisce \(1\) se è avvenuto l'evento e \(0\) altrimenti.
+</p>
+
+<p>
+Per variabili aleatorie <b>discrete</b>, il <b><b>valore atteso</b></b>, indicato con \(E[X]\), è definito come \(E[X] = \sum_x x \cdot P(X = x)\), ovvero la <a href="#orga9d3e4a">media</a> ponderata in cui i pesi sono le probabilità.
+</p>
+
+<p>
+Quando si tratta di insiemi enumerabili, avrebbe senso chiedersi se converge e in generale non è vero, sebbene i casi che tratteremo sono tutti casi di convergenza.
+</p>
+
+<p>
+Dato il modo in cui è definito, il <b><b>valore atteso</b></b> di una variabile con specificazione binaria, ad esempio della funzione indicatrice, è esattamente \(P(1)\)
+</p>
+
+<p>
+La <b><b><a href="#org3523bea">varianza</a></b></b>, indicata con \(\text{Var}(X)\), si calcola con \(\text{Var}(X) = E[(X - E[X])^2]\) che può essere espanso per ottenere \(E[X^2] - (E[X])^2\). Da questo consegue che la <a href="#org3523bea">varianza</a> di una variabile aleatoria che descrive \(n\) enti equiprobabili ha la forma \(\frac{n^2-1}{12}\).
+</p>
+
+<p>
+La <b><b><a href="#org3523bea">varianza</a> della funzione indicatrice</b></b>, considerando che questa è idempotente, ovvero \(I_A(x)^2 = I_A(x)\) è uguale
+\[\text{Var}(I_A) = E[I_A] - (E[I_A])^2 = P(A) \cdot (1 - P(A)) = P(A) \cdot P(A^c)\]
+</p>
+
+<p>
+Posso definire anche la <b><b>funzione di ripartizione congiunta</b></b> di due variabili aleatorie X e Y, indicata con \(F_{X,Y}(x,y)\), come la probabilità che X sia minore o uguale a x e contemporaneamente Y sia minore o uguale a y: \(F_{X,Y}(x,y) = P(X \leq x, Y \leq y)\). Quando \(\lim_{y \to \infty} F_{X,Y}(x,y)\) allora ottengo \(F_X(x)\) e si dice che ho ottenuto la <b><b>funzione di ripartizione marginale</b></b>.
+</p>
+
+<p>
+<span class="underline">_</span>
+</p>
+
+<p>
+Può essere definita anche la <b>massa di probabilità congiunta</b> e quella marginale, che si ottiene considerando tutte le associazioni della prima variabile con la seconda, fissando la prima e poi sommandole, dato che sono disgiunte.
+</p>
+
+<p>
+L'<b>indipendenza</b> tra variabili avviene quando <b>ogni evento</b> della specificazione dell'una è indipendente da ogni evento dell'altra, e quindi sia la funzione di ripartizione congiunta che quella di massa di probabilità congiunta sono fattorizzabili come quelle non congiunte sul rispettivo argomento.
+</p>
+
+<p>
+Se ho un vettore multivariato, ovvero un insieme di variabili aleatorie, posso fare il seguente ragionamento riguardo il valore atteso:
+<a id="org0f88cc3"></a>
+</p>
+
+<p>
+Posso stimare il valore di una variabile aleatoria usando un altro valore \(c\). Calcoliamo il valore atteso dell'errore \(E((x-c)^2\) <a id="org7dbc7cb"></a>
+</p>
+
+<p>
+La covarianza è definita come <a id="org09deb19"></a> e segue le seguenti proprieta <a id="org6a3e8cf"></a>
+</p>
+
+<p>
+<span class="underline">_</span>
 </p>
 </div>
-<div id="outline-container-org9a7b68f" class="outline-4">
-<h4 id="org9a7b68f"><span class="todo TODO">TODO</span> fare anki</h4>
+</div>
+</div>
+<div id="outline-container-org1bc5353" class="outline-2">
+<h2 id="org1bc5353">Formalizzazione di Concetti di Probabilità e Statistica</h2>
+<div class="outline-text-2" id="text-org1bc5353">
+</div>
+<div id="outline-container-orgfc3764d" class="outline-3">
+<h3 id="orgfc3764d">Massa di Probabilità Congiunta e Marginale</h3>
+<div class="outline-text-3" id="text-orgfc3764d">
+<p>
+<b>Definizione (Massa di Probabilità Congiunta):</b> La funzione di massa di probabilità congiunta di due variabili aleatorie discrete \(X\) e \(Y\), indicata con \(p_{X,Y}(x,y)\), è definita come:
+</p>
+
+<p>
+\[p_{X,Y}(x,y) = P(X = x, Y = y)\]
+</p>
+
+<p>
+<b>Definizione (Massa di Probabilità Marginale):</b> La funzione di massa di probabilità marginale di \(X\), indicata con \(p_X(x)\), si ottiene sommando la massa di probabilità congiunta su tutti i possibili valori di \(Y\):
+</p>
+
+<p>
+\[p_X(x) = \sum_y p_{X,Y}(x,y)\]
+</p>
+
+<p>
+Analogamente, per la variabile aleatoria \(Y\):
+</p>
+
+<p>
+\[p_Y(y) = \sum_x p_{X,Y}(x,y)\]
+</p>
+
+<p>
+La massa di probabilità marginale si ottiene considerando tutte le associazioni della prima variabile con la seconda, fissando la prima e poi sommandole, poiché gli eventi \(\{X=x, Y=y\}\) per valori diversi di \(y\) sono disgiunti.
+</p>
+</div>
+</div>
+<div id="outline-container-orga8e1458" class="outline-3">
+<h3 id="orga8e1458">Indipendenza tra Variabili Aleatorie</h3>
+<div class="outline-text-3" id="text-orga8e1458">
+<p>
+<b>Definizione (Indipendenza di Variabili Aleatorie):</b> Due variabili aleatorie \(X\) e \(Y\) si dicono indipendenti se ogni evento della specificazione dell'una è indipendente da ogni evento dell'altra. 
+</p>
+
+<p>
+Formalmente, \(X\) e \(Y\) sono indipendenti se e solo se:
+</p>
+
+<ol class="org-ol">
+<li>Per la funzione di ripartizione congiunta:
+\[F_{X,Y}(x,y) = F_X(x) \cdot F_Y(y) \quad \text{per ogni } x, y \in \mathbb{R}\]</li>
+
+<li>Per la funzione di massa di probabilità congiunta (nel caso discreto):
+\[p_{X,Y}(x,y) = p_X(x) \cdot p_Y(y) \quad \text{per ogni } x, y\]</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org3f57426" class="outline-3">
+<h3 id="org3f57426">Valore Atteso di una Somma di Variabili Aleatorie</h3>
+<div class="outline-text-3" id="text-org3f57426">
+<p>
+Considerando un vettore multivariato, ovvero un insieme di variabili aleatorie \(X_1, X_2, \ldots, X_n\), possiamo definire una nuova variabile aleatoria \(S = X_1 + X_2 + \ldots + X_n\).
+</p>
+
+<p>
+Il valore atteso di \(S\) può essere calcolato come:
+</p>
+
+<p>
+\[E[S] = E[X_1 + X_2 + \ldots + X_n]\]
+</p>
+
+<p>
+Dalla definizione di valore atteso:
+</p>
+
+<p>
+\[E[S] = \sum_{x_1} \sum_{x_2} \ldots \sum_{x_n} (x_1 + x_2 + \ldots + x_n) \cdot p_{X_1,X_2,\ldots,X_n}(x_1,x_2,\ldots,x_n)\]
+</p>
+
+<p>
+Riarrangiando i termini:
+</p>
+
+<p>
+\[E[S] = \sum_{x_1} x_1 \sum_{x_2} \ldots \sum_{x_n} p_{X_1,X_2,\ldots,X_n}(x_1,x_2,\ldots,x_n) + \ldots\]
+</p>
+
+<p>
+Dove le sommatorie interne corrispondono alle probabilità marginali di ciascuna variabile. Quindi:
+</p>
+
+<p>
+\[E[S] = \sum_{x_1} x_1 \cdot p_{X_1}(x_1) + \sum_{x_2} x_2 \cdot p_{X_2}(x_2) + \ldots + \sum_{x_n} x_n \cdot p_{X_n}(x_n)\]
+</p>
+
+<p>
+\[E[S] = E[X_1] + E[X_2] + \ldots + E[X_n]\]
+</p>
+
+<p>
+Questo dimostra la linearità del valore atteso: \(E[X+Y] = E[X] + E[Y]\).
+</p>
+</div>
+</div>
+<div id="outline-container-org573876c" class="outline-3">
+<h3 id="org573876c">Stima di una Variabile Aleatoria</h3>
+<div class="outline-text-3" id="text-org573876c">
+<p>
+Se vogliamo stimare il valore di una variabile aleatoria \(X\) usando un valore costante \(c\), possiamo calcolare il valore atteso dell'errore quadratico:
+</p>
+
+<p>
+\[E[(X-c)^2]\]
+</p>
+
+<p>
+Riscrivendo questo, aggiungendo e sottraendo il valore atteso di \(X\), indicato con \(\mu\):
+</p>
+
+<p>
+\[E[(X-c)^2] = E[(X-\mu+\mu-c)^2]\]
+</p>
+
+<p>
+Espandendo il binomio:
+</p>
+
+<p>
+\[E[(X-c)^2] = E[(X-\mu)^2 + 2(X-\mu)(\mu-c) + (\mu-c)^2]\]
+</p>
+
+<p>
+\[E[(X-c)^2] = E[(X-\mu)^2] + 2(\mu-c)E[X-\mu] + (\mu-c)^2\]
+</p>
+
+<p>
+Poiché \(E[X-\mu] = E[X] - \mu = 0\):
+</p>
+
+<p>
+\[E[(X-c)^2] = E[(X-\mu)^2] + (\mu-c)^2\]
+</p>
+
+<p>
+\[E[(X-c)^2] = \text{Var}(X) + (\mu-c)^2\]
+</p>
+
+<p>
+Questo è sempre maggiore o uguale alla <a href="#org3523bea">varianza</a> di \(X\), poiché \((\mu-c)^2 \geq 0\). L'errore minimo si ottiene quando \(c = \mu = E[X]\), e in quel caso l'errore quadratico medio è esattamente uguale alla <a href="#org3523bea">varianza</a>.
+</p>
+</div>
+</div>
+<div id="outline-container-org39d0753" class="outline-3">
+<h3 id="org39d0753">Covarianza: Definizione e Proprietà</h3>
+<div class="outline-text-3" id="text-org39d0753">
+<p>
+<b>Definizione (Covarianza):</b> La covarianza tra due variabili aleatorie \(X\) e \(Y\), indicata con \(\text{Cov}(X,Y)\), è definita come:
+</p>
+
+<p>
+\[\text{Cov}(X,Y) = E[(X-\mu_X)(Y-\mu_Y)]\]
+</p>
+
+<p>
+dove \(\mu_X = E[X]\) e \(\mu_Y = E[Y]\).
+</p>
+
+<p>
+<b>Proprietà della Covarianza:</b>
+</p>
+
+<ol class="org-ol">
+<li>\(\text{Cov}(aX,Y) = a \cdot \text{Cov}(X,Y)\) per ogni costante \(a\)</li>
+<li>\(\text{Cov}(X+Y,Z) = \text{Cov}(X,Z) + \text{Cov}(Y,Z)\)</li>
+<li>Più in generale: \(\text{Cov}\left(\sum_{i} X_i, \sum_{j} Y_j\right) = \sum_{i} \sum_{j} \text{Cov}(X_i, Y_j)\)</li>
+<li>\(\text{Cov}(X,X) = \text{Var}(X)\)</li>
+</ol>
+</div>
+<div id="outline-container-org6ab2102" class="outline-4">
+<h4 id="org6ab2102"><span class="todo TODO">TODO</span> fare anki di tutto il paragrafo</h4>
 </div>
 </div>
 <div id="outline-container-orgb05c5fa" class="outline-3">
 <h3 id="orgb05c5fa"><span class="todo TODO">TODO</span> Classificatore bayes</h3>
 </div>
-
 <div id="outline-container-org1490421" class="outline-3">
 <h3 id="org1490421"><span class="todo TODO">TODO</span> Formalizzare spazio di probabilità</h3>
 <div class="outline-text-3" id="text-org1490421">
@@ -1544,7 +1806,7 @@ Spazio di probabilità (Spazio degli eventi (Omega), Algebra, P)
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-05-04 Sun 19:22</p>
+<p class="date">Created: 2025-05-30 Fri 09:00</p>
 </div>
 </body>
 </html>
