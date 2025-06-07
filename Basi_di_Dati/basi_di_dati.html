@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-05-30 Fri 07:58 -->
+<!-- 2025-06-07 Sat 16:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Basi di dati</title>
@@ -76,9 +76,56 @@
 </li>
 <li><a href="#org56951a6">Progettazione logica</a>
 <ul>
-<li><a href="#orgca2d74e">Ristruttazione</a></li>
+<li><a href="#org5bff971">Ristrutturazione</a></li>
 <li><a href="#orgfc04f5d">Traduzione a modello relazionale</a></li>
 <li><a href="#orge62db05"><span class="todo TODO">TODO</span> Reverse Engineering</a></li>
+<li><a href="#org4489564">Normalizzazione di Schemi Relazionali</a>
+<ul>
+<li><a href="#orge38ffbb">Dipendenza Funzionale</a></li>
+<li><a href="#org0c3b93d">Regole di Inferenza sulle Dipendenze Funzionali</a></li>
+<li><a href="#orgb54d095">Individuazione delle Dipendenze Funzionali</a></li>
+<li><a href="#orgcf483ab">Normalizzazione di Relazioni</a></li>
+<li><a href="#org736749d">Forme Normali</a>
+<ul>
+<li><a href="#org33e892b">Prima Forma Normale (1NF)</a></li>
+<li><a href="#org1cad199">Seconda Forma Normale (2NF)</a></li>
+<li><a href="#org27a9a90">Terza Forma Normale (3NF)</a></li>
+<li><a href="#orgc85feca">Forma Normale di Boyce-Codd (BCNF)</a></li>
+</ul>
+</li>
+<li><a href="#org7ce2b50">Riassunto delle Proprietà della Normalizzazione</a></li>
+<li><a href="#org7309663">Esempio di Decomposizione in 3NF</a></li>
+<li><a href="#orge2afa43">Note Finali</a>
+<ul>
+<li><a href="#orgcdfc43f">Verifica di correttezza</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org8478db7">Progettazione Fisica: Strutture e Metodi d'Accesso ai Dati su Disco</a>
+<ul>
+<li><a href="#orgafde17f">DBMS e sistema operativo</a></li>
+<li><a href="#org0ca3ea3">Fattore di blocco</a></li>
+<li><a href="#org03b1d15">Strutture primarie dei file</a></li>
+<li><a href="#orga8e47af">Strutture ad accesso sequenziale</a>
+<ul>
+<li><a href="#orgc1e8f0b">Struttura non ordinata (file heap)</a></li>
+<li><a href="#org9954a3f">Struttura sequenziale ad array</a></li>
+<li><a href="#org8c2c3d1">Struttura sequenziale ordinata</a></li>
+</ul>
+</li>
+<li><a href="#orgbc1ddf4">Strutture ad accesso calcolato (hash)</a></li>
+<li><a href="#org2399872">Alberi (indici)</a>
+<ul>
+<li><a href="#orgbb93c2c">Indici primari</a></li>
+<li><a href="#org9a90d3b">Indici secondari</a></li>
+</ul>
+</li>
+<li><a href="#org434d37c">Considerazioni sugli indici</a></li>
+<li><a href="#org4a455f1">Alberi di ricerca</a></li>
+<li><a href="#orgc189ed7">Tips</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#orgc40ce0a">Progetto</a>
@@ -556,9 +603,9 @@ Sia cardinalità che identificatori sono vincoli di integrità su relazioni ed e
 Una volta creato un modello ER completo, bisogna ristrutturarlo e poi tradurlo nel modello relazionale.
 </p>
 </div>
-<div id="outline-container-orgca2d74e" class="outline-3">
-<h3 id="orgca2d74e">Ristruttazione</h3>
-<div class="outline-text-3" id="text-orgca2d74e">
+<div id="outline-container-org5bff971" class="outline-3">
+<h3 id="org5bff971">Ristrutturazione</h3>
+<div class="outline-text-3" id="text-org5bff971">
 <p>
 Si basano su valutazioni legate ai parametri di carico della basi di dati. Questi parametri includono:
 </p>
@@ -622,10 +669,460 @@ Le <b>relazioni 1 a N</b> sono trasformate o inglobando nell'entità con cardina
 <b>Relazioni n-arie</b>: si traducono come le relazioni N:M con una chiave esterna per ogni entità implicata nell’associazione.
 <b>Relazioni ricorsive</b>: si traducono come normali associazioni ma ridenominando le chiavi esterne in modo da evidenziarne il ruolo nell’associazione.
 </p>
+
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Tipo di Relazione</th>
+<th scope="col" class="org-left">Trasformazione in Modello Relazionale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>N:N</b></td>
+<td class="org-left">Creazione di una nuova tabella con chiave primaria composta dalle chiavi delle entità partecipanti. Gli attributi della relazione diventano attributi della nuova tabella. Possono entrare nella chiave per permettere relazioni multiple tra stesse entità.</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>1:1</b></td>
+<td class="org-left">Inglobame                                                                             mnnto di una delle chiavi nell'altra relazione, insieme agli   attributi della relazione.</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>1:N</b></td>
+<td class="org-left">Due opzioni: (1) Inglobare nella tabella dell'entità con cardinalità 1 la chiave dell'altra entità, o (2) Creare una nuova tabella con entrambe le chiavi e gli attributi della relazione, dove la chiave primaria è solo l'attributo dell'entità con cardinalità 1.</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>n-arie</b></td>
+<td class="org-left">Si traducono come le relazioni N:M, creando una tabella con una chiave esterna per ogni entità implicata nell'associazione.</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>ricorsive</b></td>
+<td class="org-left">Si traducono come normali associazioni, ridenominando le chiavi esterne per evidenziare il loro ruolo specifico nell'associazione.</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="outline-container-orge62db05" class="outline-3">
 <h3 id="orge62db05"><span class="todo TODO">TODO</span> Reverse Engineering</h3>
+</div>
+<div id="outline-container-org4489564" class="outline-3">
+<h3 id="org4489564">Normalizzazione di Schemi Relazionali</h3>
+<div class="outline-text-3" id="text-org4489564">
+</div>
+<div id="outline-container-orge38ffbb" class="outline-4">
+<h4 id="orge38ffbb">Dipendenza Funzionale</h4>
+<div class="outline-text-4" id="text-orge38ffbb">
+<p>
+Una <b>dipendenza funzionale</b> \(X \rightarrow Y\) tra due sottoinsiemi di attributi \(X\) e \(Y\) di una relazione \(R\) stabilisce un vincolo sulle ennuple che possono formare uno stato di relazione \(r\) di \(R\):
+</p>
+
+<p>
+Per ogni coppia di ennuple \(t_1\) e \(t_2\) in \(r\) per cui \(t_1[X] = t_2[X]\), si ha \(t_1[Y] = t_2[Y]\), ovvero \(t_1[X] = t_2[X] \rightarrow t_1[Y] = t_2[Y]\).
+</p>
+
+<ul class="org-ul">
+<li>Se \(X\) è una chiave di \(R\), allora \(X \rightarrow Y\) vale per ogni sottoinsieme \(Y\) di attributi di \(R\).</li>
+<li>\(X \rightarrow Y\) <b>NON</b> implica \(Y \rightarrow X\).</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org0c3b93d" class="outline-4">
+<h4 id="org0c3b93d">Regole di Inferenza sulle Dipendenze Funzionali</h4>
+<div class="outline-text-4" id="text-org0c3b93d">
+<ol class="org-ol">
+<li><b>Regola riflessiva:</b> Se \(Y \subseteq X\), allora \(X \rightarrow Y\)</li>
+<li><b>Regola di arricchimento:</b> Da \(X \rightarrow Y\), segue \(XZ \rightarrow YZ\)</li>
+<li><b>Regola transitiva:</b> Da \(X \rightarrow Y\) e \(Y \rightarrow Z\), segue \(X \rightarrow Z\)</li>
+<li><b>Regola di decomposizione:</b> Da \(X \rightarrow YZ\), segue \(X \rightarrow Y\) e \(X \rightarrow Z\)</li>
+<li><b>Regola di unione:</b> Da \(X \rightarrow Y\) e \(X \rightarrow Z\), segue \(X \rightarrow YZ\)</li>
+<li><b>Regola pseudo-transitiva:</b> Da \(X \rightarrow Y\) e \(WY \rightarrow Z\), segue \(WX \rightarrow Z\)</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgb54d095" class="outline-4">
+<h4 id="orgb54d095">Individuazione delle Dipendenze Funzionali</h4>
+<div class="outline-text-4" id="text-orgb54d095">
+<ul class="org-ul">
+<li>È il progettista della base di dati a individuare le dipendenze funzionali in base alla conoscenza del dominio.</li>
+<li>Dato un insieme iniziale di dipendenze funzionali \(F\), è possibile dedurne altre tramite le regole di inferenza.</li>
+<li>L'insieme \(F^+\) delle dipendenze funzionali individuate dal progettista unito a quelle inferite si chiama <b>chiusura di \(F\)</b>.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgcf483ab" class="outline-4">
+<h4 id="orgcf483ab">Normalizzazione di Relazioni</h4>
+<div class="outline-text-4" id="text-orgcf483ab">
+<ul class="org-ul">
+<li>Le <b>forme normali</b> sono proprietà delle relazioni definite con riferimento alle dipendenze funzionali, utili per evitare anomalie.</li>
+<li>Se una relazione non è compatibile con una forma normale, si decompone in relazioni più piccole che rispettano la forma normale desiderata.</li>
+<li>Obiettivi:
+<ul class="org-ul">
+<li><b>Join senza perdita:</b> la ricostruzione della relazione dalle sue parti decomposte non deve generare ennuple non inizialmente presenti.</li>
+<li><b>Conservazione delle dipendenze:</b> ogni dipendenza funzionale deve essere rispettata nello schema normalizzato.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org736749d" class="outline-4">
+<h4 id="org736749d">Forme Normali</h4>
+<div class="outline-text-4" id="text-org736749d">
+</div>
+<div id="outline-container-org33e892b" class="outline-5">
+<h5 id="org33e892b">Prima Forma Normale (1NF)</h5>
+<div class="outline-text-5" id="text-org33e892b">
+<ul class="org-ul">
+<li>Uno schema di relazione \(R(X)\) è in 1NF se ogni attributo di \(X\) è semplice, cioè atomico.</li>
+<li>Esclude attributi multivalore e strutturati.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org1cad199" class="outline-5">
+<h5 id="org1cad199">Seconda Forma Normale (2NF)</h5>
+<div class="outline-text-5" id="text-org1cad199">
+<ul class="org-ul">
+<li>Risolve il problema delle <b>dipendenze parziali</b></li>
+<li>Si applica a relazioni con chiave composta.</li>
+<li>Una dipendenza funzionale \(X \rightarrow Y\) è <b>completa</b> se la rimozione di qualsiasi attributo da \(X\) rende la dipendenza non più valida.</li>
+<li>Uno schema è in 2NF se ogni attributo non primo dipende funzionalmente in modo completo dalla chiave primaria (anche transitivamente).</li>
+<li>Un attributo è <b>primo</b> se fa parte di almeno una chiave di \(R\).</li>
+<li>Normalizzazione: per ogni dipendenza parziale, si crea una relazione distinta.</li>
+
+<li>Un ruolo della chiave primaria è quello di "discernere" nella sua interezza le tuple. Come se ogni chiave rappresentasse un istanza i cui attributi sono le sue caratteristiche. (che è come dire che dalla combinnazione di attributi della chiave dipendono i valori degli altri attributi, definizione)</li>
+<li>Se invece il valore di un attributo dipende soltanto da una parte della chiave, allora una chiave distinta non rappresenta più una nuova istanza, restringendo a quell'attributo</li>
+<li>A stessi valori di \(X\) corrispondono stessi valori di \(Y\), sebbene la chiave sia diversa.</li>
+<li>Questo causa problemi per:
+<ul class="org-ul">
+<li>aggiornamento: i valori ridondanti di \(Y\) vanno aggiornati tutti ogni volta</li>
+<li>cancellazione: se vengono cancellati tutti i valori del resto della chiave, devo cancellare l'intera tupla (essendo chiave) e perdo anche l'associazione di \(X\) a \(Y\)</li>
+<li>inserimento: non posso inserire l'informazione che ad una certa istanza di \(X\) è associato \(Y\) se non conosco già il resto della chiave</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org27a9a90" class="outline-5">
+<h5 id="org27a9a90">Terza Forma Normale (3NF)</h5>
+<div class="outline-text-5" id="text-org27a9a90">
+<ul class="org-ul">
+<li>Risolve il problema delle dipendenze ricorsive</li>
+<li>Uno schema \(R\) è in 3NF se, per ogni dipendenza funzionale non banale \(X \rightarrow A\):
+<ul class="org-ul">
+<li>\(X\) è una superchiave, <b>oppure</b></li>
+<li>\(A\) appartiene ad almeno una chiave di \(R\)</li>
+<li>Ovvero, in ogni dipendenza funzionale è coinvolta almeno una chiave o parte di essa.</li>
+</ul></li>
+<li>Un'altra definizione è che lo schema \(R\) rispetti la 2NF <b>e</b> esiste un attributo non primo che dipende in modo transitivo dalla chiave primaria.
+<ul class="org-ul">
+<li>Questa forma equivale alla precedente perchè se \(X \rightarrow A\) e X non è una superchiave e A non fa parte di alcuna chiave:
+<ul class="org-ul">
+<li>X dipende necessariamente da K chiave perchè questo vale sempre</li>
+<li>allora A dipende funzionalmente da K mediante X e quindi è transitiva</li>
+</ul></li>
+<li>Al contrario, se K -&gt; X -&gt; A, allora X non è una superchiave (altrimenti non potrebbe dipendere funzionalmente da K) e A non fa parte di una chiave (altrimenti sarebbe parte di K)</li>
+</ul></li>
+<li>La 3NF è sempre raggiungibile senza perdita e conservando le dipendenze.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc85feca" class="outline-5">
+<h5 id="orgc85feca">Forma Normale di Boyce-Codd (BCNF)</h5>
+<div class="outline-text-5" id="text-orgc85feca">
+<ul class="org-ul">
+<li>Notare che in 3NF si ammette anche il caso in cui X non è una superchiave e A invece fa parte di una chiave.
+<ul class="org-ul">
+<li>Abbiamo un elemento che fa parte della chiave, e quindi che collabora a determinare ogni altro attributo</li>
+<li>Ma questo stesso elemento è a sua volta determinato da un altro attributo.</li>
+<li><p>
+Ovvero ho una situazione AB-&gt;C, C-&gt;A, dove AB è chiave
+per ogni Progetto e Sede c'è un solo manager, e per ogni manager c'è una sola branch.    
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Manager (C)</th>
+<th scope="col" class="org-left">Progetto (B)</th>
+<th scope="col" class="org-left">Sede  (A)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Brown</td>
+<td class="org-left">Mars</td>
+<td class="org-left">Chicago</td>
+</tr>
+
+<tr>
+<td class="org-left">Green</td>
+<td class="org-left">Jupiter</td>
+<td class="org-left">Birmingham</td>
+</tr>
+
+<tr>
+<td class="org-left">Green</td>
+<td class="org-left">Mars</td>
+<td class="org-left">Birmingham</td>
+</tr>
+
+<tr>
+<td class="org-left">Hoskin</td>
+<td class="org-left">Saturn</td>
+<td class="org-left">Birmingham</td>
+</tr>
+</tbody>
+</table></li>
+<li>Questa forma potrebbe causare problemi: c'è ridondanza perchè le colonne A e C accadono sempre insieme, in quanto dipendono l'una dall'altra. Se modifico il valore di una tupla, devo modificarlo anche per ogni altra tupla con lo stesso valore.</li>
+<li>In effetti l'informazione che lega A e C esiste aldilà di questa relazione e quindi può essere scorporato.</li>
+</ul></li>
+<li>Uno schema \(R\) è in BCNF se, per ogni dipendenza funzionale non banale \(X \rightarrow A\), \(X\) è una superchiave.</li>
+<li>Normalizzazione: decomporre \(R\) in modo che esista una relazione per ogni dipendenza, con chiave il lato sinistro della dipendenza.</li>
+<li>La BCNF non è sempre raggiungibile senza perdita di dipendenze.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org7ce2b50" class="outline-4">
+<h4 id="org7ce2b50">Riassunto delle Proprietà della Normalizzazione</h4>
+<div class="outline-text-4" id="text-org7ce2b50">
+<ul class="org-ul">
+<li>Una forma normale garantisce l'assenza di determinati difetti (ridondanze, anomalie di aggiornamento/inserimento/cancellazione).</li>
+<li>La normalizzazione consiste nel decomporre uno schema in sottoschemi normalizzati.</li>
+<li>Ogni decomposizione deve essere:
+<ul class="org-ul">
+<li><b>Senza perdita</b>, cioè permettere la ricostruzione esatta della relazione originaria.</li>
+<li><b>Conservativa delle dipendenze</b>, per evitare query complesse di verifica dei vincoli.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org7309663" class="outline-4">
+<h4 id="org7309663">Esempio di Decomposizione in 3NF</h4>
+<div class="outline-text-4" id="text-org7309663">
+<p>
+Supponiamo di avere lo schema \(R(ABCDEFG)\) con le seguenti dipendenze funzionali:
+</p>
+<ul class="org-ul">
+<li>\(AB \rightarrow CD\)</li>
+<li>\(AB \rightarrow E\)</li>
+<li>\(C \rightarrow F\)</li>
+<li>\(F \rightarrow G\)</li>
+</ul>
+
+<p>
+La decomposizione in 3NF produrrà:
+</p>
+<ul class="org-ul">
+<li>\(R_1(ABCDE)\)</li>
+<li>\(R_2(CF)\)</li>
+<li>\(R_3(FG)\)</li>
+</ul>
+
+<p>
+Alla fine si verifica che almeno una relazione contenga una chiave della relazione originaria.
+</p>
+</div>
+</div>
+<div id="outline-container-orge2afa43" class="outline-4">
+<h4 id="orge2afa43">Note Finali</h4>
+<div class="outline-text-4" id="text-orge2afa43">
+<ul class="org-ul">
+<li>La <b>terza forma normale</b> è meno restrittiva della BCNF e può ammettere ancora qualche anomalia, ma garantisce sempre la conservazione delle dipendenze.</li>
+<li>Se una relazione ha una sola chiave, allora è in BCNF se e solo se è in 3NF.</li>
+<li>La normalizzazione è una tecnica di verifica degli schemi, non una metodologia di progettazione.</li>
+</ul>
+</div>
+<div id="outline-container-orgcdfc43f" class="outline-5">
+<h5 id="orgcdfc43f">Verifica di correttezza</h5>
+<div class="outline-text-5" id="text-orgcdfc43f">
+<p>
+Le informazioni presentate nel testo sono corrette e riflettono accuratamente la teoria della normalizzazione degli schemi relazionali. In particolare:
+</p>
+
+<ul class="org-ul">
+<li>Le definizioni delle forme normali sono precise</li>
+<li>Le regole di inferenza rappresentano l'insieme completo degli assiomi di Armstrong</li>
+<li>L'esempio di decomposizione fornito è corretto</li>
+<li>È vero che la 3NF è sempre raggiungibile preservando dipendenze e senza perdita di informazione</li>
+<li>È corretto che la BCNF è più restrittiva ma non sempre garantisce la conservazione delle dipendenze</li>
+</ul>
+
+<p>
+La frase conclusiva "Normalizzare uno schema significa decomporlo in sottoschemi; ogni decomposizione deve essere senza perdita e, preferibilmente, conservare le dipendenze funzionali" sintetizza accuratamente il concetto di normalizzazione.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org8478db7" class="outline-3">
+<h3 id="org8478db7">Progettazione Fisica: Strutture e Metodi d'Accesso ai Dati su Disco</h3>
+<div class="outline-text-3" id="text-org8478db7">
+</div>
+<div id="outline-container-orgafde17f" class="outline-4">
+<h4 id="orgafde17f">DBMS e sistema operativo</h4>
+<div class="outline-text-4" id="text-orgafde17f">
+<ul class="org-ul">
+<li>I dati sono memorizzati su memoria secondaria per garantire persistenza</li>
+<li>L'organizzazione avviene in blocchi di dimensione fissa</li>
+<li>L'elaborazione avviene in memoria principale</li>
+<li>Il buffer:
+<ul class="org-ul">
+<li>Gestisce i dati in memoria principale</li>
+<li>Applica strategie per minimizzare i trasferimenti da/verso la memoria secondaria</li>
+<li>È organizzato in pagine di dimensione X blocchi</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org0ca3ea3" class="outline-4">
+<h4 id="org0ca3ea3">Fattore di blocco</h4>
+<div class="outline-text-4" id="text-org0ca3ea3">
+<ul class="org-ul">
+<li>Il fattore di blocco (bfr) rappresenta il numero di record per blocco</li>
+<li>Formula: \[bfr = \left\lfloor \frac{B}{R} \right\rfloor\]
+dove \(B\) è la dimensione del blocco e \(R\) è la dimensione media del record</li>
+<li>I record possono essere a lunghezza fissa o variabile</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org03b1d15" class="outline-4">
+<h4 id="org03b1d15">Strutture primarie dei file</h4>
+<div class="outline-text-4" id="text-org03b1d15">
+<ul class="org-ul">
+<li>Determinano la disposizione delle tuple/record nei file</li>
+<li>Si distinguono per metodo d'accesso:
+<ul class="org-ul">
+<li>Sequenziale (non ordinato, ad array, ordinato)</li>
+<li>Calcolato (hash)</li>
+<li>Albero</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orga8e47af" class="outline-4">
+<h4 id="orga8e47af">Strutture ad accesso sequenziale</h4>
+<div class="outline-text-4" id="text-orga8e47af">
+</div>
+<div id="outline-container-orgc1e8f0b" class="outline-5">
+<h5 id="orgc1e8f0b">Struttura non ordinata (file heap)</h5>
+<div class="outline-text-5" id="text-orgc1e8f0b">
+<ul class="org-ul">
+<li>Sequenza basata sull'ordine di inserimento</li>
+<li>Inserimento efficiente</li>
+<li>Ricerca lineare</li>
+<li>Cancellazione logica</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org9954a3f" class="outline-5">
+<h5 id="org9954a3f">Struttura sequenziale ad array</h5>
+<div class="outline-text-5" id="text-org9954a3f">
+<ul class="org-ul">
+<li>Solo con record a lunghezza fissa</li>
+<li>Ogni tupla ha un indice che ne determina la posizione</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org8c2c3d1" class="outline-5">
+<h5 id="org8c2c3d1">Struttura sequenziale ordinata</h5>
+<div class="outline-text-5" id="text-org8c2c3d1">
+<ul class="org-ul">
+<li>Ordinamento fisico basato su chiave (pseudochiave)</li>
+<li>Efficiente per ricerche sul campo chiave</li>
+<li>Richiede indici per ricerche efficienti</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbc1ddf4" class="outline-4">
+<h4 id="orgbc1ddf4">Strutture ad accesso calcolato (hash)</h4>
+<div class="outline-text-4" id="text-orgbc1ddf4">
+<ul class="org-ul">
+<li>La posizione dipende dal valore di un campo chiave</li>
+<li>Utilizza una funzione hash \(h\) per calcolare la posizione</li>
+<li>Efficiente per ricerca puntuale, inefficiente per intervalli</li>
+<li>Richiede gestione delle collisioni</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org2399872" class="outline-4">
+<h4 id="org2399872">Alberi (indici)</h4>
+<div class="outline-text-4" id="text-org2399872">
+</div>
+<div id="outline-container-orgbb93c2c" class="outline-5">
+<h5 id="orgbb93c2c">Indici primari</h5>
+<div class="outline-text-5" id="text-orgbb93c2c">
+<ul class="org-ul">
+<li>Contengono i dati della relazione</li>
+<li>Garantiscono accesso basato sulla pseudochiave</li>
+<li>Ogni voce contiene valore della pseudochiave e puntatore</li>
+<li>Sono sempre indici sparsi (una voce per blocco)</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org9a90d3b" class="outline-5">
+<h5 id="org9a90d3b">Indici secondari</h5>
+<div class="outline-text-5" id="text-org9a90d3b">
+<ul class="org-ul">
+<li>Forniscono struttura di accesso aggiuntiva</li>
+<li>Sono sempre densi (una voce per valore chiave)</li>
+<li>Possono riferirsi a campi non chiave (con gestione dei duplicati)</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org434d37c" class="outline-4">
+<h4 id="org434d37c">Considerazioni sugli indici</h4>
+<div class="outline-text-4" id="text-org434d37c">
+<ul class="org-ul">
+<li>Un file può avere un solo indice primario</li>
+<li>Può avere numerosi indici secondari</li>
+<li>Gli indici sono file di piccole dimensioni</li>
+<li>Rendono efficienti le ricerche</li>
+<li>Hanno tempi di accesso logaritmico</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org4a455f1" class="outline-4">
+<h4 id="org4a455f1">Alberi di ricerca</h4>
+<div class="outline-text-4" id="text-org4a455f1">
+<ul class="org-ul">
+<li>Un albero di ordine \(p\) ha nodi con massimo \(p-1\) valori e \(p\) puntatori</li>
+<li>È importante mantenere il bilanciamento per ricerche efficienti</li>
+</ul>
+
+<p>
+Questa struttura organizza i dati fisici per ottimizzare l'accesso, minimizzando le operazioni di I/O e migliorando l'efficienza del database.
+</p>
+</div>
+</div>
+<div id="outline-container-orgc189ed7" class="outline-4">
+<h4 id="orgc189ed7">Tips</h4>
+<div class="outline-text-4" id="text-orgc189ed7">
+<ul class="org-ul">
+<li>Inserire una chiave id quando l'entità non abbia una chiave esplicita</li>
+<li>Quando un attributo di una relazione vuole essere usato come chiave (non possibile normalmente), trasformarlo in un entità che partecipa alla stessa relazione, che quindi diventa molteplice</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div id="outline-container-orgc40ce0a" class="outline-2">
@@ -767,7 +1264,7 @@ Materialized view, ma le tabelle derivate mostrano che si sa come funziona. Comu
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-05-30 Fri 07:58</p>
+<p class="date">Created: 2025-06-07 Sat 16:49</p>
 </div>
 </body>
 </html>
