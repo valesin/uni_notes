@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
-<!-- 2025-06-07 Sat 16:49 -->
+<!-- 2025-06-08 Sun 22:00 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Statistica</title>
@@ -46,7 +46,7 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgd65a0a0">Leggere e rappresentare dati su Python</a>
+<li><a href="#orgff8a2ba">Python</a>
 <ul>
 <li><a href="#orgc08f01b">Tipi primitivi di collezioni</a></li>
 <li><a href="#org7893313">NumPy</a></li>
@@ -54,8 +54,8 @@
 <ul>
 <li><a href="#org174774b">Series</a>
 <ul>
-<li><a href="#orgb94cb44">Creazione</a></li>
-<li><a href="#org5be234e">Accesso</a>
+<li><a href="#org448df05">Creazione</a></li>
+<li><a href="#orgc9e01a9">Accesso</a>
 <ul>
 <li><a href="#org987eed6">Accedere ad un valore specifico</a></li>
 <li><a href="#orgd396d2f">Accedere ad una sottocollezione</a></li>
@@ -63,17 +63,19 @@
 </li>
 <li><a href="#orga7a5000">Proprietà</a></li>
 <li><a href="#orge324c00">Visualizzazione</a></li>
-<li><a href="#orgea62f5a">Categorizzare dati</a>
+<li><a href="#orgaf56610">Operazioni su dati</a>
 <ul>
 <li><a href="#org240e4b9">Raccogliere valori in bins</a></li>
+<li><a href="#org2e87c54">Scremare e contare</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#orga0968b7">Dataframe</a>
 <ul>
-<li><a href="#org448df05">Creazione</a></li>
-<li><a href="#orgc9e01a9">Accesso</a>
+<li><a href="#org2b9ac2f">Lettura da CSV</a></li>
+<li><a href="#org3313761">Creazione</a></li>
+<li><a href="#orgc0691ad">Accesso</a>
 <ul>
 <li><a href="#orgba4c936">Colonne</a></li>
 <li><a href="#org10d56e5">Righe</a></li>
@@ -90,16 +92,43 @@
 <li><a href="#org7f82827">Conta numero di casi e colonne</a></li>
 <li><a href="#orgc050509">Ritorna valori unici di un attributo</a></li>
 <li><a href="#orga5cbf69">Capisci esistenza valori nulli</a></li>
+<li><a href="#org92865b5">Trova tipi dato colonne</a></li>
+<li><a href="#org4138ab1">Filtra colonne per tipo</a></li>
 </ul>
 </li>
-<li><a href="#org2b9ac2f">Lettura da CSV</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a href="#orge68f6db">Tecniche python</a>
+<ul>
+<li><a href="#orgcd62758">Calcola funzione di ripartizione usando massa</a></li>
+<li><a href="#orga16c0a3">Inversa della funzione di ripartizione</a></li>
+<li><a href="#org429311b">(AGGIUNGERE CODICE) Stabilire se una popolazione può essere descritta da una variabile aleatoria</a></li>
+<li><a href="#org487ad7a">Mostrare media non robusta in distribuzione skewed</a></li>
+</ul>
+</li>
+<li><a href="#org6927619">Grafici Statistici in Python: Guida Rapida (Approccio OOP)</a>
+<ul>
+<li><a href="#org4cf7804">Blueprint</a>
+<ul>
+<li><a href="#org959cd8d">Un solo grafico</a></li>
+<li><a href="#org7609554">Due grafici</a></li>
+</ul>
+</li>
+<li><a href="#orgcff9f4e">A bastoncini (Stem plots)</a></li>
+<li><a href="#org51a8b7d">A barre (Bar charts)</a></li>
+<li><a href="#org1a80a59">Poligonale (Line plots)</a></li>
+<li><a href="#org2759f15">A torta (Pie charts)</a></li>
+<li><a href="#org58062db">Istogramma (Histogram)</a></li>
+<li><a href="#orgfe65122">Grafici multipli (Multiple plots)</a></li>
+<li><a href="#orgfb76f92">Scatter plot (Diagramma di dispersione)</a></li>
+<li><a href="#orgdec16b2">Tabella comparativa per scelta grafico</a></li>
+<li><a href="#org7f0975c">Linee guida rapide</a></li>
+<li><a href="#orgd313567">Personalizzazione rapida degli assi e grafici</a></li>
 </ul>
 </li>
 <li><a href="#orgb4f68ba">Statistica descrittiva (continuare con anki e revisione da qui)</a>
-<ul>
-<li><a href="#org1e5d71c">Descrivere i dati</a>
 <ul>
 <li><a href="#org28044a0">Dati quantitativi e qualitativi</a></li>
 <li><a href="#orgcd936b4">Frequenze</a>
@@ -116,29 +145,24 @@
 </ul>
 </li>
 <li><a href="#orgf5ed488">Frequenze congiunte e marginali</a></li>
+<li><a href="#orgf028389">Indici di centralità</a>
+<ul>
+<li><a href="#org2a78fed">Media campionaria</a></li>
+<li><a href="#orgfc9cf19">Mediana campionaria</a></li>
+<li><a href="#org0baab7f">Moda campionaria</a></li>
 </ul>
 </li>
-<li><a href="#org63ba63a">Riassumere i dati</a>
+<li><a href="#org589bb4c">Indici di dispersione</a>
 <ul>
-<li><a href="#org418119f">Indici di centralità</a>
-<ul>
-<li><a href="#orgc0ac8a0">Media campionaria</a></li>
-<li><a href="#org6c4acd7">Mediana campionaria</a></li>
-<li><a href="#orgd5248d4">Moda campionaria</a></li>
-</ul>
-</li>
-<li><a href="#orgd279798">Indici di dispersione</a>
-<ul>
-<li><a href="#org6a7ed95">Varianza campionaria</a>
+<li><a href="#org9e46e20">Varianza campionaria</a>
 <ul>
 <li><a href="#org2dc05a8">Perchè si usa il quadrato?</a></li>
 </ul>
 </li>
 <li><a href="#org39dcb4a">Deviazione standard</a></li>
-<li><a href="#org0cbcb88"><span class="todo WAIT">WAIT</span> Perchè si divide per \(n-1\)?</a></li>
 </ul>
 </li>
-<li><a href="#org14a9103">Quantili</a>
+<li><a href="#orgc8c377b">Quantili</a>
 <ul>
 <li><a href="#org0403396">Box plot</a>
 <ul>
@@ -156,8 +180,6 @@
 <li><a href="#orgf40875c">Distribuzione normale</a></li>
 <li><a href="#org8a94430">Coefficiente di correlazione campionaria</a></li>
 <li><a href="#org74d6d2e"><span class="todo TODO">TODO</span> Lorenz e Gini</a></li>
-</ul>
-</li>
 <li><a href="#org1e7948c">Grafici</a>
 <ul>
 <li><a href="#org0d01e63">A bastoncini</a></li>
@@ -172,19 +194,17 @@
 </li>
 </ul>
 </li>
-<li><a href="#orgc4f9e77"><span class="todo TODO">TODO</span> Calcolo combinatorio</a>
-<ul>
-<li><a href="#orge7324dc">Teorema fondamentale del calcolo combinatorio</a></li>
-<li><a href="#orgd3943c9">Permutazioni</a></li>
-<li><a href="#org2db997b">Disposizioni</a></li>
-<li><a href="#orgc72e4b4">Combinazioni</a></li>
-</ul>
-</li>
 <li><a href="#org88aaa01">Probabilità</a></li>
 <li><a href="#org9eea659">Variabili aleatorie</a>
 <ul>
-<li><a href="#org9dc9c96">Definizione e concetti di base</a></li>
-<li><a href="#org4a34135">Funzione di ripartizione e funzione di massa di probabilità</a></li>
+<li><a href="#org0712b1e">Funzione di ripartizione e funzioni di probabilità</a>
+<ul>
+<li><a href="#orga1d27bb">Concetti fondamentali per variabili aleatorie</a></li>
+<li><a href="#org8b3219b">Variabili aleatorie discrete</a></li>
+<li><a href="#orgfe1ac5a">Variabili aleatorie continue</a></li>
+<li><a href="#orgb058a68">Confronto e differenze principali</a></li>
+</ul>
+</li>
 <li><a href="#org30aaf5e">Funzione indicatrice</a></li>
 <li><a href="#org31227f4">Valore atteso e varianza</a></li>
 <li><a href="#orgc7e5d71">Variabili aleatorie multivariate</a>
@@ -200,14 +220,10 @@
 <li><a href="#orgebfc0f0">Coefficiente di correlazione</a></li>
 </ul>
 </li>
-<li><a href="#orgfe1ac5a">Variabili aleatorie continue</a></li>
-<li><a href="#org89947d1">Disuguaglianze probabilistiche fondamentali</a>
-<ul>
 <li><a href="#org98ebc0b">Disuguaglianza di Markov</a></li>
 <li><a href="#org16eba75">Disuguaglianza di Chebyshev</a></li>
 <li><a href="#org88f7a28">Legge dei grandi numeri</a></li>
-</ul>
-</li>
+<li><a href="#org93cdc7f">Legge dei grandi numeri</a></li>
 <li><a href="#org74800df">Modelli di variabili aleatorie</a>
 <ul>
 <li><a href="#org57a32f3">Modello di Bernoulli</a></li>
@@ -222,7 +238,7 @@
 <li><a href="#org698e5cf">Proprietà di assenza di memoria</a></li>
 <li><a href="#org2cc6ff4">Relazione con altre distribuzioni</a></li>
 <li><a href="#org0942342">Applicazioni</a></li>
-<li><a href="#orgff8a2ba">Python</a></li>
+<li><a href="#org3107891">Python</a></li>
 </ul>
 </li>
 <li><a href="#org7036508">Uniforme discreto</a></li>
@@ -231,16 +247,24 @@
 <li><a href="#orge9c02b0">Continuo uniforme</a></li>
 <li><a href="#org59e2742">Esponenziale</a></li>
 <li><a href="#org451db8e">Gaussiano</a></li>
-<li><a href="#orgf895136">Considerazioni su riproducibilità (da integrare)</a></li>
 </ul>
 </li>
-<li><a href="#orge68f6db">Tecniche python</a>
+<li><a href="#org5f6d451">Riproducibilità (da integrare)</a></li>
+<li><a href="#orgbd29f40">Teorema centrale del limite (da integrare)</a></li>
+<li><a href="#orge1dd96e">Assenza di memoria</a></li>
+</ul>
+</li>
+<li><a href="#org117121d">Statistica inferenziale</a>
 <ul>
-<li><a href="#orgcd62758">Calcola funzione di ripartizione usando massa</a></li>
-<li><a href="#orga16c0a3">Inversa della funzione di ripartizione</a></li>
-<li><a href="#org429311b">(AGGIUNGERE CODICE) Stabilire se una popolazione può essere descritta da una variabile aleatoria</a></li>
+<li><a href="#org8673dd5">Stimatore non deviato</a>
+<ul>
+<li><a href="#org43be099">Media campionaria come stimatore</a></li>
+<li><a href="#orgc7bb3f2">Varianza campionaria come stimatore</a></li>
 </ul>
 </li>
+<li><a href="#orga719f4c">Errore quadratico medio</a></li>
+<li><a href="#orge69270b">Consistenza in media quadratica</a></li>
+<li><a href="#orgf4bb999">Consistenza debole</a></li>
 </ul>
 </li>
 <li><a href="#orgb225ee8"><span class="todo TODO">TODO</span> Creare una panoramica con tutti i grafici delle distribuzioni che abbiamo guardato fatte in python</a></li>
@@ -251,9 +275,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orgd65a0a0" class="outline-2">
-<h2 id="orgd65a0a0">Leggere e rappresentare dati su Python</h2>
-<div class="outline-text-2" id="text-orgd65a0a0">
+<div id="outline-container-orgff8a2ba" class="outline-2">
+<h2 id="orgff8a2ba">Python</h2>
+<div class="outline-text-2" id="text-orgff8a2ba">
 </div>
 <div id="outline-container-orgc08f01b" class="outline-3">
 <h3 id="orgc08f01b">Tipi primitivi di collezioni</h3>
@@ -351,9 +375,9 @@ I due array sono accessibili mediante i metodi <code>.array</code>, che ritorna 
 Quando si disegna il grafico di due serie, i valori vengono associati in base all'indice.
 </p>
 </div>
-<div id="outline-container-orgb94cb44" class="outline-5">
-<h5 id="orgb94cb44">Creazione</h5>
-<div class="outline-text-5" id="text-orgb94cb44">
+<div id="outline-container-org448df05" class="outline-5">
+<h5 id="org448df05">Creazione</h5>
+<div class="outline-text-5" id="text-org448df05">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #a020f0;">import</span> pandas <span style="color: #a020f0;">as</span> pd
 
@@ -367,9 +391,9 @@ Quando si disegna il grafico di due serie, i valori vengono associati in base al
 </div>
 </div>
 </div>
-<div id="outline-container-org5be234e" class="outline-5">
-<h5 id="org5be234e">Accesso</h5>
-<div class="outline-text-5" id="text-org5be234e">
+<div id="outline-container-orgc9e01a9" class="outline-5">
+<h5 id="orgc9e01a9">Accesso</h5>
+<div class="outline-text-5" id="text-orgc9e01a9">
 </div>
 <div id="outline-container-org987eed6" class="outline-6">
 <h6 id="org987eed6">Accedere ad un valore specifico</h6>
@@ -425,9 +449,9 @@ first_appearance.index  <span style="color: #b22222;"># </span><span style="colo
 </div>
 </div>
 </div>
-<div id="outline-container-orgea62f5a" class="outline-5">
-<h5 id="orgea62f5a">Categorizzare dati</h5>
-<div class="outline-text-5" id="text-orgea62f5a">
+<div id="outline-container-orgaf56610" class="outline-5">
+<h5 id="orgaf56610">Operazioni su dati</h5>
+<div class="outline-text-5" id="text-orgaf56610">
 </div>
 <div id="outline-container-org240e4b9" class="outline-6">
 <h6 id="org240e4b9">Raccogliere valori in bins</h6>
@@ -443,6 +467,15 @@ first_appearance.index  <span style="color: #b22222;"># </span><span style="colo
 <span style="color: #a0522d;">frequency_table</span> = pd.crosstab(index=height_categories, columns=<span style="color: #8b2252;">'count'</span>)
 </pre>
 </div>
+</div>
+</div>
+<div id="outline-container-org2e87c54" class="outline-6">
+<h6 id="org2e87c54">Scremare e contare</h6>
+<div class="outline-text-6" id="text-org2e87c54">
+<p>
+Per scremare <code>serie[serie &lt; 50])</code>.
+<code>len()</code> lunghezza compreso nan, <code>.count()</code> senza nan.
+</p>
 </div>
 </div>
 </div>
@@ -474,9 +507,39 @@ Per <b>accedere ad una riga</b> si utilizza <code>loc[]</code> e <code>iloc[]</c
 Per <b>accedere ad un elemento</b> si usa <code>at[index, column]</code>.
 </p>
 </div>
-<div id="outline-container-org448df05" class="outline-5">
-<h5 id="org448df05">Creazione</h5>
-<div class="outline-text-5" id="text-org448df05">
+<div id="outline-container-org2b9ac2f" class="outline-5">
+<h5 id="org2b9ac2f">Lettura da CSV</h5>
+<div class="outline-text-5" id="text-org2b9ac2f">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Lettura di base</span>
+<span style="color: #a0522d;">df</span> = pd.read_csv(<span style="color: #8b2252;">'file.csv'</span>)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Con opzioni personalizzate</span>
+<span style="color: #a0522d;">heroes</span> = pd.read_csv(<span style="color: #8b2252;">'heroes.csv'</span>,
+                      delimiter=<span style="color: #8b2252;">';'</span>,  <span style="color: #b22222;"># </span><span style="color: #b22222;">Field separator</span>
+                      quotechar=<span style="color: #8b2252;">'"'</span>,  <span style="color: #b22222;"># </span><span style="color: #b22222;">Quote character</span>
+                      na_values=[<span style="color: #8b2252;">'NA'</span>, <span style="color: #8b2252;">''</span>],  <span style="color: #b22222;"># </span><span style="color: #b22222;">Values to treat as NaN</span>
+                      index_col=<span style="color: #8b2252;">'name'</span>,  <span style="color: #b22222;"># </span><span style="color: #b22222;">Column to use as index</span>
+
+                      <span style="color: #b22222;"># </span><span style="color: #b22222;">--- Numerical Separators ---</span>
+                      decimal=<span style="color: #8b2252;">'.'</span>,  <span style="color: #b22222;"># </span><span style="color: #b22222;">Decimal separator (default is '.')</span>
+                      thousands=<span style="color: #8b2252;">','</span>, <span style="color: #b22222;"># </span><span style="color: #b22222;">Thousands separator (e.g., "1,000.00")</span>
+
+                      <span style="color: #b22222;"># </span><span style="color: #b22222;">--- Column Data Types ---</span>
+                       dtype={
+                           <span style="color: #8b2252;">'colonna_A'</span>: <span style="color: #483d8b;">float</span>,  <span style="color: #b22222;"># </span><span style="color: #b22222;">Force 'colonna_A' to float</span>
+                           <span style="color: #8b2252;">'colonna_B'</span>: <span style="color: #483d8b;">str</span>,    <span style="color: #b22222;"># </span><span style="color: #b22222;">Force 'colonna_B' to string</span>
+                           <span style="color: #8b2252;">'colonna_interi_con_NA'</span>: pd.Int64Dtype(), <span style="color: #b22222;"># </span><span style="color: #b22222;">Nullable integer column</span>
+                           <span style="color: #8b2252;">'colonna_mista_numerica'</span>: np.float64  <span style="color: #b22222;"># </span><span style="color: #b22222;">Mixed int/float column</span>
+                      }
+                     )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org3313761" class="outline-5">
+<h5 id="org3313761">Creazione</h5>
+<div class="outline-text-5" id="text-org3313761">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Da dizionario di liste/array</span>
 <span style="color: #a0522d;">heroes_df</span> = pd.DataFrame({
@@ -495,9 +558,9 @@ Per <b>accedere ad un elemento</b> si usa <code>at[index, column]</code>.
 </div>
 </div>
 </div>
-<div id="outline-container-orgc9e01a9" class="outline-5">
-<h5 id="orgc9e01a9">Accesso</h5>
-<div class="outline-text-5" id="text-orgc9e01a9">
+<div id="outline-container-orgc0691ad" class="outline-5">
+<h5 id="orgc0691ad">Accesso</h5>
+<div class="outline-text-5" id="text-orgc0691ad">
 </div>
 <div id="outline-container-orgba4c936" class="outline-6">
 <h6 id="orgba4c936">Colonne</h6>
@@ -619,22 +682,635 @@ dataframe.loc[:,listaDiColonneRiordinate]
 </p>
 </div>
 </div>
-</div>
-<div id="outline-container-org2b9ac2f" class="outline-4">
-<h4 id="org2b9ac2f">Lettura da CSV</h4>
-<div class="outline-text-4" id="text-org2b9ac2f">
+<div id="outline-container-org92865b5" class="outline-5">
+<h5 id="org92865b5">Trova tipi dato colonne</h5>
+<div class="outline-text-5" id="text-org92865b5">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Lettura di base</span>
-<span style="color: #a0522d;">df</span> = pd.read_csv(<span style="color: #8b2252;">'file.csv'</span>)
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Funzione per mostrare i tipi di dato nel DataFrame</span>
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">show_dtypes</span>(df):
+    <span style="color: #a020f0;">for</span> col, dtype <span style="color: #a020f0;">in</span> df.dtypes.items():
+        <span style="color: #483d8b;">print</span>(f<span style="color: #8b2252;">"</span>{col}<span style="color: #8b2252;">: </span>{dtype}<span style="color: #8b2252;">"</span>)
+    <span style="color: #483d8b;">print</span>(<span style="color: #8b2252;">"-"</span> * 30)
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Con opzioni personalizzate</span>
-<span style="color: #a0522d;">heroes</span> = pd.read_csv(<span style="color: #8b2252;">'heroes.csv'</span>, 
-                     delimiter=<span style="color: #8b2252;">';'</span>,  <span style="color: #b22222;"># </span><span style="color: #b22222;">Separatore personalizzato</span>
-                     quotechar=<span style="color: #8b2252;">'"'</span>,  <span style="color: #b22222;"># </span><span style="color: #b22222;">Carattere di quotazione</span>
-                     na_values=[<span style="color: #8b2252;">'NA'</span>, <span style="color: #8b2252;">''</span>],  <span style="color: #b22222;"># </span><span style="color: #b22222;">Valori da considerare come NA</span>
-                     index_col=<span style="color: #8b2252;">'name'</span>)  <span style="color: #b22222;"># </span><span style="color: #b22222;">Colonna da usare come indice</span>
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Mostriamo tutti i tipi di dato nel DataFrame</span>
+<span style="color: #483d8b;">print</span>(<span style="color: #8b2252;">"Tipi di dato nel DataFrame:"</span>)
+show_dtypes(df)
 </pre>
 </div>
+</div>
+</div>
+<div id="outline-container-org4138ab1" class="outline-5">
+<h5 id="org4138ab1">Filtra colonne per tipo</h5>
+<div class="outline-text-5" id="text-org4138ab1">
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #a0522d;">numeric_df</span> = df.select_dtypes(include=[<span style="color: #8b2252;">'number'</span>])
+<span style="color: #483d8b;">print</span>(numeric_df.columns.tolist())
+<span style="color: #b22222;">#</span><span style="color: #b22222;">interi -&gt; integer, float -&gt; float, stringhe -&gt; object, booleani -&gt; bool, date -&gt; datetime</span>
+<span style="color: #b22222;"># </span><span style="color: #b22222;">posso usare anche dati di np come np.float64</span>
+<span style="color: #b22222;"># </span><span style="color: #b22222;">altro argomento, exclude</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orge68f6db" class="outline-2">
+<h2 id="orge68f6db">Tecniche python</h2>
+<div class="outline-text-2" id="text-orge68f6db">
+</div>
+<div id="outline-container-orgcd62758" class="outline-3">
+<h3 id="orgcd62758">Calcola funzione di ripartizione usando massa</h3>
+<div class="outline-text-3" id="text-orgcd62758">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #483d8b;">sum</span>([X.pmf(i) <span style="color: #a020f0;">for</span> i <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">range</span>(7)])
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga16c0a3" class="outline-3">
+<h3 id="orga16c0a3">Inversa della funzione di ripartizione</h3>
+<div class="outline-text-3" id="text-orga16c0a3">
+<p>
+<code>X.ppf(0.8)</code>
+Per rispondere alla domanda: si determini il più piccolo dei valori per cui la funzione di ripartizione vale x.
+Ovvero dato il numero r, trovare quel valore della variabile aleatoria tale per cui lo 0.x % dei valori ne sono più piccoli. Proprio il concetto di <b>quantile</b>
+</p>
+</div>
+</div>
+<div id="outline-container-org429311b" class="outline-3">
+<h3 id="org429311b">(AGGIUNGERE CODICE) Stabilire se una popolazione può essere descritta da una variabile aleatoria</h3>
+<div class="outline-text-3" id="text-org429311b">
+<p>
+Tracciare un grafico con l'asse delle ascisse recante i quantili del campione e quello delle ordinate quelli teorici della specifica distribuzione ipotetica
+</p>
+
+<p>
+Con la normale viene automaticamente normalizzato
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> statsmodels.api <span style="color: #a020f0;">as</span> sm
+<span style="color: #a0522d;">fig</span> = plt.figure(figsize=(8, 8))
+<span style="color: #a0522d;">ax</span> = fig.add_subplot(111)
+
+sm.qqplot(campione, line=<span style="color: #8b2252;">'s'</span>, ax=ax)
+
+ax.set_title(<span style="color: #8b2252;">'QQ-Plot contro la Distribuzione Normale'</span>)
+ax.grid(<span style="color: #008b8b;">True</span>, linestyle=<span style="color: #8b2252;">'--'</span>, alpha=0.7)
+
+plt.tight_layout()
+plt.show()
+</pre>
+</div>
+
+<p>
+altrimenti no
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> numpy <span style="color: #a020f0;">as</span> np
+<span style="color: #a020f0;">import</span> matplotlib.pyplot <span style="color: #a020f0;">as</span> plt
+<span style="color: #a020f0;">import</span> statsmodels.api <span style="color: #a020f0;">as</span> sm
+<span style="color: #a020f0;">import</span> scipy.stats <span style="color: #a020f0;">as</span> st
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Parametri della distribuzione ipergeometrica</span>
+<span style="color: #a0522d;">M_tot</span> = 50  <span style="color: #b22222;"># </span><span style="color: #b22222;">Dimensione della popolazione</span>
+<span style="color: #a0522d;">M_fun</span> = 20  <span style="color: #b22222;"># </span><span style="color: #b22222;">Numero di successi nella popolazione</span>
+<span style="color: #a0522d;">n_estr</span> = 10  <span style="color: #b22222;"># </span><span style="color: #b22222;">Numero di estrazioni</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Creazione del QQ-plot utilizzando la distribuzione corretta</span>
+<span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax</span> = plt.subplots(figsize=(8, 8))
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Creiamo la distribuzione ipergeometrica congelata con i parametri specifici</span>
+<span style="color: #a0522d;">hypergeom_dist</span> = st.hypergeom(M=M_tot, n=M_fun, N=n_estr)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Passiamo l'oggetto distribuzione invece della funzione</span>
+sm.qqplot(serie, dist=hypergeom_dist, fit=<span style="color: #008b8b;">False</span>, line=<span style="color: #8b2252;">'45'</span>, ax=ax)
+
+ax.set_title(<span style="color: #8b2252;">'QQ-Plot: Campione vs Distribuzione Ipergeometrica'</span>)
+ax.set_xlabel(<span style="color: #8b2252;">'Quantili Teorici (Ipergeometrica)'</span>)
+ax.set_ylabel(<span style="color: #8b2252;">'Quantili del Campione (lat)'</span>)
+ax.grid(<span style="color: #008b8b;">True</span>, linestyle=<span style="color: #8b2252;">'--'</span>, alpha=0.7)
+
+plt.tight_layout()
+plt.show()
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org487ad7a" class="outline-3">
+<h3 id="org487ad7a">Mostrare media non robusta in distribuzione skewed</h3>
+<div class="outline-text-3" id="text-org487ad7a">
+<p>
+Calcolo l'ecdf e plotto il diagramma di pareto. Poi ci stampo la media con una linea verticale. 
+</p>
+
+<p>
+Altro grafico: stampo un grafico poligonale con x=numero dell'osservazione (ordinate) e y intensità. Recupero l'indice del primo elemento maggiore della media calcolando ecdf(media) * len(serie). Mostro che l'elemento in quella posizione (con iloc, altrimenti non funziona) è maggiore della media e il precedente no. Stampo la linea verticale corrispondente alla media sul grafico
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Calcolo della media e identificazione del primo elemento maggiore della media</span>
+<span style="color: #a0522d;">mean</span> = <span style="color: #483d8b;">sum</span>(serie.dropna()) / <span style="color: #483d8b;">len</span>(serie.dropna())  <span style="color: #b22222;"># </span><span style="color: #b22222;">Alternativa: serie.dropna().mean()</span>
+<span style="color: #a0522d;">y</span> = serie.dropna().sort_values()  <span style="color: #b22222;"># </span><span style="color: #b22222;">Serie ordinata</span>
+<span style="color: #a0522d;">ecdf_media</span> = ecdf(mean)  <span style="color: #b22222;"># </span><span style="color: #b22222;">Valore della ECDF in corrispondenza della media</span>
+<span style="color: #a0522d;">pos_ultimo_minore</span> = <span style="color: #483d8b;">int</span>(ecdf_media * <span style="color: #483d8b;">len</span>(y)) - 1  <span style="color: #b22222;"># </span><span style="color: #b22222;">Posizione dell'ultimo elemento &#8804; media</span>
+<span style="color: #a0522d;">pos_primo_maggiore</span> = pos_ultimo_minore + 1  <span style="color: #b22222;"># </span><span style="color: #b22222;">Posizione del primo elemento &gt; media</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Verifica</span>
+<span style="color: #a0522d;">ultimo_minore</span> = y.iloc[pos_ultimo_minore]
+<span style="color: #a0522d;">primo_maggiore</span> = y.iloc[pos_primo_maggiore]
+<span style="color: #483d8b;">print</span>(f<span style="color: #8b2252;">"Media: </span>{mean:.2f}<span style="color: #8b2252;">"</span>)
+<span style="color: #483d8b;">print</span>(f<span style="color: #8b2252;">"Ultimo elemento &#8804; media: </span>{ultimo_minore:.2f}<span style="color: #8b2252;"> (posizione </span>{pos_ultimo_minore}<span style="color: #8b2252;">)"</span>)
+<span style="color: #483d8b;">print</span>(f<span style="color: #8b2252;">"Primo elemento &gt; media: </span>{primo_maggiore:.2f}<span style="color: #8b2252;"> (posizione </span>{pos_primo_maggiore}<span style="color: #8b2252;">)"</span>)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Creazione del grafico</span>
+<span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax</span> = plt.subplots(figsize=(10, 6))
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Grafico poligonale dei valori ordinati</span>
+ax.plot(np.arange(0, <span style="color: #483d8b;">len</span>(y)), y, <span style="color: #8b2252;">'b-'</span>, linewidth=2, markersize=6)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Linea orizzontale per la media</span>
+ax.axhline(y=mean, color=<span style="color: #8b2252;">'r'</span>, linestyle=<span style="color: #8b2252;">'--'</span>, label=f<span style="color: #8b2252;">'Media (&#956;) = </span>{mean:.2f}<span style="color: #8b2252;">'</span>)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Evidenziazione del punto di transizione</span>
+ax.plot(pos_primo_maggiore, primo_maggiore, <span style="color: #8b2252;">'ro'</span>, markersize=8)  <span style="color: #b22222;"># </span><span style="color: #b22222;">Punto rosso</span>
+ax.annotate(<span style="color: #8b2252;">'Primo elemento &gt; media'</span>, 
+            xy=(pos_primo_maggiore, primo_maggiore),
+            xytext=(pos_primo_maggiore + <span style="color: #483d8b;">len</span>(y)*0.05, primo_maggiore),
+            arrowprops=<span style="color: #483d8b;">dict</span>(facecolor=<span style="color: #8b2252;">'black'</span>, shrink=0.05, width=1.5))
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Aggiunta di etichette e griglia</span>
+ax.set_xlabel(<span style="color: #8b2252;">'Posizione nell</span><span style="color: #008b8b;">\'</span><span style="color: #8b2252;">ordinamento'</span>)
+ax.set_ylabel(<span style="color: #8b2252;">'Valore'</span>)
+ax.set_title(<span style="color: #8b2252;">'Distribuzione Ordinata con Identificazione del Primo Elemento &gt; Media'</span>)
+ax.legend()
+ax.grid(<span style="color: #008b8b;">True</span>, linestyle=<span style="color: #8b2252;">'--'</span>, alpha=0.7)
+
+plt.tight_layout()
+plt.show()
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org6927619" class="outline-2">
+<h2 id="org6927619">Grafici Statistici in Python: Guida Rapida (Approccio OOP)</h2>
+<div class="outline-text-2" id="text-org6927619">
+</div>
+<div id="outline-container-org4cf7804" class="outline-3">
+<h3 id="org4cf7804">Blueprint</h3>
+<div class="outline-text-3" id="text-org4cf7804">
+</div>
+<div id="outline-container-org959cd8d" class="outline-4">
+<h4 id="org959cd8d">Un solo grafico</h4>
+<div class="outline-text-4" id="text-org959cd8d">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> numpy <span style="color: #a020f0;">as</span> np
+<span style="color: #a020f0;">import</span> matplotlib.pyplot <span style="color: #a020f0;">as</span> plt
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Generazione dei dati</span>
+<span style="color: #a0522d;">x</span> = np.arange(1, 11)
+<span style="color: #a0522d;">y</span> = x ** 2
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Approccio OOP con fig e ax</span>
+<span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax</span> = plt.subplots(figsize=(8, 6))
+ax.vlines(x, ymin=0, ymax=y, color=<span style="color: #8b2252;">'blue'</span>)
+ax.plot(x, y, <span style="color: #8b2252;">'o'</span>, color=<span style="color: #8b2252;">'red'</span>)  <span style="color: #b22222;"># </span><span style="color: #b22222;">Punti all'estremit&#224;</span>
+ax.set_xlabel(<span style="color: #8b2252;">'x'</span>)
+ax.set_ylabel(<span style="color: #8b2252;">'y = x^2'</span>)
+ax.set_title(<span style="color: #8b2252;">'Grafico a bastoncini per y = x^2'</span>)
+ax.grid(<span style="color: #008b8b;">True</span>)
+plt.show()
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org7609554" class="outline-4">
+<h4 id="org7609554">Due grafici</h4>
+<div class="outline-text-4" id="text-org7609554">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> numpy <span style="color: #a020f0;">as</span> np
+<span style="color: #a020f0;">import</span> matplotlib.pyplot <span style="color: #a020f0;">as</span> plt
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Dati di base</span>
+<span style="color: #a0522d;">x</span> = np.arange(1, 11)
+<span style="color: #a0522d;">y1</span> = x ** 2
+<span style="color: #a0522d;">y2</span> = x ** 3
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Creazione dei subplot affiancati</span>
+<span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">axes</span> = plt.subplots(1, 2, figsize=(12, 5))
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Primo plot: quadrato</span>
+axes[0].vlines(x, ymin=0, ymax=y1, color=<span style="color: #8b2252;">'blue'</span>)
+axes[0].plot(x, y1, <span style="color: #8b2252;">'o'</span>, color=<span style="color: #8b2252;">'blue'</span>)
+axes[0].set_title(<span style="color: #8b2252;">'y = x^2'</span>)
+axes[0].set_xlabel(<span style="color: #8b2252;">'x'</span>)
+axes[0].set_ylabel(<span style="color: #8b2252;">'y'</span>)
+axes[0].grid(<span style="color: #008b8b;">True</span>)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Secondo plot: cubo</span>
+axes[1].vlines(x, ymin=0, ymax=y2, color=<span style="color: #8b2252;">'orange'</span>)
+axes[1].plot(x, y2, <span style="color: #8b2252;">'s'</span>, color=<span style="color: #8b2252;">'orange'</span>)
+axes[1].set_title(<span style="color: #8b2252;">'y = x^3'</span>)
+axes[1].set_xlabel(<span style="color: #8b2252;">'x'</span>)
+axes[1].set_ylabel(<span style="color: #8b2252;">'y'</span>)
+axes[1].grid(<span style="color: #008b8b;">True</span>)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Ottimizza la disposizione</span>
+plt.tight_layout()
+plt.show()
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgcff9f4e" class="outline-3">
+<h3 id="orgcff9f4e">A bastoncini (Stem plots)</h3>
+<div class="outline-text-3" id="text-orgcff9f4e">
+<ul class="org-ul">
+<li><b>Uso</b>: Variabili numeriche discrete, serie temporali con pochi punti, enfasi su valori puntuali</li>
+<li><b>Dati</b>: Numerici discreti, conteggi di frequenza, serie temporali a campionamento regolare</li>
+<li><b>Sintassi essenziale OOP</b>:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> numpy <span style="color: #a020f0;">as</span> np
+<span style="color: #a020f0;">import</span> matplotlib.pyplot <span style="color: #a020f0;">as</span> plt
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Dati</span>
+<span style="color: #a0522d;">x</span> = np.arange(1, 11)
+<span style="color: #a0522d;">y</span> = np.random.randint(1, 30, size=10)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Approccio OOP</span>
+<span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax</span> = plt.subplots(figsize=(8, 6))
+ax.vlines(x, 0, y, colors=<span style="color: #8b2252;">'blue'</span>, linewidth=2)
+ax.plot(x, y, <span style="color: #8b2252;">'o'</span>, color=<span style="color: #8b2252;">'red'</span>, markersize=8)
+ax.set_xlabel(<span style="color: #8b2252;">'Valore x'</span>)
+ax.set_ylabel(<span style="color: #8b2252;">'Frequenza'</span>)
+ax.set_title(<span style="color: #8b2252;">'Grafico a bastoncini'</span>)
+ax.grid(<span style="color: #008b8b;">True</span>, linestyle=<span style="color: #8b2252;">'--'</span>, alpha=0.7)
+plt.show()
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org51a8b7d" class="outline-3">
+<h3 id="org51a8b7d">A barre (Bar charts)</h3>
+<div class="outline-text-3" id="text-org51a8b7d">
+<ul class="org-ul">
+<li><b>Uso</b>: Confronto tra categorie, distribuzioni di frequenza di variabili categoriche, confronti tra gruppi</li>
+<li><b>Dati</b>: Categorici, discreti con poche modalità, aggregazioni per categoria</li>
+<li><b>Sintassi essenziale OOP</b>:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> numpy <span style="color: #a020f0;">as</span> np
+<span style="color: #a020f0;">import</span> matplotlib.pyplot <span style="color: #a020f0;">as</span> plt
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Dati</span>
+<span style="color: #a0522d;">categories</span> = [<span style="color: #8b2252;">'A'</span>, <span style="color: #8b2252;">'B'</span>, <span style="color: #8b2252;">'C'</span>, <span style="color: #8b2252;">'D'</span>, <span style="color: #8b2252;">'E'</span>]
+<span style="color: #a0522d;">values</span> = [23, 45, 56, 78, 42]
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Approccio OOP</span>
+<span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax</span> = plt.subplots(figsize=(8, 6))
+<span style="color: #a0522d;">bars</span> = ax.bar(categories, values, color=<span style="color: #8b2252;">'skyblue'</span>, edgecolor=<span style="color: #8b2252;">'black'</span>)
+ax.set_xlabel(<span style="color: #8b2252;">'Categoria'</span>)
+ax.set_ylabel(<span style="color: #8b2252;">'Valore'</span>)
+ax.set_title(<span style="color: #8b2252;">'Grafico a barre'</span>)
+ax.grid(axis=<span style="color: #8b2252;">'y'</span>, linestyle=<span style="color: #8b2252;">'--'</span>, alpha=0.7)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Barre raggruppate (esempio)</span>
+<span style="color: #a0522d;">width</span> = 0.35
+<span style="color: #a0522d;">x</span> = np.arange(<span style="color: #483d8b;">len</span>(categories))
+<span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax</span> = plt.subplots(figsize=(10, 6))
+ax.bar(x - width/2, [23, 45, 56, 78, 42], width, label=<span style="color: #8b2252;">'Gruppo A'</span>)
+ax.bar(x + width/2, [31, 39, 63, 52, 38], width, label=<span style="color: #8b2252;">'Gruppo B'</span>)
+ax.set_xticks(x)
+ax.set_xticklabels(categories)
+ax.legend()
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1a80a59" class="outline-3">
+<h3 id="org1a80a59">Poligonale (Line plots)</h3>
+<div class="outline-text-3" id="text-org1a80a59">
+<ul class="org-ul">
+<li><b>Uso</b>: Serie temporali, tendenze, comparazioni di serie nel tempo, dati ordinati</li>
+<li><b>Dati</b>: Serie temporali, dati ordinati, misurazioni sequenziali</li>
+<li><b>Sintassi essenziale OOP</b>:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> numpy <span style="color: #a020f0;">as</span> np
+<span style="color: #a020f0;">import</span> matplotlib.pyplot <span style="color: #a020f0;">as</span> plt
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Dati</span>
+<span style="color: #a0522d;">x</span> = np.arange(0, 10, 0.5)
+<span style="color: #a0522d;">y1</span> = np.sin(x)
+<span style="color: #a0522d;">y2</span> = np.cos(x)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Approccio OOP</span>
+<span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax</span> = plt.subplots(figsize=(10, 6))
+ax.plot(x, y1, <span style="color: #8b2252;">'b-o'</span>, linewidth=2, markersize=6, label=<span style="color: #8b2252;">'sin(x)'</span>)
+ax.plot(x, y2, <span style="color: #8b2252;">'r-s'</span>, linewidth=2, markersize=6, label=<span style="color: #8b2252;">'cos(x)'</span>)
+ax.set_xlabel(<span style="color: #8b2252;">'x'</span>)
+ax.set_ylabel(<span style="color: #8b2252;">'y'</span>)
+ax.set_title(<span style="color: #8b2252;">'Grafico poligonale'</span>)
+ax.legend()
+ax.grid(<span style="color: #008b8b;">True</span>, linestyle=<span style="color: #8b2252;">'--'</span>, alpha=0.7)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Step plot per dati discreti</span>
+<span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax</span> = plt.subplots(figsize=(10, 6))
+ax.step(x, y1, <span style="color: #8b2252;">'g-'</span>, where=<span style="color: #8b2252;">'mid'</span>, linewidth=2, label=<span style="color: #8b2252;">'Step mid'</span>)
+ax.set_title(<span style="color: #8b2252;">'Grafico a gradini'</span>)
+ax.legend()
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2759f15" class="outline-3">
+<h3 id="org2759f15">A torta (Pie charts)</h3>
+<div class="outline-text-3" id="text-org2759f15">
+<ul class="org-ul">
+<li><b>Uso</b>: Proporzioni relative, poche categorie (≤7), parti di un intero</li>
+<li><b>Dati</b>: Categorici, proporzioni/percentuali</li>
+<li><b>Sintassi essenziale OOP</b>:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> matplotlib.pyplot <span style="color: #a020f0;">as</span> plt
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Dati</span>
+<span style="color: #a0522d;">labels</span> = [<span style="color: #8b2252;">'A'</span>, <span style="color: #8b2252;">'B'</span>, <span style="color: #8b2252;">'C'</span>, <span style="color: #8b2252;">'D'</span>]
+<span style="color: #a0522d;">values</span> = [35, 25, 20, 20]
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Approccio OOP</span>
+<span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax</span> = plt.subplots(figsize=(8, 8))
+ax.pie(values, labels=labels, autopct=<span style="color: #8b2252;">'%1.1f%%'</span>, 
+       startangle=90, shadow=<span style="color: #008b8b;">True</span>,
+       colors=[<span style="color: #8b2252;">'#ff9999'</span>,<span style="color: #8b2252;">'#66b3ff'</span>,<span style="color: #8b2252;">'#99ff99'</span>,<span style="color: #8b2252;">'#ffcc99'</span>])
+ax.axis(<span style="color: #8b2252;">'equal'</span>)  <span style="color: #b22222;"># </span><span style="color: #b22222;">Per mantenere la forma circolare</span>
+ax.set_title(<span style="color: #8b2252;">'Grafico a torta'</span>)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Grafico a ciambella</span>
+<span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax</span> = plt.subplots(figsize=(8, 8))
+ax.pie(values, labels=labels, autopct=<span style="color: #8b2252;">'%1.1f%%'</span>, 
+      wedgeprops=<span style="color: #483d8b;">dict</span>(width=0.5, edgecolor=<span style="color: #8b2252;">'w'</span>))
+ax.set_title(<span style="color: #8b2252;">'Grafico a ciambella'</span>)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org58062db" class="outline-3">
+<h3 id="org58062db">Istogramma (Histogram)</h3>
+<div class="outline-text-3" id="text-org58062db">
+<ul class="org-ul">
+<li><b>Uso</b>: Distribuzione variabili continue, forma distribuzione, identificare outlier</li>
+<li><b>Dati</b>: Numerici continui, dataset numerici grandi</li>
+<li><b>Sintassi essenziale OOP</b>:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> numpy <span style="color: #a020f0;">as</span> np
+<span style="color: #a020f0;">import</span> matplotlib.pyplot <span style="color: #a020f0;">as</span> plt
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Dati</span>
+<span style="color: #a0522d;">data</span> = np.random.normal(0, 1, 1000)  <span style="color: #b22222;"># </span><span style="color: #b22222;">Distribuzione normale</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Approccio OOP</span>
+<span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax</span> = plt.subplots(figsize=(10, 6))
+ax.hist(data, bins=30, color=<span style="color: #8b2252;">'skyblue'</span>, edgecolor=<span style="color: #8b2252;">'black'</span>, alpha=0.7)
+ax.set_title(<span style="color: #8b2252;">'Istogramma di una distribuzione normale'</span>)
+ax.set_xlabel(<span style="color: #8b2252;">'Valore'</span>)
+ax.set_ylabel(<span style="color: #8b2252;">'Frequenza'</span>)
+ax.grid(axis=<span style="color: #8b2252;">'y'</span>, alpha=0.75, linestyle=<span style="color: #8b2252;">'--'</span>)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Bin personalizzati</span>
+<span style="color: #a0522d;">bin_edges</span> = np.hstack((np.arange(0, 5, 0.5), 
+                      np.arange(5, 10, 1), 
+                      np.arange(10, 20, 2)))
+<span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax</span> = plt.subplots(figsize=(10, 6))
+ax.hist(np.random.exponential(2, 1000), bins=bin_edges, 
+       color=<span style="color: #8b2252;">'purple'</span>, alpha=0.7, edgecolor=<span style="color: #8b2252;">'black'</span>)
+ax.set_title(<span style="color: #8b2252;">'Istogramma con bin personalizzati'</span>)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfe65122" class="outline-3">
+<h3 id="orgfe65122">Grafici multipli (Multiple plots)</h3>
+<div class="outline-text-3" id="text-orgfe65122">
+<ul class="org-ul">
+<li><b>Uso</b>: Confronti multipli, relazioni tra variabili, visualizzazione compatta</li>
+<li><b>Dati</b>: Qualsiasi tipo di dati per confronto</li>
+<li><b>Sintassi essenziale OOP</b>:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> numpy <span style="color: #a020f0;">as</span> np
+<span style="color: #a020f0;">import</span> matplotlib.pyplot <span style="color: #a020f0;">as</span> plt
+<span style="color: #a020f0;">import</span> matplotlib.gridspec <span style="color: #a020f0;">as</span> gridspec
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Griglia regolare</span>
+<span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">axs</span> = plt.subplots(2, 2, figsize=(12, 10))
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Grafico 1: Linea</span>
+<span style="color: #a0522d;">x</span> = np.linspace(0, 10, 100)
+axs[0, 0].plot(x, np.sin(x), <span style="color: #8b2252;">'b-'</span>)
+axs[0, 0].set_title(<span style="color: #8b2252;">'Grafico a linea: sin(x)'</span>)
+axs[0, 0].grid(<span style="color: #008b8b;">True</span>)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Grafico 2: Scatter</span>
+axs[0, 1].scatter(np.random.rand(50), np.random.rand(50), 
+                 c=np.random.rand(50), cmap=<span style="color: #8b2252;">'viridis'</span>)
+axs[0, 1].set_title(<span style="color: #8b2252;">'Grafico a dispersione'</span>)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Grafico 3: Barre</span>
+<span style="color: #a0522d;">categories</span> = [<span style="color: #8b2252;">'A'</span>, <span style="color: #8b2252;">'B'</span>, <span style="color: #8b2252;">'C'</span>, <span style="color: #8b2252;">'D'</span>]
+<span style="color: #a0522d;">values</span> = [3, 7, 2, 5]
+axs[1, 0].bar(categories, values, color=<span style="color: #8b2252;">'green'</span>)
+axs[1, 0].set_title(<span style="color: #8b2252;">'Grafico a barre'</span>)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Grafico 4: Istogramma</span>
+<span style="color: #a0522d;">data</span> = np.random.normal(0, 1, 1000)
+axs[1, 1].hist(data, bins=30, color=<span style="color: #8b2252;">'purple'</span>, alpha=0.7)
+axs[1, 1].set_title(<span style="color: #8b2252;">'Istogramma'</span>)
+
+plt.tight_layout()
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">GridSpec per layout personalizzati</span>
+<span style="color: #a0522d;">fig</span> = plt.figure(figsize=(12, 10))
+<span style="color: #a0522d;">gs</span> = gridspec.GridSpec(2, 2, width_ratios=[2, 1], height_ratios=[1, 2])
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Grafico principale (pi&#249; grande)</span>
+<span style="color: #a0522d;">ax1</span> = fig.add_subplot(gs[0, 0])
+ax1.plot(np.random.randn(100).cumsum(), <span style="color: #8b2252;">'b-'</span>)
+ax1.set_title(<span style="color: #8b2252;">'Serie temporale'</span>)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Grafico in alto a destra</span>
+<span style="color: #a0522d;">ax2</span> = fig.add_subplot(gs[0, 1])
+ax2.pie([35, 65], labels=[<span style="color: #8b2252;">'A'</span>, <span style="color: #8b2252;">'B'</span>], autopct=<span style="color: #8b2252;">'%1.1f%%'</span>)
+ax2.set_title(<span style="color: #8b2252;">'Proporzioni'</span>)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Grafico grande in basso</span>
+<span style="color: #a0522d;">ax3</span> = fig.add_subplot(gs[1, :])
+<span style="color: #a0522d;">x</span> = np.random.randn(1000)
+<span style="color: #a0522d;">y</span> = x * 2 + np.random.randn(1000) * 0.5
+ax3.scatter(x, y, alpha=0.5)
+ax3.set_title(<span style="color: #8b2252;">'Dispersione con correlazione'</span>)
+
+plt.tight_layout()
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfb76f92" class="outline-3">
+<h3 id="orgfb76f92">Scatter plot (Diagramma di dispersione)</h3>
+<div class="outline-text-3" id="text-orgfb76f92">
+<ul class="org-ul">
+<li><b>Uso</b>: Relazione tra due variabili numeriche, correlazioni, pattern/cluster</li>
+<li><b>Dati</b>: Coppie di variabili numeriche, dati correlati</li>
+<li><b>Sintassi essenziale OOP</b>:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> numpy <span style="color: #a020f0;">as</span> np
+<span style="color: #a020f0;">import</span> matplotlib.pyplot <span style="color: #a020f0;">as</span> plt
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Dati base</span>
+<span style="color: #a0522d;">x</span> = np.random.rand(50)
+<span style="color: #a0522d;">y</span> = 3 * x + np.random.randn(50) * 0.2
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Approccio OOP base</span>
+<span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax</span> = plt.subplots(figsize=(10, 6))
+ax.scatter(x, y, color=<span style="color: #8b2252;">'blue'</span>, alpha=0.7)
+ax.set_title(<span style="color: #8b2252;">'Scatter plot con correlazione positiva'</span>)
+ax.set_xlabel(<span style="color: #8b2252;">'Variabile X'</span>)
+ax.set_ylabel(<span style="color: #8b2252;">'Variabile Y'</span>)
+ax.grid(<span style="color: #008b8b;">True</span>, linestyle=<span style="color: #8b2252;">'--'</span>, alpha=0.7)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Con dimensione e colore variabili</span>
+<span style="color: #a0522d;">n</span> = 50
+<span style="color: #a0522d;">x</span> = np.random.rand(n)
+<span style="color: #a0522d;">y</span> = np.random.rand(n)
+<span style="color: #a0522d;">colors</span> = np.random.rand(n)
+<span style="color: #a0522d;">sizes</span> = 1000 * np.random.rand(n)
+
+<span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax</span> = plt.subplots(figsize=(10, 8))
+<span style="color: #a0522d;">scatter</span> = ax.scatter(x, y, c=colors, s=sizes, alpha=0.5, cmap=<span style="color: #8b2252;">'viridis'</span>)
+fig.colorbar(scatter, ax=ax, label=<span style="color: #8b2252;">'Valore colore'</span>)
+ax.set_title(<span style="color: #8b2252;">'Scatter plot con dimensione e colore variabili'</span>)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Per gruppi</span>
+<span style="color: #a0522d;">groups</span> = {<span style="color: #8b2252;">'A'</span>: (np.random.normal(0, 1, 30), np.random.normal(0, 1, 30)),
+          <span style="color: #8b2252;">'B'</span>: (np.random.normal(2, 1, 30), np.random.normal(3, 1, 30))}
+
+<span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax</span> = plt.subplots(figsize=(10, 8))
+<span style="color: #a020f0;">for</span> name, (x, y) <span style="color: #a020f0;">in</span> groups.items():
+    ax.scatter(x, y, label=name, alpha=0.7, s=80)
+ax.legend()
+ax.set_title(<span style="color: #8b2252;">'Scatter plot raggruppato'</span>)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgdec16b2" class="outline-3">
+<h3 id="orgdec16b2">Tabella comparativa per scelta grafico</h3>
+<div class="outline-text-3" id="text-orgdec16b2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Tipo di dati</th>
+<th scope="col" class="org-left">Obiettivo</th>
+<th scope="col" class="org-left">Grafico consigliato</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Categorici (&lt;20 cat.)</td>
+<td class="org-left">Confrontare valori</td>
+<td class="org-left">Barre</td>
+</tr>
+
+<tr>
+<td class="org-left">Categorici (≤7 cat.)</td>
+<td class="org-left">Mostrare proporzioni</td>
+<td class="org-left">Torta</td>
+</tr>
+
+<tr>
+<td class="org-left">Numerici discreti</td>
+<td class="org-left">Valori puntuali</td>
+<td class="org-left">Bastoncini</td>
+</tr>
+
+<tr>
+<td class="org-left">Numerici continui</td>
+<td class="org-left">Distribuzione</td>
+<td class="org-left">Istogramma</td>
+</tr>
+
+<tr>
+<td class="org-left">Serie temporali</td>
+<td class="org-left">Tendenze nel tempo</td>
+<td class="org-left">Poligonale</td>
+</tr>
+
+<tr>
+<td class="org-left">Due variabili numeriche</td>
+<td class="org-left">Correlazione</td>
+<td class="org-left">Scatter</td>
+</tr>
+
+<tr>
+<td class="org-left">Più variabili</td>
+<td class="org-left">Confronti multipli</td>
+<td class="org-left">Grafici multipli</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org7f0975c" class="outline-3">
+<h3 id="org7f0975c">Linee guida rapide</h3>
+<div class="outline-text-3" id="text-org7f0975c">
+<ul class="org-ul">
+<li><b>Bastoncini</b>: Per valori discreti, evita fraintendimenti sugli intervalli</li>
+<li><b>Barre</b>: Per confronti categorici chiari</li>
+<li><b>Poligonale</b>: Per tendenze, connessioni e serie temporali</li>
+<li><b>Torta</b>: Solo per poche categorie che sommano al 100%</li>
+<li><b>Istogramma</b>: Per visualizzare distribuzione e forma di dati continui</li>
+<li><b>Scatter</b>: Per esplorare relazioni statistiche tra due variabili</li>
+<li><b>Multipli</b>: Per confrontare più aspetti contemporaneamente</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd313567" class="outline-3">
+<h3 id="orgd313567">Personalizzazione rapida degli assi e grafici</h3>
+<div class="outline-text-3" id="text-orgd313567">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Personalizzazioni comuni dell'oggetto ax</span>
+ax.set_title(<span style="color: #8b2252;">'Titolo del grafico'</span>, fontsize=14)
+ax.set_xlabel(<span style="color: #8b2252;">'Etichetta asse x'</span>, fontsize=12)
+ax.set_ylabel(<span style="color: #8b2252;">'Etichetta asse y'</span>, fontsize=12)
+ax.set_xlim([xmin, xmax])
+ax.set_ylim([ymin, ymax])
+ax.grid(<span style="color: #008b8b;">True</span>, linestyle=<span style="color: #8b2252;">'--'</span>, alpha=0.7)
+ax.legend(loc=<span style="color: #8b2252;">'best'</span>, fontsize=10)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Annotazioni</span>
+ax.text(x, y, <span style="color: #8b2252;">"Testo"</span>, fontsize=12)
+ax.annotate(<span style="color: #8b2252;">'Punto importante'</span>, xy=(x, y), xytext=(x+1, y+1),
+           arrowprops=<span style="color: #483d8b;">dict</span>(facecolor=<span style="color: #8b2252;">'black'</span>, shrink=0.05))
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Stili di linea e marker</span>
+<span style="color: #b22222;"># </span><span style="color: #b22222;">linestyle: '-', '--', '-.', ':', 'None'</span>
+<span style="color: #b22222;"># </span><span style="color: #b22222;">marker: 'o', 's', '^', 'v', '&lt;', '&gt;', 'p', '*', '+', 'x', 'D'</span>
+ax.plot(x, y, linestyle=<span style="color: #8b2252;">'--'</span>, marker=<span style="color: #8b2252;">'o'</span>, color=<span style="color: #8b2252;">'red'</span>, linewidth=2, markersize=8)
+</pre>
 </div>
 </div>
 </div>
@@ -643,13 +1319,9 @@ dataframe.loc[:,listaDiColonneRiordinate]
 <h2 id="orgb4f68ba">Statistica descrittiva (continuare con anki e revisione da qui)</h2>
 <div class="outline-text-2" id="text-orgb4f68ba">
 </div>
-<div id="outline-container-org1e5d71c" class="outline-3">
-<h3 id="org1e5d71c">Descrivere i dati</h3>
-<div class="outline-text-3" id="text-org1e5d71c">
-</div>
-<div id="outline-container-org28044a0" class="outline-4">
-<h4 id="org28044a0">Dati quantitativi e qualitativi</h4>
-<div class="outline-text-4" id="text-org28044a0">
+<div id="outline-container-org28044a0" class="outline-3">
+<h3 id="org28044a0">Dati quantitativi e qualitativi</h3>
+<div class="outline-text-3" id="text-org28044a0">
 <dl class="org-dl">
 <dt>Dati quantitativi</dt><dd>Misurati attraverso quantità numeriche
 <ul class="org-ul">
@@ -677,9 +1349,9 @@ Nei dataset reali, va inoltre considerato che anche i dati continui vengono disc
 </p>
 </div>
 </div>
-<div id="outline-container-orgcd936b4" class="outline-4">
-<h4 id="orgcd936b4">Frequenze</h4>
-<div class="outline-text-4" id="text-orgcd936b4">
+<div id="outline-container-orgcd936b4" class="outline-3">
+<h3 id="orgcd936b4">Frequenze</h3>
+<div class="outline-text-3" id="text-orgcd936b4">
 <p>
 La <b>frequenza assoluta</b> è il conteggio del numero di volte che una data osservazione occorre in un campione.
 </p>
@@ -700,18 +1372,18 @@ In <code>pandas</code> si ottengono con il metodo <code>crosstab</code>, il cui 
 </pre>
 </div>
 </div>
-<div id="outline-container-org6c873ff" class="outline-5">
-<h5 id="org6c873ff">Arrotondare il numero di cifre decimali</h5>
-<div class="outline-text-5" id="text-org6c873ff">
+<div id="outline-container-org6c873ff" class="outline-4">
+<h4 id="org6c873ff">Arrotondare il numero di cifre decimali</h4>
+<div class="outline-text-4" id="text-org6c873ff">
 <div class="org-src-container">
 <pre class="src src-python">publisher_rel_freq.<span style="color: #483d8b;">apply</span>(<span style="color: #a020f0;">lambda</span> p: 100 * np.<span style="color: #483d8b;">round</span>(p, 3))
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org743852a" class="outline-5">
-<h5 id="org743852a">Mostrare frequenza relativa in percentuali</h5>
-<div class="outline-text-5" id="text-org743852a">
+<div id="outline-container-org743852a" class="outline-4">
+<h4 id="org743852a">Mostrare frequenza relativa in percentuali</h4>
+<div class="outline-text-4" id="text-org743852a">
 <div class="org-src-container">
 <pre class="src src-python">(publisher_rel_freq.<span style="color: #483d8b;">apply</span>(<span style="color: #a020f0;">lambda</span> p: np.<span style="color: #483d8b;">round</span>(100*p, 2))
                    .astype(<span style="color: #483d8b;">str</span>)
@@ -720,9 +1392,9 @@ In <code>pandas</code> si ottengono con il metodo <code>crosstab</code>, il cui 
 </div>
 </div>
 </div>
-<div id="outline-container-orgfa65629" class="outline-5">
-<h5 id="orgfa65629">Rinormalizzare su un sottoinsieme delle osservazioni</h5>
-<div class="outline-text-5" id="text-orgfa65629">
+<div id="outline-container-orgfa65629" class="outline-4">
+<h4 id="orgfa65629">Rinormalizzare su un sottoinsieme delle osservazioni</h4>
+<div class="outline-text-4" id="text-orgfa65629">
 <p>
 Quando si filtrano alcune osservazioni (ad esempio quelle con un valore inferiore ad un certo valore), la somma di tutte le frequenze relative non sarà più \(1\).
 </p>
@@ -759,9 +1431,9 @@ Se invece si lavora su una <b>serie</b> (situazione solita), basta usare la nota
 </div>
 </div>
 </div>
-<div id="outline-container-org53b88bb" class="outline-4">
-<h4 id="org53b88bb">Frequenze cumulate</h4>
-<div class="outline-text-4" id="text-org53b88bb">
+<div id="outline-container-org53b88bb" class="outline-3">
+<h3 id="org53b88bb">Frequenze cumulate</h3>
+<div class="outline-text-3" id="text-org53b88bb">
 <p>
 La frequenza cumulata (assoluta o relativa), associata ad una modalità su cui è possibile definire una relazione d'ordine, è pari alla somma della sua frequenza (assoluta o relativa) e di quelle delle modalità che la precedono.
 </p>
@@ -770,18 +1442,72 @@ La frequenza cumulata (assoluta o relativa), associata ad una modalità su cui �
 In <code>pandas</code> si ottiene con il metodo <code>.cumsum()</code> su un <code>dataframe</code>.
 </p>
 </div>
-<div id="outline-container-org96ad5bf" class="outline-5">
-<h5 id="org96ad5bf"><span class="todo TODO">TODO</span> Funzione cumulativa empirica</h5>
-<div class="outline-text-5" id="text-org96ad5bf">
+<div id="outline-container-org96ad5bf" class="outline-4">
+<h4 id="org96ad5bf"><span class="todo TODO">TODO</span> Funzione cumulativa empirica</h4>
+<div class="outline-text-4" id="text-org96ad5bf">
 <p>
-Una funzione che restituisce la proporzione di dati sotto un certo valore, aumentando di \(frac{1}{n}\) ad ogni osservazione di una certa modalità.
-inserisci formula e fai anki
+Una funzione che restituisce la proporzione di dati sotto un certo valore, aumentando di \(frac{1}{n}\) ad ogni osservazione di una certa modalità. È uno stimatore consistente e non deviato della funzione di ripartizione.
 </p>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #b22222;">#</span><span style="color: #b22222;">manualmente, ordino</span>
+<span style="color: #a0522d;">acres_sorted</span> = ps[<span style="color: #8b2252;">'Acres'</span>].sort_values()
+<span style="color: #a0522d;">cumulative_prob_1</span> = np.arange(1, <span style="color: #483d8b;">len</span>(acres_sorted) + 1) / <span style="color: #483d8b;">len</span>(acres_sorted)
+
+<span style="color: #b22222;">#</span><span style="color: #b22222;">altrimenti</span>
+<span style="color: #a020f0;">import</span> statsmodels.api <span style="color: #a020f0;">as</span> sm
+<span style="color: #a0522d;">ecdf</span> = sm.distributions.ECDF(ps[<span style="color: #8b2252;">'Acres'</span>]).dropna() <span style="color: #b22222;">#</span><span style="color: #b22222;">se non droppo i na, non avr&#242; mai 1 anche per valori grandi</span>
+<span style="color: #a0522d;">x</span> = np.arange(0, 12)
+<span style="color: #a0522d;">y</span> = ecdf(x)
+</pre>
+</div>
+
+
+<p>
+Plotting:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Creiamo una figura con due subplot</span>
+fig, (<span style="color: #a0522d;">ax1</span>, <span style="color: #a0522d;">ax2</span>) = plt.subplots(1, 2, figsize=(12, 5))
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Plot per dati continui - grafico a linea a gradini</span>
+ax1.step(ecdf_continuous.x, ecdf_continuous.y, where=<span style="color: #8b2252;">'post'</span>, label=<span style="color: #8b2252;">'ECDF'</span>, color=<span style="color: #8b2252;">'blue'</span>)
+ax1.set_title(<span style="color: #8b2252;">'ECDF per Dati Continui'</span>)
+ax1.set_xlabel(<span style="color: #8b2252;">'Valore'</span>)
+ax1.set_ylabel(<span style="color: #8b2252;">'Proporzione Cumulativa'</span>)
+ax1.grid(<span style="color: #008b8b;">True</span>, linestyle=<span style="color: #8b2252;">'--'</span>, alpha=0.7)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Plot per dati discreti - grafico a gradini con punti marcati</span>
+<span style="color: #a0522d;">x_unique</span> = np.unique(discrete_data)
+<span style="color: #a0522d;">y_unique</span> = [np.mean(discrete_data &lt;= x) <span style="color: #a020f0;">for</span> x <span style="color: #a020f0;">in</span> x_unique]
+ax2.step(x_unique, y_unique, where=<span style="color: #8b2252;">'post'</span>, label=<span style="color: #8b2252;">'ECDF'</span>, color=<span style="color: #8b2252;">'red'</span>)
+ax2.scatter(x_unique, y_unique, color=<span style="color: #8b2252;">'red'</span>, zorder=3)  <span style="color: #b22222;"># </span><span style="color: #b22222;">Aggiungiamo punti per evidenziare i valori discreti</span>
+ax2.set_title(<span style="color: #8b2252;">'ECDF per Dati Discreti'</span>)
+ax2.set_xlabel(<span style="color: #8b2252;">'Valore'</span>)
+ax2.set_ylabel(<span style="color: #8b2252;">'Proporzione Cumulativa'</span>)
+ax2.grid(<span style="color: #008b8b;">True</span>, linestyle=<span style="color: #8b2252;">'--'</span>, alpha=0.7)
+
+plt.tight_layout()
+plt.show()
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Alternativa per dati discreti - grafico a barre cumulative</span>
+plt.figure(figsize=(8, 5))
+<span style="color: #a0522d;">counts</span> = np.bincount(discrete_data)
+<span style="color: #a0522d;">cumcounts</span> = np.cumsum(counts) / <span style="color: #483d8b;">len</span>(discrete_data)
+plt.bar(<span style="color: #483d8b;">range</span>(<span style="color: #483d8b;">len</span>(cumcounts)), cumcounts, width=0.7, color=<span style="color: #8b2252;">'green'</span>, alpha=0.7)
+plt.title(<span style="color: #8b2252;">'ECDF per Dati Discreti - Grafico a Barre Cumulative'</span>)
+plt.xlabel(<span style="color: #8b2252;">'Valore'</span>)
+plt.ylabel(<span style="color: #8b2252;">'Proporzione Cumulativa'</span>)
+plt.grid(<span style="color: #008b8b;">True</span>, linestyle=<span style="color: #8b2252;">'--'</span>, alpha=0.7, axis=<span style="color: #8b2252;">'y'</span>)
+plt.show()
+</pre>
 </div>
 </div>
-<div id="outline-container-org3398d1a" class="outline-5">
-<h5 id="org3398d1a">Diagrammi di Pareto</h5>
-<div class="outline-text-5" id="text-org3398d1a">
+</div>
+<div id="outline-container-org3398d1a" class="outline-4">
+<h4 id="org3398d1a">Diagrammi di Pareto</h4>
+<div class="outline-text-4" id="text-org3398d1a">
 <p>
 Il diagramma di Pareto di un campione unisce il grafico <b>a barre</b> delle <b>frequenze relative</b> ed il grafico <b>poligonale</b> delle <b>frequenze cumulate relative</b>.
 </p>
@@ -790,23 +1516,44 @@ Il diagramma di Pareto di un campione unisce il grafico <b>a barre</b> delle <b>
 Per generare il diagramma a partire da una serie, considerando solo i dati superiori ad un certo valore e scegliendo se renormalizzare o meno, si fa così:
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">my_pareto</span>(data, threshold=0.02, renormalize=<span style="color: #008b8b;">False</span>):
-    <span style="color: #a0522d;">freq</span> = data.value_counts(normalize=<span style="color: #008b8b;">True</span>)
-    <span style="color: #a0522d;">freq</span> = freq[freq &gt; threshold]
-    <span style="color: #a020f0;">if</span> renormalize:
-        <span style="color: #a0522d;">freq</span> = freq / <span style="color: #483d8b;">sum</span>(freq)
-    freq.cumsum().plot()
-    freq.plot.bar()
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">pareto_plot</span>(data, threshold, renormalize=<span style="color: #008b8b;">True</span>, bins=30, figsize=(12, 6)):
+    <span style="color: #8b2252;">"""Versione compatta del diagramma di Pareto con ECDF"""</span>
+    <span style="color: #b22222;"># </span><span style="color: #b22222;">Filtraggio e istogramma</span>
+    <span style="color: #a0522d;">filtered_data</span> = data[data &gt; threshold]
+    <span style="color: #a0522d;">counts</span>, <span style="color: #a0522d;">bin_edges</span> = np.histogram(filtered_data, bins=bins)
+    <span style="color: #a0522d;">bin_centers</span> = (bin_edges[:-1] + bin_edges[1:]) / 2
 
-my_pareto(heroes[<span style="color: #8b2252;">'Eye color'</span>], threshold=0)
+    <span style="color: #b22222;"># </span><span style="color: #b22222;">Ordinamento decrescente</span>
+    <span style="color: #a0522d;">sorted_indices</span> = np.argsort(-counts)
+    <span style="color: #a0522d;">sorted_counts</span> = counts[sorted_indices]
+    <span style="color: #a0522d;">sorted_bin_centers</span> = bin_centers[sorted_indices]
+
+    <span style="color: #b22222;"># </span><span style="color: #b22222;">Frequenze relative</span>
+    <span style="color: #a0522d;">relative_freq</span> = sorted_counts / (filtered_data.<span style="color: #483d8b;">sum</span>() <span style="color: #a020f0;">if</span> renormalize <span style="color: #a020f0;">else</span> data.<span style="color: #483d8b;">sum</span>())
+
+    <span style="color: #b22222;"># </span><span style="color: #b22222;">Grafico</span>
+    <span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax1</span> = plt.subplots(figsize=figsize)
+    ax1.bar(np.arange(<span style="color: #483d8b;">len</span>(sorted_counts)), relative_freq, color=<span style="color: #8b2252;">'skyblue'</span>, edgecolor=<span style="color: #8b2252;">'black'</span>)
+    ax1.set_ylabel(<span style="color: #8b2252;">'Frequenza Relativa'</span>, color=<span style="color: #8b2252;">'skyblue'</span>)
+
+    <span style="color: #b22222;"># </span><span style="color: #b22222;">ECDF su asse secondario</span>
+    <span style="color: #a0522d;">ax2</span> = ax1.twinx()
+    ax2.plot(np.arange(<span style="color: #483d8b;">len</span>(sorted_counts)), np.cumsum(relative_freq), <span style="color: #8b2252;">'o-'</span>, color=<span style="color: #8b2252;">'navy'</span>)
+    ax2.set_ylabel(<span style="color: #8b2252;">'ECDF'</span>, color=<span style="color: #8b2252;">'navy'</span>)
+    ax2.axhline(y=0.8, color=<span style="color: #8b2252;">'red'</span>, linestyle=<span style="color: #8b2252;">'--'</span>, alpha=0.7)
+
+    plt.title(f<span style="color: #8b2252;">'Diagramma di Pareto (threshold &gt; </span>{threshold:.2f}<span style="color: #8b2252;">)'</span>)
+    <span style="color: #a020f0;">return</span> fig, ax1, ax2
+
+<span style="color: #a0522d;">fig</span>, <span style="color: #a0522d;">ax1</span>, <span style="color: #a0522d;">ax2</span> = pareto_diagram(y, threshold=0, renormalize=<span style="color: #008b8b;">True</span>)
 </pre>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-orgf5ed488" class="outline-4">
-<h4 id="orgf5ed488">Frequenze congiunte e marginali</h4>
-<div class="outline-text-4" id="text-orgf5ed488">
+<div id="outline-container-orgf5ed488" class="outline-3">
+<h3 id="orgf5ed488">Frequenze congiunte e marginali</h3>
+<div class="outline-text-3" id="text-orgf5ed488">
 <p>
 Le <b>frequenze congiunte*</b> contano il numero di osservazioni in cui due caratteri (variabili) assumono simultaneamente determinati valori. Rappresentano la distribuzione bidimensionale di due variabili.
 </p>
@@ -938,20 +1685,15 @@ plt.show()
 </div>
 </div>
 </div>
+<div id="outline-container-orgf028389" class="outline-3">
+<h3 id="orgf028389">Indici di centralità</h3>
+<div class="outline-text-3" id="text-orgf028389">
 </div>
-<div id="outline-container-org63ba63a" class="outline-3">
-<h3 id="org63ba63a">Riassumere i dati</h3>
-<div class="outline-text-3" id="text-org63ba63a">
-</div>
-<div id="outline-container-org418119f" class="outline-4">
-<h4 id="org418119f">Indici di <a id="org6b0d8c3">centralità</a></h4>
-<div class="outline-text-4" id="text-org418119f">
-</div>
-<div id="outline-container-orgc0ac8a0" class="outline-5">
-<h5 id="orgc0ac8a0"><a id="org440f691">Media</a> campionaria</h5>
-<div class="outline-text-5" id="text-orgc0ac8a0">
+<div id="outline-container-org2a78fed" class="outline-4">
+<h4 id="org2a78fed">Media campionaria</h4>
+<div class="outline-text-4" id="text-org2a78fed">
 <p>
-La <a href="#org440f691">media</a> campionaria è definita come:
+La media campionaria è definita come:
 </p>
 
 <p>
@@ -967,33 +1709,37 @@ Ovvero è la somma di tutti i valori divisa per il numero di osservazioni.
 </p>
 
 <p>
-Dato che vanno eseguite operazioni matematiche sui valori, la <a href="#org440f691">media</a> può essere calcolata soltanto su dati <b>quantitativi</b> o <b>qualitativi</b> a cui è associato un <b>valore numerico</b>.
+Dato che vanno eseguite operazioni matematiche sui valori, la media può essere calcolata soltanto su dati <b>quantitativi</b> o <b>qualitativi</b> a cui è associato un <b>valore numerico</b>.
 </p>
 
 <p>
-Dato un campione \(y = ax + b\), per \(a,b\) fissati, è facile derivare attraverso la formula che \(\bar{y} = a\bar{x}+y\), ovvero la <a href="#org440f691">media</a> di un campione trasformato è la <a href="#org440f691">media</a> del campione originale trasformata nello stesso modo.
+Dato un campione \(y = ax + b\), per \(a,b\) fissati, è facile derivare attraverso la formula che \(\bar{y} = a\bar{x}+y\), ovvero la media di un campione trasformato è la media del campione originale trasformata nello stesso modo.
 </p>
 
 <p>
-Se di un campione si conoscono i \(k\) distinti valori quantitativi \(v\) del campione e le relative frequenze \(f\), allora la <a href="#org440f691">media</a> è definita come:
-\[\bar{x}=\frac{1}{n}\sum_{j=1}^{k}v_{j}f_{j}\], che è anche la <b><a href="#org440f691">media</a> pesata</b> dei valori distinti, dove il peso di ogni valore è la sua frequenza. Questo ragionamento vale sia per le frequenze assolute che relative.
+Se di un campione si conoscono i \(k\) distinti valori quantitativi \(v\) del campione e le relative frequenze \(f\), allora la media è definita come:
+\[\bar{x}=\frac{1}{n}\sum_{j=1}^{k}v_{j}f_{j}\], che è anche la <b>media pesata</b> dei valori distinti, dove il peso di ogni valore è la sua frequenza. Questo ragionamento vale sia per le frequenze assolute che relative.
 </p>
 
 <p>
-La <a href="#org440f691">media</a> campionaria <b>non è robusta</b>, ovvero è molto sensibile a <b>outlier</b> (valori fuori scala).
+La media campionaria <b>non è robusta</b>, ovvero è molto sensibile a <b>outlier</b> (valori fuori scala).
 </p>
 
 <p>
-La somma di <b>tutti</b> gli scarti dei valori di un campione dalla <a href="#org440f691">media</a> è nulla, ovvero
+La somma di <b>tutti</b> gli scarti dei valori di un campione dalla media è nulla, ovvero
 \[\sum_{i=1}^{n} (x_i - \bar{x}) = 0\]
 </p>
-</div>
-</div>
-<div id="outline-container-org6c4acd7" class="outline-5">
-<h5 id="org6c4acd7"><a id="org9e56fdf">Mediana</a> campionaria</h5>
-<div class="outline-text-5" id="text-org6c4acd7">
+
 <p>
-La <a href="#org9e56fdf">mediana</a> campionaria è un altro indice di <a href="#org6b0d8c3">centralità</a>.
+Si calcola con <code>serie.mean()</code>
+</p>
+</div>
+</div>
+<div id="outline-container-orgfc9cf19" class="outline-4">
+<h4 id="orgfc9cf19">Mediana campionaria</h4>
+<div class="outline-text-4" id="text-orgfc9cf19">
+<p>
+La mediana campionaria è un altro indice di centralità.
 </p>
 
 <p>
@@ -1001,43 +1747,47 @@ Per calcolarla, si ordinano i valori dell'insieme dal più piccolo al più grand
 </p>
 
 <p>
-Se il numero totale di elementi \(n\) è dispari, la <a href="#org9e56fdf">mediana</a> è il valore che occupa la posizione \((n + 1)/2\). Se n è pari, invece, la <a href="#org9e56fdf">mediana</a> è data dalla <a href="#org440f691">media</a> dei due valori centrali, ovvero quelli nelle posizioni \(n/2\) e \(n/2 + 1\).
+Se il numero totale di elementi \(n\) è dispari, la mediana è il valore che occupa la posizione \((n + 1)/2\). Se n è pari, invece, la mediana è data dalla media dei due valori centrali, ovvero quelli nelle posizioni \(n/2\) e \(n/2 + 1\).
 </p>
 
 <p>
-A differenza della <a href="#org440f691">media</a>, la <a href="#org9e56fdf">mediana</a> può essere calcolata anche su dati <b>qualitativi</b>, purchè questi siano <b>ordinabili</b> e siano in numero <b>dispari</b>. Se fossero pari, sarebbe richiesto di fare la <a href="#org440f691">media</a> dei due valori centrali, che è impossibile.
+A differenza della media, la mediana può essere calcolata anche su dati <b>qualitativi</b>, purchè questi siano <b>ordinabili</b> e siano in numero <b>dispari</b>. Se fossero pari, sarebbe richiesto di fare la media dei due valori centrali, che è impossibile.
 </p>
 
 <p>
-La <a href="#org9e56fdf">mediana</a> è <b>robusta</b> rispetto ad eventuali outlier.
+La mediana è <b>robusta</b> rispetto ad eventuali outlier.
 </p>
-</div>
-</div>
-<div id="outline-container-orgd5248d4" class="outline-5">
-<h5 id="orgd5248d4"><a id="orgd6a75da">Moda</a> campionaria</h5>
-<div class="outline-text-5" id="text-orgd5248d4">
+
 <p>
-La <b><a href="#orgd6a75da">moda</a></b> è l'attributo che appare più spesso. Se esistono più attributi con frequenza massima, vengono chiamati <b>valori modali</b>. Può essere calcolata su qualunque tipo di dato.
+<code>serie.quantile(0.5)</code>
 </p>
 </div>
 </div>
-</div>
-<div id="outline-container-orgd279798" class="outline-4">
-<h4 id="orgd279798">Indici di <a id="org22836a9">dispersione</a></h4>
-<div class="outline-text-4" id="text-orgd279798">
+<div id="outline-container-org0baab7f" class="outline-4">
+<h4 id="org0baab7f">Moda campionaria</h4>
+<div class="outline-text-4" id="text-org0baab7f">
 <p>
-Gli indici di <a href="#org22836a9">dispersione</a> sono utilizzati per capire la <b>variabilità</b> o lo <b>spread</b> di un campione.
+La <b>moda</b> è l'attributo che appare più spesso. Se esistono più attributi con frequenza massima, vengono chiamati <b>valori modali</b>. Può essere calcolata su qualunque tipo di dato.
 </p>
 </div>
-<div id="outline-container-org6a7ed95" class="outline-5">
-<h5 id="org6a7ed95"><a id="org41a8e1b">Varianza</a> campionaria</h5>
-<div class="outline-text-5" id="text-org6a7ed95">
+</div>
+</div>
+<div id="outline-container-org589bb4c" class="outline-3">
+<h3 id="org589bb4c">Indici di dispersione</h3>
+<div class="outline-text-3" id="text-org589bb4c">
+<p>
+Gli indici di dispersione sono utilizzati per capire la <b>variabilità</b> o lo <b>spread</b> di un campione.
+</p>
+</div>
+<div id="outline-container-org9e46e20" class="outline-4">
+<h4 id="org9e46e20">Varianza campionaria</h4>
+<div class="outline-text-4" id="text-org9e46e20">
 <p>
 \[ s^2 = \frac{1}{n-1} \sum_{i=1}^{n} \left( x_i - \overline{x} \right)^2 \]
 </p>
 
 <p>
-Il concetto su cui si basa la <b><a href="#org41a8e1b">varianza</a></b> campionaria è quello di accumulare la <b>distanza</b> fra ogni osservazione e la <b><a href="#org9e56fdf">mediana</a></b>.
+Il concetto su cui si basa la <b>varianza</b> campionaria è quello di accumulare la <b>distanza</b> fra ogni osservazione e la <b>mediana</b>.
 </p>
 
 <p>
@@ -1045,18 +1795,18 @@ Può essere calcolata <b>soltanto</b> su dati <b>quantitativi</b>.
 </p>
 
 <p>
-Dalla definizione si ricava che la <a href="#org41a8e1b">varianza</a> di un campione trasformato linearmente è uguale alla <a href="#org41a8e1b">varianza</a> del campione originale <b>scalata</b> per <b>il quadrato del fattore</b>, mentre è <b>insensibile alla traslazione</b>.
+Dalla definizione si ricava che la varianza di un campione trasformato linearmente è uguale alla varianza del campione originale <b>scalata</b> per <b>il quadrato del fattore</b>, mentre è <b>insensibile alla traslazione</b>.
 </p>
 </div>
-<div id="outline-container-org2dc05a8" class="outline-6">
-<h6 id="org2dc05a8">Perchè si usa il quadrato?</h6>
-<div class="outline-text-6" id="text-org2dc05a8">
+<div id="outline-container-org2dc05a8" class="outline-5">
+<h5 id="org2dc05a8">Perchè si usa il quadrato?</h5>
+<div class="outline-text-5" id="text-org2dc05a8">
 <p>
 Per ottenere la somma delle differenze, occorre assicurarsi che le distanze calcolate siano sempre positive.
 </p>
 
 <p>
-Infatti, le differenze per i valori superiori alla <a href="#org9e56fdf">mediana</a>, se lasciate invariate, produrrebbero valori negativi che ridurrebbero l'accumulazione totale.
+Infatti, le differenze per i valori superiori alla mediana, se lasciate invariate, produrrebbero valori negativi che ridurrebbero l'accumulazione totale.
 </p>
 
 <p>
@@ -1069,25 +1819,22 @@ Di conseguenza, l'approccio preferito consiste nel considerare il <b>quadrato</b
 </div>
 </div>
 </div>
-<div id="outline-container-org39dcb4a" class="outline-5">
-<h5 id="org39dcb4a"><a id="orged12c36">Deviazione standard</a></h5>
-<div class="outline-text-5" id="text-org39dcb4a">
+<div id="outline-container-org39dcb4a" class="outline-4">
+<h4 id="org39dcb4a"><a id="org6db3d4f">Deviazione standard</a></h4>
+<div class="outline-text-4" id="text-org39dcb4a">
 <p>
-La <b><a href="#orged12c36">deviazione standard</a></b> è il quadrato della <a href="#org41a8e1b">varianza</a> campionaria. È utile perchè permette di esprimere la <a href="#org41a8e1b">varianza</a> nell'unità di misura originale.
+La <b><a href="#org6db3d4f">deviazione standard</a></b> è il quadrato della varianza campionaria. È utile perchè permette di esprimere la varianza nell'unità di misura originale.
 </p>
 
 <p>
-Come la <a href="#org41a8e1b">varianza</a> è insensibile alla traslazione, mentre scala come il <b>valore assoluto del fattore</b> con cui è scalato il campione. Infatti, non avrebbe senso considerare una <a href="#org41a8e1b">varianza</a> negativa.
+Come la varianza è insensibile alla traslazione, mentre scala come il <b>valore assoluto del fattore</b> con cui è scalato il campione. Infatti, non avrebbe senso considerare una varianza negativa.
 </p>
 </div>
 </div>
-<div id="outline-container-org0cbcb88" class="outline-5">
-<h5 id="org0cbcb88"><span class="todo WAIT">WAIT</span> Perchè si divide per \(n-1\)?</h5>
 </div>
-</div>
-<div id="outline-container-org14a9103" class="outline-4">
-<h4 id="org14a9103"><a id="orgbfbc9e0">Quantili</a></h4>
-<div class="outline-text-4" id="text-org14a9103">
+<div id="outline-container-orgc8c377b" class="outline-3">
+<h3 id="orgc8c377b">Quantili</h3>
+<div class="outline-text-3" id="text-orgc8c377b">
 <p>
 Un <b>quantile</b> di <b>livello</b> \(p \in [0,1]\) di un campione da \(n\) <b>osservazioni</b> è uno dei valori del campione tale per cui \(np\) valori del campione sono minori o uguali ad esso e \(n(1-p)\) valori ne sono invece maggiori o uguali. \(100p\) è la percentuale di valori minori o uguali a quello scelto e \(100(1-p)\) resto sono maggiori.
 </p>
@@ -1102,7 +1849,7 @@ Lo trovo ordinando i valori del campione e scandendo dal più piccolo. L'element
 </ul>
 
 <p>
-Di conseguenza, quando \(np\) è intero ci sono \(2\) elementi che rispettano entrambe le condizioni. Allora se ne prende la <b><a href="#org440f691">media</a></b>.
+Di conseguenza, quando \(np\) è intero ci sono \(2\) elementi che rispettano entrambe le condizioni. Allora se ne prende la <b>media</b>.
 </p>
 
 <p>
@@ -1114,41 +1861,41 @@ Quindi, quando \(np\) è razionale esiste <b>un solo</b> valore che rispetta ent
 </p>
 
 <p>
-I <a href="#orgbfbc9e0">quantili</a> dove \(p\) ha al massimo due cifre decimali sono chiamati <b>percentili</b>, mentre quelli con \(p\) corrispondente ai multipli interi di \(0.25\) sono chiamati <b>quartili</b>.
+I quantili dove \(p\) ha al massimo due cifre decimali sono chiamati <b>percentili</b>, mentre quelli con \(p\) corrispondente ai multipli interi di \(0.25\) sono chiamati <b>quartili</b>.
 </p>
 </div>
-<div id="outline-container-org0403396" class="outline-5">
-<h5 id="org0403396">Box plot</h5>
-<div class="outline-text-5" id="text-org0403396">
+<div id="outline-container-org0403396" class="outline-4">
+<h4 id="org0403396">Box plot</h4>
+<div class="outline-text-4" id="text-org0403396">
 <p>
-Il box plot è un grafico che riassume le seguenti informazioni: <b>minimo e massimo</b> del campione come <b>estremi dei baffi</b>, <b>primo e terzo</b> quartile come <b>estremi della scatola</b> e <b><a href="#org9e56fdf">mediana</a></b> (o secondo quartile) come <b>linea nella scatola</b>.
+Il box plot è un grafico che riassume le seguenti informazioni: <b>minimo e massimo</b> del campione come <b>estremi dei baffi</b>, <b>primo e terzo</b> quartile come <b>estremi della scatola</b> e <b>mediana</b> (o secondo quartile) come <b>linea nella scatola</b>.
 </p>
 </div>
-<div id="outline-container-org8dc1c5f" class="outline-6">
-<h6 id="org8dc1c5f"><span class="todo TODO">TODO</span> Capire cosa ha detto il professore riguardo alla relazione fra box plot e distribuzione e capire cosa c'entra la <a href="#org440f691">media</a></h6>
+<div id="outline-container-org8dc1c5f" class="outline-5">
+<h5 id="org8dc1c5f"><span class="todo TODO">TODO</span> Capire cosa ha detto il professore riguardo alla relazione fra box plot e distribuzione e capire cosa c'entra la media</h5>
 </div>
 </div>
-<div id="outline-container-org5023b89" class="outline-5">
-<h5 id="org5023b89">Range inter-quartile</h5>
-<div class="outline-text-5" id="text-org5023b89">
+<div id="outline-container-org5023b89" class="outline-4">
+<h4 id="org5023b89">Range inter-quartile</h4>
+<div class="outline-text-4" id="text-org5023b89">
 <p>
-Il <b>range inter-quartile</b> è un <b>indice di <a href="#org22836a9">dispersione</a></b> ed è calcolato come \(Q_3 - Q_1\), ovvero l'ampiezza della fascia di valori che circonda la <a href="#org9e56fdf">mediana</a> senza entrare nei quartili adiacenti. Corrisponde alla lunghezza del box nel box plot.
+Il <b>range inter-quartile</b> è un <b>indice di dispersione</b> ed è calcolato come \(Q_3 - Q_1\), ovvero l'ampiezza della fascia di valori che circonda la mediana senza entrare nei quartili adiacenti. Corrisponde alla lunghezza del box nel box plot.
 </p>
 
 <p>
-Quanto più questo range è grande, quanto più i valori sono lontani dalla <a href="#org9e56fdf">mediana</a>.
+Quanto più questo range è grande, quanto più i valori sono lontani dalla mediana.
 </p>
 </div>
 </div>
-<div id="outline-container-orgf51e9d1" class="outline-5">
-<h5 id="orgf51e9d1">QQ plot</h5>
-<div class="outline-text-5" id="text-orgf51e9d1">
+<div id="outline-container-orgf51e9d1" class="outline-4">
+<h4 id="orgf51e9d1">QQ plot</h4>
+<div class="outline-text-4" id="text-orgf51e9d1">
 <p>
 I grafici <b>quantile-quantile</b> sono usati per confrontare le distribuzioni di due campioni.
 </p>
 
 <p>
-L'idea è quella di introdurre un sistema di riferimento cartesiano sulle cui assi si trovano i corrispondenti <a href="#orgbfbc9e0">quantili</a> dei due campioni e i punti si trovano in corrispondenza del valore dei due <a href="#orgbfbc9e0">quantili</a>.
+L'idea è quella di introdurre un sistema di riferimento cartesiano sulle cui assi si trovano i corrispondenti quantili dei due campioni e i punti si trovano in corrispondenza del valore dei due quantili.
 </p>
 
 <p>
@@ -1159,20 +1906,20 @@ Se i valori si allineano sulla funzione identità \(y=x\), ovvero sulla bisettri
 Il QQ plot è uno metodo grafico e <b>qualitativo</b>, usato soltanto per refutare o validare ipotesi su campioni.
 </p>
 </div>
-<div id="outline-container-org11d9f65" class="outline-6">
-<h6 id="org11d9f65"><span class="todo TODO">TODO</span> Come stampare?</h6>
+<div id="outline-container-org11d9f65" class="outline-5">
+<h5 id="org11d9f65"><span class="todo TODO">TODO</span> Come stampare?</h5>
 </div>
 </div>
 </div>
-<div id="outline-container-orgf40875c" class="outline-4">
-<h4 id="orgf40875c">Distribuzione normale</h4>
-<div class="outline-text-4" id="text-orgf40875c">
+<div id="outline-container-orgf40875c" class="outline-3">
+<h3 id="orgf40875c">Distribuzione normale</h3>
+<div class="outline-text-3" id="text-orgf40875c">
 <p>
-Un campione le frequenza dei valori presi in ordine cresce fino a raggiungere il picco in corrispondenza della <a href="#org9e56fdf">mediana</a> e poi decresce con la stessa pendenza con cui era cresciuta viene chiamata <b>normale</b>.
+Un campione le frequenza dei valori presi in ordine cresce fino a raggiungere il picco in corrispondenza della mediana e poi decresce con la stessa pendenza con cui era cresciuta viene chiamata <b>normale</b>.
 </p>
 
 <p>
-Questi campioni seguono una <b>regola empirica</b> per la quale (dove \(\bar{x}\) è la <a href="#org440f691">media</a> e \(s\) è la <a href="#orged12c36">deviazione standard</a>:
+Questi campioni seguono una <b>regola empirica</b> per la quale (dove \(\bar{x}\) è la media e \(s\) è la <a href="#org6db3d4f">deviazione standard</a>:
 </p>
 <ul class="org-ul">
 <li>il \(68\%\) delle osservazioni hanno valore compreso entro \(\bar{x} \pm s\)</li>
@@ -1181,19 +1928,19 @@ Questi campioni seguono una <b>regola empirica</b> per la quale (dove \(\bar{x}\
 </ul>
 </div>
 </div>
-<div id="outline-container-org8a94430" class="outline-4">
-<h4 id="org8a94430">Coefficiente di correlazione campionaria</h4>
-<div class="outline-text-4" id="text-org8a94430">
+<div id="outline-container-org8a94430" class="outline-3">
+<h3 id="org8a94430">Coefficiente di correlazione campionaria</h3>
+<div class="outline-text-3" id="text-org8a94430">
 <p>
 Lo scatter plot di due osservazioni in coppia può presentare una <b>tendenza lineare</b>. Ovvero, i valori sulle ascisse e sulle ordinate sono fra loro proporzionali.
 </p>
 
 <p>
-Date le <b>medie campionarie</b> \(\bar x, \bar y\), consideriamo gli <b>scarti</b> fra ogni valore di un campione e la propria <a href="#org440f691">media</a>. Quando lo scarto di un valore è <b>non negativo</b>, esso è più grande della propria <a href="#org440f691">media</a>, ovvero \(x-\bar x \geq 0\). Quando è <b>non positivo</b>, esso è minore e quindi \(x-\bar x \leq 0\).
+Date le <b>medie campionarie</b> \(\bar x, \bar y\), consideriamo gli <b>scarti</b> fra ogni valore di un campione e la propria media. Quando lo scarto di un valore è <b>non negativo</b>, esso è più grande della propria media, ovvero \(x-\bar x \geq 0\). Quando è <b>non positivo</b>, esso è minore e quindi \(x-\bar x \leq 0\).
 </p>
 
 <p>
-Allora, data una coppia di valori \((x_i, y_i)\), se essi sono entrambi maggiori o uguali della propria <a href="#org440f691">media</a>, oppure sono entrambi minori o uguali, il <b>prodotto degli scarti</b> sarà <b>non negativo</b>, ovvero \((x-\bar x)(y-\bar y)\geq 0\). Quando invece un elemento della coppia è piccolo, mentre l'altro è grande, il prodotto dei loro scarti sarà <b>non positivo</b>.
+Allora, data una coppia di valori \((x_i, y_i)\), se essi sono entrambi maggiori o uguali della propria media, oppure sono entrambi minori o uguali, il <b>prodotto degli scarti</b> sarà <b>non negativo</b>, ovvero \((x-\bar x)(y-\bar y)\geq 0\). Quando invece un elemento della coppia è piccolo, mentre l'altro è grande, il prodotto dei loro scarti sarà <b>non positivo</b>.
 </p>
 
 <p>
@@ -1236,11 +1983,15 @@ Se un dato è una trasformazione lineare dell'altro, allora:
 <p>
 Se entrambi i dati sono trasformazioni lineari dello stesso dato, \(r = 1\) se i coefficienti sono concordi e l'opposto se discordi.
 </p>
+
+<p>
+<code>pd.DataFrame({'x': serie1, 'y': serie2}).corr().loc['x', 'y']</code>, a partire da un dataframe fornisce una tabella (simmetrica diagonalmente) dei coefficienti di correlazione per tale riga e colonna. Se non ho un dataframe, me lo creo
+</p>
 </div>
 </div>
-<div id="outline-container-org74d6d2e" class="outline-4">
-<h4 id="org74d6d2e"><span class="todo TODO">TODO</span> Lorenz e Gini</h4>
-<div class="outline-text-4" id="text-org74d6d2e">
+<div id="outline-container-org74d6d2e" class="outline-3">
+<h3 id="org74d6d2e"><span class="todo TODO">TODO</span> Lorenz e Gini</h3>
+<div class="outline-text-3" id="text-org74d6d2e">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">gini</span>(series):
     <span style="color: #a020f0;">return</span> 1 - <span style="color: #483d8b;">sum</span>(series.value_counts(normalize=<span style="color: #008b8b;">True</span>)
@@ -1253,14 +2004,9 @@ Se entrambi i dati sono trasformazioni lineari dello stesso dato, \(r = 1\) se i
 </div>
 </div>
 </div>
-</div>
 <div id="outline-container-org1e7948c" class="outline-3">
 <h3 id="org1e7948c">Grafici</h3>
 <div class="outline-text-3" id="text-org1e7948c">
-<p>
-<a href="https://matplotlib.org/stable/users/explain/quick_start.html">https://matplotlib.org/stable/users/explain/quick_start.html</a>
-vedi xlim e ylim e xticks
-</p>
 </div>
 <div id="outline-container-org0d01e63" class="outline-4">
 <h4 id="org0d01e63">A bastoncini</h4>
@@ -1401,23 +2147,6 @@ Si stampa con
 </div>
 </div>
 </div>
-<div id="outline-container-orgc4f9e77" class="outline-2">
-<h2 id="orgc4f9e77"><span class="todo TODO">TODO</span> Calcolo combinatorio</h2>
-<div class="outline-text-2" id="text-orgc4f9e77">
-</div>
-<div id="outline-container-orge7324dc" class="outline-3">
-<h3 id="orge7324dc">Teorema fondamentale del calcolo combinatorio</h3>
-</div>
-<div id="outline-container-orgd3943c9" class="outline-3">
-<h3 id="orgd3943c9">Permutazioni</h3>
-</div>
-<div id="outline-container-org2db997b" class="outline-3">
-<h3 id="org2db997b">Disposizioni</h3>
-</div>
-<div id="outline-container-orgc72e4b4" class="outline-3">
-<h3 id="orgc72e4b4">Combinazioni</h3>
-</div>
-</div>
 <div id="outline-container-org88aaa01" class="outline-2">
 <h2 id="org88aaa01">Probabilità</h2>
 <div class="outline-text-2" id="text-org88aaa01">
@@ -1511,7 +2240,7 @@ La formula può essere estesa ad \(n\) eventi \(F_i\) tali per cui essi sono tut
 </p>
 
 <p>
-Questa formula mi dice che \(P(E)\) è la <a href="#org440f691">media</a> degli \(P(E|F_i)\) pesata in base ad \(F_i\).
+Questa formula mi dice che \(P(E)\) è la media degli \(P(E|F_i)\) pesata in base ad \(F_i\).
 </p>
 
 <p>
@@ -1548,7 +2277,7 @@ L'indipendenza cattura il concetto che i due eventi non sono influenzati, ovvero
 Il fatto che \(F\) sia accaduto o meno non cambia l'informazione riguardo \(E\). Infatti, se provo ad incorporare un evidenza indipendente nella mia ipotesi (caso d'uso della formula di Bayes), ottengo \(P(H|E) = \frac{P(EF)}{P(E)} = \frac{P(E)P(F)}{P(E)} = P(H)\)
 </p>
 
-<pre class="example" id="org863f21e">
+<pre class="example" id="org9f9d3dd">
 Immagina una popolazione in cui:
 la metà sono uomini, P(U)=0.5
 un decimo sono mancini, P(M)=0.1
@@ -1604,10 +2333,6 @@ Più di due eventi \(E\) &isin; \(I\) sono indipendenti gli eventi di ogni sotto
 <div id="outline-container-org9eea659" class="outline-2">
 <h2 id="org9eea659">Variabili aleatorie</h2>
 <div class="outline-text-2" id="text-org9eea659">
-</div>
-<div id="outline-container-org9dc9c96" class="outline-3">
-<h3 id="org9dc9c96">Definizione e concetti di base</h3>
-<div class="outline-text-3" id="text-org9dc9c96">
 <p>
 Le <b>variabili aleatorie</b> si usano per poter codificare degli esiti di un esperimento aleatorio in termini numerici, permettendo più operazioni matematiche sui risultati.
 </p>
@@ -1622,18 +2347,31 @@ I valori assunti dalla variabile (specificazioni) sono definiti in base agli esi
 ovvero, la variabile assume il valore \(\alpha\) quando l'immagine dell'esito \(\omega\) è \(\alpha\).
 </p>
 </div>
+<div id="outline-container-org0712b1e" class="outline-3">
+<h3 id="org0712b1e">Funzione di ripartizione e funzioni di probabilità</h3>
+<div class="outline-text-3" id="text-org0712b1e">
 </div>
-<div id="outline-container-org4a34135" class="outline-3">
-<h3 id="org4a34135">Funzione di ripartizione e funzione di massa di probabilità</h3>
-<div class="outline-text-3" id="text-org4a34135">
+<div id="outline-container-orga1d27bb" class="outline-4">
+<h4 id="orga1d27bb">Concetti fondamentali per variabili aleatorie</h4>
+<div class="outline-text-4" id="text-orga1d27bb">
 <p>
-<b>Definizione (Funzione di ripartizione):</b> La funzione di ripartizione di X, indicata con \(F_X(x)\), è definita come la probabilità che la variabile aleatoria X assuma valore minore o uguale a x:
+<b>Definizione (Funzione di ripartizione):</b> La funzione di ripartizione di una variabile aleatoria \(X\), indicata con \(F_X(x)\), è definita come:
 \[F_X(x) = P(X \leq x)\]
 </p>
 
 <p>
-Per variabili aleatorie su supporti discreti, vale il ragionamento per cui:
-\[F_X(b) - F_X(a) = P(a < X \leq b)\]
+La funzione di ripartizione \(F_X(x)\) possiede le seguenti proprietà universali:
+</p>
+<ol class="org-ol">
+<li>È sempre \(F_X(x) \geq 0\) (la probabilità non è mai negativa)</li>
+<li>\(\lim_{x \to -\infty} F_X(x) = 0\) e \(\lim_{x \to \infty} F_X(x) = 1\)</li>
+<li>È continua da destra: \(\lim_{h \to 0^+} F_X(x+h) = F_X(x)\)</li>
+<li>È non decrescente: se \(a < b\), allora \(F_X(a) \leq F_X(b)\)</li>
+</ol>
+
+<p>
+Per qualsiasi tipo di variabile aleatoria, vale il teorema fondamentale:
+\[P(a < X \leq b) = F_X(b) - F_X(a)\]
 </p>
 
 <p>
@@ -1645,39 +2383,119 @@ F_X(b) - F_X(a) &= P(X \leq b) - P(X \leq a)\\
 &= P(X \leq a) + P(a < X \leq b) - P(X \leq a)\\
 &= P(a < X \leq b)
 \end{align}
-
+</div>
+</div>
+<div id="outline-container-org8b3219b" class="outline-4">
+<h4 id="org8b3219b">Variabili aleatorie discrete</h4>
+<div class="outline-text-4" id="text-org8b3219b">
 <p>
-La funzione di ripartizione \(F_X(x)\) ha le seguenti proprietà:
-</p>
-<ol class="org-ol">
-<li>È sempre \(F_X(x) \geq 0\) (la probabilità non è mai negativa)</li>
-<li>Il suo limite a infinito è \(\lim_{x \to \infty} F_X(x) = 1\) (certezza)</li>
-<li>È continua da destra (per costruzione)</li>
-<li>È non decrescente (se \(a < b\), allora \(F_X(a) \leq F_X(b)\))</li>
-</ol>
-
-<p>
-<b>Definizione (Funzione di massa di probabilità):</b> La funzione di massa di probabilità, indicata con \(p_X(x)\), è definita come la probabilità che la variabile aleatoria X assuma esattamente il valore x:
+<b>Definizione (Funzione di massa di probabilità):</b> Per una variabile aleatoria discreta \(X\), la funzione di massa di probabilità, indicata con \(p_X(x)\), è definita come:
 \[p_X(x) = P(X = x)\]
 </p>
 
 <p>
-Questa funzione ha le seguenti proprietà:
+<b>Interpretazione intuitiva:</b> La PMF assegna a ciascun valore possibile della variabile aleatoria la sua probabilità di occorrenza.
+</p>
+
+<p>
+<b>Proprietà della PMF:</b>
 </p>
 <ol class="org-ol">
-<li>È sempre \(p_X(x) \geq 0\) (la probabilità non è mai negativa)</li>
-<li>La somma su ogni valore della variabile è \(\sum_x p_X(x) = 1\) (certezza)</li>
+<li>\(p_X(x) \geq 0\) per ogni \(x \in \mathbb{R}\)</li>
+<li>\(\sum_{x \in \text{Supp}(X)} p_X(x) = 1\), dove \(\text{Supp}(X)\) è il supporto di \(X\)</li>
+<li>\(p_X(x) > 0\) se e solo se \(x\) appartiene al supporto di \(X\)</li>
 </ol>
 
 <p>
-Sia la funzione di ripartizione \(F_X(x)\) che la funzione di massa di probabilità \(p_X(x)\) da sole bastano per descrivere una variabile aleatoria e si può passare dall'una all'altra considerando che \(F_X(x)\) è una funzione costante a tratti e i salti fra i tratti sono uguali al valore di \(p_X(x)\) in quel punto. I passaggi sono questi:
-\[F_X(x) = P(X \leq x) = P\left(\bigcup_{a \leq x} \{X = a\}\right) = \sum_{a \leq x} p_X(a)\]
+<b>Relazione con la funzione di ripartizione:</b> Per variabili discrete, la CDF è una funzione a gradini con salti nei punti del supporto:
+\[F_X(x) = \sum_{t \leq x} p_X(t)\]
 </p>
 
 <p>
-E viceversa:
+La funzione di massa può essere ricavata dalla funzione di ripartizione come:
 \[p_X(x) = F_X(x) - \lim_{y \to x^-} F_X(y)\]
 </p>
+
+<p>
+che rappresenta l'ampiezza del "salto" della funzione di ripartizione nel punto \(x\).
+</p>
+</div>
+</div>
+<div id="outline-container-orgfe1ac5a" class="outline-4">
+<h4 id="orgfe1ac5a">Variabili aleatorie continue</h4>
+<div class="outline-text-4" id="text-orgfe1ac5a">
+<p>
+<b>Definizione (Funzione di densità di probabilità):</b> Per una variabile aleatoria continua \(X\), la funzione di densità di probabilità, indicata con \(f_X(x)\), è definita tale che per ogni insieme misurabile \(B \subset \mathbb{R}\):
+\[P(X \in B) = \int_B f_X(x) \, dx\]
+</p>
+
+<p>
+<b>Interpretazione intuitiva:</b> Mentre la PMF fornisce direttamente probabilità, la PDF rappresenta la "concentrazione di probabilità" intorno a ciascun punto. La probabilità in un intervallo infinitesimale \([x, x+dx]\) è approssimativamente \(f_X(x) \, dx\).
+</p>
+
+<p>
+<b>Proprietà della PDF:</b>
+</p>
+<ol class="org-ol">
+<li>\(f_X(x) \geq 0\) per ogni \(x \in \mathbb{R}\)</li>
+<li>\(\int_{-\infty}^{+\infty} f_X(x) \, dx = 1\)</li>
+<li>\(P(X = c) = 0\) per qualsiasi singolo valore \(c\)</li>
+</ol>
+
+<p>
+<b>Relazione con la funzione di ripartizione:</b> Per variabili continue, la CDF e la PDF sono legate dalle seguenti relazioni:
+\[F_X(x) = \int_{-\infty}^{x} f_X(t) \, dt\]
+\[f_X(x) = \frac{d}{dx}F_X(x)\]
+</p>
+
+<p>
+dove la seconda equazione è valida nei punti in cui \(F_X\) è differenziabile.
+</p>
+
+<p>
+<b>Calcolo di probabilità:</b> La probabilità che \(X\) appartenga a un intervallo \([a,b]\) si calcola mediante:
+\[P(a \leq X \leq b) = \int_a^b f_X(x) \, dx = F_X(b) - F_X(a)\]
+</p>
+
+<p>
+Poiché \(P(X = a) = P(X = b) = 0\) per variabili continue, abbiamo anche:
+\[P(a < X < b) = P(a \leq X \leq b) = P(a < X \leq b) = P(a \leq X < b) = F_X(b) - F_X(a)\]
+</p>
+</div>
+</div>
+<div id="outline-container-orgb058a68" class="outline-4">
+<h4 id="orgb058a68">Confronto e differenze principali</h4>
+<div class="outline-text-4" id="text-orgb058a68">
+<p>
+<b>Differenze chiave tra PMF e PDF:</b>
+</p>
+
+<ol class="org-ol">
+<li><b>Interpretazione dei valori:</b>
+<ul class="org-ul">
+<li>PMF: \(p_X(x)\) rappresenta direttamente \(P(X = x)\)</li>
+<li>PDF: \(f_X(x)\) non rappresenta una probabilità ma una densità; \(f_X(x)\) può assumere valori maggiori di 1</li>
+</ul></li>
+
+<li><b>Calcolo delle probabilità:</b>
+<ul class="org-ul">
+<li>PMF: \(P(X \in A) = \sum_{x \in A} p_X(x)\)</li>
+<li>PDF: \(P(X \in A) = \int_A f_X(x) \, dx\)</li>
+</ul></li>
+
+<li><b>Probabilità di punti singoli:</b>
+<ul class="org-ul">
+<li>PMF: \(P(X = x)\) può essere positiva</li>
+<li>PDF: \(P(X = x) = 0\) per ogni \(x\)</li>
+</ul></li>
+
+<li><b>Natura della funzione di ripartizione:</b>
+<ul class="org-ul">
+<li>Per variabili discrete: \(F_X\) è una funzione a gradini, discontinua nei punti del supporto</li>
+<li>Per variabili continue: \(F_X\) è una funzione continua (e differenziabile quasi ovunque)</li>
+</ul></li>
+</ol>
+</div>
 </div>
 </div>
 <div id="outline-container-org30aaf5e" class="outline-3">
@@ -1697,15 +2515,15 @@ Le funzioni indicatrici sono utili per rappresentare eventi in forma matematica 
 </div>
 </div>
 <div id="outline-container-org31227f4" class="outline-3">
-<h3 id="org31227f4">Valore atteso e <a href="#org41a8e1b">varianza</a></h3>
+<h3 id="org31227f4">Valore atteso e varianza</h3>
 <div class="outline-text-3" id="text-org31227f4">
 <p>
-<b>Definizione (Valore atteso):</b> Per variabili aleatorie discrete, il valore atteso (o <a href="#org440f691">media</a>), indicato con \(E[X]\), è definito come:
+<b>Definizione (Valore atteso):</b> Per variabili aleatorie discrete, il valore atteso (o media), indicato con \(E[X]\), è definito come:
 \[E[X] = \sum_x x \cdot P(X = x) = \sum_x x \cdot p_X(x)\]
 </p>
 
 <p>
-ovvero la <a href="#org440f691">media</a> ponderata in cui i pesi sono le probabilità.
+ovvero la media ponderata in cui i pesi sono le probabilità.
 </p>
 
 <p>
@@ -1728,7 +2546,7 @@ Per variabili aleatorie discrete positive, questa proprietà si può verificare 
 </p>
 
 <p>
-<b>Definizione (<a href="#org41a8e1b">Varianza</a>):</b> La <a href="#org41a8e1b">varianza</a>, indicata con \(\text{Var}(X)\), si calcola con:
+<b>Definizione (Varianza):</b> La varianza, indicata con \(\text{Var}(X)\), si calcola con:
 \[\text{Var}(X) = E[(X - E[X])^2]\]
 </p>
 
@@ -1738,13 +2556,72 @@ che può essere espanso per ottenere una formula più pratica:
 </p>
 
 <p>
-Da questo consegue che la <a href="#org41a8e1b">varianza</a> di una variabile aleatoria che descrive \(n\) valori equiprobabili da 1 a \(n\) ha la forma:
+Da questo consegue che la varianza di una variabile aleatoria che descrive \(n\) valori equiprobabili da 1 a \(n\) ha la forma:
 \[\text{Var}(X) = \frac{n^2-1}{12}\]
 </p>
 
 <p>
-La <a href="#org41a8e1b">varianza</a> della funzione indicatrice, considerando che questa è idempotente (ovvero \(I_A(x)^2 = I_A(x)\)), è:
+La varianza della funzione indicatrice, considerando che questa è idempotente (ovvero \(I_A(x)^2 = I_A(x)\)), è:
 \[\text{Var}(I_A) = E[I_A] - (E[I_A])^2 = P(A) - P(A)^2 = P(A) \cdot (1 - P(A)) = P(A) \cdot P(A^c)\]
+</p>
+
+<p>
+<b>Definizione (Varianza):</b> La varianza, indicata con \(\text{Var}(X)\), si calcola con:
+\[\text{Var}(X) = E[(X - E[X])^2]\]
+</p>
+
+<p>
+che può essere espanso per ottenere una formula più pratica:
+\[\text{Var}(X) = E[X^2] - (E[X])^2\]
+</p>
+
+<p>
+Da questo consegue che la varianza di una variabile aleatoria che descrive \(n\) valori equiprobabili da 1 a \(n\) ha la forma:
+\[\text{Var}(X) = \frac{n^2-1}{12}\]
+</p>
+
+<p>
+La varianza della funzione indicatrice, considerando che questa è idempotente (ovvero \(I_A(x)^2 = I_A(x)\)), è:
+\[\text{Var}(I_A) = E[I_A] - (E[I_A])^2 = P(A) - P(A)^2 = P(A) \cdot (1 - P(A)) = P(A) \cdot P(A^c)\]
+</p>
+
+<p>
+## Varianza di somme di variabili aleatorie non necessariamente indipendenti
+</p>
+
+<p>
+<b>Definizione (Varianza di una somma):</b> Per variabili aleatorie \(X\) e \(Y\) non necessariamente indipendenti, la varianza della loro somma è data da:
+\[\text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X,Y)\]
+</p>
+
+<p>
+dove \(\text{Cov}(X,Y)\) rappresenta la covarianza tra \(X\) e \(Y\).
+</p>
+
+<p>
+<b>Dimostrazione:</b>
+Partendo dalla definizione di varianza e usando la linearità del valore atteso:
+</p>
+\begin{align}
+\text{Var}(X+Y) &= E[(X+Y - E[X+Y])^2] \\
+&= E[(X+Y - E[X] - E[Y])^2] \\
+&= E[(X-E[X])^2 + 2(X-E[X])(Y-E[Y]) + (Y-E[Y])^2] \\
+&= E[(X-E[X])^2] + 2E[(X-E[X])(Y-E[Y])] + E[(Y-E[Y])^2] \\
+&= \text{Var}(X) + 2\text{Cov}(X,Y) + \text{Var}(Y)
+\end{align}
+
+<p>
+<b>Generalizzazione:</b> Per una somma di \(n\) variabili aleatorie, la formula si estende a:
+\[\text{Var}\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{Var}(X_i) + 2\sum_{i<j} \text{Cov}(X_i, X_j)\]
+</p>
+
+<p>
+<b>Osservazione:</b> Quando le variabili sono indipendenti, \(\text{Cov}(X_i, X_j) = 0\) per \(i \neq j\), e la formula si semplifica nella ben nota additività delle varianze:
+\[\text{Var}\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{Var}(X_i)\]
+</p>
+
+<p>
+Questo evidenzia come la presenza di covarianza non nulla possa aumentare o diminuire la varianza totale, a seconda del segno della covarianza stessa.
 </p>
 </div>
 </div>
@@ -1899,7 +2776,7 @@ Poiché \(E[X-\mu] = E[X] - \mu = 0\):
 </p>
 
 <p>
-Questo è sempre maggiore o uguale alla <a href="#org41a8e1b">varianza</a> di \(X\), poiché \((\mu-c)^2 \geq 0\). L'errore minimo si ottiene quando \(c = \mu = E[X]\), e in quel caso l'errore quadratico medio è esattamente uguale alla <a href="#org41a8e1b">varianza</a>.
+Questo è sempre maggiore o uguale alla varianza di \(X\), poiché \((\mu-c)^2 \geq 0\). L'errore minimo si ottiene quando \(c = \mu = E[X]\), e in quel caso l'errore quadratico medio è esattamente uguale alla varianza.
 </p>
 </div>
 </div>
@@ -1930,10 +2807,10 @@ Usando la linearità del valore atteso, si può dimostrare che:
 </div>
 </div>
 <div id="outline-container-org6549c85" class="outline-4">
-<h4 id="org6549c85"><a href="#org41a8e1b">Varianza</a> di somme di variabili aleatorie</h4>
+<h4 id="org6549c85">Varianza di somme di variabili aleatorie</h4>
 <div class="outline-text-4" id="text-org6549c85">
 <p>
-Per la <a href="#org41a8e1b">varianza</a> di una somma di variabili aleatorie \(X\) e \(Y\), vale:
+Per la varianza di una somma di variabili aleatorie \(X\) e \(Y\), vale:
 \[\text{Var}(X+Y) = E[(X+Y)^2] - (E[X+Y])^2\]
 </p>
 
@@ -1956,7 +2833,7 @@ Quando \(X\) e \(Y\) sono indipendenti, la loro covarianza è 0 e quindi:
 </p>
 
 <p>
-Quindi la <a href="#org41a8e1b">varianza</a> è additiva solo quando le variabili sono indipendenti.
+Quindi la varianza è additiva solo quando le variabili sono indipendenti.
 </p>
 </div>
 </div>
@@ -2010,51 +2887,9 @@ Il coefficiente di correlazione \(\rho_{X,Y}\) è sempre compreso tra -1 e 1:
 </div>
 </div>
 </div>
-<div id="outline-container-orgfe1ac5a" class="outline-3">
-<h3 id="orgfe1ac5a">Variabili aleatorie continue</h3>
-<div class="outline-text-3" id="text-orgfe1ac5a">
-<p>
-Nelle variabili aleatorie a supporto continuo, al posto della funzione di massa di probabilità si ha la funzione di densità di probabilità, \(f_X: \mathbb{R} \to \mathbb{R}^+\) tale che per ogni insieme misurabile \(B \subset \mathbb{R}\):
-\[P(X \in B) = \int_B f_X(x) \, dx\]
-</p>
-
-<p>
-ovvero per ogni intervallo \(B\), si considera la probabilità che la variabile assuma valori in quell'intervallo.
-</p>
-
-<p>
-Proprietà fondamentali della densità di probabilità:
-</p>
-
-<ol class="org-ol">
-<li>\(f_X(x) \geq 0\) per ogni \(x \in \mathbb{R}\)</li>
-<li>\(\int_{-\infty}^{+\infty} f_X(x) \, dx = 1\)</li>
-<li>La probabilità che una singola specificazione sia ottenuta è 0, quindi \(P(X = x) = 0\)
-per qualsiasi \(x\). Per questo motivo non importa se gli intervalli siano aperti o chiusi.</li>
-</ol>
-
-<p>
-La funzione di ripartizione per variabili continue è:
-\[F_X(a) = P(X \leq a) = \int_{-\infty}^{a} f_X(x) \, dx\]
-</p>
-
-<p>
-Per il teorema fondamentale del calcolo integrale, vale che:
-\[f_X(x) = \frac{d}{dx}F_X(x)\]
-</p>
-
-<p>
-Questo ha senso intuitivamente perché la densità rappresenta il tasso di variazione della funzione di ripartizione.
-</p>
-</div>
-</div>
-<div id="outline-container-org89947d1" class="outline-3">
-<h3 id="org89947d1">Disuguaglianze probabilistiche fondamentali</h3>
-<div class="outline-text-3" id="text-org89947d1">
-</div>
-<div id="outline-container-org98ebc0b" class="outline-4">
-<h4 id="org98ebc0b">Disuguaglianza di Markov</h4>
-<div class="outline-text-4" id="text-org98ebc0b">
+<div id="outline-container-org98ebc0b" class="outline-3">
+<h3 id="org98ebc0b">Disuguaglianza di Markov</h3>
+<div class="outline-text-3" id="text-org98ebc0b">
 <p>
 <b>Teorema (Disuguaglianza di Markov):</b> Se \(X\) è una variabile aleatoria non negativa (cioè \(X \geq 0\)), allora per ogni costante \(a > 0\):
 \[P(X \geq a) \leq \frac{E[X]}{a}\]
@@ -2096,11 +2931,11 @@ Da cui:
 </p>
 </div>
 </div>
-<div id="outline-container-org16eba75" class="outline-4">
-<h4 id="org16eba75">Disuguaglianza di Chebyshev</h4>
-<div class="outline-text-4" id="text-org16eba75">
+<div id="outline-container-org16eba75" class="outline-3">
+<h3 id="org16eba75">Disuguaglianza di Chebyshev</h3>
+<div class="outline-text-3" id="text-org16eba75">
 <p>
-<b>Teorema (Disuguaglianza di Chebyshev):</b> Data una variabile aleatoria \(X\) con valore atteso \(E[X] = \mu\) e <a href="#org41a8e1b">varianza</a> \(Var(X) = \sigma^2\), allora per ogni \(r > 0\):
+<b>Teorema (Disuguaglianza di Chebyshev):</b> Data una variabile aleatoria \(X\) con valore atteso \(E[X] = \mu\) e varianza \(Var(X) = \sigma^2\), allora per ogni \(r > 0\):
 \[P(|X-\mu| \geq r) \leq \frac{\sigma^2}{r^2}\]
 </p>
 
@@ -2144,15 +2979,15 @@ Sostituendo:
 </ul>
 
 <p>
-Questo ci fornisce un nuovo modo di interpretare la <a href="#org41a8e1b">varianza</a>: non solo come misura di <a href="#org22836a9">dispersione</a>, ma anche come unità di misura per la distanza dal valore atteso. La probabilità che un valore si discosti di \(k\) deviazioni standard dal valore atteso decresce almeno proporzionalmente a \(1/k^2\).
+Questo ci fornisce un nuovo modo di interpretare la varianza: non solo come misura di dispersione, ma anche come unità di misura per la distanza dal valore atteso. La probabilità che un valore si discosti di \(k\) deviazioni standard dal valore atteso decresce almeno proporzionalmente a \(1/k^2\).
 </p>
 </div>
 </div>
-<div id="outline-container-org88f7a28" class="outline-4">
-<h4 id="org88f7a28">Legge dei grandi numeri</h4>
-<div class="outline-text-4" id="text-org88f7a28">
+<div id="outline-container-org88f7a28" class="outline-3">
+<h3 id="org88f7a28">Legge dei grandi numeri</h3>
+<div class="outline-text-3" id="text-org88f7a28">
 <p>
-<b>Teorema (Legge debole dei grandi numeri):</b> Sia \(X_1, X_2, ..., X_n\) una sequenza di variabili aleatorie indipendenti e identicamente distribuite, ciascuna con valore atteso \(\mu\) e <a href="#org41a8e1b">varianza</a> \(\sigma^2\). Definiamo la <a href="#org440f691">media</a> campionaria \(\overline{X}_n = \frac{1}{n}\sum_{i=1}^n X_i\). Allora, per ogni \(\varepsilon > 0\):
+<b>Teorema (Legge debole dei grandi numeri):</b> Sia \(X_1, X_2, ..., X_n\) una sequenza di variabili aleatorie indipendenti e identicamente distribuite, ciascuna con valore atteso \(\mu\) e varianza \(\sigma^2\). Definiamo la media campionaria \(\overline{X}_n = \frac{1}{n}\sum_{i=1}^n X_i\). Allora, per ogni \(\varepsilon > 0\):
 </p>
 
 <p>
@@ -2160,7 +2995,7 @@ Questo ci fornisce un nuovo modo di interpretare la <a href="#org41a8e1b">varian
 </p>
 
 <p>
-Ovvero, la <a href="#org440f691">media</a> campionaria converge in probabilità al valore atteso \(\mu\).
+Ovvero, la media campionaria converge in probabilità al valore atteso \(\mu\).
 </p>
 
 <p>
@@ -2188,9 +3023,20 @@ Quindi:
 </p>
 
 <p>
-<b>Interpretazione:</b> La legge dei grandi numeri afferma che, con un numero sufficientemente grande di osservazioni, la <a href="#org440f691">media</a> campionaria di variabili aleatorie indipendenti e identicamente distribuite si avvicina al loro valore atteso. Ad esempio, lanciando una moneta equilibrata molte volte, la proporzione di teste si avvicinerà a 0.5.
+<b>Interpretazione:</b> La legge dei grandi numeri afferma che, con un numero sufficientemente grande di osservazioni, la media campionaria di variabili aleatorie indipendenti e identicamente distribuite si avvicina al loro valore atteso. Ad esempio, lanciando una moneta equilibrata molte volte, la proporzione di teste si avvicinerà a 0.5.
 </p>
 </div>
+</div>
+<div id="outline-container-org93cdc7f" class="outline-3">
+<h3 id="org93cdc7f">Legge dei grandi numeri</h3>
+<div class="outline-text-3" id="text-org93cdc7f">
+<p>
+<b>versione forte</b>: $P(lim<sub>n&rarr; +&infin;</sub> \overline{X}<sub>n</sub> = &mu;) = 1, ovvero all'aumentare dei campioni considerati, la probabilità che la media campionaria come stimatore raggiunga <b>esattamente</b> il valore atteso della variabile da stimare si avvicina a \(1\)
+</p>
+
+<p>
+<b>versione debole</b>: \(\lim_{n\to +\infty} P(|\overline{X}_n -\mu|>\epsilon) = 0\), ovvero fissato un \(\epsilon\) piccolo, l'errore da parte della media campionaria rispetto al valore atteso da stimare diventerà minore di \(\epsilon\) prima o poi
+</p>
 </div>
 </div>
 <div id="outline-container-org74800df" class="outline-3">
@@ -2222,11 +3068,11 @@ dove \(I_{\{0,1\}}(x)\) è la funzione indicatrice dell'insieme \(\{0,1\}\).
 </p>
 <ul class="org-ul">
 <li><b>Valore atteso:</b> \(E[X] = p\)</li>
-<li><b><a href="#org41a8e1b">Varianza</a>:</b> \(Var(X) = p(1-p)\)</li>
+<li><b>Varianza:</b> \(Var(X) = p(1-p)\)</li>
 </ul>
 
 <p>
-<b>Dimostrazione della <a href="#org41a8e1b">varianza</a>:</b>
+<b>Dimostrazione della varianza:</b>
 </p>
 \begin{align}
 Var(X) &= E[X^2] - E[X]^2 \\
@@ -2370,7 +3216,7 @@ Invece, considero le variabili bernoulliane \(X_i\) che compongono la binomiale 
 </p>
 
 <p>
-Stesso per la <a href="#org41a8e1b">varianza</a>, sfruttando l'indipendenza per usare la linearità della <a href="#org41a8e1b">varianza</a>, quindi il risultato è:
+Stesso per la varianza, sfruttando l'indipendenza per usare la linearità della varianza, quindi il risultato è:
 \[\text{Var}(X) = np(1-p)\]
 </p>
 
@@ -2523,10 +3369,10 @@ E[X] &= \sum_{i=0}^{+\infty} i \cdot p(1-p)^i \\
 </div>
 </div>
 <div id="outline-container-org732100c" class="outline-5">
-<h5 id="org732100c"><a href="#org41a8e1b">Varianza</a></h5>
+<h5 id="org732100c">Varianza</h5>
 <div class="outline-text-5" id="text-org732100c">
 <p>
-La <a href="#org41a8e1b">varianza</a> della distribuzione geometrica è:
+La varianza della distribuzione geometrica è:
 </p>
 
 <p>
@@ -2534,7 +3380,7 @@ La <a href="#org41a8e1b">varianza</a> della distribuzione geometrica è:
 </p>
 
 <p>
-<b>Nota:</b> All'aumentare di \(p\), sia il valore atteso che la <a href="#org41a8e1b">varianza</a> diminuiscono, coerentemente con l'interpretazione probabilistica (maggiore probabilità di successo = minor numero atteso di insuccessi).
+<b>Nota:</b> All'aumentare di \(p\), sia il valore atteso che la varianza diminuiscono, coerentemente con l'interpretazione probabilistica (maggiore probabilità di successo = minor numero atteso di insuccessi).
 </p>
 </div>
 </div>
@@ -2615,9 +3461,9 @@ La distribuzione geometrica modella efficacemente:
 </p>
 </div>
 </div>
-<div id="outline-container-orgff8a2ba" class="outline-5">
-<h5 id="orgff8a2ba">Python</h5>
-<div class="outline-text-5" id="text-orgff8a2ba">
+<div id="outline-container-org3107891" class="outline-5">
+<h5 id="org3107891">Python</h5>
+<div class="outline-text-5" id="text-org3107891">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #a020f0;">import</span> numpy <span style="color: #a020f0;">as</span> np
 <span style="color: #a020f0;">import</span> matplotlib.pyplot <span style="color: #a020f0;">as</span> plt
@@ -2855,7 +3701,7 @@ La funzione di massa di probabilità è:
 <ul class="org-ul">
 <li><b>Supporto:</b> \(X \in \{0, 1, 2, ...\}\)</li>
 <li><b>Valore atteso:</b> \(E[X] = \lambda\)</li>
-<li><b><a href="#org41a8e1b">Varianza</a>:</b> \(Var(X) = \lambda\)</li>
+<li><b>Varianza:</b> \(Var(X) = \lambda\)</li>
 </ul>
 
 <p>
@@ -3069,7 +3915,7 @@ Quando la popolazione è molto grande rispetto al numero di estrazioni (cioè \(
 
 <ul class="org-ul">
 <li><b>Valore atteso:</b> \(E[X] = n \cdot \frac{M}{M+N}\)</li>
-<li><b><a href="#org41a8e1b">Varianza</a>:</b> \(Var(X) = n \cdot \frac{M}{M+N} \cdot (1-\frac{M}{M+N}) \cdot \frac{M+N-n}{M+N-1}\)</li>
+<li><b>Varianza:</b> \(Var(X) = n \cdot \frac{M}{M+N} \cdot (1-\frac{M}{M+N}) \cdot \frac{M+N-n}{M+N-1}\)</li>
 </ul>
 
 <p>
@@ -3083,7 +3929,7 @@ La funzione di ripartizione è:
 <ul class="org-ul">
 <li>Se \(n\) è piccolo rispetto a \(M+N\), la distribuzione ipergeometrica può essere approssimata da una distribuzione binomiale \(B(n, \frac{M}{M+N})\)</li>
 <li>A differenza della binomiale, le estrazioni non sono indipendenti (senza rimpiazzo)</li>
-<li>Il fattore \(\frac{M+N-n}{M+N-1}\) nella <a href="#org41a8e1b">varianza</a> è chiamato "fattore di correzione per popolazione finita"n (non visto a lezione)</li>
+<li>Il fattore \(\frac{M+N-n}{M+N-1}\) nella varianza è chiamato "fattore di correzione per popolazione finita"n (non visto a lezione)</li>
 </ul>
 
 <p>
@@ -3091,11 +3937,11 @@ La funzione di ripartizione è:
 </p>
 <ol class="org-ol">
 <li><p>
-Come si comporta la <a href="#org41a8e1b">varianza</a> della distribuzione ipergeometrica quando \(n\) si avvicina a \(M+N\)?
+Come si comporta la varianza della distribuzione ipergeometrica quando \(n\) si avvicina a \(M+N\)?
 </p>
 
 <p>
-La <a href="#org41a8e1b">varianza</a> tende a 0, infatti nel caso limite di \(n=M+N\), il numero di oggetti funzionanti sarà sempre \(M\) e quindi tale probabilità è \(1\) e tutto il resto \(0\).
+La varianza tende a 0, infatti nel caso limite di \(n=M+N\), il numero di oggetti funzionanti sarà sempre \(M\) e quindi tale probabilità è \(1\) e tutto il resto \(0\).
 </p></li>
 <li>Perché il fattore di correzione per popolazione finita è sempre minore o uguale a 1?</li>
 <li><p>
@@ -3293,7 +4139,7 @@ Questo risultato è coerente con l'interpretazione geometrica: la densità forma
 <ul class="org-ul">
 <li><b>Supporto:</b> \(X \in [a,b]\)</li>
 <li><b>Valore atteso:</b> \(E[X] = \frac{a+b}{2}\)</li>
-<li><b><a href="#org41a8e1b">Varianza</a>:</b> \(Var(X) = \frac{(b-a)^2}{12}\)</li>
+<li><b>Varianza:</b> \(Var(X) = \frac{(b-a)^2}{12}\)</li>
 </ul>
 
 <p>
@@ -3532,7 +4378,7 @@ Utilizzando la sostituzione \(y = \lambda x\) (quindi \(dx = \frac{dy}{\lambda}\
 <ul class="org-ul">
 <li><b>Supporto:</b> \(X \in [0,\infty)\)</li>
 <li><b>Valore atteso:</b> \(E[X] = \frac{1}{\lambda}\)</li>
-<li><b><a href="#org41a8e1b">Varianza</a>:</b> \(Var(X) = \frac{1}{\lambda^2}\)</li>
+<li><b>Varianza:</b> \(Var(X) = \frac{1}{\lambda^2}\)</li>
 </ul>
 
 <p>
@@ -3750,7 +4596,7 @@ plt.show()
 <h4 id="org451db8e">Gaussiano</h4>
 <div class="outline-text-4" id="text-org451db8e">
 <p>
-<b>Definizione (Distribuzione Gaussiana o Normale):</b> Una variabile aleatoria \(X\) segue una distribuzione gaussiana con parametri \(\mu\) (<a href="#org440f691">media</a>) e \(\sigma > 0\) (<a href="#orged12c36">deviazione standard</a>), scriviamo \(X \sim \mathcal{G}(\mu, \sigma)\), se la sua funzione di densità di probabilità è:
+<b>Definizione (Distribuzione Gaussiana o Normale):</b> Una variabile aleatoria \(X\) segue una distribuzione gaussiana con parametri \(\mu\) (media) e \(\sigma > 0\) (<a href="#org6db3d4f">deviazione standard</a>), scriviamo \(X \sim \mathcal{G}(\mu, \sigma)\), se la sua funzione di densità di probabilità è:
 </p>
 
 <p>
@@ -3881,7 +4727,7 @@ produce una variabile aleatoria \(Z \sim \mathcal{G}(0, 1)\), chiamata normale s
 <ul class="org-ul">
 <li><b>Supporto:</b> \(X \in (-\infty, \infty)\)</li>
 <li><b>Valore atteso:</b> \(E[X] = \mu\)</li>
-<li><b><a href="#org41a8e1b">Varianza</a>:</b> \(Var(X) = \sigma^2\)</li>
+<li><b>Varianza:</b> \(Var(X) = \sigma^2\)</li>
 </ul>
 
 <p>
@@ -3905,7 +4751,7 @@ Questa proprietà deriva dalla simmetria della densità gaussiana rispetto all'o
 </p>
 
 <p>
-Possiamo trasformare un campione statistico in una variabile aleatoria e porci domande in funzione della sua probabilità. Ad esempio, possiamo chiederci qual è la probabilità che una variabile gaussiana si trovi entro \(n\) deviazioni standard dalla <a href="#org440f691">media</a>:
+Possiamo trasformare un campione statistico in una variabile aleatoria e porci domande in funzione della sua probabilità. Ad esempio, possiamo chiederci qual è la probabilità che una variabile gaussiana si trovi entro \(n\) deviazioni standard dalla media:
 \[P(|X-\mu| \leq n\sigma)\]
 </p>
 
@@ -3936,11 +4782,17 @@ Calcolando questo valore per \(n = 1, 2, 3\), otteniamo i risultati della regola
 <b>Regola empirica (regola 68-95-99.7):</b> Per una variabile aleatoria normale:
 </p>
 <ul class="org-ul">
-<li>Circa il 68% dei valori si trova entro 1 <a href="#orged12c36">deviazione standard</a> dalla <a href="#org440f691">media</a></li>
-<li>Circa il 95% dei valori si trova entro 2 deviazioni standard dalla <a href="#org440f691">media</a></li>
-<li>Circa il 99.7% dei valori si trova entro 3 deviazioni standard dalla <a href="#org440f691">media</a></li>
+<li>Circa il 68% dei valori si trova entro 1 <a href="#org6db3d4f">deviazione standard</a> dalla media</li>
+<li>Circa il 95% dei valori si trova entro 2 deviazioni standard dalla media</li>
+<li>Circa il 99.7% dei valori si trova entro 3 deviazioni standard dalla media</li>
 </ul>
 
+<p>
+<b>Legame con la distribuzione binomiale</b>: dato che
+$X&sim; B(n,p) = &sum;<sub>i=1</sub><sup>n</sup> (X<sub>i&sim;</sub> B(p)) \dot&sim; N(np,\sqrt{np(1-p)}) e in particolare frac{X-np}{sqrt(np(1-p) approx N(0,1)
+Quindi, se ho a che fare con binomiali abbastanza grandi, posso approssimare con una gaussiana in virtù del TCL, evitando una lunga catena di addendi contenenti binomiali.
+Potrei anche approssimare con Poisson ma solo quando np rimane costante.
+</p>
 
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #a020f0;">import</span> numpy <span style="color: #a020f0;">as</span> np
@@ -4042,9 +4894,10 @@ plt.show()
 </div>
 </div>
 </div>
-<div id="outline-container-orgf895136" class="outline-4">
-<h4 id="orgf895136">Considerazioni su riproducibilità (da integrare)</h4>
-<div class="outline-text-4" id="text-orgf895136">
+</div>
+<div id="outline-container-org5f6d451" class="outline-3">
+<h3 id="org5f6d451">Riproducibilità (da integrare)</h3>
+<div class="outline-text-3" id="text-org5f6d451">
 <p>
 La riproducibilità è una proprietà fondamentale di alcune distribuzioni di probabilità che si mantengono "della stessa famiglia" sotto certe operazioni, come la somma di variabili aleatorie indipendenti.
 </p>
@@ -4153,37 +5006,127 @@ Questa proprietà ha importanti applicazioni pratiche:
 </ol>
 </div>
 </div>
-</div>
-<div id="outline-container-orge68f6db" class="outline-3">
-<h3 id="orge68f6db">Tecniche python</h3>
-<div class="outline-text-3" id="text-orge68f6db">
-</div>
-<div id="outline-container-orgcd62758" class="outline-4">
-<h4 id="orgcd62758">Calcola funzione di ripartizione usando massa</h4>
-<div class="outline-text-4" id="text-orgcd62758">
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #483d8b;">sum</span>([X.pmf(i) <span style="color: #a020f0;">for</span> i <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">range</span>(7)])
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-orga16c0a3" class="outline-4">
-<h4 id="orga16c0a3">Inversa della funzione di ripartizione</h4>
-<div class="outline-text-4" id="text-orga16c0a3">
+<div id="outline-container-orgbd29f40" class="outline-3">
+<h3 id="orgbd29f40">Teorema centrale del limite (da integrare)</h3>
+<div class="outline-text-3" id="text-orgbd29f40">
 <p>
-<code>X.ppf(0.8)</code>
-Per rispondere alla domanda: si determini il più piccolo dei valori per cui la funzione di ripartizione vale x.
-Ovvero dato il numero r, trovare quel valore della variabile aleatoria tale per cui lo 0.x % dei valori ne sono più piccoli. Proprio il concetto di <b>quantile</b>
+Data una successione di \(n\) v.a. X<sub>1,&#x2026;,X</sub><sub>n</sub> i.i.d (ovvero essendo indipendenti e distribuite secondo lo stesso parametro), allora forall i vale che \(\mathcal{E}(X_i) = \mu\) e $Var(X<sub>i</sub>) = &sigma;<sup>2</sup>. Allora &sum;<sub>i</sub>=1<sup>n</sup> X<sub>i</sub> è approssimamente distribuito come una normale N(nmu, \sqrt(n) sigma). Standardizzando, ottengo &sum;<sub>i=1</sub><sup>n</sup> (\frac{X_i-n\mu}{\sqrt{n}&sigma; \dot\sym N(0,1)
+</p>
+
+<p>
+Quando il numero \(n\) aumenta, ovvero lim n-&gt; infty che la probabilità che la var standardizzata sia controllata da un certo errore \(x\) allora ci si avvicina alla normale standard Phi (X)
 </p>
 </div>
 </div>
-<div id="outline-container-org429311b" class="outline-4">
-<h4 id="org429311b">(AGGIUNGERE CODICE) Stabilire se una popolazione può essere descritta da una variabile aleatoria</h4>
-<div class="outline-text-4" id="text-org429311b">
+<div id="outline-container-orge1dd96e" class="outline-3">
+<h3 id="orge1dd96e">Assenza di memoria</h3>
+</div>
+</div>
+<div id="outline-container-org117121d" class="outline-2">
+<h2 id="org117121d">Statistica inferenziale</h2>
+<div class="outline-text-2" id="text-org117121d">
 <p>
-Tracciare un grafico con l'asse delle ascisse recante i <a href="#orgbfbc9e0">quantili</a> del campione e quello delle ordinate quelli teorici della specifica distribuzione iptetica
+Estrarre informazioni in senso <b>induttivo</b>.
+Conosco il modello di una v.a. ma non conosco alcuni dei parametri.
+I concetti fondamentali sono:
+</p>
+<dl class="org-dl">
+<dt>popolazione</dt><dd>una v.a. \(X\sim F(\theta)\), con &theta; ignoto e &tau;(theta è quello che vogliamo stimare</dd>
+<dt>campione</dt><dd>X<sub>1</sub>, &#x2026;, X<sub>n</sub> i.i.d fra loro e rispetto ad \(X\), con le lettere minuscole si intende i loro singoli valori calcolati</dd>
+<dt>statistica (stimatore)</dt><dd>\(t:D_X^n -> R\), ovvero una funzione che prende una ennupla di \(n\) campionamenti e restituisce una stima</dd>
+<dt>stima</dt><dd>t cappello = t(x<sub>1,&#x2026;,x</sub><sub>n</sub>) &asymp; &tau;(&theta;)</dd>
+</dl>
+</div>
+<div id="outline-container-org8673dd5" class="outline-3">
+<h3 id="org8673dd5">Stimatore non deviato</h3>
+<div class="outline-text-3" id="text-org8673dd5">
+<p>
+Uno stimatore è detto non deviato per &tau;(&theta;) quando il valore atteso della statistica su un certo campione di \(n\) osservazioni è uguale al valore da stimare, ovvero
+\[\mathcal{E}(t(X_1,...,X_n))=\tau(\theta)\]
 </p>
 </div>
+<div id="outline-container-org43be099" class="outline-4">
+<h4 id="org43be099">Media campionaria come stimatore</h4>
+<div class="outline-text-4" id="text-org43be099">
+<p>
+Se considero lo stimatore \(\overline X = t(x_1, ...,x_n) = \frac{1}{n}\sum_i X_i\), ovvero quello che stima \(\tau(\theta)\) come la media campionaria delle osservazioni, allora questo è sempre <b>non deviato</b> per la stima del valore atteso di \(X\), indipendentemente dal modello di X. Infatti E(\frac{1}{n}&sum;<sub>i</sub> X<sub>i</sub>) = \frac{1}{n}&sum;<sub>i</sub> E(X<sub>i</sub>) usando la linearità di E = \frac{1}{n}&sum;<sub>i</sub> E(X) usando che X<sub>i</sub> i.i.d X = E(X).
+Notare inoltre che \overline X è una v.a. e possiamo calcolarci anche la varianza:
+Var(\overline X) = \frac{Var(x)}{n}, seguendo lo stesso procedimento del valore atteso ma tirando fuori un \(n^2\)
+</p>
+
+<p>
+Si dimostra anche che non è possibile pesare i campioni in modo diverso per ottenere una stima più accurata, in quanto quella che minimizza il MSE è la scelta uniforme dei pesi
+</p>
+</div>
+</div>
+<div id="outline-container-orgc7bb3f2" class="outline-4">
+<h4 id="orgc7bb3f2">Varianza campionaria come stimatore</h4>
+<div class="outline-text-4" id="text-orgc7bb3f2">
+<p>
+Lo stimatore \(S^2 = \frac{1}{n-1}\sum_{i=1}^n(X_i-\overline X)^2\), questo è sempre non distorto per \(Var(X)\), come la media campionaria.
+</p>
+
+<p>
+La dimostrazione procede in questo modo:
+</p>
+<ul class="org-ul">
+<li>sviluppa il binomio della definizione e trasforma \(\sum X_i\) in \(n\overline X\).</li>
+<li>porta \((n-1)\) a sinistra e calcola il valore atteso dei due membri</li>
+<li>nel calcolo del valore atteso, trasformare ogni caso di \(\mathcal{E}(X^2\) usando la formula della varianza.</li>
+<li>considerare anche che la varianza di \(\overline X\) è \(\frac{\sigma^2}{n}\) e che il suo valore atteso è \(\mu\)</li>
+<li>i \(\mu\) scompaiono, rimangono solo i \(\sigma\)</li>
+<li>dividere entrambi i membri per \((n-1)\)</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orga719f4c" class="outline-3">
+<h3 id="orga719f4c">Errore quadratico medio</h3>
+<div class="outline-text-3" id="text-orga719f4c">
+<p>
+Per la stessa quantità &tau;(&theta;) possono esistere vari stimatori non deviati. L'errore quadratico medio serve per capire quanto è buono uno stimatore, calcolando il valore atteso dell'errore commesso dallo stimatore, ovvero la distanza fra esso e il valore che vuole stimare.
+MSE<sub>&tau;(&theta;)</sub>(T)= E((T-&tau;(&theta;))<sup>2</sup>), dove \(T=t(X_1,...,X_n\) è uno stimatore.
+</p>
+
+<p>
+Espandendo nella definizione il quadrato di binomio e applicando la linearità del valore atteso, si ottiene anche che $$MSE<sub>&tau;(&theta;)</sub>(T) = Var(T)+(E(T)-&tau;(&theta;))<sup>2</sup>.
+Il secondo addendo è chiamato <b>bias</b>, \(b_{\tau(\theta)=E(T)-\tau(\theta)\)
+</p>
+
+<p>
+In uno stimatore non deviato ,b<sub>&tau;(&theta;)</sub>=0
+</p>
+</div>
+</div>
+<div id="outline-container-orge69270b" class="outline-3">
+<h3 id="orge69270b">Consistenza in media quadratica</h3>
+<div class="outline-text-3" id="text-orge69270b">
+<p>
+Uno stimatore T è consistente in media quadratica per &tau;(&theta;) se lim<sub>n-&gt;&infin;</sub> MSE<sub>&tau;(&theta;)</sub>(T) = 0
+</p>
+
+<p>
+Va specificato che in realtà lo stimatore è una funzione diversa per ogni valore di \(n\), si parla quindi di una famiglia di stimatori {T<sub>n</sub>} e qui si studia come si comporta lo stimatore di questa famiglia con n molto alto
+</p>
+</div>
+</div>
+<div id="outline-container-orgf4bb999" class="outline-3">
+<h3 id="orgf4bb999">Consistenza debole</h3>
+<div class="outline-text-3" id="text-orgf4bb999">
+<p>
+Un altro modo di vedere la "precisione" di uno stimatore rispetto alla media quadratica.
+Uno stimatore T è consistente in media quadratica per &tau;(&theta;) se &forall; &epsilon; &gt; 0 lim<sub>n-&gt;&infin;</sub> P(&tau;(&theta;)-&epsilon; &le; T<sub>n</sub> &le; &tau;(&theta;)+&epsilon; = 1
+</p>
+
+<p>
+La consistenza in media quadratica implica quella debole. La dimostrazione consiste nel
+</p>
+<ul class="org-ul">
+<li>trasformare la probabilità nella definizione in P(|T<sub>n</sub>-&tau;(&theta;)|&le; e)</li>
+<li>elevare al quadrato.</li>
+<li>applicare la disuguaglianza di Markov, prima complementando a 1</li>
+<li>ottenere una formula che contiene MSE che per ipotesi tende a 0</li>
+</ul>
 </div>
 </div>
 </div>
@@ -4204,7 +5147,7 @@ Tracciare un grafico con l'asse delle ascisse recante i <a href="#orgbfbc9e0">qu
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2025-06-07 Sat 16:49</p>
+<p class="date">Created: 2025-06-08 Sun 22:00</p>
 </div>
 </body>
 </html>
